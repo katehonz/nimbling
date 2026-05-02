@@ -1,81 +1,72 @@
-## Code generation: produces Nim wrapper functions and descriptor functions.
-## Equivalent to codegen.rs in wasm-bindgen-macro-support.
+## Code generation helpers: type mapping, wrapper builders.
+## Used by macroimpl.nim at compile time.
 
 import common
 import std/macros
+import std/strutils
 
-type
-  CodegenCtx* = object
-    exports*: seq[Export]
-    imports*: seq[Import]
-    uniqueId*: string
-    counter*: int
+# ─── Nim type name → TY_* constant ───
 
-proc newCodegenCtx*(uniqueId: string): CodegenCtx =
-  CodegenCtx(uniqueId: uniqueId)
+proc nimTypeToTyId*(tname: string): uint32 =
+  ## Map a Nim type name string to the corresponding TY_* constant.
+  case tname
+  of "int8":    TY_I8
+  of "uint8", "byte": TY_U8
+  of "int16":   TY_I16
+  of "uint16":  TY_U16
+  of "int32", "cint": TY_I32
+  of "uint32", "cuint": TY_U32
+  of "int64":   TY_I64
+  of "uint64":  TY_U64
+  of "float32": TY_F32
+  of "float64": TY_F64
+  of "bool":    TY_BOOLEAN
+  of "string":  TY_STRING
+  of "JsValue": TY_EXTERNREF
+  of "char":    TY_CHAR
+  else:         TY_EXTERNREF
 
-proc nextId(ctx: var CodegenCtx): int =
-  result = ctx.counter
-  inc ctx.counter
+proc isStringType*(tname: string): bool =
+  tname == "string"
 
-# ─── Generate export wrapper for a Nim proc ───
-# Takes a Nim proc like `proc greet(a: string): string`
-# Generates an extern "C" wrapper that takes ptr/len args and returns ptr/len.
+proc isVoidNode*(node: NimNode): bool =
+  node.kind == nnkEmpty
 
-proc shimName*(ctx: var CodegenCtx, funcName: string): string =
-  result = "__nbg_shim_" & funcName & "_" & $ctx.nextId()
+proc typeName*(node: NimNode): string =
+  ## Extract the type name from a NimNode (ident, bracket expr, or empty).
+  case node.kind
+  of nnkIdent, nnkSym: result = node.strVal
+  of nnkBracketExpr:   result = node[0].strVal
+  of nnkEmpty:         result = ""
+  else:                result = ""
 
-proc generateExportWrapper*(ctx: var CodegenCtx, procDef: NimNode): NimNode =
-  ## Given a Nim proc definition node, generate:
-  ## 1. An `{.exportc.}` wrapper that converts wasm ABI ↔ Nim types
-  ## 2. A `__nbg_describe_*` function
-  ## Returns the modified AST with both additions.
-  result = procDef
+# ─── Parse formal params into (name, typeName) pairs ───
 
-  # In a real implementation, this would:
-  # - Parse the proc signature (params, return type)
-  # - Generate string/ptr conversion shims
-  # - Emit descriptor function
-  # For now, we provide the scaffolding.
+proc parseFormalParams*(params: NimNode): seq[(string, string)] =
+  ## Handles `a, b: int32` (multi-name defs) correctly.
+  result = @[]
+  for i in 1..<params.len:
+    let p = params[i]
+    if p.kind == nnkIdentDefs:
+      let typeNode = p[^2]          # second-to-last child is the type
+      let tname = typeNode.typeName()
+      # All children except last two (type, default) are names
+      for j in 0..<(p.len - 2):
+        case p[j].kind
+        of nnkIdent, nnkSym:
+          result.add((p[j].strVal, tname))
+        else:
+          discard
 
-  let name = procDef[0].strVal
-  # Generates: proc `__nbg_describe_name`() {.exportc.} = ...
-  # This is a placeholder; the real macro will generate actual descriptor calls.
+# ─── JS type name for shim generation ───
 
-proc generateImportWrapper*(ctx: var CodegenCtx, externBlock: NimNode): NimNode =
-  ## Given an extern block with imports, generate JS import shims.
-  result = externBlock
-
-# ─── Descriptor function generation ───
-
-proc generateDescribeFn*(name: string, describeArgs: seq[(string, string)]): string =
-  ## Generate the Nim source for a __nbg_describe_* function.
-  ## describeArgs is a list of (type, description) pairs.
-  result = "proc $1() {.exportc, cdecl.} =\n" % ["__nbg_describe_" & name]
-  for (ty, desc) in describeArgs:
-    result.add("  __nbg_describe($1)  # $2\n" % [desc, ty])
-
-# ─── JS Shim body generator templating ───
-
-proc passStringToWasm*(): string =
-  ## JS helper: convert JS string to wasm ptr/len
-  """
-function passStringToWasm(arg) {
-  const buf = new TextEncoder('utf-8').encode(arg);
-  const len = buf.length;
-  const ptr = wasm.__nbg_malloc(len, 1);
-  let array = new Uint8Array(wasm.memory.buffer);
-  array.set(buf, ptr);
-  return [ptr, len];
-}
-"""
-
-proc getStringFromWasm*(): string =
-  ## JS helper: read string from wasm memory
-  """
-function getStringFromWasm(ptr, len) {
-  const mem = new Uint8Array(wasm.memory.buffer);
-  const slice = mem.slice(ptr, ptr + len);
-  return new TextDecoder('utf-8').decode(slice);
-}
-"""
+proc jsTypeName*(tname: string): string =
+  ## Map Nim type names to JS type descriptions for jsgen.
+  case tname
+  of "string":  "string"
+  of "int32", "cint", "int16", "int8", "uint32", "cuint",
+     "uint16", "uint8": "number"
+  of "int64", "uint64": "bigint"
+  of "float32", "float64": "number"
+  of "bool": "boolean"
+  else: "any"

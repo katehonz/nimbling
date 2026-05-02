@@ -26,11 +26,15 @@ import nimbling/runtime
 import nimbling/macroimpl
 
 # Re-export core types
-export common.JsValue
-export common.Closure
-export runtime.nbgMalloc
-export runtime.nbgFree
+export common
+export runtime.JsValue
+export runtime.Closure
+export runtime.fromIdx
 export macroimpl.wasmBindgen
+
+when defined(wasm32):
+  export runtime.nbgMalloc
+  export runtime.nbgFree
 
 when isMainModule:
   echo "nimbling v" & SchemaVersion

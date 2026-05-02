@@ -9,13 +9,11 @@
 import nimbling
 
 # Export a function to JavaScript
-{.wasmBindgen.}
-proc greet(name: string): string =
+proc greet(name: string): string {.wasmBindgen.} =
   result = "Hello, " & name & "!"
 
 # Export another function — takes and returns integers
-{.wasmBindgen.}
-proc add(a, b: int32): int32 =
+proc add(a, b: int32): int32 {.wasmBindgen.} =
   result = a + b
 
 # This would be the user's application logic

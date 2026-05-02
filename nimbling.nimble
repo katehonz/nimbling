@@ -19,5 +19,11 @@ task test, "Run all tests":
   exec "nim c --path:src -r tests/all.nim"
 
 # Build with wasm target helper
-task wasm, "Build an example for wasm":
-  exec "nim c --cc:clang --os:standalone --gc:orc -d:wasm32 -d:release examples/hello/hello.nim"
+# Two-step process: Nim → C → .wasm via clang
+# Requires: clang with wasm32 target (wasi-sdk or emscripten)
+task wasm, "Build hello example for wasm32":
+  # Step 1: Compile Nim → C
+  exec "nim c --path:src --cc:clang --os:standalone --mm:orc -d:wasm32 -d:release --compileOnly --nimcache:/tmp/nimcache_wasm examples/hello/hello.nim"
+  echo "C files generated in /tmp/nimcache_wasm"
+  echo "To produce .wasm, run:"
+  echo "  clang --target=wasm32 -nostdlib -Wl,--no-entry -Wl,--export-all -o hello.wasm /tmp/nimcache_wasm/*.c"

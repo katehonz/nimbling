@@ -1,11 +1,13 @@
 ## Test suite for nimbling
 
 import std/unittest
+import std/strutils
 
 import nimbling/common
 import nimbling/encode
 import nimbling/decode
 import nimbling/describe
+import nimbling/jsgen
 
 suite "common - identifiers":
   test "valid JS identifiers":
@@ -150,3 +152,107 @@ suite "describe - descriptor decode":
     let d = Descriptor.decode(data)
     check d.kind == TY_VECTOR
     check d.inner[].kind == TY_U8
+
+suite "jsgen - JS glue generation":
+  test "generates module header for bundler target":
+    var prog = Program(uniqueCrateIdentifier: "test")
+    var jsg = newJsGen(prog, jsBundler, "hello")
+    let output = jsg.generate()
+    check output.contains("import * as wasm from './hello_bg.js'")
+    check output.contains("async function init(input)")
+
+  test "generates module header for node target":
+    var prog = Program(uniqueCrateIdentifier: "test")
+    var jsg = newJsGen(prog, jsNode, "hello")
+    let output = jsg.generate()
+    check output.contains("require('./hello_bg.js')")
+
+  test "generates heap helpers":
+    var prog = Program(uniqueCrateIdentifier: "test")
+    var jsg = newJsGen(prog, jsBundler, "hello")
+    let output = jsg.generate()
+    check output.contains("addHeapObject")
+    check output.contains("dropObject")
+    check output.contains("takeObject")
+    check output.contains("passStringToWasm")
+    check output.contains("getStringFromWasm")
+
+  test "generates export shim for string function":
+    var prog = Program(
+      uniqueCrateIdentifier: "test",
+      exports: @[
+        Export(
+          function: FunctionDesc(
+            name: "greet",
+            args: @[
+              FunctionArgumentData(name: "name", tyOverride: "string"),
+            ],
+            retTyOverride: "string",
+          ),
+        ),
+      ],
+    )
+    var jsg = newJsGen(prog, jsBundler, "hello")
+    let output = jsg.generate()
+    check output.contains("export function greet(")
+    check output.contains("passStringToWasm")
+    check output.contains("__nbg_shim_greet")
+    check output.contains("__nbg_boxed_str_ptr")
+    check output.contains("getStringFromWasm")
+
+  test "generates export shim for numeric function":
+    var prog = Program(
+      uniqueCrateIdentifier: "test",
+      exports: @[
+        Export(
+          function: FunctionDesc(
+            name: "add",
+            args: @[
+              FunctionArgumentData(name: "a", tyOverride: "int32"),
+              FunctionArgumentData(name: "b", tyOverride: "int32"),
+            ],
+            retTyOverride: "int32",
+          ),
+        ),
+      ],
+    )
+    var jsg = newJsGen(prog, jsBundler, "hello")
+    let output = jsg.generate()
+    check output.contains("export function add(")
+    check output.contains("__nbg_shim_add")
+
+  test "generates import shim for function":
+    var prog = Program(
+      uniqueCrateIdentifier: "test",
+      imports: @[
+        Import(
+          module: some(ImportModule(kind: imNamed, name: "./math")),
+          importKind: ImportKindObj(
+            kind: ikFunction,
+            funcData: ImportFunction(
+              shim: "__nbg_f_add",
+              function: FunctionDesc(
+                name: "add",
+                args: @[
+                  FunctionArgumentData(name: "a", tyOverride: "int32"),
+                  FunctionArgumentData(name: "b", tyOverride: "int32"),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
+    )
+    var jsg = newJsGen(prog, jsBundler, "hello")
+    let output = jsg.generate()
+    check output.contains("export function __nbg_f_add(")
+    check output.contains("import { add } from './math'")
+
+  test "generates init with async load":
+    var prog = Program(uniqueCrateIdentifier: "test")
+    var jsg = newJsGen(prog, jsWeb, "hello")
+    let output = jsg.generate()
+    check output.contains("async function __nbg_load")
+    check output.contains("async function init")
+    check output.contains("WebAssembly.instantiateStreaming")
+    check output.contains("export default init")

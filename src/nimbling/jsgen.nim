@@ -5,7 +5,6 @@
 import common
 import std/strformat
 import std/strutils
-import std/sequtils
 
 type
   JsGenTarget* = enum
@@ -112,6 +111,16 @@ function passArray8ToWasm(arg) {
 proc generateHelpers(g: var JsGen) =
   g.add(jsHelpers)
 
+# ─── Type analysis helpers ───
+
+proc classifyArgType(arg: FunctionArgumentData): string =
+  ## Returns "string", "number", "boolean", or "jsvalue"
+  let t = arg.tyOverride
+  if t == "string": return "string"
+  if t in ["bool"]: return "boolean"
+  if t in ["JsValue", "Closure"]: return "jsvalue"
+  return "number"  # int32, float64, etc.
+
 # ─── Generate import shims ───
 
 proc generateImportShim(g: var JsGen, imp: Import) =
@@ -127,62 +136,132 @@ proc generateImportShim(g: var JsGen, imp: Import) =
 
     g.addLine(&"// Import shim for '{jsFnName}' from '{modulePath}'")
 
-    if modulePath.len > 0 and modulePath.startsWith("./") or modulePath.startsWith("../"):
+    if modulePath.len > 0 and (modulePath.startsWith("./") or modulePath.startsWith("../")):
       g.addLine(&"import {{ {jsFnName} }} from '{modulePath}';")
 
-    g.addLine(&"export function {shimName}(arg0, arg1, wasmretptr) {{")
+    # Build arg list for the shim signature
+    var shimArgs: seq[string] = @[]
+    for i, arg in f.function.args:
+      let argTy = classifyArgType(arg)
+      if argTy == "string":
+        shimArgs.add(&"arg{i}_ptr")
+        shimArgs.add(&"arg{i}_len")
+      else:
+        shimArgs.add(&"arg{i}")
+
+    g.addLine(&"export function {shimName}({shimArgs.join(\", \")}, wasmretptr) {{")
     g.indent()
 
-    # Generate argument conversions based on types
-    # For now, simple string conversion example:
-    g.addLine(&"const arg = getStringFromWasm(arg0, arg1);")
-    g.addLine(&"const result = {jsFnName}(arg);")
-    g.addLine(&"if (typeof result === 'string') {{")
-    g.indent()
-    g.addLine("const [retptr, retlen] = passStringToWasm(result);")
-    g.addLine("(new Uint32Array(wasm.memory.buffer))[wasmretptr / 4] = retlen;")
-    g.addLine("return retptr;")
-    g.dedent()
-    g.addLine("}")
+    # Convert wasm args → JS args
+    var jsCallArgs: seq[string] = @[]
+    for i, arg in f.function.args:
+      let argTy = classifyArgType(arg)
+      if argTy == "string":
+        g.addLine(&"const arg{i} = getStringFromWasm(arg{i}_ptr, arg{i}_len);")
+      jsCallArgs.add(&"arg{i}")
+
+    g.addLine(&"const result = {jsFnName}({jsCallArgs.join(\", \")});")
+
+    # Handle return value
+    if f.function.args.len > 0:
+      g.addLine(&"if (typeof result === 'string') {{")
+      g.indent()
+      g.addLine("const [retptr, retlen] = passStringToWasm(result);")
+      g.addLine("(new Uint32Array(wasm.memory.buffer))[wasmretptr / 4] = retlen;")
+      g.addLine("return retptr;")
+      g.dedent()
+      g.addLine("}")
+      g.addLine("return result;")
 
     g.dedent()
     g.addLine("}")
     g.add("")
 
-  of ikStatic, ikString, ikType, ikEnum:
-    g.addLine(&"// Import shim (non-function) — todo")
+  of ikStatic:
+    let s = imp.importKind.staticData
+    g.addLine(&"// Import shim (static): {s.name}")
+    g.addLine(&"export function {s.shim}() {{ return {s.name}; }}")
+    g.add("")
+
+  of ikString:
+    let s = imp.importKind.stringData
+    g.addLine(&"// Import shim (string constant): {s.string}")
+    g.addLine(&"export function {s.shim}() {{ return '{s.string}'; }}")
+    g.add("")
+
+  of ikType:
+    let t = imp.importKind.typeData
+    g.addLine(&"// Import shim (type): {t.name}")
+    g.addLine(&"export function {t.instanceofShim}(arg) {{ return arg instanceof {t.name}; }}")
+    g.add("")
+
+  of ikEnum:
+    let e = imp.importKind.enumData
+    g.addLine(&"// Import shim (enum): {e.name}")
     g.add("")
 
 # ─── Generate export shims ───
 
 proc generateExportShim(g: var JsGen, exp: Export) =
   let funcName = exp.function.name
-  let exportName = exp.function.name  # could have js_name override
+  let exportName = exp.function.name
   let args = exp.function.args
+  let shimFuncName = "__nbg_shim_" & funcName
 
-  g.addLine(&"export function {exportName}({args.mapIt(it.name).join(\", \")}) {{")
+  # Check if any arg is a string or return is string
+  var hasStringArgs = false
+  for arg in args:
+    if classifyArgType(arg) == "string":
+      hasStringArgs = true
+      break
+
+  let hasStringReturn = exp.function.retTyOverride == "string" or
+                        (exp.function.retTyOverride == "" and args.len > 0)
+  # For now: if retTyOverride is empty and there are args, assume string return
+  # (fallback heuristic — the descriptor will clarify)
+
+  # JS function signature
+  var jsArgs: seq[string] = @[]
+  for i, arg in args:
+    jsArgs.add(&"arg{i}")
+
+  g.addLine(&"export function {exportName}({jsArgs.join(\", \")}) {{")
   g.indent()
 
-  # Convert each JS argument to wasm ABI
+  # Convert JS args → wasm args
   var wasmArgs: seq[string] = @[]
   for i, arg in args:
-    g.addLine(&"const [ptr{i}, len{i}] = passStringToWasm({arg.name});")
-    wasmArgs.add(&"ptr{i}, len{i}")
+    let argTy = classifyArgType(arg)
+    if argTy == "string":
+      g.addLine(&"const [ptr{i}, len{i}] = passStringToWasm(arg{i});")
+      wasmArgs.add(&"ptr{i}, len{i}")
+    elif argTy == "jsvalue":
+      g.addLine(&"const idx{i} = addHeapObject(arg{i});")
+      wasmArgs.add(&"idx{i}")
+    else:
+      wasmArgs.add(&"arg{i}")
 
-  # Call wasm
-  g.addLine(&"const ret = wasm.{funcName}({wasmArgs.join(\", \")});")
+  # Call the wasm shim function
+  g.addLine(&"const ret = wasm.{shimFuncName}({wasmArgs.join(\", \")});")
 
   # Convert return value
-  g.addLine("const ptr = wasm.__nbg_boxed_str_ptr(ret);")
-  g.addLine("const len = wasm.__nbg_boxed_str_len(ret);")
-  g.addLine("const realRet = getStringFromWasm(ptr, len);")
-  g.addLine("wasm.__nbg_boxed_str_free(ret);")
+  if hasStringReturn:
+    g.addLine("const rptr = wasm.__nbg_boxed_str_ptr(ret);")
+    g.addLine("const rlen = wasm.__nbg_boxed_str_len(ret);")
+    g.addLine("const realRet = getStringFromWasm(rptr, rlen);")
+    g.addLine("wasm.__nbg_boxed_str_free(ret);")
+    # Free string args
+    for i, arg in args:
+      if classifyArgType(arg) == "string":
+        g.addLine(&"wasm.__nbg_free(ptr{i}, len{i}, 1);")
+    g.addLine("return realRet;")
+  else:
+    # Free string args
+    for i, arg in args:
+      if classifyArgType(arg) == "string":
+        g.addLine(&"wasm.__nbg_free(ptr{i}, len{i}, 1);")
+    g.addLine("return ret;")
 
-  # Free arguments
-  for i in 0..<args.len:
-    g.addLine(&"wasm.__nbg_free(ptr{i}, len{i}, 1);")
-
-  g.addLine("return realRet;")
   g.dedent()
   g.addLine("}")
   g.add("")

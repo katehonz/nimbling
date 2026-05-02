@@ -1,129 +1,202 @@
 ## Macro implementation: the `{.wasmBindgen.}` pragma.
 ## This is the compile-time engine that:
-## 1. Parses Nim AST for annotated procs/types
-## 2. Generates export/import wrappers
-## 3. Encodes program metadata
-## 4. Embeds encoded data as a custom wasm section
+## 1. Parses Nim AST for annotated procs
+## 2. Generates export wrappers with ABI conversion
+## 3. Generates descriptor functions for the CLI interpreter
+## 4. Encodes program metadata for the custom wasm section
 
 import std/macros
 import common
 import encode
+import codegen
 
-type
-  ParserCtx = object
-    program*: Program
-    uniqueId*: string
+# ─── Build an {.exportc, cdecl.} wrapper proc ───
 
-proc newParserCtx*(uniqueId: string): ParserCtx =
-  ParserCtx(
-    program: Program(uniqueCrateIdentifier: uniqueId),
-    uniqueId: uniqueId,
+proc buildShimProc(procName: string, args: seq[(string, string)],
+                   retTypeStr: string, isVoid: bool): NimNode =
+  ## Generates a wrapper proc that converts wasm ABI ↔ Nim types.
+  ##
+  ## For `proc greet(name: string): string`:
+  ##   proc __nbg_shim_greet(name_ptr, name_len: uint32): uint32 {.exportc, cdecl.} =
+  ##     var name = newString(name_len.int)
+  ##     if name_len > 0: copyMem(addr name[0], cast[pointer](name_ptr), name_len.int)
+  ##     let ret = greet(name)
+  ##     # box the return string...
+  ##
+  ## For `proc add(a, b: int32): int32`:
+  ##   proc __nbg_shim_add(a, b: int32): int32 {.exportc, cdecl.} =
+  ##     return add(a, b)
+
+  let shimName = ident("__nbg_shim_" & procName)
+  let origName = ident(procName)
+
+  # ── formal params ──
+  var formalParams = newNimNode(nnkFormalParams)
+
+  if isVoid:
+    formalParams.add(newEmptyNode())
+  elif retTypeStr == "string":
+    formalParams.add(ident("uint32"))      # boxed string handle
+  else:
+    formalParams.add(ident(retTypeStr))
+
+  for (pname, ptype) in args:
+    if ptype == "string":
+      formalParams.add(newIdentDefs(ident(pname & "_ptr"), ident("uint32")))
+      formalParams.add(newIdentDefs(ident(pname & "_len"), ident("uint32")))
+    else:
+      formalParams.add(newIdentDefs(ident(pname), ident(ptype)))
+
+  # ── body ──
+  var body = newStmtList()
+
+  # 1) convert string args: ptr+len → Nim string
+  for (pname, ptype) in args:
+    if ptype == "string":
+      let s = ident(pname)
+      let p = ident(pname & "_ptr")
+      let l = ident(pname & "_len")
+      body.add quote do:
+        var `s` = newString(int(`l`))
+        if `l` > 0:
+          copyMem(addr `s`[0], cast[pointer](`p`), int(`l`))
+
+  # 2) build the call to the original proc
+  var call = newCall(origName)
+  for (pname, _) in args:
+    call.add(ident(pname))
+
+  # 3) handle return value
+  if isVoid:
+    body.add(call)
+  elif retTypeStr == "string":
+    let retId = genSym(nskLet, "ret")
+    let dataLen = ident("dataLen")
+    let dataPtr = ident("dataPtr")
+    let boxPtr  = ident("boxPtr")
+    let mallocFn = ident("nbgMalloc")
+    body.add(newLetStmt(retId, call))
+    # Box the string: allocate {data_ptr, data_len} struct in wasm memory
+    body.add quote do:
+      let `dataLen` = uint32(`retId`.len)
+      var `dataPtr`: uint32 = 0
+      if `dataLen` > 0:
+        `dataPtr` = cast[uint32](`mallocFn`(`dataLen`, 1))
+        copyMem(cast[pointer](`dataPtr`), unsafeAddr `retId`[0], int(`dataLen`))
+      let `boxPtr` = cast[uint32](`mallocFn`(8, 4))
+      cast[ptr uint32](cast[pointer](`boxPtr`))[]       = `dataPtr`
+      cast[ptr uint32](cast[pointer](cast[uint](`boxPtr`) + 4))[] = `dataLen`
+      return `boxPtr`
+  else:
+    body.add(nnkReturnStmt.newTree(call))
+
+  # ── assemble proc def ──
+  let pragmas = nnkPragmaExpr.newTree(
+    shimName,
+    nnkPragma.newTree(ident("exportc"), ident("cdecl"))
   )
 
-# ─── Parse exported proc ───
-
-proc parseExportProc(ctx: var ParserCtx, procDef: NimNode) =
-  ## Build an Export entry from a Nim proc definition.
-  let name = procDef[0].strVal
-  var fargs: seq[FunctionArgumentData] = @[]
-  var isAsync = false
-
-  # Extract params
-  let params = procDef[3]
-  for i in 1..<params.len:
-    let paramDef = params[i]
-    var pname = "arg" & $i
-    if paramDef.kind == nnkIdentDefs:
-      pname = paramDef[0].strVal
-    fargs.add(FunctionArgumentData(name: pname))
-
-  let funcDesc = FunctionDesc(
-    name: name,
-    args: fargs,
-    isAsync: isAsync,
-    generateTypescript: true,
-    generateJsdoc: true,
+  result = nnkProcDef.newTree(
+    pragmas, newEmptyNode(), newEmptyNode(),
+    formalParams, newEmptyNode(), newEmptyNode(),
+    body
   )
 
-  ctx.program.exports.add(Export(
-    function: funcDesc,
-    methodKind: MethodKind.mkOperation,
-  ))
+# ─── Build a __nbg_describe_* descriptor proc ───
 
-# ─── Parse imported function ───
+proc buildDescribeProc(procName: string, args: seq[(string, string)],
+                       retTyId: uint32, isVoid: bool): NimNode =
+  ## Generates:
+  ##   proc __nbg_describe_NAME() {.exportc, cdecl.} =
+  ##     __nbg_describe(TY_ARG0)
+  ##     __nbg_describe(TY_ARG1)
+  ##     __nbg_describe(TY_RET)
 
-proc parseImportProc(ctx: var ParserCtx, externBlock: NimNode, module: string) =
-  ## Build an Import entry from an extern block.
-  for child in externBlock.children:
-    if child.kind == nnkProcDef:
-      let name = child[0].strVal
-      var fargs: seq[FunctionArgumentData] = @[]
+  let descFnName = ident(DescribeFnPrefix & procName)
+  let descCall   = ident("__nbg_describe")
 
-      let params = child[3]
-      for i in 1..<params.len:
-        let paramDef = params[i]
-        var pname = "arg" & $i
-        if paramDef.kind == nnkIdentDefs:
-          pname = paramDef[0].strVal
-        fargs.add(FunctionArgumentData(name: pname))
+  var body = newStmtList()
 
-      let shim = "__nbg_f_" & name
-      let funcDesc = FunctionDesc(name: name, args: fargs)
-      let importFunc = ImportFunction(shim: shim, function: funcDesc)
-      let ofModule =
-        if module.startsWith("./") or module.startsWith("../"):
-          ImportModule(kind: imNamed, name: module)
-        else:
-          ImportModule(kind: imRawNamed, rawName: module)
+  # describe each argument type
+  for (_, ptype) in args:
+    let tyLit = newLit(nimTypeToTyId(ptype))
+    body.add(newCall(descCall, tyLit))
 
-      ctx.program.imports.add(Import(
-        module: some(ofModule),
-        importKind: ImportKindObj(kind: ikFunction, funcData: importFunc),
-      ))
+  # describe return type
+  if isVoid:
+    body.add(newCall(descCall, newLit(TY_UNIT)))
+  else:
+    body.add(newCall(descCall, newLit(retTyId)))
 
-# ─── Main macro: wasmBindgen ───
+  let pragmas = nnkPragmaExpr.newTree(
+    descFnName,
+    nnkPragma.newTree(ident("exportc"), ident("cdecl"))
+  )
+
+  result = nnkProcDef.newTree(
+    pragmas, newEmptyNode(), newEmptyNode(),
+    nnkFormalParams.newTree(newEmptyNode()),
+    newEmptyNode(), newEmptyNode(),
+    body
+  )
+
+# ─── Compile-time state ───
+
+var describeImportDeclared {.compileTime.} = false
+
+# ─── Main macro ───
 
 macro wasmBindgen*(body: untyped): untyped =
   ## Main pragma macro. Use as:
   ##   {.wasmBindgen.}
   ##   proc myFunc(a: string): string = ...
-  ##   {.wasmBindgen: "module".}
-  ##   proc externalFunc(): cint {.importc.}
   ##
-  ## This macro processes the annotated item and:
-  ## - Generates export wrappers with {.exportc.}
-  ## - Generates descriptor functions
-  ## - Embeds program metadata
+  ## Generates:
+  ##   1. Original proc (unchanged)
+  ##   2. __nbg_shim_<name>  — {.exportc, cdecl.} wrapper with ABI conversion
+  ##   3. __nbg_describe_<name> — descriptor function for CLI interpreter
 
-  result = body
+  if body.kind != nnkProcDef:
+    error("wasmBindgen can only be applied to proc definitions", body)
 
-  # In a full implementation, this macro would:
-  # 1. Walk the AST for {.wasmBindgen.} annotated items
-  # 2. Parse each proc/type into the Program AST
-  # 3. Generate wrapper Nim code (exportc shims)
-  # 4. Generate __nbg_describe_* functions
-  # 5. Embed the serialized Program as a custom section
-  #
-  # For the initial implementation, we provide the architecture
-  # and scaffolding. The actual macro expansion requires deep
-  # AST manipulation that depends on the Nim compiler internals.
+  let procDef  = body
+  let procName = procDef[0].strVal
+  let params   = procDef[3]
+  let retType  = params[0]
+  let isVoid   = isVoidNode(retType)
+  let retTypeStr = if isVoid: "" else: retType.typeName()
+  let retTyId    = if isVoid: TY_UNIT else: nimTypeToTyId(retTypeStr)
 
-  # Example placeholder — generates a descriptor function
-  # and exportc wrapper
+  let args = parseFormalParams(params)
 
-  when false:  # placeholder for actual macro expansion
-    let ctx = newParserCtx("my_crate")
-    ctx.parseExportProc(body)
-    let encoded = newEncoder()
-    encoded.encode(ctx.program)
+  result = newStmtList()
 
-    # Embed custom section
-    result = quote do:
-      `body`
+  # 1) Original proc — always present (works natively and in wasm)
+  result.add(procDef)
 
-      proc `__nbg_describe`(x: uint32) {.importc, nodecl.}
+  # 2-3) Wasm-specific code: export wrapper + descriptor (only compiled for wasm32)
+  var wasmBody = newStmtList()
 
-      # Generated descriptor functions would go here
+  # Declare __nbg_describe import (once per compilation unit)
+  if not describeImportDeclared:
+    let descFn = ident("__nbg_describe")
+    wasmBody.add quote do:
+      proc `descFn`(v: uint32) {.importc, nodecl.}
+    describeImportDeclared = true
+
+  # Export wrapper
+  wasmBody.add(buildShimProc(procName, args, retTypeStr, isVoid))
+
+  # Descriptor function
+  wasmBody.add(buildDescribeProc(procName, args, retTyId, isVoid))
+
+  # Build: when defined(wasm32): <wasmBody>
+  let whenBranch = nnkElifBranch.newTree(
+    newCall(ident("defined"), ident("wasm32")),
+    wasmBody
+  )
+  let whenStmt = nnkWhenStmt.newTree(whenBranch)
+  result.add(whenStmt)
 
 # ─── Compile-time pragma for annotation ───
 

@@ -1,1 +1,8 @@
 OLD/
+nimcache/
+*.exe
+*.o
+*.obj
+src/nimbling/cli
+tests/all
+examples/hello/hello
