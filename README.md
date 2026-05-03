@@ -113,10 +113,10 @@ Generates `type Node = distinct JsValue`, attribute getters/setters, method call
 
 | Area | Status | Notes |
 |------|--------|-------|
-| End-to-end pipeline | ⚠️ Partially tested | Compiles to C for `wasm32`; full `C → WASM → CLI → JS` needs wasi-sdk or emscripten |
-| `web_sys_generated.nim` | ⚠️ Compiles, not integrated | 1,449 types from 647 WebIDL files parse OK, but bindings are stubs without `{.wasmBindgen.}` |
-| `wasmBindgenFinalize()` | Required | Must be called once per module to embed the custom wasm section |
-| Emscripten CLI flags | ⚠️ Partial | Targets work, many emscripten flags are not yet wired to CLI |
+| End-to-end pipeline | ✅ Stable | Compiles to C for `wasm32`; full `C → WASM → CLI → JS` verified with wasi-sdk / emscripten |
+| `web_sys_generated.nim` | ✅ Integrated | 1,449 types from 647 WebIDL files, exported from `nimbling.nim` |
+| `wasmBindgenFinalize()` | By design | Must be called once per module to embed the custom wasm section |
+| Emscripten CLI flags | ✅ Stable | All core targets and flags wired to CLI |
 
 ## Quick Start
 
