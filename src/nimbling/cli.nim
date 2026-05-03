@@ -132,6 +132,28 @@ proc describeExports*(wasmData: seq[byte], prog: var Program) =
   ## Each descriptor sequence maps 1-to-1 with prog.exports in order.
   prog.descriptors = extractDescriptors(wasmData)
 
+proc isEnumName(name: string, prog: Program): bool =
+  for ne in prog.enums:
+    if ne.name == name:
+      return true
+  return false
+
+proc isStructName(name: string, prog: Program): bool =
+  for ns in prog.structs:
+    if ns.name == name:
+      return true
+  return false
+
+proc tsTypeName(tyOverride: string, prog: Program): string =
+  ## Map a tyOverride string to a TypeScript type name.
+  if tyOverride == "string": return "string"
+  if tyOverride == "bool": return "boolean"
+  if tyOverride in ["int32", "cint", "uint32", "cuint", "int16", "uint16", "int8", "uint8",
+                    "float32", "float64", "int64", "uint64"]: return "number"
+  if isEnumName(tyOverride, prog): return tyOverride
+  if isStructName(tyOverride, prog): return tyOverride
+  return "any"
+
 proc runCli*() =
   let config = parseArgs()
 
@@ -206,11 +228,51 @@ proc runCli*() =
   if not config.noTypescript:
     let tsPath = config.outDir / (config.wasmName & ".d.ts")
     var ts = "/* TypeScript declarations for " & config.wasmName & " */\n"
+
+    # Enum declarations
+    for ne in prog.enums:
+      if ne.generateTypescript and not ne.private:
+        ts &= "export enum " & ne.name & " {\n"
+        for v in ne.variants:
+          ts &= "  " & v.name & " = " & $v.value & ",\n"
+        ts &= "}\n"
+        ts &= "\n"
+
+    # Struct class declarations
+    for ns in prog.structs:
+      if ns.generateTypescript and not ns.private:
+        ts &= "export class " & ns.name & " {\n"
+        # Constructor
+        var ctorArgs: seq[string] = @[]
+        for field in ns.fields:
+          ctorArgs.add(field.name & ": " & tsTypeName(field.tyOverride, prog))
+        ts &= "  constructor(" & ctorArgs.join(", ") & ");\n"
+        ts &= "  free(): void;\n"
+        for field in ns.fields:
+          let tsTy = tsTypeName(field.tyOverride, prog)
+          ts &= "  get " & field.name & "(): " & tsTy & ";\n"
+          if not field.readonly:
+            ts &= "  set " & field.name & "(v: " & tsTy & ");\n"
+        ts &= "}\n"
+        ts &= "\n"
+
     ts &= "export function init(input: RequestInfo | URL | Response | BufferSource | WebAssembly.Module): Promise<typeof wasmExports>;\n"
     ts &= "\n"
     ts &= "declare namespace wasmExports {\n"
     for exp in prog.exports:
-      ts &= "  export function " & exp.function.name & "(...args: any[]): any;\n"
+      let f = exp.function
+      var sig = "  export function " & f.name & "("
+      for i, arg in f.args:
+        if i > 0: sig &= ", "
+        let tsTy = tsTypeName(arg.tyOverride, prog)
+        sig &= "arg" & $i & ": " & tsTy
+      sig &= "): "
+      if f.retTyOverride.len > 0:
+        sig &= tsTypeName(f.retTyOverride, prog)
+      else:
+        sig &= "void"
+      sig &= ";\n"
+      ts &= sig
     ts &= "}\n"
     writeFile(tsPath, ts)
     echo &"Generated {tsPath}"

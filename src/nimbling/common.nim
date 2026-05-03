@@ -6,7 +6,7 @@ import std/strutils
 
 export options
 
-const SchemaVersion* = "0.1.0"
+const SchemaVersion* = "0.2.0"
 
 # ─── Type ID constants (mirrors tys.rs) ───
 const
@@ -188,6 +188,7 @@ type
     comments*: seq[string]
     generateTypescript*: bool
     jsNamespace*: seq[string]
+    hole*: uint32
     private*: bool
 
   StructField* = object
@@ -196,6 +197,7 @@ type
     comments*: seq[string]
     generateTypescript*: bool
     generateJsdoc*: bool
+    tyOverride*: string
 
   NimStruct* = object
     name*: string

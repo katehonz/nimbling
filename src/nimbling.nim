@@ -31,6 +31,7 @@ export runtime.JsValue
 export runtime.Closure
 export runtime.fromIdx
 export macroimpl.wasmBindgen
+export macroimpl.wasmBindgenType
 export macroimpl.wasmBindgenFinalize
 
 when defined(wasm32):

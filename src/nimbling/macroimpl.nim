@@ -6,6 +6,7 @@
 ## 4. Encodes program metadata for the custom wasm section
 
 import std/macros
+import std/tables
 import common
 import encode
 import codegen
@@ -38,14 +39,14 @@ proc buildShimProc(procName: string, args: seq[(string, string)],
   elif retTypeStr == "string":
     formalParams.add(ident("uint32"))      # boxed string handle
   else:
-    formalParams.add(ident(retTypeStr))
+    formalParams.add(ident(nimTypeToWasmAbiType(retTypeStr)))
 
   for (pname, ptype) in args:
     if ptype == "string":
       formalParams.add(newIdentDefs(ident(pname & "_ptr"), ident("uint32")))
       formalParams.add(newIdentDefs(ident(pname & "_len"), ident("uint32")))
     else:
-      formalParams.add(newIdentDefs(ident(pname), ident(ptype)))
+      formalParams.add(newIdentDefs(ident(pname), ident(nimTypeToWasmAbiType(ptype))))
 
   # ── body ──
   var body = newStmtList()
@@ -60,6 +61,22 @@ proc buildShimProc(procName: string, args: seq[(string, string)],
         var `s` = newString(int(`l`))
         if `l` > 0:
           copyMem(addr `s`[0], cast[pointer](`p`), int(`l`))
+
+  # 1b) cast enum args from int32 → enum type
+  for (pname, ptype) in args:
+    if isEnumType(ptype):
+      let p = ident(pname)
+      let enumType = ident(ptype)
+      body.add quote do:
+        var `p` = cast[`enumType`](`p`)
+
+  # 1c) cast struct args from uint32 pointer → struct value
+  for (pname, ptype) in args:
+    if isStructType(ptype):
+      let p = ident(pname)
+      let structType = ident(ptype)
+      body.add quote do:
+        var `p` = cast[ptr `structType`](`p`)[]
 
   # 2) build the call to the original proc
   var call = newCall(origName)
@@ -87,6 +104,21 @@ proc buildShimProc(procName: string, args: seq[(string, string)],
       cast[ptr uint32](cast[pointer](`boxPtr`))[]       = `dataPtr`
       cast[ptr uint32](cast[pointer](cast[uint](`boxPtr`) + 4))[] = `dataLen`
       return `boxPtr`
+  elif isEnumType(retTypeStr):
+    let retId = genSym(nskLet, "ret")
+    body.add(newLetStmt(retId, call))
+    body.add quote do:
+      return cast[int32](`retId`)
+  elif isStructType(retTypeStr):
+    let retId = genSym(nskLet, "ret")
+    let retPtr = genSym(nskLet, "retPtr")
+    let structType = ident(retTypeStr)
+    let mallocFn = ident("nbgMalloc")
+    body.add(newLetStmt(retId, call))
+    body.add quote do:
+      let `retPtr` = cast[uint32](`mallocFn`(sizeof(`structType`).uint32, 4))
+      cast[ptr `structType`](`retPtr`)[] = `retId`
+      return `retPtr`
   else:
     body.add(nnkReturnStmt.newTree(call))
 
@@ -102,10 +134,34 @@ proc buildShimProc(procName: string, args: seq[(string, string)],
     body
   )
 
+# ─── Helper: emit multi-u32 enum descriptor ───
+
+proc emitDescribeEnum(body: var NimNode, ne: NimEnum) =
+  let descCall = ident("__nbg_describe")
+  body.add(newCall(descCall, newLit(TY_ENUM)))
+  # emit name length
+  body.add(newCall(descCall, newLit(ne.name.len.uint32)))
+  # emit each char
+  for c in ne.name:
+    body.add(newCall(descCall, newLit(uint32(c))))
+  # emit hole
+  body.add(newCall(descCall, newLit(ne.hole)))
+
+# ─── Helper: emit multi-u32 struct descriptor ───
+
+proc emitDescribeStruct(body: var NimNode, ns: NimStruct) =
+  let descCall = ident("__nbg_describe")
+  body.add(newCall(descCall, newLit(TY_RUST_STRUCT)))
+  # emit name length
+  body.add(newCall(descCall, newLit(ns.name.len.uint32)))
+  # emit each char
+  for c in ns.name:
+    body.add(newCall(descCall, newLit(uint32(c))))
+
 # ─── Build a __nbg_describe_* descriptor proc ───
 
 proc buildDescribeProc(procName: string, args: seq[(string, string)],
-                       retTyId: uint32, isVoid: bool): NimNode =
+                       retTyId: uint32, retTypeStr: string, isVoid: bool): NimNode =
   ## Generates:
   ##   proc __nbg_describe_NAME() {.exportc, cdecl.} =
   ##     __nbg_describe(TY_ARG0)
@@ -119,12 +175,21 @@ proc buildDescribeProc(procName: string, args: seq[(string, string)],
 
   # describe each argument type
   for (_, ptype) in args:
-    let tyLit = newLit(nimTypeToTyId(ptype))
-    body.add(newCall(descCall, tyLit))
+    if isEnumType(ptype):
+      emitDescribeEnum(body, getEnum(ptype))
+    elif isStructType(ptype):
+      emitDescribeStruct(body, getStruct(ptype))
+    else:
+      let tyLit = newLit(nimTypeToTyId(ptype))
+      body.add(newCall(descCall, tyLit))
 
   # describe return type
   if isVoid:
     body.add(newCall(descCall, newLit(TY_UNIT)))
+  elif isEnumType(retTypeStr):
+    emitDescribeEnum(body, getEnum(retTypeStr))
+  elif isStructType(retTypeStr):
+    emitDescribeStruct(body, getStruct(retTypeStr))
   else:
     body.add(newCall(descCall, newLit(retTyId)))
 
@@ -208,7 +273,7 @@ macro wasmBindgen*(body: untyped): untyped =
   wasmBody.add(buildShimProc(procName, args, retTypeStr, isVoid))
 
   # Descriptor function
-  wasmBody.add(buildDescribeProc(procName, args, retTyId, isVoid))
+  wasmBody.add(buildDescribeProc(procName, args, retTyId, retTypeStr, isVoid))
 
   # Build: when defined(wasm32): <wasmBody>
   let whenBranch = nnkElifBranch.newTree(
@@ -218,15 +283,303 @@ macro wasmBindgen*(body: untyped): untyped =
   let whenStmt = nnkWhenStmt.newTree(whenBranch)
   result.add(whenStmt)
 
+# ─── Helpers for wasmBindgenType macro ───
+
+proc parseEnumType(enumTy: NimNode, enumName: string) {.compileTime.} =
+  var variants = newSeq[EnumVariant]()
+  var nextValue: uint32 = 0
+  for i in 1 ..< enumTy.len:
+    let field = enumTy[i]
+    var vname: string
+    var vval: uint32
+    if field.kind == nnkEnumFieldDef:
+      vname = field[0].strVal
+      vval = uint32(field[2].intVal)
+      nextValue = vval + 1
+    elif field.kind in {nnkIdent, nnkSym}:
+      vname = field.strVal
+      vval = nextValue
+      nextValue = vval + 1
+    else:
+      continue
+    variants.add(EnumVariant(name: vname, value: vval))
+
+  if variants.len == 0:
+    return
+
+  var maxValue: uint32 = 0
+  for v in variants:
+    if v.value > maxValue: maxValue = v.value
+  var hole: uint32
+  if maxValue == uint32(variants.len - 1):
+    hole = uint32(variants.len)
+  else:
+    hole = maxValue + 1
+
+  let ne = NimEnum(
+    name: enumName,
+    signed: false,
+    variants: variants,
+    comments: @[],
+    generateTypescript: true,
+    jsNamespace: @[],
+    hole: hole,
+    private: false,
+  )
+  compileTimeProgram.enums.add(ne)
+  enumRegistry[enumName] = ne
+
+proc parseStructType(objectTy: NimNode, structName: string) {.compileTime.} =
+  let recList = objectTy[2]
+  var fields = newSeq[StructField]()
+
+  for fieldDef in recList:
+    if fieldDef.kind != nnkIdentDefs:
+      continue
+    let typeNode = fieldDef[^2]
+    let tname = typeNode.typeName()
+    for j in 0 ..< (fieldDef.len - 2):
+      case fieldDef[j].kind
+      of nnkIdent, nnkSym:
+        fields.add(StructField(
+          name: fieldDef[j].strVal,
+          tyOverride: tname,
+          readonly: false,
+        ))
+      else:
+        discard
+
+  let ns = NimStruct(
+    name: structName,
+    nimName: structName,
+    fields: fields,
+    comments: @[],
+    isInspectable: false,
+    generateTypescript: true,
+    jsNamespace: @[],
+    private: false,
+  )
+  compileTimeProgram.structs.add(ns)
+  structRegistry[structName] = ns
+
 # ─── Compile-time pragma for annotation ───
 
-template wasmBindgenType*(body: untyped): untyped =
+macro wasmBindgenType*(body: untyped): untyped =
   ## Annotation for structs/enums to be exposed to JS.
-  body
+  result = body
+
+  var typeDef: NimNode
+  if body.kind == nnkTypeDef:
+    typeDef = body
+  elif body.kind == nnkTypeSection and body.len > 0 and body[0].kind == nnkTypeDef:
+    typeDef = body[0]
+  else:
+    return
+
+  let typeExpr = typeDef[2]
+  let nameNode = typeDef[0]
+  var typeName: string
+  if nameNode.kind == nnkPragmaExpr:
+    typeName = nameNode[0].strVal
+  elif nameNode.kind in {nnkIdent, nnkSym}:
+    typeName = nameNode.strVal
+  else:
+    return
+
+  if typeExpr.kind == nnkEnumTy:
+    parseEnumType(typeExpr, typeName)
+    return
+
+  var objectTy: NimNode
+  if typeExpr.kind == nnkObjectTy:
+    objectTy = typeExpr
+  elif typeExpr.kind == nnkRefTy and typeExpr[0].kind == nnkObjectTy:
+    objectTy = typeExpr[0]
+  else:
+    return
 
 template wasmBindgenModule*(modulePath: static string, body: untyped): untyped =
   ## Annotation for JS import blocks.
   body
+
+# ─── Struct shim generators ───
+
+proc buildStructNewShim(ns: NimStruct): NimNode =
+  let shimName = ident(newFunction(ns.name))
+  let structType = ident(ns.name)
+  let mallocFn = ident("nbgMalloc")
+
+  var formalParams = newNimNode(nnkFormalParams)
+  formalParams.add(ident("uint32"))
+
+  var body = newStmtList()
+
+  # String field conversions
+  for field in ns.fields:
+    if field.tyOverride == "string":
+      let s = ident(field.name)
+      let p = ident(field.name & "_ptr")
+      let l = ident(field.name & "_len")
+      body.add quote do:
+        var `s` = newString(int(`l`))
+        if `l` > 0:
+          copyMem(addr `s`[0], cast[pointer](`p`), int(`l`))
+
+  # Build object constructor
+  var initStmt = nnkObjConstr.newTree(structType)
+  for field in ns.fields:
+    initStmt.add(newColonExpr(ident(field.name), ident(field.name)))
+
+  body.add(newLetStmt(ident("s"), initStmt))
+  body.add quote do:
+    let memPtr = `mallocFn`(sizeof(`structType`).uint32, 4)
+    cast[ptr `structType`](memPtr)[] = s
+    return cast[uint32](memPtr)
+
+  # Formal params
+  for field in ns.fields:
+    if field.tyOverride == "string":
+      formalParams.add(newIdentDefs(ident(field.name & "_ptr"), ident("uint32")))
+      formalParams.add(newIdentDefs(ident(field.name & "_len"), ident("uint32")))
+    else:
+      formalParams.add(newIdentDefs(ident(field.name), ident(nimTypeToWasmAbiType(field.tyOverride))))
+
+  let pragmas = nnkPragmaExpr.newTree(
+    shimName,
+    nnkPragma.newTree(ident("exportc"), ident("cdecl"))
+  )
+  result = nnkProcDef.newTree(
+    pragmas, newEmptyNode(), newEmptyNode(),
+    formalParams, newEmptyNode(), newEmptyNode(),
+    body
+  )
+
+proc buildStructFreeShim(ns: NimStruct): NimNode =
+  let shimName = ident(freeFunction(ns.name))
+  let structType = ident(ns.name)
+  let freeFn = ident("nbgFree")
+
+  var formalParams = newNimNode(nnkFormalParams)
+  formalParams.add(newEmptyNode())
+  formalParams.add(newIdentDefs(ident("ptr"), ident("uint32")))
+
+  var body = newStmtList()
+  body.add quote do:
+    `freeFn`(memPtr, sizeof(`structType`).uint32, 4)
+
+  let pragmas = nnkPragmaExpr.newTree(
+    shimName,
+    nnkPragma.newTree(ident("exportc"), ident("cdecl"))
+  )
+  result = nnkProcDef.newTree(
+    pragmas, newEmptyNode(), newEmptyNode(),
+    formalParams, newEmptyNode(), newEmptyNode(),
+    body
+  )
+
+proc buildStructGetterShim(ns: NimStruct, field: StructField): NimNode =
+  let shimName = ident(structFieldGet(ns.name, field.name))
+  let structType = ident(ns.name)
+
+  var formalParams = newNimNode(nnkFormalParams)
+  formalParams.add(ident(nimTypeToWasmAbiType(field.tyOverride)))
+  formalParams.add(newIdentDefs(ident("ptr"), ident("uint32")))
+
+  var body = newStmtList()
+
+  if field.tyOverride == "string":
+    let retId = genSym(nskLet, "ret")
+    let dataLen = ident("dataLen")
+    let dataPtr = ident("dataPtr")
+    let boxPtr = ident("boxPtr")
+    let mallocFn = ident("nbgMalloc")
+    let castNode = nnkCast.newTree(
+      nnkBracketExpr.newTree(ident("ptr"), structType),
+      ident("ptr")
+    )
+    let fieldAccess = newDotExpr(castNode, ident(field.name))
+    body.add(newLetStmt(retId, fieldAccess))
+    body.add quote do:
+      let `dataLen` = uint32(`retId`.len)
+      var `dataPtr`: uint32 = 0
+      if `dataLen` > 0:
+        `dataPtr` = cast[uint32](`mallocFn`(`dataLen`, 1))
+        copyMem(cast[pointer](`dataPtr`), unsafeAddr `retId`[0], int(`dataLen`))
+      let `boxPtr` = cast[uint32](`mallocFn`(8, 4))
+      cast[ptr uint32](cast[pointer](`boxPtr`))[] = `dataPtr`
+      cast[ptr uint32](cast[pointer](cast[uint](`boxPtr`) + 4))[] = `dataLen`
+      return `boxPtr`
+  else:
+    let castNode = nnkCast.newTree(
+      nnkBracketExpr.newTree(ident("ptr"), structType),
+      ident("ptr")
+    )
+    let fieldAccess = newDotExpr(castNode, ident(field.name))
+    body.add(nnkReturnStmt.newTree(fieldAccess))
+
+  let pragmas = nnkPragmaExpr.newTree(
+    shimName,
+    nnkPragma.newTree(ident("exportc"), ident("cdecl"))
+  )
+  result = nnkProcDef.newTree(
+    pragmas, newEmptyNode(), newEmptyNode(),
+    formalParams, newEmptyNode(), newEmptyNode(),
+    body
+  )
+
+proc buildStructSetterShim(ns: NimStruct, field: StructField): NimNode =
+  let shimName = ident(structFieldSet(ns.name, field.name))
+  let structType = ident(ns.name)
+
+  var formalParams = newNimNode(nnkFormalParams)
+  formalParams.add(newEmptyNode())
+  formalParams.add(newIdentDefs(ident("ptr"), ident("uint32")))
+
+  var body = newStmtList()
+
+  if field.tyOverride == "string":
+    let s = ident(field.name)
+    let p = ident(field.name & "_ptr")
+    let l = ident(field.name & "_len")
+    formalParams.add(newIdentDefs(p, ident("uint32")))
+    formalParams.add(newIdentDefs(l, ident("uint32")))
+    body.add quote do:
+      var `s` = newString(int(`l`))
+      if `l` > 0:
+        copyMem(addr `s`[0], cast[pointer](`p`), int(`l`))
+    let castNode = nnkCast.newTree(
+      nnkBracketExpr.newTree(ident("ptr"), structType),
+      ident("ptr")
+    )
+    let fieldAccess = newDotExpr(castNode, ident(field.name))
+    body.add(newAssignment(fieldAccess, ident(field.name)))
+  else:
+    formalParams.add(newIdentDefs(ident(field.name), ident(nimTypeToWasmAbiType(field.tyOverride))))
+    let castNode = nnkCast.newTree(
+      nnkBracketExpr.newTree(ident("ptr"), structType),
+      ident("ptr")
+    )
+    let fieldAccess = newDotExpr(castNode, ident(field.name))
+    body.add(newAssignment(fieldAccess, ident(field.name)))
+
+  let pragmas = nnkPragmaExpr.newTree(
+    shimName,
+    nnkPragma.newTree(ident("exportc"), ident("cdecl"))
+  )
+  result = nnkProcDef.newTree(
+    pragmas, newEmptyNode(), newEmptyNode(),
+    formalParams, newEmptyNode(), newEmptyNode(),
+    body
+  )
+
+proc makeStructArgData(field: StructField): seq[FunctionArgumentData] =
+  if field.tyOverride == "string":
+    result = @[
+      FunctionArgumentData(name: field.name & "_ptr", tyOverride: "uint32"),
+      FunctionArgumentData(name: field.name & "_len", tyOverride: "uint32"),
+    ]
+  else:
+    result = @[FunctionArgumentData(name: field.name, tyOverride: field.tyOverride)]
 
 # ─── Finalize: embed the Program as a custom wasm section ───
 
@@ -234,6 +587,67 @@ macro wasmBindgenFinalize*(): untyped =
   ## Must be called after all `{.wasmBindgen.}` annotations to embed metadata.
   ## Encodes the accumulated Program and emits it as a custom wasm section
   ## via C `__attribute__((section(...)))`.
+
+  # Add struct exports to compile-time program
+  for structName, ns in structRegistry:
+    # Constructor export
+    var newArgs = newSeq[FunctionArgumentData]()
+    for field in ns.fields:
+      if field.tyOverride == "string":
+        newArgs.add(FunctionArgumentData(name: field.name & "_ptr", tyOverride: "uint32"))
+        newArgs.add(FunctionArgumentData(name: field.name & "_len", tyOverride: "uint32"))
+      else:
+        newArgs.add(FunctionArgumentData(name: field.name, tyOverride: field.tyOverride))
+    compileTimeProgram.exports.add(Export(
+      class: some(ns.name),
+      methodKind: mkConstructor,
+      function: FunctionDesc(
+        name: newFunction(ns.name),
+        args: newArgs,
+        retTyOverride: "uint32",
+      ),
+    ))
+
+    # Free export
+    compileTimeProgram.exports.add(Export(
+      class: some(ns.name),
+      methodKind: mkOperation,
+      function: FunctionDesc(
+        name: freeFunction(ns.name),
+        args: @[FunctionArgumentData(name: "ptr", tyOverride: "uint32")],
+        retTyOverride: "",
+      ),
+    ))
+
+    # Getter and setter exports
+    for field in ns.fields:
+      compileTimeProgram.exports.add(Export(
+        class: some(ns.name),
+        methodKind: mkOperation,
+        function: FunctionDesc(
+          name: structFieldGet(ns.name, field.name),
+          args: @[FunctionArgumentData(name: "ptr", tyOverride: "uint32")],
+          retTyOverride: field.tyOverride,
+        ),
+      ))
+      if not field.readonly:
+        var setArgs = @[FunctionArgumentData(name: "ptr", tyOverride: "uint32")]
+        if field.tyOverride == "string":
+          setArgs.add(FunctionArgumentData(name: field.name & "_ptr", tyOverride: "uint32"))
+          setArgs.add(FunctionArgumentData(name: field.name & "_len", tyOverride: "uint32"))
+        else:
+          setArgs.add(FunctionArgumentData(name: field.name, tyOverride: field.tyOverride))
+        compileTimeProgram.exports.add(Export(
+          class: some(ns.name),
+          methodKind: mkOperation,
+          function: FunctionDesc(
+            name: structFieldSet(ns.name, field.name),
+            args: setArgs,
+            retTyOverride: "",
+          ),
+        ))
+
+  # Encode program
   var enc = newEncoder()
   enc.encode(compileTimeProgram)
   let bytes = enc.buf
@@ -249,6 +663,25 @@ macro wasmBindgenFinalize*(): untyped =
   let emitStr = newStrLitNode(cDef)
 
   result = newStmtList()
+
+  # Generate struct shim procs (wasm32 only)
+  var wasmBody = newStmtList()
+  for structName, ns in structRegistry:
+    wasmBody.add(buildStructNewShim(ns))
+    wasmBody.add(buildStructFreeShim(ns))
+    for field in ns.fields:
+      wasmBody.add(buildStructGetterShim(ns, field))
+      if not field.readonly:
+        wasmBody.add(buildStructSetterShim(ns, field))
+
+  if wasmBody.len > 0:
+    let whenBranch = nnkElifBranch.newTree(
+      newCall(ident("defined"), ident("wasm32")),
+      wasmBody
+    )
+    let whenStmt = nnkWhenStmt.newTree(whenBranch)
+    result.add(whenStmt)
+
   result.add quote do:
     when defined(wasm32):
       {.emit: `emitStr`.}

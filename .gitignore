@@ -6,3 +6,5 @@ nimcache/
 src/nimbling/cli
 tests/all
 examples/hello/hello
+src/nimbling/jsgen
+src/nimbling/runtime

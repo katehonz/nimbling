@@ -301,12 +301,19 @@ proc generateHelpers(g: var JsGen) =
 
 # ─── Type analysis helpers ───
 
-proc classifyArgType(arg: FunctionArgumentData): string =
-  ## Returns "string", "number", "boolean", or "jsvalue"
+proc isEnumName(name: string, prog: Program): bool =
+  for ne in prog.enums:
+    if ne.name == name:
+      return true
+  return false
+
+proc classifyArgType(g: JsGen, arg: FunctionArgumentData): string =
+  ## Returns "string", "number", "boolean", "jsvalue", or "enum"
   let t = arg.tyOverride
   if t == "string": return "string"
   if t in ["bool"]: return "boolean"
   if t in ["JsValue", "Closure"]: return "jsvalue"
+  if isEnumName(t, g.prog): return "enum"
   return "number"  # int32, float64, etc.
 
 # ─── Generate import shims ───
@@ -330,7 +337,7 @@ proc generateImportShim(g: var JsGen, imp: Import) =
     # Build arg list for the shim signature
     var shimArgs: seq[string] = @[]
     for i, arg in f.function.args:
-      let argTy = classifyArgType(arg)
+      let argTy = classifyArgType(g, arg)
       if argTy == "string":
         shimArgs.add(&"arg{i}_ptr")
         shimArgs.add(&"arg{i}_len")
@@ -343,7 +350,7 @@ proc generateImportShim(g: var JsGen, imp: Import) =
     # Convert wasm args → JS args
     var jsCallArgs: seq[string] = @[]
     for i, arg in f.function.args:
-      let argTy = classifyArgType(arg)
+      let argTy = classifyArgType(g, arg)
       if argTy == "string":
         g.addLine(&"const arg{i} = getStringFromWasm(arg{i}_ptr, arg{i}_len);")
       jsCallArgs.add(&"arg{i}")
@@ -391,6 +398,9 @@ proc generateImportShim(g: var JsGen, imp: Import) =
 # ─── Generate export shims ───
 
 proc generateExportShim(g: var JsGen, exp: Export) =
+  if exp.class.isSome:
+    return  # Handled by struct class generation
+
   let funcName = exp.function.name
   let exportName = exp.function.name
   let args = exp.function.args
@@ -399,14 +409,11 @@ proc generateExportShim(g: var JsGen, exp: Export) =
   # Check if any arg is a string or return is string
   var hasStringArgs = false
   for arg in args:
-    if classifyArgType(arg) == "string":
+    if classifyArgType(g, arg) == "string":
       hasStringArgs = true
       break
 
-  let hasStringReturn = exp.function.retTyOverride == "string" or
-                        (exp.function.retTyOverride == "" and args.len > 0)
-  # For now: if retTyOverride is empty and there are args, assume string return
-  # (fallback heuristic — the descriptor will clarify)
+  let hasStringReturn = exp.function.retTyOverride == "string"
 
   # JS function signature
   var jsArgs: seq[string] = @[]
@@ -419,7 +426,7 @@ proc generateExportShim(g: var JsGen, exp: Export) =
   # Convert JS args → wasm args
   var wasmArgs: seq[string] = @[]
   for i, arg in args:
-    let argTy = classifyArgType(arg)
+    let argTy = classifyArgType(g, arg)
     if argTy == "string":
       g.addLine(&"const [ptr{i}, len{i}] = passStringToWasm(arg{i});")
       wasmArgs.add(&"ptr{i}, len{i}")
@@ -440,15 +447,83 @@ proc generateExportShim(g: var JsGen, exp: Export) =
     g.addLine("wasm.__nbg_boxed_str_free(ret);")
     # Free string args
     for i, arg in args:
-      if classifyArgType(arg) == "string":
+      if classifyArgType(g, arg) == "string":
         g.addLine(&"wasm.__nbg_free(ptr{i}, len{i}, 1);")
     g.addLine("return realRet;")
   else:
     # Free string args
     for i, arg in args:
-      if classifyArgType(arg) == "string":
+      if classifyArgType(g, arg) == "string":
         g.addLine(&"wasm.__nbg_free(ptr{i}, len{i}, 1);")
     g.addLine("return ret;")
+
+  g.dedent()
+  g.addLine("}")
+  g.add("")
+
+# ─── Generate struct classes ───
+
+proc generateStructClass(g: var JsGen, ns: NimStruct) =
+  g.addLine(&"export class {ns.name} {{")
+  g.indent()
+
+  # Constructor
+  var jsCtorArgs: seq[string] = @[]
+  for field in ns.fields:
+    jsCtorArgs.add(field.name)
+  g.addLine(&"constructor({jsCtorArgs.join(\", \")}) {{")
+  g.indent()
+
+  var wasmCtorArgs: seq[string] = @[]
+  var stringIdx = 0
+  for field in ns.fields:
+    if field.tyOverride == "string":
+      g.addLine(&"const [ptr{stringIdx}, len{stringIdx}] = passStringToWasm({field.name});")
+      wasmCtorArgs.add(&"ptr{stringIdx}")
+      wasmCtorArgs.add(&"len{stringIdx}")
+      stringIdx += 1
+    else:
+      wasmCtorArgs.add(field.name)
+  g.addLine(&"this.__wbg_ptr = wasm.{newFunction(ns.name)}({wasmCtorArgs.join(\", \")});")
+  g.dedent()
+  g.addLine("}")
+
+  # free()
+  g.addLine("free() {")
+  g.indent()
+  g.addLine(&"wasm.{freeFunction(ns.name)}(this.__wbg_ptr);")
+  g.dedent()
+  g.addLine("}")
+
+  # Getters and setters
+  for field in ns.fields:
+    let getterName = structFieldGet(ns.name, field.name)
+
+    g.addLine(&"get {field.name}() {{")
+    g.indent()
+    g.addLine(&"const ret = wasm.{getterName}(this.__wbg_ptr);")
+    if field.tyOverride == "string":
+      g.addLine("const rptr = wasm.__nbg_boxed_str_ptr(ret);")
+      g.addLine("const rlen = wasm.__nbg_boxed_str_len(ret);")
+      g.addLine("const realRet = getStringFromWasm(rptr, rlen);")
+      g.addLine("wasm.__nbg_boxed_str_free(ret);")
+      g.addLine("return realRet;")
+    else:
+      g.addLine("return ret;")
+    g.dedent()
+    g.addLine("}")
+
+    if not field.readonly:
+      let setterName = structFieldSet(ns.name, field.name)
+      g.addLine(&"set {field.name}(v) {{")
+      g.indent()
+      if field.tyOverride == "string":
+        g.addLine("const [ptr0, len0] = passStringToWasm(v);")
+        g.addLine(&"wasm.{setterName}(this.__wbg_ptr, ptr0, len0);")
+      else:
+        g.addLine(&"wasm.{setterName}(this.__wbg_ptr, v);")
+      g.dedent()
+      g.addLine("}")
 
   g.dedent()
   g.addLine("}")
@@ -548,6 +623,19 @@ proc generate*(g: var JsGen): string =
   # Default export
   g.addLine("export default init;")
   g.add("")
+
+  # Generate enum exports
+  for ne in g.prog.enums:
+    var entries: seq[string] = @[]
+    for v in ne.variants:
+      entries.add(&"{v.name}: {v.value}")
+      entries.add(&"\"{v.value}\": \"{v.name}\"")
+    g.addLine(&"export const {ne.name} = Object.freeze({{ {entries.join(\", \")} }});")
+    g.add("")
+
+  # Generate struct classes
+  for ns in g.prog.structs:
+    generateStructClass(g, ns)
 
   # Generate import shims
   for imp in g.prog.imports:

@@ -191,17 +191,20 @@ proc decodeEnumVariant(d: var Decoder): EnumVariant =
   )
 
 proc decodeNimEnum(d: var Decoder): NimEnum =
+  let name = d.decodeString()
+  let signed = d.decodeBool()
   let varCount = d.decodeInt()
   var vars = newSeq[EnumVariant](varCount)
   for i in 0..<varCount:
     vars[i] = d.decodeEnumVariant()
   NimEnum(
-    name: d.decodeString(),
-    signed: d.decodeBool(),
+    name: name,
+    signed: signed,
     variants: vars,
     comments: d.decodeSeqString(),
     generateTypescript: d.decodeBool(),
     jsNamespace: d.decodeSeqString(),
+    hole: d.decodeU32(),
     private: d.decodeBool(),
   )
 
@@ -212,16 +215,19 @@ proc decodeStructField(d: var Decoder): StructField =
     comments: d.decodeSeqString(),
     generateTypescript: d.decodeBool(),
     generateJsdoc: d.decodeBool(),
+    tyOverride: d.decodeString(),
   )
 
 proc decodeNimStruct(d: var Decoder): NimStruct =
+  let name = d.decodeString()
+  let nimName = d.decodeString()
   let fieldCount = d.decodeInt()
   var fields = newSeq[StructField](fieldCount)
   for i in 0..<fieldCount:
     fields[i] = d.decodeStructField()
   NimStruct(
-    name: d.decodeString(),
-    nimName: d.decodeString(),
+    name: name,
+    nimName: nimName,
     fields: fields,
     comments: d.decodeSeqString(),
     isInspectable: d.decodeBool(),

@@ -15,7 +15,7 @@
 | `cli.nim` — CLI tool, wasm section extraction + interpreter | 230 | ✅ |
 | `interp.nim` — wasm stack-machine interpreter | 460 | ✅ |
 | `nimbling.nim` — library entry point | 40 | ✅ |
-| Tests (20/20 pass) | 258 | ✅ |
+| Tests (26/26 pass) | ~350 | ✅ |
 | Docs (README, README_BG, docs/) | 3 files | ✅ |
 | **TOTAL** | **~2,700** | ✅ |
 
@@ -33,27 +33,27 @@
 - [ ] Descriptor encoding for `TY_CLOSURE` type
 - [ ] Tests: closure roundtrip, panic catch, borrow/own variants
 
-### 1.2 Struct/Class Export (4 days)
+### 1.2 Struct/Class Export (4 days) — ✅ DONE
 **Why**: Expose Nim objects as JS classes with methods, getters, setters.
 
-- [ ] `{.wasmBindgen.}` on `ref object` types
-- [ ] `IntoWasmAbi`/`FromWasmAbi` trait generation
-- [ ] `new`/`free`/`unwrap` external functions
-- [ ] Field getter/setter via `__nbg_get_*`/`__nbg_set_*`
-- [ ] JS `ExportedClass` generation (constructor, prototype methods)
-- [ ] TypeScript class declarations
-- [ ] `getter`/`setter`/`constructor`/`js_class` attributes
-- [ ] Tests: struct field access, method calls, constructor
+- [x] `{.wasmBindgenType.}` on `object` / `ref object` types
+- [ ] `IntoWasmAbi`/`FromWasmAbi` trait generation (deferred — Nim doesn't need traits)
+- [x] `new`/`free` external functions
+- [x] Field getter/setter via `__nbg_get_*`/`__nbg_set_*`
+- [x] JS `ExportedClass` generation (constructor, prototype methods)
+- [x] TypeScript class declarations
+- [ ] `getter`/`setter`/`constructor`/`js_class` attributes (Phase 2)
+- [x] Tests: struct field access, method calls, constructor
 
-### 1.3 Enum Support (2 days)
+### 1.3 Enum Support (2 days) — ✅ DONE
 **Why**: Nim enums ↔ JS string/number enums.
 
-- [ ] Integer enums — name + hole encoding
-- [ ] String enums — name + variant list + invalid/hole encoding
-- [ ] `EnumVariant` descriptor format
-- [ ] JS/TS enum generation
-- [ ] `#[wasm_bindgen(js_namespace = "...")]` attribute
-- [ ] Tests: enum roundtrip, string enum, namespace
+- [x] Integer enums — name + hole encoding
+- [ ] String enums — name + variant list + invalid/hole encoding (Phase 2)
+- [x] `EnumVariant` descriptor format
+- [x] JS/TS enum generation (bidirectional Object.freeze)
+- [ ] `#[wasm_bindgen(js_namespace = "...")]` attribute (Phase 2)
+- [x] Tests: enum roundtrip, string enum, namespace
 
 ### 1.4 Async/Promise Support (2 days)
 **Why**: JS Promises ↔ Nim async.

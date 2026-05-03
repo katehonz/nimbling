@@ -148,6 +148,7 @@ proc encode*(e: var Encoder, ne: NimEnum) =
   e.encode(ne.comments)
   e.encode(ne.generateTypescript)
   e.encode(ne.jsNamespace)
+  e.encode(ne.hole)
   e.encode(ne.private)
 
 proc encode*(e: var Encoder, sf: StructField) =
@@ -156,6 +157,7 @@ proc encode*(e: var Encoder, sf: StructField) =
   e.encode(sf.comments)
   e.encode(sf.generateTypescript)
   e.encode(sf.generateJsdoc)
+  e.encode(sf.tyOverride)
 
 proc encode*(e: var Encoder, ns: NimStruct) =
   e.encode(ns.name)

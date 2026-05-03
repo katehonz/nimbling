@@ -3,6 +3,25 @@
 
 import common
 import std/macros
+import std/tables
+
+# ─── Compile-time enum registry ───
+var enumRegistry* {.compileTime.}: Table[string, NimEnum]
+
+proc isEnumType*(tname: string): bool {.compileTime.} =
+  enumRegistry.hasKey(tname)
+
+proc getEnum*(tname: string): NimEnum {.compileTime.} =
+  enumRegistry[tname]
+
+# ─── Compile-time struct registry ───
+var structRegistry* {.compileTime.}: Table[string, NimStruct]
+
+proc isStructType*(tname: string): bool {.compileTime.} =
+  structRegistry.hasKey(tname)
+
+proc getStruct*(tname: string): NimStruct {.compileTime.} =
+  structRegistry[tname]
 
 # ─── Nim type name → TY_* constant ───
 
@@ -23,7 +42,10 @@ proc nimTypeToTyId*(tname: string): uint32 =
   of "string":  TY_STRING
   of "JsValue": TY_EXTERNREF
   of "char":    TY_CHAR
-  else:         TY_EXTERNREF
+  else:
+    if isEnumType(tname): TY_ENUM
+    elif isStructType(tname): TY_RUST_STRUCT
+    else: TY_EXTERNREF
 
 proc isStringType*(tname: string): bool =
   tname == "string"
@@ -68,7 +90,10 @@ proc jsTypeName*(tname: string): string =
   of "int64", "uint64": "bigint"
   of "float32", "float64": "number"
   of "bool": "boolean"
-  else: "any"
+  else:
+    if isEnumType(tname): "number"
+    elif isStructType(tname): "jsvalue"
+    else: "any"
 
 # ─── Wasm ABI type conversion helpers ───
 
@@ -85,11 +110,14 @@ proc nimTypeToWasmAbiType*(tname: string): string =
   of "bool": "int32"
   of "string": "uint32"
   of "JsValue": "uint32"
-  else: "uint32"
+  else:
+    if isEnumType(tname): "int32"
+    elif isStructType(tname): "uint32"
+    else: "uint32"
 
 proc hasWasmAbiConversion*(tname: string): bool =
   ## Returns true if this type needs ABI conversion (e.g. string, JsValue)
-  tname == "string" or tname == "JsValue"
+  tname == "string" or tname == "JsValue" or isEnumType(tname) or isStructType(tname)
 
 proc abiArgCount*(tname: string): int =
   ## How many wasm arguments a Nim type produces.
