@@ -1349,14 +1349,14 @@ suite "transforms — feature detection":
 # ─── transforms — stack pointer finder ───
 
 suite "transforms — stack pointer finder":
-  test "findStackPointer with empty data":
-    check findStackPointer(noByteSeq) == -1
+  test "findImportGlobal with empty data":
+    check findImportGlobal(noByteSeq, "__stack_pointer") == -1
 
-  test "findStackPointer with invalid magic":
+  test "findImportGlobal with invalid magic":
     let wasm = @[0x00'u8, 0x00'u8, 0x00'u8, 0x00'u8, 0x01'u8, 0x00'u8, 0x00'u8, 0x00'u8]
-    check findStackPointer(wasm) == -1
+    check findImportGlobal(wasm, "__stack_pointer") == -1
 
-  test "findStackPointer with func-only imports returns -1":
+  test "findImportGlobal with func-only imports returns -1":
     let wasm = buildMinimalWasm(
       types = @[(params: @[ValI32], results: noByteSeq)],
       imports = @[
@@ -1366,7 +1366,7 @@ suite "transforms — stack pointer finder":
       exports = noExportSeq,
       codes = noCodeSeq,
     )
-    check findStackPointer(wasm) == -1
+    check findImportGlobal(wasm, "__stack_pointer") == -1
 
 # ─── transforms — return pointer detection ───
 
@@ -1511,7 +1511,7 @@ suite "transforms — transform pass-throughs":
 
     let threadCfg = defaultThreadsConfig()
     check threadCfg.enabled == true
-    check threadCfg.stackSize == 1024 * 1024
+    check threadCfg.stackSize == 1024 * 1024 * 2
 
     let transCfg = defaultTransformConfig()
     check transCfg.externref.enabled == true

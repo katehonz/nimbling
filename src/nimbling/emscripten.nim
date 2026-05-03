@@ -232,6 +232,10 @@ type
     noModulesGlobal*: string
     omitDefaultModulePath*: bool
     splitLinkedModules*: bool
+    generateResetState*: bool
+    encodeInto*: bool
+    keepLldExports*: bool
+    target*: string
 
 proc defaultCliFlags*(): CliFlags =
   CliFlags(
@@ -245,6 +249,10 @@ proc defaultCliFlags*(): CliFlags =
     noModulesGlobal: "wasm_bindgen",
     omitDefaultModulePath: false,
     splitLinkedModules: false,
+    generateResetState: false,
+    encodeInto: false,
+    keepLldExports: false,
+    target: "bundler",
   )
 
 proc parseCliFlags*(args: seq[string]): CliFlags =
@@ -276,6 +284,16 @@ proc parseCliFlags*(args: seq[string]): CliFlags =
       result.omitDefaultModulePath = true
     of "--split-linked-modules":
       result.splitLinkedModules = true
+    of "--generate-reset-state":
+      result.generateResetState = true
+    of "--encode-into":
+      result.encodeInto = true
+    of "--keep-lld-exports":
+      result.keepLldExports = true
+    of "--target":
+      if i + 1 < args.len:
+        inc i
+        result.target = args[i]
     else:
       discard
     inc i

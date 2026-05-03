@@ -338,22 +338,246 @@ proc transformMultivalue*(wasmData: seq[byte], config: MultivalueConfig): seq[by
 type
   CatchConfig* = object
     enabled*: bool
-    jsTag*: string       ## JS exception tag name
+    jsTag*: string
 
-  CatchFuncInfo = object
-    funcIdx: int
-    shimName: string
+  CatchFuncInfo* = object
+    funcIdx*: int
+    shimName*: string
+
+  ExceptionHandlingVersion* = enum
+    ehNone, ehLegacy, ehModern
 
 proc defaultCatchConfig*(): CatchConfig =
   CatchConfig(enabled: true, jsTag: "__nbg_js_exception")
 
-proc findCatchFuncs(data: seq[byte], config: CatchConfig): seq[CatchFuncInfo] =
-  ## Find functions that need catch wrappers by scanning the export section
-  ## for functions whose names start with __nbg_ and whose corresponding
-  ## import has catch=true (detected via custom section metadata).
+proc detectExceptionHandling*(data: seq[byte]): ExceptionHandlingVersion =
+  result = ehNone
+  let parsed = parseSections(data)
+  for sec in parsed.sections:
+    if sec.id == SecCode:
+      let payload = parsed.sectionPayload(sec)
+      var p = 0
+      let funcCount = int(readUleb128(payload, p))
+      for f in 0 ..< funcCount:
+        let bodySize = int(readUleb128(payload, p))
+        let bodyStart = p
+        let bodyEnd = bodyStart + bodySize
+        var ip = p
+        while ip < bodyEnd:
+          let opcode = payload[ip]
+          inc ip
+          case opcode
+          of 0x06: result = max(result, ehLegacy)
+          of 0x02, 0x03, 0x04: discard readByte(payload, ip)
+          of 0x10: discard readUleb128(payload, ip)
+          of 0x11:
+            discard readUleb128(payload, ip)
+            discard readByte(payload, ip)
+          of 0x20, 0x21, 0x22: discard readUleb128(payload, ip)
+          of 0x23, 0x24: discard readUleb128(payload, ip)
+          of 0x28 .. 0x3E:
+            discard readUleb128(payload, ip)
+            discard readUleb128(payload, ip)
+          of 0x3F, 0x40: discard readByte(payload, ip)
+          of 0x41: discard readSleb128(payload, ip)
+          of 0x42:
+            while ip < bodyEnd and (payload[ip] and 0x80) != 0: inc ip
+            inc ip
+          of 0x43: ip += 4
+          of 0x44: ip += 8
+          of 0xD0: discard readByte(payload, ip)
+          else: discard
+        p = bodyEnd
+
+# ─── Thread Transform ───
+
+const
+  PageSize* = 1 shl 16
+  DefaultStackSize* = 1 shl 21
+
+type
+  ThreadsConfig* = object
+    enabled*: bool
+    stackSize*: int
+
+  TLSInfo* = object
+    initFuncIdx*: int
+    sizeGlobalIdx*: int
+    alignGlobalIdx*: int
+    baseGlobalIdx*: int
+
+  ThreadState* = object
+    tlsInfo*: TLSInfo
+    stackPointerGlobalIdx*: int
+    heapBaseGlobalIdx*: int
+    mallocFuncIdx*: int
+    hasSharedMemory*: bool
+
+proc defaultThreadsConfig*(): ThreadsConfig =
+  ThreadsConfig(enabled: true, stackSize: DefaultStackSize)
+
+proc isMemoryShared*(data: seq[byte]): bool =
+  let parsed = parseSections(data)
+  for sec in parsed.sections:
+    if sec.id == SecMemory:
+      let payload = parsed.sectionPayload(sec)
+      var p = 0
+      let count = int(readUleb128(payload, p))
+      if count > 0:
+        let flags = readByte(payload, p)
+        return (flags and 0x02) != 0
+  return false
+
+proc patchMemoryShared*(data: var seq[byte]): bool =
+  let parsed = parseSections(data)
+  for sec in parsed.sections:
+    if sec.id == SecMemory:
+      let payload = parsed.sectionPayload(sec)
+      var p = 0
+      let count = int(readUleb128(payload, p))
+      if count == 0: return false
+      let flagsPos = sec.payloadOffset + (p - payload.len + payload.len - (p - 0))
+      var rp = 0
+      discard readUleb128(parsed.data, rp)
+      var secP = sec.payloadOffset
+      discard readUleb128(data, secP)
+      let oldFlags = data[secP]
+      if (oldFlags and 0x02) != 0: return true
+      var pp = secP + 1
+      let initial = int(readUleb128(data, pp))
+      var newPayload: seq[byte] = @[]
+      writeUleb128(newPayload, uint32(count))
+      newPayload.add(oldFlags or 0x03'u8)
+      writeUleb128(newPayload, uint32(initial))
+      writeUleb128(newPayload, uint32(max(initial, 65536)))
+      var newData: seq[byte] = @[]
+      newData.add(data[0 ..< sec.offset])
+      newData.add(byte(SecMemory))
+      writeUleb128(newData, uint32(newPayload.len))
+      newData.add(newPayload)
+      let afterEnd = sec.payloadOffset + sec.size
+      if afterEnd < data.len:
+        newData.add(data[afterEnd ..< data.len])
+      data = newData
+      return true
+  return false
+
+proc findImportGlobal*(data: seq[byte], name: string): int =
+  result = -1
+  let parsed = parseSections(data)
+  var globalIdx = 0
+  for sec in parsed.sections:
+    if sec.id == SecImport:
+      let payload = parsed.sectionPayload(sec)
+      var p = 0
+      let count = int(readUleb128(payload, p))
+      for i in 0 ..< count:
+        discard readUleb128String(payload, p)
+        let fieldName = readUleb128String(payload, p)
+        let kind = readByte(payload, p)
+        case kind
+        of ExtFunc:
+          discard readUleb128(payload, p)
+        of ExtTable:
+          discard readByte(payload, p)
+          let flags = readByte(payload, p)
+          discard readUleb128(payload, p)
+          if (flags and 0x01) != 0: discard readUleb128(payload, p)
+        of ExtMemory:
+          let flags = readByte(payload, p)
+          discard readUleb128(payload, p)
+          if (flags and 0x01) != 0: discard readUleb128(payload, p)
+        of ExtGlobal:
+          if fieldName == name: return globalIdx
+          discard readByte(payload, p)
+          discard readByte(payload, p)
+          inc globalIdx
+        else:
+          discard
+
+proc findImportFunc*(data: seq[byte], modName, fieldName: string): int =
+  result = -1
+  let parsed = parseSections(data)
+  var funcIdx = 0
+  for sec in parsed.sections:
+    if sec.id == SecImport:
+      let payload = parsed.sectionPayload(sec)
+      var p = 0
+      let count = int(readUleb128(payload, p))
+      for i in 0 ..< count:
+        let mn = readUleb128String(payload, p)
+        let fn = readUleb128String(payload, p)
+        let kind = readByte(payload, p)
+        case kind
+        of ExtFunc:
+          if mn == modName and fn == fieldName: return funcIdx
+          discard readUleb128(payload, p)
+          inc funcIdx
+        of ExtTable:
+          discard readByte(payload, p)
+          let flags = readByte(payload, p)
+          discard readUleb128(payload, p)
+          if (flags and 0x01) != 0: discard readUleb128(payload, p)
+        of ExtMemory:
+          let flags = readByte(payload, p)
+          discard readUleb128(payload, p)
+          if (flags and 0x01) != 0: discard readUleb128(payload, p)
+        of ExtGlobal:
+          discard readByte(payload, p)
+          discard readByte(payload, p)
+        else:
+          discard
+
+proc findExport*(data: seq[byte], name: string): (byte, int) =
+  result = (0xFF'u8, -1)
+  let parsed = parseSections(data)
+  for sec in parsed.sections:
+    if sec.id == SecExport:
+      let payload = parsed.sectionPayload(sec)
+      var p = 0
+      let count = int(readUleb128(payload, p))
+      for i in 0 ..< count:
+        let en = readUleb128String(payload, p)
+        let kind = readByte(payload, p)
+        let idx = int(readUleb128(payload, p))
+        if en == name: return (kind, idx)
+
+proc transformThreads*(wasmData: seq[byte], config: ThreadsConfig): seq[byte] =
+  if not config.enabled:
+    return wasmData
+  if wasmData.len < 8:
+    return wasmData
+  if wasmData[0..3] != WasmMagic:
+    return wasmData
+
+  result = wasmData
+
+  var state = ThreadState()
+  state.stackPointerGlobalIdx = findImportGlobal(result, "__stack_pointer")
+  state.heapBaseGlobalIdx = findImportGlobal(result, "__heap_base")
+
+  if state.stackPointerGlobalIdx < 0:
+    return result
+
+  state.mallocFuncIdx = findImportFunc(result, "__wbindgen_placeholder__", "__wbindgen_malloc")
+  if state.mallocFuncIdx < 0:
+    state.mallocFuncIdx = findImportFunc(result, "__wbg", "__nbg_malloc")
+
+  let (tlsKind, tlsBaseIdx) = findExport(result, "__tls_base")
+  state.tlsInfo.baseGlobalIdx = if tlsKind == ExtGlobal: tlsBaseIdx else: -1
+
+  let (_, tlsInitIdx) = findExport(result, "__wasm_init_tls")
+  state.tlsInfo.initFuncIdx = if tlsInitIdx >= 0: tlsInitIdx else: -1
+
+  if isMemoryShared(result):
+    state.hasSharedMemory = true
+  else:
+    if patchMemoryShared(result):
+      state.hasSharedMemory = true
+
+proc findCatchFuncs*(data: seq[byte]): seq[string] =
   result = @[]
   let parsed = parseSections(data)
-
   for sec in parsed.sections:
     if sec.id == SecExport:
       let payload = parsed.sectionPayload(sec)
@@ -362,166 +586,20 @@ proc findCatchFuncs(data: seq[byte], config: CatchConfig): seq[CatchFuncInfo] =
       for i in 0 ..< count:
         let name = readUleb128String(payload, p)
         let kind = readByte(payload, p)
-        let idx = int(readUleb128(payload, p))
-        if kind == ExtFunc and name.startsWith(NbgPrefix) and name.endsWith("_catch"):
-          result.add(CatchFuncInfo(funcIdx: idx, shimName: name))
-
-proc generateCatchWrapper(data: var seq[byte], funcInfo: CatchFuncInfo, config: CatchConfig) =
-  ## Generate a try/catch wrapper import for the given function.
-  ## In a full implementation this would:
-  ##   1. Add a new import function that wraps the original
-  ##   2. The wrapper uses try/catch in the JS host to catch exceptions
-  ##   3. Stores the exception in __nbg_exn_store global
-  ##   4. Returns an error code (0 = ok, 1 = exception)
-  # Stub: tracking for future implementation
-  discard
-
-proc injectExnStore(data: var seq[byte]) =
-  ## Add __nbg_exn_store global if not present.
-  ## This global stores the last caught JS exception reference.
-  # Stub: would patch global section to add:
-  #   (global $__nbg_exn_store (mut externref) (ref.null extern))
-  discard
+        discard readUleb128(payload, p)
+        if kind == ExtFunc and (name.endsWith("_catch") or name.endsWith("__catch")):
+          result.add(name)
 
 proc transformCatch*(wasmData: seq[byte], config: CatchConfig): seq[byte] =
-  ## Add try/catch wrapper imports for functions marked with catch.
-  ## 1. Find functions that need catch wrappers
-  ## 2. Generate wrapper imports that catch JS exceptions
-  ## 3. Store exception info in __nbg_exn_store
-  ## Returns modified wasm binary.
   if not config.enabled:
     return wasmData
-
   if wasmData.len < 8:
     return wasmData
-
-  let magic = wasmData[0..3]
-  if magic != WasmMagic:
+  if wasmData[0..3] != WasmMagic:
     return wasmData
 
   result = wasmData
-  let catchFuncs = findCatchFuncs(result, config)
-
-  if catchFuncs.len > 0:
-    injectExnStore(result)
-    for fi in catchFuncs:
-      generateCatchWrapper(result, fi, config)
-
-# ─── Thread Transform ───
-
-type
-  ThreadsConfig* = object
-    enabled*: bool
-    stackSize*: int      ## default stack size per thread
-
-  ThreadState = object
-    stackPointerGlobalIdx: int
-    stackPointerFound: bool
-    sharedMemoryAdded: bool
-    destroyIntrinsicAdded: bool
-
-const DefaultStackSize = 1024 * 1024  # 1 MiB
-
-proc defaultThreadsConfig*(): ThreadsConfig =
-  ThreadsConfig(enabled: true, stackSize: DefaultStackSize)
-
-proc findStackPointer*(data: seq[byte]): int =
-  ## Find the __stack_pointer global index.
-  ## Returns -1 if not found.
-  let parsed = parseSections(data)
-
-  for sec in parsed.sections:
-    if sec.id == SecImport:
-      let payload = parsed.sectionPayload(sec)
-      var p = 0
-      let count = int(readUleb128(payload, p))
-      var globalIdx = 0
-      for i in 0 ..< count:
-        let modName = readUleb128String(payload, p)
-        let fieldName = readUleb128String(payload, p)
-        let kind = readByte(payload, p)
-        case kind
-        of ExtFunc:
-          discard readUleb128(payload, p)  # typeidx
-          inc globalIdx
-        of ExtTable:
-          discard readByte(payload, p)    # elemtype
-          let flags = readByte(payload, p)
-          discard readUleb128(payload, p)  # initial
-          if (flags and 0x01) != 0:
-            discard readUleb128(payload, p)
-        of ExtMemory:
-          let flags = readByte(payload, p)
-          discard readUleb128(payload, p)  # initial
-          if (flags and 0x01) != 0:
-            discard readUleb128(payload, p)
-        of ExtGlobal:
-          let valType = readByte(payload, p)
-          let mut = readByte(payload, p)
-          if fieldName == "__stack_pointer" or fieldName == "__stack_pointer":
-            return globalIdx
-          inc globalIdx
-        else:
-          discard
-  return -1
-
-proc addSharedMemory(data: var seq[byte]) =
-  ## Mark linear memory as shared for multi-threading.
-  ## Patches the memory section to set the shared flag.
-  ## In a full implementation:
-  ##   1. Find memory section
-  ##   2. Set shared flag (0x03) on memory declaration
-  ##   3. Add max page count if not present (required for shared memory)
-  # Stub: tracking for future implementation
-  discard
-
-proc addThreadDestroyIntrinsic(data: var seq[byte]) =
-  ## Add __nbg_thread_destroy import function.
-  ## Called when a worker thread finishes to clean up its stack.
-  ## In a full implementation:
-  ##   1. Add import: (import "__nbg_threading" "destroy" (func $__nbg_thread_destroy))
-  ##   2. This function frees the thread's stack allocation
-  # Stub: tracking for future implementation
-  discard
-
-proc addStackPointerShims(data: var seq[byte]) =
-  ## Add stack pointer save/restore shims for thread switching.
-  ## In a full implementation:
-  ##   1. Add __nbg_stack_pointer_save: reads __stack_pointer, stores to TLS
-  ##   2. Add __nbg_stack_pointer_restore: reads TLS, writes to __stack_pointer
-  ##   3. These allow cooperative thread switching
-  # Stub: tracking for future implementation
-  discard
-
-proc transformThreads*(wasmData: seq[byte], config: ThreadsConfig): seq[byte] =
-  ## Prepare wasm module for threads.
-  ## 1. Find __stack_pointer global
-  ## 2. Add shared memory attribute
-  ## 3. Add thread destroy intrinsic
-  ## 4. Add stack pointer shims
-  ## Returns modified wasm binary.
-  if not config.enabled:
-    return wasmData
-
-  if wasmData.len < 8:
-    return wasmData
-
-  let magic = wasmData[0..3]
-  if magic != WasmMagic:
-    return wasmData
-
-  result = wasmData
-  var state = ThreadState()
-
-  state.stackPointerGlobalIdx = findStackPointer(result)
-  state.stackPointerFound = state.stackPointerGlobalIdx >= 0
-
-  if state.stackPointerFound:
-    addSharedMemory(result)
-    state.sharedMemoryAdded = true
-    addThreadDestroyIntrinsic(result)
-    state.destroyIntrinsicAdded = true
-    addStackPointerShims(result)
+  let catchFuncs = findCatchFuncs(result)
 
 # ─── Feature detection ───
 

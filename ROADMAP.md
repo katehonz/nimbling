@@ -34,9 +34,12 @@
 
 | Priority | Task | Status |
 |----------|------|--------|
-| P0 | Threads transform — real wasm binary patching | ⬜ |
-| P0 | Catch/exception transform — real wasm binary patching | ⬜ |
+| P0 | Threads transform — real wasm binary patching | ✅ |
+| P0 | Catch/exception transform — real wasm binary patching | ✅ |
 | P1 | **web-sys: batch-convert 697 WebIDL → Nim** | ✅ 612/647 (94.7%) |
+| P2 | JsCast / Upcast type system | ✅ |
+| P3 | Missing js-sys APIs (WeakRef, SharedArrayBuffer, DataView, RegExp, Proxy) | ✅ |
+| P4 | CLI targets + flags | ✅ |
 
 ### 5.1 web-sys from 701 WebIDL Files — **612/647 (94.7%) DONE**
 - [x] WebIDL parser (`webidl.nim` — interfaces, partials, mixins, dictionaries, enums, namespaces)

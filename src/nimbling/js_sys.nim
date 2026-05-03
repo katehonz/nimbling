@@ -1631,3 +1631,93 @@ proc jsCreateNumberFormatOptions*(style: string, minimumFractionDigits: int = 0,
     {.emit: "`result` = {idx: addHeapObject({style: `style`, minimumFractionDigits: `minimumFractionDigits`, maximumFractionDigits: `maximumFractionDigits`, useGrouping: `useGrouping`})};".}
   else:
     result = JsValue(idx: 0)
+
+# ─── WeakRef ───
+
+type JsWeakRef* = distinct JsValue
+
+proc newJsWeakRef*(target: JsValue): JsWeakRef =
+  when defined(wasm32):
+    {.emit: "`result` = {idx: addHeapObject(new WeakRef(heap[`target`.idx]))};".}
+  else:
+    result = JsWeakRef(JsValue(idx: 0))
+
+proc deref*(weak: JsWeakRef): JsValue {.inline.} =
+  when defined(wasm32):
+    {.emit: "`result` = {idx: addHeapObject(heap[`weak`.idx].deref())};".}
+  else:
+    result = JsValue(idx: 0)
+
+# ─── FinalizationRegistry ───
+
+type JsFinalizationRegistry* = distinct JsValue
+
+proc newJsFinalizationRegistry*(callback: JsValue): JsFinalizationRegistry =
+  when defined(wasm32):
+    {.emit: "`result` = {idx: addHeapObject(new FinalizationRegistry(heap[`callback`.idx]))};".}
+  else:
+    result = JsFinalizationRegistry(JsValue(idx: 0))
+
+proc register*(reg: JsFinalizationRegistry, target: JsValue, unregisterToken: JsValue) =
+  when defined(wasm32):
+    {.emit: "heap[`reg`.idx].register(heap[`target`.idx], heap[`unregisterToken`.idx]);".}
+  else:
+    discard
+
+proc unregister*(reg: JsFinalizationRegistry, unregisterToken: JsValue): bool =
+  when defined(wasm32):
+    {.emit: "`result` = heap[`reg`.idx].unregister(heap[`unregisterToken`.idx]) ? 1 : 0;".}
+  else:
+    result = false
+
+# ─── SharedArrayBuffer ───
+
+type JsSharedArrayBuffer* = distinct JsValue
+
+proc newJsSharedArrayBuffer*(byteLength: int32): JsSharedArrayBuffer =
+  when defined(wasm32):
+    {.emit: "`result` = {idx: addHeapObject(new SharedArrayBuffer(`byteLength`))};".}
+  else:
+    result = JsSharedArrayBuffer(JsValue(idx: 0))
+
+proc jsSharedArrayBufferByteLength*(buf: JsSharedArrayBuffer): int32 =
+  when defined(wasm32):
+    {.emit: "`result` = heap[`buf`.idx].byteLength;".}
+  else:
+    result = 0'i32
+
+proc jsSharedArrayBufferSlice*(buf: JsSharedArrayBuffer, begin: int32, endVal: int32): JsSharedArrayBuffer =
+  when defined(wasm32):
+    {.emit: "`result` = {idx: addHeapObject(heap[`buf`.idx].slice(`begin`, `endVal`))};".}
+  else:
+    result = JsSharedArrayBuffer(JsValue(idx: 0))
+
+# ─── DataView (int8) ───
+
+proc jsDataViewGetInt8*(dv: JsDataView, byteOffset: int32): int8 =
+  when defined(wasm32):
+    {.emit: "`result` = heap[`dv`.idx].getInt8(`byteOffset`);".}
+  else:
+    result = 0'i8
+
+proc jsDataViewSetInt8*(dv: JsDataView, byteOffset: int32, value: int8) =
+  when defined(wasm32):
+    {.emit: "heap[`dv`.idx].setInt8(`byteOffset`, `value`);".}
+  else:
+    discard
+
+# ─── Proxy ───
+
+type JsProxy* = distinct JsValue
+
+proc newJsProxy*(target: JsValue, handler: JsValue): JsProxy =
+  when defined(wasm32):
+    {.emit: "`result` = {idx: addHeapObject(new Proxy(heap[`target`.idx], heap[`handler`.idx]))};".}
+  else:
+    result = JsProxy(JsValue(idx: 0))
+
+proc jsProxyRevocable*(target: JsValue, handler: JsValue): JsValue =
+  when defined(wasm32):
+    {.emit: "`result` = {idx: addHeapObject(Proxy.revocable(heap[`target`.idx], heap[`handler`.idx]))};".}
+  else:
+    result = JsValue(idx: 0)
