@@ -163,7 +163,7 @@ proc parseWasmModule*(data: seq[byte]): WasmModule =
             localTypes.add(valType)
 
         let bodyEnd = bodyStart + codeSize
-        result.funcs[i].codeOffset = pos
+        result.funcs[i].codeOffset = pos - codeDataStart
         result.funcs[i].codeLen = bodyEnd - pos
         if i < funcSectionTypes.len:
           result.funcs[i].typeIdx = funcSectionTypes[i]

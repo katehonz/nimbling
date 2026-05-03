@@ -27,8 +27,8 @@ proc `=destroy`*(v: var JsValue) =
 
 proc `=copy`*(dest: var JsValue, src: JsValue) =
   ## Shallow copy — both share the same idx.
+  dest.idx = src.idx
   when defined(wasm32):
-    dest.idx = src.idx
     {.emit: "__nbg_object_clone_ref(`dest`.idx);".}
 
 proc `=destroy`*[T](c: var Closure[T]) =

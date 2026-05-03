@@ -62,7 +62,7 @@ proc parseArgs(): CliConfig =
     of cmdEnd:
       break
 
-proc extractCustomSection(wasmData: seq[byte], sectionName: string): seq[byte] =
+proc extractCustomSection*(wasmData: seq[byte], sectionName: string): seq[byte] =
   ## Parse a .wasm binary and extract a named custom section.
   ## WebAssembly binary format is:
   ##   magic: 4 bytes (0x00, 0x61, 0x73, 0x6D)
@@ -77,7 +77,7 @@ proc extractCustomSection(wasmData: seq[byte], sectionName: string): seq[byte] =
 
   # Verify magic
   let magic = wasmData[0..3]
-  if magic != [0x00'u8, 0x61'u8, 0x6D'u8, 0x73'u8]:
+  if magic != [0x00'u8, 0x61'u8, 0x73'u8, 0x6D'u8]:
     echo "Warning: invalid wasm magic bytes"
     return @[]
 
@@ -132,19 +132,19 @@ proc describeExports*(wasmData: seq[byte], prog: var Program) =
   ## Each descriptor sequence maps 1-to-1 with prog.exports in order.
   prog.descriptors = extractDescriptors(wasmData)
 
-proc isEnumName(name: string, prog: Program): bool =
+proc isEnumName*(name: string, prog: Program): bool =
   for ne in prog.enums:
     if ne.name == name:
       return true
   return false
 
-proc isStructName(name: string, prog: Program): bool =
+proc isStructName*(name: string, prog: Program): bool =
   for ns in prog.structs:
     if ns.name == name:
       return true
   return false
 
-proc tsTypeName(tyOverride: string, prog: Program): string =
+proc tsTypeName*(tyOverride: string, prog: Program): string =
   ## Map a tyOverride string to a TypeScript type name.
   if tyOverride == "string": return "string"
   if tyOverride == "bool": return "boolean"

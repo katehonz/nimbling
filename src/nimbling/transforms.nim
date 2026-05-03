@@ -9,7 +9,7 @@ import leb128
 # ─── Wasm binary constants ───
 
 const
-  WasmMagic = [0x00'u8, 0x61'u8, 0x6D'u8, 0x73'u8]
+  WasmMagic = [0x00'u8, 0x61'u8, 0x73'u8, 0x6D'u8]
   WasmVersion = [0x01'u8, 0x00'u8, 0x00'u8, 0x00'u8]
 
   SecCustom* = 0
@@ -241,16 +241,16 @@ type
   MultivalueConfig* = object
     enabled*: bool
 
-  RetPtrInfo = object
-    funcIdx: int
-    retPtrLocalIdx: int
-    retValTypes: seq[byte]
-    callSites: seq[int]
+  RetPtrInfo* = object
+    funcIdx*: int
+    retPtrLocalIdx*: int
+    retValTypes*: seq[byte]
+    callSites*: seq[int]
 
 proc defaultMultivalueConfig*(): MultivalueConfig =
   MultivalueConfig(enabled: true)
 
-proc findReturnPointerFuncs(data: seq[byte]): seq[RetPtrInfo] =
+proc findReturnPointerFuncs*(data: seq[byte]): seq[RetPtrInfo] =
   ## Identify functions that return via a pointer parameter.
   ## A function uses return-pointer ABI if:
   ##   - It has an i32 last parameter (the return pointer)
@@ -425,7 +425,7 @@ const DefaultStackSize = 1024 * 1024  # 1 MiB
 proc defaultThreadsConfig*(): ThreadsConfig =
   ThreadsConfig(enabled: true, stackSize: DefaultStackSize)
 
-proc findStackPointer(data: seq[byte]): int =
+proc findStackPointer*(data: seq[byte]): int =
   ## Find the __stack_pointer global index.
   ## Returns -1 if not found.
   let parsed = parseSections(data)
