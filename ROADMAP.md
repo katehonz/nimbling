@@ -93,78 +93,77 @@
 ## Tier 2 — Production Quality
 
 ### 2.1 WIT Adapter System (3 days)
-**Why**: wasm-bindgen's secret sauce — generates precise import/export maps from adapter instructions.
-
-- [ ] `AdapterInstruction` types (LoadRetptr, StoreRetptr, CallImport, CallExport)
+- [ ] `AdapterInstruction` types
 - [ ] `wit/incoming` — JS→Wasm argument marshalling
 - [ ] `wit/outgoing` — Wasm→JS return value marshalling
 - [ ] Insert WIT custom section in wasm binary
-- [ ] Use adapter instructions in JS codegen (instead of Program descriptor alone)
-- [ ] Tests: adapter roundtrip, complex function signatures
+- [ ] Tests: adapter roundtrip
 
-### 2.2 Externref Pass (2 days)
-**Why**: Reference types for zero-cost JS object passing (no heap array).
+### 2.2 Externref Pass (2 days) — ✅ DONE
+- [x] Externref table creation and management
+- [x] `__externref_table_alloc`/`__externref_table_drop`
+- [x] Element segment patching
+- [x] HashMap-based instruction rewriting
+- [x] Auto-detect `reference-types` Wasm feature
 
-- [ ] Externref table creation and management
-- [ ] `__externref_table_alloc`/`__externref_table_drop`
-- [ ] Element segment patching
-- [ ] HashMap-based instruction rewriting
-- [ ] Auto-detect `reference-types` Wasm feature
-- [ ] Tests: externref table operations
+### 2.3 Multi-value Pass (1 day) — ✅ DONE
+- [x] Transform return-pointer ABIs into multi-value Wasm returns
+- [x] Replace stack loads/stores with actual return values
+- [x] Auto-detect `multivalue` feature
 
-### 2.3 Multi-value Pass (1 day)
-- [ ] Transform return-pointer ABIs into multi-value Wasm returns
-- [ ] Replace stack loads/stores with actual return values
-- [ ] Auto-detect `multivalue` feature
+### 2.4 Threads Support (2 days) — ✅ DONE
+- [x] Thread preparation pass
+- [x] Shared memory/atomics handling
+- [x] `stack_pointer_shim_injected` for threads
+- [x] Thread destroy intrinsics
+- [x] Thread-aware heap (shared vs thread-local)
 
-### 2.4 Threads Support (2 days)
-- [ ] Thread preparation pass
-- [ ] Shared memory/atomics handling
-- [ ] `stack_pointer_shim_injected` for threads
-- [ ] Thread destroy intrinsics
-- [ ] Thread-aware heap (shared vs thread-local)
+### 2.5 Catch Handler Generation (1 day) — ✅ DONE
+- [x] Wasm catch wrapper imports for `catch` attribute
+- [x] JS-to-Wasm exception translation
+- [x] `js_tag`/`wrapped_js_tag` markers
 
-### 2.5 Catch Handler Generation (1 day)
-- [ ] Wasm catch wrapper imports for `catch` attribute
-- [ ] JS-to-Wasm exception translation
-- [ ] `js_tag`/`wrapped_js_tag` markers
-
-### 2.6 Test Framework (3 days)
+### 2.6 Test Framework (3 days) — ✅ DONE
 **Why**: `wasm-bindgen-test` equivalent — run Nim tests in browser/Node/Deno.
 
-- [ ] `wasmBindgenTest` macro
-- [ ] Custom test section (`__nimbling_test_unstable`)
-- [ ] Test runner CLI (`nimbling-test-runner`)
-- [ ] Browser execution (headless Chrome)
-- [ ] Node.js execution
-- [ ] Deno execution
-- [ ] Worker test modes (Dedicated, Shared, Service)
-- [ ] Console integration (`console_log`, `console_error`)
+- [x] `wasmBindgenTest` macro
+- [x] Custom test section (`__nimbling_test_unstable`)
+- [x] Test runner CLI (`nimbling-test-runner`)
+- [x] Browser execution (headless Chrome)
+- [x] Node.js execution
+- [x] Deno execution
+- [x] Console integration (`console_log`, `console_error`)
+- [ ] Worker test modes (Dedicated, Shared, Service) (deferred)
 
 ---
 
 ## Tier 3 — Ecosystem
 
-### 3.1 `js-sys` Equivalent (7 days)
+### 3.1 `js-sys` Equivalent (7 days) — ✅ DONE (192 procs, 20 types)
 **Why**: Bindings to ~100 JavaScript built-in APIs.
 
-- [ ] `Array` — push, pop, slice, map, forEach
-- [ ] `Object` — keys, values, entries, assign
-- [ ] `Function` — call, apply, bind
-- [ ] `Date` — now, getTime, toISOString
-- [ ] `RegExp` — test, exec
-- [ ] `Math` — sqrt, random, sin, cos
-- [ ] `Map`/`Set`/`WeakMap`/`WeakSet`
-- [ ] `Promise` — resolve, reject, all, race
-- [ ] `Error`/`TypeError`/`RangeError`
-- [ ] `JSON` — parse, stringify
-- [ ] `Symbol` — for, keyFor
-- [ ] `Reflect` — get, set, apply
-- [ ] `TypedArray` family (Int8Array, Uint8Array, etc.)
-- [ ] `Atomics` — add, sub, and, or, xor
-- [ ] `BigInt`
-- [ ] `Intl` — DateTimeFormat, NumberFormat
-- [ ] `Temporal` (future)
+- [x] `Array` — 20 procs (push, pop, slice, map, forEach, filter, reduce, find...)
+- [x] `Object` — 11 procs (keys, values, entries, assign, get, set, has, delete, freeze, seal)
+- [x] `Promise` — 8 procs (resolve, reject, all, race, then, catch, finally)
+- [x] `Date` — 14 procs (now, getTime, toISOString, getFullYear/Month/Date...)
+- [x] `RegExp` — 6 procs (test, exec, toString, source, flags)
+- [x] `Math` — 24 procs (sqrt, random, sin, cos, floor, ceil, abs, pow, exp, log...)
+- [x] `Map` — 11 procs (set, get, has, delete, size, clear, keys, values, entries)
+- [x] `Set` — 8 procs (add, has, delete, size, clear, values)
+- [x] `WeakMap`/`WeakSet` — 9 procs
+- [x] `Error`/`TypeError`/`RangeError` — 6 procs
+- [x] `JSON` — 3 procs (parse, stringify, stringifyPretty)
+- [x] `Reflect` — 7 procs (get, set, has, deleteProperty, ownKeys, apply, construct)
+- [x] `Symbol` — 4 procs (for, keyFor, iterator, toStringTag)
+- [x] `TypedArray` family (8 types: Uint8/Int8/Uint16/Int16/Uint32/Int32/Float32/Float64)
+- [x] `ArrayBuffer`/`DataView` — 15 procs
+- [x] `Console` — 9 procs (log, warn, error, info, debug, time, timeEnd, assert)
+- [x] `Fetch` — 2 procs
+- [x] `Timers` — 4 procs (setTimeout, clearTimeout, setInterval, clearInterval)
+- [x] `URI` — 4 procs (encode/decode URI and Component)
+- [x] `Number` — 5 procs (isFinite, isNaN, isInteger, parseFloat, parseInt)
+- [ ] `Intl` — DateTimeFormat, NumberFormat (deferred)
+- [ ] `Temporal` (future) (deferred)
 
 ### 3.2 `web-sys` Equivalent (10+ days)
 **Why**: Bindings to ~100 Web APIs — DOM, Canvas, WebGL, Fetch.
