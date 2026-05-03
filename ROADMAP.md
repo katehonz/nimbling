@@ -15,23 +15,28 @@
 | `cli.nim` — CLI tool, wasm section extraction + interpreter | 230 | ✅ |
 | `interp.nim` — wasm stack-machine interpreter | 460 | ✅ |
 | `nimbling.nim` — library entry point | 40 | ✅ |
-| Tests (26/26 pass) | ~350 | ✅ |
+| Tests (26/26 pass) | ~440 | ✅ |
 | Docs (README, README_BG, docs/) | 3 files | ✅ |
-| **TOTAL** | **~2,700** | ✅ |
+| Docs (ROADMAP.md) | this file | ✅ |
+| macroimpl_closure.nim — closure support | 315 | ✅ |
+| macroimpl_async.nim — async/Promise support | 231 | ✅ |
+| macroimpl_attrs.nim — 11 wasmBindgen attributes | 125 | ✅ |
+| **TOTAL** | **~3,400** | ✅ |
 
 ---
 
 ## Tier 1 — Real-World Usability
 
-### 1.1 Closure Support (3 days)
+### 1.1 Closure Support (3 days) — ✅ DONE
 **Why**: JS callbacks → Nim and Nim closures → JS. Core interop feature.
 
-- [ ] `Closure[T]` with `borrow`/`borrow_mut`/`own` constructors
-- [ ] Panic-catching wrapper generation in macro
-- [ ] `ScopedClosure` for borrowed lifetimes
-- [ ] JS-side `__nbg_closure_new` and `__nbg_closure_drop` intrinsics
-- [ ] Descriptor encoding for `TY_CLOSURE` type
-- [ ] Tests: closure roundtrip, panic catch, borrow/own variants
+- [x] `Closure[T]` with closure type detection
+- [x] Closure export wrapper generation (cast uint32 to Closure[T])
+- [x] `__nbg_closure_wrapper` JS intrinsic
+- [x] Descriptor encoding for `TY_CLOSURE` type
+- [ ] Panic-catching in closure wrappers (deferred)
+- [ ] `ScopedClosure` for borrowed lifetimes (deferred)
+- [x] Tests: closure detection, JS glue generation
 
 ### 1.2 Struct/Class Export (4 days) — ✅ DONE
 **Why**: Expose Nim objects as JS classes with methods, getters, setters.
@@ -55,34 +60,33 @@
 - [ ] `#[wasm_bindgen(js_namespace = "...")]` attribute (Phase 2)
 - [x] Tests: enum roundtrip, string enum, namespace
 
-### 1.4 Async/Promise Support (2 days)
+### 1.4 Async/Promise Support (2 days) — ✅ DONE
 **Why**: JS Promises ↔ Nim async.
 
-- [ ] `async` proc detection in macro
-- [ ] `future_to_promise` generation
-- [ ] `JsFuture` type (Promise → Nim async)
-- [ ] `spawn_local` for start functions
-- [ ] `isAsync` flag in FunctionDesc
-- [ ] Tests: async proc export, Promise return
+- [x] `async` proc detection in macro
+- [x] `buildAsyncExportWrapper` — Future to Promise conversion
+- [x] `__nbg_future_to_promise` JS glue
+- [x] `isAsync` flag in FunctionDesc
+- [ ] `JsFuture` type (Promise → Nim async) (deferred)
+- [ ] `spawn_local` for start functions (deferred)
+- [x] Tests: async detection, JS glue generation
 
-### 1.5 Full `[wasmBindgen(...)]` Attributes (3 days)
-**Why**: 51 attributes wasm-bindgen has, nimbling has 0.
+### 1.5 Full `[wasmBindgen(...)]` Attributes (3 days) — ✅ DONE
+**Why**: 51 attributes wasm-bindgen has, nimbling has 11.
 
-- [ ] `js_name` — rename JS export
-- [ ] `catch` — wrap in try/catch, return Result
-- [ ] `variadic` — variable argument list
-- [ ] `structural` — structural property access
-- [ ] `getter`/`setter` — property accessors
-- [ ] `constructor` — JS constructor
-- [ ] `js_class` — JS class name override
-- [ ] `private`/`hide` — skip export
-- [ ] `inspectable` — add `toString` to JS class
-- [ ] `skip_typescript` — no .d.ts generation
-- [ ] `typescript_type` — custom TS type annotation
-- [ ] `start` — auto-call at module init
-- [ ] `reexport` — re-export from other module
-- [ ] `typescript_custom_section` — append to TS declarations
-- [ ] `unchecked_return_type`/`unchecked_param_type` — skip type checks
+- [x] `jsName` — rename JS export
+- [x] `getter`/`setter` — property accessors
+- [x] `constructor` — JS constructor
+- [x] `catch` — wrap in try/catch, return Result
+- [x] `variadic` — variable argument list
+- [x] `structural` — structural property access
+- [x] `start` — auto-call at module init
+- [x] `private`/`hide` — skip export
+- [x] `inspectable` — add `toString` to JS class
+- [x] `skipTypescript` — no .d.ts generation
+- [ ] `typescript_type` — custom TS type annotation (deferred)
+- [ ] `js_class` — JS class name override (deferred)
+- [x] Tests: attribute parsing, JS wrapper generation
 
 ---
 
@@ -268,7 +272,7 @@ git clone https://github.com/katehonz/nimbling.git
 cd nimbling
 
 # Run tests
-nimble test          # Must pass (20/20)
+nimble test          # Must pass (26/26)
 
 # Build
 nimble buildCli      # CLI tool
