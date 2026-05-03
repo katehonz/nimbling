@@ -14,6 +14,7 @@ import nimbling/interp
 import nimbling/transforms
 import nimbling/runtime
 import nimbling/cli
+import nimbling/macroimpl_webidl
 
 suite "common - identifiers":
   test "valid JS identifiers":
@@ -1661,3 +1662,84 @@ suite "runtime — types":
     check b.idx == 15
     b.idx = 25
     check a.idx == 15
+
+# ─── webidlBind macro — generated bindings ───
+
+# Use the macro to generate bindings from WebIDL
+webidlBind("""
+  interface Node {
+    readonly attribute unsigned short nodeType;
+    attribute DOMString? nodeName;
+    Node appendChild(Node newChild);
+    static Document createDocument();
+  };
+  interface Element {
+    DOMString tagName();
+  };
+  interface Document {
+    Element getElementById(DOMString id);
+    Element createElement(DOMString tag);
+  };
+  dictionary ScrollOptions {
+    required ScrollBehavior behavior;
+    boolean optional;
+  };
+  enum ScrollBehavior { "auto", "instant", "smooth" };
+  namespace console {
+    void log(any data);
+  };
+""")
+
+suite "webidlBind macro — generated types":
+  test "interface types are distinct JsValue":
+    var n = Node(JsValue(idx: 0))
+    check JsValue(n).idx == 0
+    var d = Document(JsValue(idx: 0))
+    check JsValue(d).idx == 0
+
+  test "dictionary types are distinct JsValue":
+    var s = ScrollOptions(JsValue(idx: 0))
+    check JsValue(s).idx == 0
+
+  test "enum types are distinct JsValue":
+    var sb = ScrollBehavior(JsValue(idx: 0))
+    check JsValue(sb).idx == 0
+
+suite "webidlBind macro — generated procs":
+  test "attribute getter compiles and returns nil value":
+    var n = Node(JsValue(idx: 0))
+    let nt = nodeType(n)
+    check nt == 0
+
+  test "attribute setter compiles":
+    var n = Node(JsValue(idx: 0))
+    `nodeName=`(n, "test")
+
+  test "operation with self compiles and returns nil value":
+    var n = Node(JsValue(idx: 0))
+    var child = Node(JsValue(idx: 0))
+    let r = appendChild(n, child)
+    check JsValue(r).idx == 0
+
+  test "static operation compiles":
+    let d = createDocument()
+    check JsValue(d).idx == 0
+
+  test "document operations compile":
+    var d = Document(JsValue(idx: 0))
+    let el = getElementById(d, "myid")
+    check JsValue(el).idx == 0
+    let el2 = createElement(d, "div")
+    check JsValue(el2).idx == 0
+
+  test "dictionary getters/setters compile":
+    var s = ScrollOptions(JsValue(idx: 0))
+    let b = behavior(s)
+    check JsValue(b).idx == 0
+    let o = optional(s)
+    check o == false
+    `optional=`(s, true)
+
+  test "namespace method compiles":
+    var jv = JsValue(idx: 0)
+    log(jv)
