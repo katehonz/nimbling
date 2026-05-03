@@ -43,9 +43,12 @@ proc nimTypeToTyId*(tname: string): uint32 =
   of "JsValue": TY_EXTERNREF
   of "char":    TY_CHAR
   else:
-    if isEnumType(tname): TY_ENUM
-    elif isStructType(tname): TY_RUST_STRUCT
-    else: TY_EXTERNREF
+    when nimvm:
+      if isEnumType(tname): TY_ENUM
+      elif isStructType(tname): TY_RUST_STRUCT
+      else: TY_EXTERNREF
+    else:
+      TY_EXTERNREF
 
 proc isStringType*(tname: string): bool =
   tname == "string"
@@ -91,9 +94,12 @@ proc jsTypeName*(tname: string): string =
   of "float32", "float64": "number"
   of "bool": "boolean"
   else:
-    if isEnumType(tname): "number"
-    elif isStructType(tname): "jsvalue"
-    else: "any"
+    when nimvm:
+      if isEnumType(tname): "number"
+      elif isStructType(tname): "jsvalue"
+      else: "any"
+    else:
+      "any"
 
 # ─── Wasm ABI type conversion helpers ───
 
@@ -111,13 +117,19 @@ proc nimTypeToWasmAbiType*(tname: string): string =
   of "string": "uint32"
   of "JsValue": "uint32"
   else:
-    if isEnumType(tname): "int32"
-    elif isStructType(tname): "uint32"
-    else: "uint32"
+    when nimvm:
+      if isEnumType(tname): "int32"
+      elif isStructType(tname): "uint32"
+      else: "uint32"
+    else:
+      "uint32"
 
 proc hasWasmAbiConversion*(tname: string): bool =
   ## Returns true if this type needs ABI conversion (e.g. string, JsValue)
-  tname == "string" or tname == "JsValue" or isEnumType(tname) or isStructType(tname)
+  when nimvm:
+    tname == "string" or tname == "JsValue" or isEnumType(tname) or isStructType(tname)
+  else:
+    tname == "string" or tname == "JsValue"
 
 proc abiArgCount*(tname: string): int =
   ## How many wasm arguments a Nim type produces.

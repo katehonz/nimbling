@@ -15,7 +15,7 @@
 | `cli.nim` — CLI tool, wasm section extraction + interpreter | 230 | ✅ |
 | `interp.nim` — wasm stack-machine interpreter | 460 | ✅ |
 | `nimbling.nim` — library entry point | 40 | ✅ |
-| Tests (26/26 pass) | ~440 | ✅ |
+| Tests (40/40 pass) | ~520 | ✅ |
 | Docs (README, README_BG, docs/) | 3 files | ✅ |
 | Docs (ROADMAP.md) | this file | ✅ |
 | macroimpl_closure.nim — closure support | 315 | ✅ |
@@ -240,22 +240,22 @@
 
 ## Test Coverage Gaps (Need Tests For)
 
-| Area | Missing | Priority |
-|------|---------|----------|
-| `macroimpl.nim` | 0 tests | 🔴 |
-| `codegen.nim` | 0 tests | 🔴 |
+| Area | Status | Priority |
+|------|--------|----------|
+| `macroimpl.nim` | indirect via macro compile tests | 🟡 |
+| `codegen.nim` | ✅ type mapping tests (5) | ✅ |
 | `cli.nim` | 0 tests | 🔴 |
 | `runtime.nim` | 0 tests | 🔴 |
 | `interp.nim` | 0 tests | 🔴 |
-| Encode/decode: enums | no roundtrip | 🟡 |
-| Encode/decode: structs | no roundtrip | 🟡 |
-| Encode/decode: linked modules | no roundtrip | 🟡 |
-| Encode/decode: local modules | no roundtrip | 🟡 |
-| Encode/decode: inline JS | no roundtrip | 🟡 |
-| Encode/decode: TypeScript sections | no roundtrip | 🟡 |
-| Encode/decode: `ikStatic`/`ikString`/`ikType`/`ikEnum` | no roundtrip | 🟡 |
-| Describe: `CLOSURE`, `RUST_STRUCT`, `NAMED_EXTERNREF`, `STRING_ENUM` | no tests | 🟡 |
-| jsgen: `jsNoModules`/`jsDeno` targets | no tests | 🟡 |
+| Encode/decode: enums | ✅ roundtrip | ✅ |
+| Encode/decode: structs | ✅ roundtrip | ✅ |
+| Encode/decode: linked modules | ✅ roundtrip | ✅ |
+| Encode/decode: local modules | ✅ roundtrip | ✅ |
+| Encode/decode: inline JS | ✅ roundtrip | ✅ |
+| Encode/decode: TypeScript sections | ✅ roundtrip | ✅ |
+| Encode/decode: `ikStatic`/`ikString`/`ikType`/`ikEnum` | ✅ roundtrip | ✅ |
+| Describe: `CLOSURE`, `RUST_STRUCT`, `NAMED_EXTERNREF`, `STRING_ENUM` | ✅ tests added | ✅ |
+| jsgen: `jsNoModules`/`jsDeno` targets | ✅ tests added | ✅ |
 | jsgen: `ikStatic`/`ikString`/`ikType`/`ikEnum` shims | no tests | 🟡 |
 
 ---

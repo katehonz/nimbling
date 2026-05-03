@@ -8,6 +8,7 @@ import nimbling/encode
 import nimbling/decode
 import nimbling/describe
 import nimbling/jsgen
+import nimbling/codegen
 
 suite "common - identifiers":
   test "valid JS identifiers":
@@ -216,6 +217,32 @@ suite "describe - descriptor decode":
     check d.kind == TY_VECTOR
     check d.inner[].kind == TY_U8
 
+  test "closure descriptor":
+    # Closure: [CLOSURE, owned=1, mutable=0, FUNCTION, shimIdx=0, argCount=0, UNIT, UNIT]
+    let data = @[TY_CLOSURE, 1'u32, 0'u32, TY_FUNCTION, 0'u32, 0'u32, TY_UNIT, TY_UNIT]
+    let d = Descriptor.decode(data)
+    check d.kind == TY_CLOSURE
+    check d.closureDesc.owned == true
+    check d.closureDesc.mutable == false
+    check d.closureDesc.function.shimIdx == 0
+    check d.closureDesc.function.arguments.len == 0
+    check d.closureDesc.function.ret.kind == TY_UNIT
+
+  test "string enum descriptor":
+    # StringEnum "Status": [STRING_ENUM, 6, S, t, a, t, u, s, variantCount=2]
+    let data = @[TY_STRING_ENUM, 6'u32, 83'u32, 116'u32, 97'u32, 116'u32, 117'u32, 115'u32, 2'u32]
+    let d = Descriptor.decode(data)
+    check d.kind == TY_STRING_ENUM
+    check d.nameStr == "Status"
+    check d.stringEnumInvalid == 2
+    check d.stringEnumHole == 3
+
+  test "named externref descriptor":
+    let data = @[TY_NAMED_EXTERNREF, 5'u32, 77'u32, 121'u32, 84'u32, 121'u32, 112'u32]
+    let d = Descriptor.decode(data)
+    check d.kind == TY_NAMED_EXTERNREF
+    check d.nameStr == "MyTyp"
+
 suite "jsgen - JS glue generation":
   test "generates module header for bundler target":
     var prog = Program(uniqueCrateIdentifier: "test")
@@ -368,6 +395,19 @@ suite "jsgen - JS glue generation":
     # Enum args should pass through directly (no string boxing, no heap object)
     check output.contains("wasm.__nbg_shim_setColor(arg0)")
 
+  test "generates module header for no-modules target":
+    var prog = Program(uniqueCrateIdentifier: "test")
+    var jsg = newJsGen(prog, jsNoModules, "hello")
+    let output = jsg.generate()
+    check output.contains("(function() {")
+    check output.contains("const wasm = wasm_bindgen;")
+
+  test "generates module header for deno target":
+    var prog = Program(uniqueCrateIdentifier: "test")
+    var jsg = newJsGen(prog, jsDeno, "hello")
+    let output = jsg.generate()
+    check output.contains("import * as wasm from './hello';")
+
   test "generates struct class with constructor and getters":
     var prog = Program(
       uniqueCrateIdentifier: "test",
@@ -440,3 +480,145 @@ suite "jsgen - JS glue generation":
     # Struct exports should NOT appear as standalone functions
     check not output.contains("export function __nbg_point_new(")
     check not output.contains("export function __nbg_get_point_x(")
+
+suite "encode + decode roundtrip — extended":
+  test "linked module roundtrip":
+    var prog = Program(
+      uniqueCrateIdentifier: "test",
+      linkedModules: @[
+        LinkedModule(
+          module: ImportModule(kind: imNamed, name: "./foo"),
+          linkFunctionName: "link_foo",
+        ),
+      ],
+    )
+    var enc = newEncoder()
+    enc.encode(prog)
+    var dec = newDecoder(enc.buf)
+    let decoded = decodeProgram(dec)
+    check decoded.linkedModules.len == 1
+    check decoded.linkedModules[0].module.kind == imNamed
+    check decoded.linkedModules[0].module.name == "./foo"
+    check decoded.linkedModules[0].linkFunctionName == "link_foo"
+
+  test "local module roundtrip":
+    var prog = Program(
+      uniqueCrateIdentifier: "test",
+      localModules: @[
+        LocalModule(
+          identifier: "bar",
+          contents: "console.log('hi');",
+          linkedModule: false,
+        ),
+      ],
+    )
+    var enc = newEncoder()
+    enc.encode(prog)
+    var dec = newDecoder(enc.buf)
+    let decoded = decodeProgram(dec)
+    check decoded.localModules.len == 1
+    check decoded.localModules[0].identifier == "bar"
+    check decoded.localModules[0].contents == "console.log('hi');"
+    check decoded.localModules[0].linkedModule == false
+
+  test "inline JS roundtrip":
+    var prog = Program(
+      uniqueCrateIdentifier: "test",
+      inlineJs: @["alert('hello');"],
+    )
+    var enc = newEncoder()
+    enc.encode(prog)
+    var dec = newDecoder(enc.buf)
+    let decoded = decodeProgram(dec)
+    check decoded.inlineJs.len == 1
+    check decoded.inlineJs[0] == "alert('hello');"
+
+  test "typescript custom sections roundtrip":
+    var prog = Program(
+      uniqueCrateIdentifier: "test",
+      typescriptCustomSections: @[
+        LitOrExpr(isExpr: false, value: "type Foo = string;"),
+      ],
+    )
+    var enc = newEncoder()
+    enc.encode(prog)
+    var dec = newDecoder(enc.buf)
+    let decoded = decodeProgram(dec)
+    check decoded.typescriptCustomSections.len == 1
+    check decoded.typescriptCustomSections[0].isExpr == false
+    check decoded.typescriptCustomSections[0].value == "type Foo = string;"
+
+  test "import kind roundtrip — static, string, type, enum":
+    var prog = Program(
+      uniqueCrateIdentifier: "test",
+      imports: @[
+        Import(
+          importKind: ImportKindObj(
+            kind: ikStatic,
+            staticData: ImportStatic(name: "PI", shim: "__nbg_s_pi"),
+          ),
+        ),
+        Import(
+          importKind: ImportKindObj(
+            kind: ikString,
+            stringData: ImportString(shim: "__nbg_s_hello", string: "hello"),
+          ),
+        ),
+        Import(
+          importKind: ImportKindObj(
+            kind: ikType,
+            typeData: ImportType(name: "HTMLElement", instanceofShim: "__nbg_instanceof_html", vendorPrefixes: @["webkit"]),
+          ),
+        ),
+        Import(
+          importKind: ImportKindObj(
+            kind: ikEnum,
+            enumData: StringEnum(name: "Color", variantValues: @["Red", "Green"]),
+          ),
+        ),
+      ],
+    )
+    var enc = newEncoder()
+    enc.encode(prog)
+    var dec = newDecoder(enc.buf)
+    let decoded = decodeProgram(dec)
+    check decoded.imports.len == 4
+    check decoded.imports[0].importKind.kind == ikStatic
+    check decoded.imports[0].importKind.staticData.name == "PI"
+    check decoded.imports[1].importKind.kind == ikString
+    check decoded.imports[1].importKind.stringData.string == "hello"
+    check decoded.imports[2].importKind.kind == ikType
+    check decoded.imports[2].importKind.typeData.name == "HTMLElement"
+    check decoded.imports[2].importKind.typeData.vendorPrefixes[0] == "webkit"
+    check decoded.imports[3].importKind.kind == ikEnum
+    check decoded.imports[3].importKind.enumData.name == "Color"
+    check decoded.imports[3].importKind.enumData.variantValues[1] == "Green"
+
+suite "codegen — type mapping":
+  test "nimTypeToTyId maps primitives correctly":
+    check nimTypeToTyId("int32") == TY_I32
+    check nimTypeToTyId("float64") == TY_F64
+    check nimTypeToTyId("string") == TY_STRING
+    check nimTypeToTyId("bool") == TY_BOOLEAN
+    check nimTypeToTyId("JsValue") == TY_EXTERNREF
+
+  test "jsTypeName maps primitives correctly":
+    check jsTypeName("string") == "string"
+    check jsTypeName("int32") == "number"
+    check jsTypeName("bool") == "boolean"
+    check jsTypeName("float64") == "number"
+
+  test "nimTypeToWasmAbiType maps primitives correctly":
+    check nimTypeToWasmAbiType("int32") == "int32"
+    check nimTypeToWasmAbiType("string") == "uint32"
+    check nimTypeToWasmAbiType("bool") == "int32"
+    check nimTypeToWasmAbiType("float64") == "float64"
+
+  test "abiArgCount handles string vs numeric":
+    check abiArgCount("string") == 2
+    check abiArgCount("int32") == 1
+    check abiArgCount("float64") == 1
+
+  test "abiArgNames generates correct names":
+    check abiArgNames("name", "string") == @["name_ptr", "name_len"]
+    check abiArgNames("x", "int32") == @["x"]
