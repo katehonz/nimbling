@@ -102,6 +102,8 @@ nimbling target.wasm --out-dir pkg/ --target bundler
   +-> Execute __nbg_describe_* functions (stack-machine interpreter)
   |     +-> Recover exact type descriptors for each import/export
   |
+  +-> Apply Wasm transforms (externref, multivalue, catch, threads)
+  |
   +-> Generate JS glue code:
   |     +-> Heap management (addHeapObject, dropObject, passStringToWasm)
   |     +-> Import shims (JS -> Wasm calling convention)
@@ -147,9 +149,47 @@ type
 
 proc `=destroy`*(v: var JsValue) =
   when defined(wasm32):
-    # Signals to JS that the object is no longer needed
     {.emit: "__nbg_object_drop_ref(`v`.idx);".}
 ```
+
+---
+
+## Compile-Time WebIDL Macro (`webidlBind`)
+
+A macro that parses WebIDL definitions at compile time and generates Nim types + proc bindings directly — no intermediate codegen step:
+
+```nim
+import nimbling/runtime, nimbling/macroimpl_webidl
+
+webidlBind("""
+  interface Node {
+    readonly attribute unsigned short nodeType;
+    Node appendChild(Node newChild);
+  };
+""")
+```
+
+Generates equivalent of:
+```nim
+type Node = distinct JsValue
+
+proc nodeType*(self: Node): uint32 =
+  when defined(wasm32):
+    {.emit: "`result` = heap[`self`.idx].nodeType;".}
+  else:
+    result = 0
+
+proc appendChild*(self: Node, newChild: Node): Node =
+  when defined(wasm32):
+    {.emit: """
+    var ret = heap[`self`.idx].appendChild(heap[`newChild`.idx]);
+    `result` = {idx: addHeapObject(ret)};
+    """.}
+  else:
+    result = Node(JsValue(idx: 0))
+```
+
+Supports: interfaces, dictionaries, enums, namespaces, callbacks, static methods, readonly attributes.
 
 ---
 
@@ -203,6 +243,37 @@ Each primitive type is encoded as:
 
 ---
 
+## Wasm Stack-Machine Interpreter
+
+The CLI extracts type descriptors by executing the `__nbg_describe_*` functions found in the wasm binary. A custom stack-machine interpreter (`interp.nim`) supports:
+
+- **Memory**: `i32.load`, `i32.store`
+- **Constants**: `i32.const`, `i64.const`, `f32.const`, `f64.const`
+- **Arithmetic**: `i32.add`, `i32.sub`, `i32.mul`
+- **Comparison**: `i32.eq`, `i32.ne`, `i32.lt_s`, `i32.gt_s`, `i32.eqz`
+- **Control flow**: `block`, `loop`, `if`/`else`, `br`, `br_if`, `end`
+- **Variables**: `local.get`, `local.set`, `local.tee`, `global.get`, `global.set`
+- **Calls**: `call` (only to `__nbg_describe` for collecting type IDs)
+
+The interpreter walks the bytecode, collects all `i32` values passed to `__nbg_describe`, and decodes them into `Descriptor` objects via `describe.nim`.
+
+---
+
+## Wasm Binary Transforms
+
+The CLI can optionally apply transforms to the wasm binary (`transforms.nim`):
+
+| Transform | Purpose |
+|-----------|---------|
+| **Externref** | Replace heap[idx] patterns with externref table operations |
+| **Multi-value** | Convert return-pointer ABIs to multi-value returns |
+| **Catch** | Add try/catch wrapper imports for functions with `catch` attribute |
+| **Threads** | Prepare module for threads (shared memory, stack pointer shims) |
+
+Feature detection scans the `target_features` custom section for `reference-types`, `multivalue`, and `threads`.
+
+---
+
 ## Module Structure
 
 ```
@@ -210,61 +281,27 @@ src/
 +-- nimbling.nim                 # Main module — re-exports public API
 +-- nimbling/
     +-- common.nim               # Constants, Program schema, helper functions
-    |   - Type ID definitions (36 constants: TY_I8..TY_RAW_POINTER)
-    |   - Program AST: Export, Import, FunctionDesc, NimEnum, NimStruct...
-    |   - Name mangling: newFunction(), structFieldGet(), qualifiedName()
-    |   - SchemaVersion = "0.1.0"
-    |
-    +-- runtime.nim              # JsValue, Closure, nbgMalloc/nbgFree
-    |   - JsValue = object(idx: uint32) with `=destroy` hook
-    |   - Bump allocator (1MB static heap) for wasm32
-    |   - Boxed string helpers (__nbg_boxed_str_ptr/len/free)
-    |
-    +-- macroimpl.nim            # {.wasmBindgen.} pragma macro
-    |   - AST parsing of annotated procs
-    |   - Export wrapper generation (ptr/len ABI conversion)
-    |   - Descriptor function generation
-    |
-    +-- codegen.nim              # Type mapping & code generation helpers
-    |   - nimTypeToTyId() — maps Nim types to TY_* constants
-    |   - parseFormalParams() — handles multi-name param defs
-    |   - classifyArgType() — string/number/boolean/jsvalue
-    |
-    +-- encode.nim               # Binary encode of Program (varint LEB128)
-    |   - Encoder object with putByte() and varint32()
-    |   - encode() overloads for all Program types
-    |
-    +-- decode.nim               # Binary decode of Program
-    |   - Decoder object with readByte() and readVarint32()
-    |   - decodeProgram() — full roundtrip
-    |
+    +-- leb128.nim               # LEB128 encode/decode utilities
+    +-- encode.nim               # Binary encoder (varint LEB128)
+    +-- decode.nim               # Binary decoder
     +-- describe.nim             # Type descriptor system
-    |   - Descriptor object (kind + inner/funcDesc/nameStr fields)
-    |   - FunctionDescriptor, ClosureDescriptor types
-    |   - decode() from u32 stream (output of stack-machine interpreter)
-    |
+    +-- runtime.nim              # JsValue, Closure, nbgMalloc/nbgFree
+    +-- macroimpl.nim            # {.wasmBindgen.} pragma macro
+    +-- macroimpl_closure.nim    # Closure support
+    +-- macroimpl_async.nim      # Async/Promise support
+    +-- macroimpl_attrs.nim      # 11 wasmBindgen attributes
+    +-- macroimpl_webidl.nim     # Compile-time WebIDL → Nim macro
+    +-- codegen.nim              # Type mapping & code generation helpers
     +-- cli.nim                  # CLI tool — reads .wasm, generates JS
-    |   - CLI argument parsing (--out-dir, --target, --debug...)
-    |   - extractCustomSection() — binary wasm parsing
-    |   - Integration with jsgen.nim for output generation
-    |
     +-- jsgen.nim                # JavaScript glue code generator
-        - JsGen object with indent/dedent/addLine
-        - generateHelpers() — heap, string, memory utilities
-        - generateImportShim() — JS shim for imported functions
-        - generateExportShim() — JS wrapper for exported functions
-        - Target support: bundler, web, no-modules, nodejs, deno
+    +-- interp.nim               # Wasm stack-machine interpreter
+    +-- transforms.nim           # Wasm binary transforms
+    +-- js_sys.nim               # js-sys: 192 procs for 20 JS built-in APIs
+    +-- web_sys.nim              # web-sys: 112 procs for 27 Web APIs
+    +-- webidl.nim               # WebIDL parser → Nim codegen
+    +-- wit.nim                  # WIT adapter system (30 instruction types)
+    +-- emscripten.nim           # Emscripten + Memory64 + CLI flags
 ```
-
----
-
-## Nimble Tasks
-
-| Command | Description |
-|---------|-------------|
-| `nimble test` | Run 20 unit tests |
-| `nimble buildCli` | Build CLI binary (release, ~200KB) |
-| `nimble wasm` | Build hello example for wasm target |
 
 ---
 
@@ -277,7 +314,12 @@ src/
 | Type descriptors | `__wbindgen_describe_*` | `__nbg_describe_*` |
 | JS function prefix | `__wbg_` | `__nbg_` |
 | JS heap | `addHeapObject`/`dropObject` | identical |
-| Schema version | `0.2.119` | `0.1.0` |
+| Schema version | `0.2.119` | `0.2.0` |
 | CLI | `wasm-bindgen` (Rust binary) | `nimbling` (Nim binary) |
-| web-sys | Yes (~100 Web APIs) | Planned |
-| Test runner | Yes (browser/Node/Deno) | Planned |
+| web-sys | Yes (~100 Web APIs) | Done (27 APIs, expandable via WebIDL) |
+| Test runner | Yes (browser/Node/Deno) | Done |
+| WebIDL macro | No | **Yes** — compile-time `webidlBind` |
+| js-sys | ~250 procs | 192 procs (20 APIs) |
+| WIT adapters | via wit-bindgen | Built-in |
+| Wasm transforms | Built-in | Built-in |
+| Stack-machine interpreter | Built-in | Built-in |

@@ -59,6 +59,8 @@ User Code (Nim)
 nimbling CLI (cli.nim)
     |-- Extracts __nimbling_unstable custom section
     |-- Decodes Program (decode.nim)
+    |-- Executes __nbg_describe_* (interp.nim)
+    |-- Applies wasm transforms (transforms.nim)
     |-- Generates JS glue (jsgen.nim)
     v
 Output: {name}.js + {name}_bg.wasm + {name}.d.ts
@@ -96,7 +98,7 @@ cat /tmp/out/*.js
 
 ## Pull Request Guidelines
 
-1. All tests must pass (`nimble test`)
+1. All tests must pass (`nimble test` — 134 tests)
 2. New features should include tests
 3. Update documentation if changing public API
 4. Keep commits focused and well-described

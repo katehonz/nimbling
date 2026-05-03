@@ -52,7 +52,7 @@ JS object -> addHeapObject(obj) -> idx: u32 -> Nim: JsValue(idx: u32)
 - **Stack** — temporary/borrowed references (push/pop for each function call)
 - **Slab** — owned objects with dynamic lifetime (reference counting)
 
-## Status — v0.1.0
+## Status — v0.1.0 (Schema v0.2.0)
 
 ### Working (compiles and tested on Nim 2.2.10)
 
@@ -62,25 +62,49 @@ JS object -> addHeapObject(obj) -> idx: u32 -> Nim: JsValue(idx: u32)
 | Program schema (all AST types) | `common.nim` | Done |
 | Binary encode (varint LEB128) | `encode.nim` | Done |
 | Binary decode (full roundtrip) | `decode.nim` | Done |
+| LEB128 utilities (shared) | `leb128.nim` | Done |
 | Type descriptor system | `describe.nim` | Done |
 | `{.wasmBindgen.}` pragma macro | `macroimpl.nim` | Done |
+| Closure support | `macroimpl_closure.nim` | Done |
+| Async/Promise support | `macroimpl_async.nim` | Done |
+| 11 wasmBindgen attributes | `macroimpl_attrs.nim` | Done |
 | Type mapping & codegen helpers | `codegen.nim` | Done |
-| JS glue generator (bundler/web/node/deno) | `jsgen.nim` | Done |
-| JsValue + Runtime (heap, allocator, boxed strings) | `runtime.nim` | Done |
+| JS glue generator (5 targets) | `jsgen.nim` | Done |
+| JsValue + Runtime (heap, allocator) | `runtime.nim` | Done |
 | CLI tool (wasm section extractor) | `cli.nim` | Done |
-| Unit tests (20 tests, all passing) | `tests/all.nim` | Done |
+| Wasm stack-machine interpreter | `interp.nim` | Done |
+| Wasm binary transforms (externref, multivalue, catch, threads) | `transforms.nim` | Done |
+| WIT adapter system (30 instruction types) | `wit.nim` | Done |
+| WebIDL parser → Nim codegen | `webidl.nim` | Done |
+| **WebIDL compile-time macro** | **`macroimpl_webidl.nim`** | **Done** |
+| `js-sys` bindings (192 procs, 20 APIs) | `js_sys.nim` | Done |
+| `web-sys` bindings (112 procs, 27 APIs) | `web_sys.nim` | Done |
+| Test framework (browser/Node/Deno) | `test_runner.nim` | Done |
+| Emscripten / Memory64 support | `emscripten.nim` | Done |
+| Unit tests (134 tests, all passing) | `tests/all.nim` | Done |
 
-### Roadmap
+### `webidlBind` — Compile-Time WebIDL Macro
 
-| Task | Priority | Description |
-|------|----------|-------------|
-| Stack-machine interpreter | High | CLI executes `__nbg_describe_*` from .wasm for type recovery |
-| `seq[T]` / `Option[T]` support | Medium | TypedArray conversion, null check |
-| Closure support | Medium | JS callbacks -> Nim, Nim closures -> JS |
-| Struct import/export | Low | `{.wasmBindgen.}` on Nim objects -> JS classes |
-| Enum import/export | Low | Nim enums <-> JS string/number enums |
-| `web-sys` equivalent | Low | Auto-generated Web API bindings from WebIDL |
-| Test framework | Low | `wasm-bindgen-test` equivalent for browser/node |
+Generate Nim bindings directly from WebIDL at compile time:
+
+```nim
+import nimbling/runtime, nimbling/macroimpl_webidl
+
+webidlBind("""
+  interface Node {
+    readonly attribute unsigned short nodeType;
+    Node appendChild(Node newChild);
+    static Document createDocument();
+  };
+  interface Document {
+    Element getElementById(DOMString id);
+  };
+""")
+
+# Now use: var n = Node(JsValue(idx: 0)); echo nodeType(n)
+```
+
+Generates `type Node = distinct JsValue`, attribute getters/setters, method calls — all with `{.emit.}` blocks following the same pattern as `web_sys.nim`.
 
 ## Quick Start
 
@@ -103,7 +127,7 @@ nimble buildCli
 
 | Command | Description |
 |---------|-------------|
-| `nimble test` | Run unit tests (20 tests) |
+| `nimble test` | Run unit tests (134 tests) |
 | `nimble buildCli` | Build CLI binary (release mode) |
 | `nimble wasm` | Build hello example for wasm |
 
@@ -114,6 +138,7 @@ nimbling/
 ├── README.md                    # This file
 ├── README_BG.md                 # Bulgarian README
 ├── DESIGN.md                    # Architecture documentation (Bulgarian)
+├── ROADMAP.md                   # Full roadmap with all tiers
 ├── LICENSE                      # MIT License
 ├── nimbling.nimble              # Nimble package manifest
 ├── docs/
@@ -123,17 +148,29 @@ nimbling/
 ├── src/
 │   ├── nimbling.nim             # Library entry point
 │   └── nimbling/
-│       ├── common.nim           # Shared types & constants
-│       ├── runtime.nim          # JsValue, memory management
-│       ├── macroimpl.nim        # {.wasmBindgen.} macro
-│       ├── codegen.nim          # Type mapping & codegen helpers
+│       ├── common.nim           # Shared types, constants, Program schema
+│       ├── leb128.nim           # LEB128 encode/decode utilities
 │       ├── encode.nim           # Binary encoder (varint LEB128)
 │       ├── decode.nim           # Binary decoder
-│       ├── describe.nim         # Type descriptors
+│       ├── describe.nim         # Type descriptor system
+│       ├── runtime.nim          # JsValue, Closure, memory management
+│       ├── macroimpl.nim        # {.wasmBindgen.} pragma macro
+│       ├── macroimpl_closure.nim # Closure support
+│       ├── macroimpl_async.nim  # Async/Promise support
+│       ├── macroimpl_attrs.nim  # 11 wasmBindgen attributes
+│       ├── macroimpl_webidl.nim # Compile-time WebIDL → Nim macro
+│       ├── codegen.nim          # Type mapping & codegen helpers
 │       ├── cli.nim              # CLI tool
-│       └── jsgen.nim            # JavaScript glue generator
+│       ├── jsgen.nim            # JavaScript glue generator
+│       ├── interp.nim           # Wasm stack-machine interpreter
+│       ├── transforms.nim       # Wasm binary transforms
+│       ├── js_sys.nim           # js-sys: 192 procs, 20 JS APIs
+│       ├── web_sys.nim          # web-sys: 112 procs, 27 Web APIs
+│       ├── webidl.nim           # WebIDL parser → Nim codegen
+│       ├── wit.nim              # WIT adapter system
+│       └── emscripten.nim       # Emscripten + Memory64 support
 ├── tests/
-│   └── all.nim                  # Unit test suite
+│   └── all.nim                  # Unit test suite (134 tests)
 ├── examples/
 │   └── hello/                   # Hello World example
 │       ├── hello.nim
@@ -165,10 +202,12 @@ nimbling/
 | Type descriptors | `__wbindgen_describe_*` | `__nbg_describe_*` |
 | JS function prefix | `__wbg_` | `__nbg_` |
 | JS heap | `addHeapObject`/`dropObject` | identical |
-| Schema version | `0.2.119` | `0.1.0` |
+| Schema version | `0.2.119` | `0.2.0` |
 | CLI | `wasm-bindgen` (Rust binary) | `nimbling` (Nim binary) |
-| web-sys | Yes (~100 Web APIs) | Planned |
-| Test runner | Yes (browser/Node/Deno) | Planned |
+| web-sys | Yes (~100 Web APIs) | Done (27 Web APIs, expandable via WebIDL) |
+| Test runner | Yes (browser/Node/Deno) | Done |
+| WebIDL macro | No | **Yes** — compile-time `webidlBind` |
+| js-sys | ~250 procs | 192 procs (20 APIs) |
 
 ## License
 
