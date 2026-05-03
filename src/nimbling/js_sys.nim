@@ -1470,3 +1470,164 @@ proc jsFetchWithInit*(url: string, init: JsValue): JsPromise =
     """.}
   else:
     result = JsPromise(JsValue(idx: 0))
+
+# ─── Intl API ───
+
+type
+  JsIntlDateTimeFormat* = distinct JsValue
+  JsIntlNumberFormat* = distinct JsValue
+  JsIntlPluralRules* = distinct JsValue
+  JsIntlCollator* = distinct JsValue
+
+proc jsNewIntlDateTimeFormat*(locale: string, options: JsValue = JsValue(idx: 0)): JsIntlDateTimeFormat =
+  when defined(wasm32):
+    {.emit: """
+    var l = `locale`;
+    var o = `options`;
+    if (o == 0) {
+      `result` = {idx: addHeapObject(new Intl.DateTimeFormat(l))};
+    } else {
+      `result` = {idx: addHeapObject(new Intl.DateTimeFormat(l, heap[o]))};
+    }
+    """.}
+  else:
+    result = JsIntlDateTimeFormat(JsValue(idx: 0))
+
+proc jsIntlDateTimeFormatFormat*(fmt: JsIntlDateTimeFormat, date: JsValue): string =
+  when defined(wasm32):
+    {.emit: """
+    var s = heap[`fmt`.idx].format(heap[`date`.idx]);
+    var len = s.length;
+    var ptr = __nbg_malloc(len, 1);
+    for (var i = 0; i < len; i++) ptr[i] = s.charCodeAt(i);
+    `result` = {Field0: ptr, Field1: len};
+    """.}
+  else:
+    result = ""
+
+proc jsIntlDateTimeFormatFormatRange*(fmt: JsIntlDateTimeFormat, startDate: JsValue, endDate: JsValue): string =
+  when defined(wasm32):
+    {.emit: """
+    var s = heap[`fmt`.idx].formatRange(heap[`startDate`.idx], heap[`endDate`.idx]);
+    var len = s.length;
+    var ptr = __nbg_malloc(len, 1);
+    for (var i = 0; i < len; i++) ptr[i] = s.charCodeAt(i);
+    `result` = {Field0: ptr, Field1: len};
+    """.}
+  else:
+    result = ""
+
+proc jsIntlDateTimeFormatResolvedOptions*(fmt: JsIntlDateTimeFormat): JsValue =
+  when defined(wasm32):
+    {.emit: "`result` = {idx: addHeapObject(heap[`fmt`.idx].resolvedOptions())};".}
+  else:
+    result = JsValue(idx: 0)
+
+proc jsNewIntlNumberFormat*(locale: string, options: JsValue = JsValue(idx: 0)): JsIntlNumberFormat =
+  when defined(wasm32):
+    {.emit: """
+    var l = `locale`;
+    var o = `options`;
+    if (o == 0) {
+      `result` = {idx: addHeapObject(new Intl.NumberFormat(l))};
+    } else {
+      `result` = {idx: addHeapObject(new Intl.NumberFormat(l, heap[o]))};
+    }
+    """.}
+  else:
+    result = JsIntlNumberFormat(JsValue(idx: 0))
+
+proc jsIntlNumberFormatFormat*(fmt: JsIntlNumberFormat, number: JsValue): string =
+  when defined(wasm32):
+    {.emit: """
+    var s = heap[`fmt`.idx].format(heap[`number`.idx]);
+    var len = s.length;
+    var ptr = __nbg_malloc(len, 1);
+    for (var i = 0; i < len; i++) ptr[i] = s.charCodeAt(i);
+    `result` = {Field0: ptr, Field1: len};
+    """.}
+  else:
+    result = ""
+
+proc jsIntlNumberFormatFormatToParts*(fmt: JsIntlNumberFormat, number: JsValue): JsValue =
+  when defined(wasm32):
+    {.emit: "`result` = {idx: addHeapObject(heap[`fmt`.idx].formatToParts(heap[`number`.idx]))};".}
+  else:
+    result = JsValue(idx: 0)
+
+proc jsIntlNumberFormatResolvedOptions*(fmt: JsIntlNumberFormat): JsValue =
+  when defined(wasm32):
+    {.emit: "`result` = {idx: addHeapObject(heap[`fmt`.idx].resolvedOptions())};".}
+  else:
+    result = JsValue(idx: 0)
+
+proc jsNewIntlPluralRules*(locale: string, options: JsValue = JsValue(idx: 0)): JsIntlPluralRules =
+  when defined(wasm32):
+    {.emit: """
+    var l = `locale`;
+    var o = `options`;
+    if (o == 0) {
+      `result` = {idx: addHeapObject(new Intl.PluralRules(l))};
+    } else {
+      `result` = {idx: addHeapObject(new Intl.PluralRules(l, heap[o]))};
+    }
+    """.}
+  else:
+    result = JsIntlPluralRules(JsValue(idx: 0))
+
+proc jsIntlPluralRulesSelect*(rules: JsIntlPluralRules, number: int): string =
+  when defined(wasm32):
+    {.emit: """
+    var s = heap[`rules`.idx].select(`number`);
+    var len = s.length;
+    var ptr = __nbg_malloc(len, 1);
+    for (var i = 0; i < len; i++) ptr[i] = s.charCodeAt(i);
+    `result` = {Field0: ptr, Field1: len};
+    """.}
+  else:
+    result = ""
+
+proc jsNewIntlCollator*(locale: string, options: JsValue = JsValue(idx: 0)): JsIntlCollator =
+  when defined(wasm32):
+    {.emit: """
+    var l = `locale`;
+    var o = `options`;
+    if (o == 0) {
+      `result` = {idx: addHeapObject(new Intl.Collator(l))};
+    } else {
+      `result` = {idx: addHeapObject(new Intl.Collator(l, heap[o]))};
+    }
+    """.}
+  else:
+    result = JsIntlCollator(JsValue(idx: 0))
+
+proc jsIntlCollatorCompare*(collator: JsIntlCollator, str1: string, str2: string): int =
+  when defined(wasm32):
+    {.emit: "`result` = heap[`collator`.idx].compare(`str1`, `str2`);".}
+  else:
+    result = 0
+
+proc jsIntlCollatorResolvedOptions*(collator: JsIntlCollator): JsValue =
+  when defined(wasm32):
+    {.emit: "`result` = {idx: addHeapObject(heap[`collator`.idx].resolvedOptions())};".}
+  else:
+    result = JsValue(idx: 0)
+
+proc jsCreateDateTimeFormatOptions*(year: string, month: string, day: string, hour: string = "", minute: string = "", second: string = "", timeZone: string = ""): JsValue =
+  when defined(wasm32):
+    {.emit: """
+    var o = {year: `year`, month: `month`, day: `day`};
+    if (`hour` != "") o.hour = `hour`;
+    if (`minute` != "") o.minute = `minute`;
+    if (`second` != "") o.second = `second`;
+    if (`timeZone` != "") o.timeZone = `timeZone`;
+    `result` = {idx: addHeapObject(o)};
+    """.}
+  else:
+    result = JsValue(idx: 0)
+
+proc jsCreateNumberFormatOptions*(style: string, minimumFractionDigits: int = 0, maximumFractionDigits: int = 0, useGrouping: bool = true): JsValue =
+  when defined(wasm32):
+    {.emit: "`result` = {idx: addHeapObject({style: `style`, minimumFractionDigits: `minimumFractionDigits`, maximumFractionDigits: `maximumFractionDigits`, useGrouping: `useGrouping`})};".}
+  else:
+    result = JsValue(idx: 0)

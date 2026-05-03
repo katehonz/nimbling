@@ -20,13 +20,13 @@
 | `cli.nim` — CLI tool, wasm section extraction + interpreter | 283 | ✅ |
 | `interp.nim` — wasm stack-machine interpreter | 502 | ✅ |
 | `transforms.nim` — externref/multivalue/catch/threads | 603 | ✅ |
-| `js_sys.nim` — 192 procs, 20 types | 1428 | ✅ |
-| `web_sys.nim` — 112 procs, 27 types | 846 | ✅ |
+| `js_sys.nim` — 210 procs, 24 types | 1633 | ✅ |
+| `web_sys.nim` — 481 procs, 68 types | 3539 | ✅ |
 | `webidl.nim` — WebIDL parser → Nim | 632 | ✅ |
 | `wit.nim` — WIT adapter system | 602 | ✅ |
 | `emscripten.nim` — Emscripten + Memory64 + CLI flags | 457 | ✅ |
 | `test_runner.nim` — wasm test framework | 781 | ✅ |
-| Tests **(158/158 pass)** | 1850 | ✅ |
+| Tests **(333/333 pass)** | 2704 | ✅ |
 | Docs (README, docs/) | 5 files | ✅ |
 | **TOTAL** | **~11,000** | ✅ |
 
@@ -160,7 +160,15 @@ DOM, CSSOM, Events, Canvas 2D, Fetch, Storage, WebSocket, Location/History, Perf
 | `macroimpl_webidl.nim` — compile-time bindings | 10 | ✅ |
 | `JsFuture` + `spawnLocal` — async bridge | 12 | ✅ |
 | Web Audio API — AudioContext, Oscillator, Gain, Filter, Analyser | 11 | ✅ |
-| **TOTAL** | **158** | ✅ |
+| Web Crypto API — Crypto, SubtleCrypto, CryptoKey, algorithms | 27 | ✅ |
+| IndexedDB — IDBFactory, IDBDatabase, IDBObjectStore, cursors | 52 | ✅ |
+| Geolocation — Geolocation, GeolocationPosition, Coordinates | 8 | ✅ |
+| Service Workers — ServiceWorkerContainer, ServiceWorker, Navigation | 19 | ✅ |
+| Web Workers — Worker, SharedWorker, MessagePort | 16 | ✅ |
+| WebRTC — RTCPeerConnection, RTCDataChannel, RTCRtpSender/Receiver | 31 | ✅ |
+| WebGL / WebGPU — WebGLRenderingContext, WebGL2, GPUDevice | 24 | ✅ |
+| Intl — DateTimeFormat, NumberFormat, PluralRules, Collator | 10 | ✅ |
+| **TOTAL** | **333** | ✅ |
 
 ---
 
@@ -190,17 +198,16 @@ DOM, CSSOM, Events, Canvas 2D, Fetch, Storage, WebSocket, Location/History, Perf
 
 ### More Web APIs
 - [x] Web Audio API — AudioContext, OscillatorNode, GainNode, BiquadFilterNode, AnalyserNode, DelayNode, AudioBuffer, AudioParam, AudioListener (69 procs, 16 types)
-- [ ] Web Crypto API
-- [ ] Web Crypto API
-- [ ] IndexedDB
-- [ ] Service Workers
-- [ ] WebRTC
-- [ ] Web Workers
-- [ ] Geolocation
-- [ ] WebGL / WebGPU
+- [x] Web Crypto API — Crypto, SubtleCrypto, CryptoKey, CryptoKeyPair (47 procs, 4 types)
+- [x] IndexedDB — IDBFactory, IDBDatabase, IDBObjectStore, IDBTransaction, IDBIndex, IDBCursor, IDBRequest, IDBKeyRange (76 procs, 9 types)
+- [x] Service Workers — ServiceWorkerContainer, ServiceWorkerRegistration, ServiceWorker, NavigationPreloadManager (24 procs, 4 types)
+- [x] Web Workers — Worker, SharedWorker, MessagePort, MessageEvent (25 procs, 4 types)
+- [x] Geolocation — Geolocation, GeolocationPosition, GeolocationCoordinates (16 procs, 4 types)
+- [x] WebRTC — RTCPeerConnection, RTCSessionDescription, RTCIceCandidate, RTCDataChannel (58 procs, 8 types)
+- [x] WebGL / WebGPU — WebGLRenderingContext, WebGL2, GPUCanvasContext, GPUDevice (70 procs, 17 types)
 
 ### js-sys
-- [ ] `Intl` — DateTimeFormat, NumberFormat
+- [x] `Intl` — DateTimeFormat, NumberFormat, PluralRules, Collator (18 procs, 4 types)
 
 ---
 

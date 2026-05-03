@@ -44,6 +44,7 @@ proc widlTypeToNim(widlType: string): string =
   of "double", "unrestricted double": return "float64"
   of "DOMString", "USVString", "ByteString", "UTF8String": return "string"
   of "void": return ""
+  of "any", "object": return "JsObject"
   of "Promise": return "JsValue"
   else:
     return t  # assume it's a user-defined DOM type

@@ -1743,7 +1743,7 @@ suite "webidlBind macro — generated procs":
     `optional=`(s, true)
 
   test "namespace method compiles":
-    var jv = JsValue(idx: 0)
+    var jv = JsObject(JsValue(idx: 0))
     log(jv)
 
 # ─── JsFuture + spawnLocal ───
@@ -1904,3 +1904,801 @@ suite "Web Audio — type aliases":
     check JsValue(JsMediaStreamAudioSourceNode(JsValue(idx: 5))).idx == 5
     check JsValue(JsMediaElementAudioSourceNode(JsValue(idx: 6))).idx == 6
     check JsValue(JsAudioListener(JsValue(idx: 7))).idx == 7
+
+suite "Web Crypto — Crypto types":
+  test "Crypto types are distinct JsValue":
+    check JsValue(JsCrypto(JsValue(idx: 1))).idx == 1
+    check JsValue(JsSubtleCrypto(JsValue(idx: 2))).idx == 2
+    check JsValue(JsCryptoKey(JsValue(idx: 3))).idx == 3
+    check JsValue(JsCryptoKeyPair(JsValue(idx: 4))).idx == 4
+
+  test "Crypto returns zero on non-wasm":
+    var c = jsGetCrypto()
+    check JsValue(c).idx == 0
+
+  test "SubtleCrypto returns zero on non-wasm":
+    var c = JsCrypto(JsValue(idx: 0))
+    var sub = jsCryptoSubtle(c)
+    check JsValue(sub).idx == 0
+
+  test "CryptoKey type returns empty on non-wasm":
+    var key = JsCryptoKey(JsValue(idx: 0))
+    check jsCryptoKeyType(key) == ""
+
+  test "CryptoKey extractable returns false on non-wasm":
+    var key = JsCryptoKey(JsValue(idx: 0))
+    check jsCryptoKeyExtractable(key) == false
+
+  test "CryptoKeyPair returns zero keys on non-wasm":
+    var pair = JsCryptoKeyPair(JsValue(idx: 0))
+    check JsValue(jsCryptoKeyPairPrivateKey(pair)).idx == 0
+    check JsValue(jsCryptoKeyPairPublicKey(pair)).idx == 0
+
+  test "ArrayBuffer creation returns zero on non-wasm":
+    var buf = jsNewJsArrayBuffer(1024)
+    check JsValue(buf).idx == 0
+
+  test "Uint8Array creation returns zero on non-wasm":
+    var arr = jsNewJsUint8Array(256)
+    check JsValue(arr).idx == 0
+
+  test "Uint8Array length returns 0 on non-wasm":
+    var arr = JsValue(idx: 0)
+    check jsUint8ArrayLen(arr) == 0
+
+  test "ArrayBuffer byteLength returns 0 on non-wasm":
+    var buf = JsValue(idx: 0)
+    check jsArrayBufferByteLength(buf) == 0
+
+  test "Algorithm creation returns zero on non-wasm":
+    var iv = JsValue(idx: 0)
+    check JsValue(jsCreateAlgorithmAesCbc(iv)).idx == 0
+    check JsValue(jsCreateAlgorithmAesGcm(iv)).idx == 0
+    check JsValue(jsCreateAlgorithmSha256()).idx == 0
+    check JsValue(jsCreateAlgorithmSha384()).idx == 0
+    check JsValue(jsCreateAlgorithmSha512()).idx == 0
+
+  test "Crypto operations return Promise on non-wasm":
+    var subtle = JsSubtleCrypto(JsValue(idx: 0))
+    var alg = JsValue(idx: 0)
+    var key = JsCryptoKey(JsValue(idx: 0))
+    var data = JsValue(idx: 0)
+    check JsValue(jsSubtleCryptoEncrypt(subtle, alg, key, data)).idx == 0
+    check JsValue(jsSubtleCryptoDecrypt(subtle, alg, key, data)).idx == 0
+    check JsValue(jsSubtleCryptoSign(subtle, alg, key, data)).idx == 0
+    check JsValue(jsSubtleCryptoVerify(subtle, alg, key, data, data)).idx == 0
+    check JsValue(jsSubtleCryptoDigest(subtle, alg, data)).idx == 0
+    check JsValue(jsSubtleCryptoGenerateKey(subtle, alg, false, data)).idx == 0
+    check JsValue(jsSubtleCryptoDeriveKey(subtle, alg, key, alg, false, data)).idx == 0
+    check JsValue(jsSubtleCryptoDeriveBits(subtle, alg, key, 256)).idx == 0
+    check JsValue(jsSubtleCryptoImportKey(subtle, "raw", data, alg, false, data)).idx == 0
+    check JsValue(jsSubtleCryptoExportKey(subtle, "raw", key)).idx == 0
+    check JsValue(jsSubtleCryptoWrapKey(subtle, "raw", key, key, alg)).idx == 0
+    check JsValue(jsSubtleCryptoUnwrapKey(subtle, "raw", data, key, alg, alg, false, data)).idx == 0
+
+  test "HMAC algorithm creation":
+    var key = JsValue(idx: 0)
+    check JsValue(jsCreateAlgorithmHmacSha256(key)).idx == 0
+    check JsValue(jsCreateAlgorithmHmacSha384(key)).idx == 0
+    check JsValue(jsCreateAlgorithmHmacSha512(key)).idx == 0
+
+  test "ECDSA/ECDH algorithm creation":
+    check JsValue(jsCreateAlgorithmEcdsa("P-256")).idx == 0
+    check JsValue(jsCreateAlgorithmEcdh("P-256")).idx == 0
+
+  test "RSA algorithm creation":
+    var exp = JsValue(idx: 0)
+    check JsValue(jsCreateAlgorithmRsaOaep(2048, exp)).idx == 0
+    check JsValue(jsCreateAlgorithmRsaPss(8)).idx == 0
+
+  test "PBKDF2 and HKDF algorithm creation":
+    var salt = JsValue(idx: 0)
+    var info = JsValue(idx: 0)
+    check JsValue(jsCreateAlgorithmPbkdf2(salt, 100000, "SHA-256")).idx == 0
+    check JsValue(jsCreateAlgorithmHkdf(salt, "SHA-256", info)).idx == 0
+
+  test "AES-GCM with tagLength":
+    var iv = JsValue(idx: 0)
+    check JsValue(jsCreateAlgorithmAesGcmWithIv(iv, 128)).idx == 0
+
+  test "AES-CTR algorithm creation":
+    var counter = JsValue(idx: 0)
+    check JsValue(jsCreateAlgorithmAesCtr(counter, 64)).idx == 0
+
+  test "Key usage arrays":
+    discard jsCreateEmptyKeyUsage()
+    discard jsCreateKeyUsage("encrypt", "decrypt")
+
+  test "Crypto randomUUID returns empty on non-wasm":
+    check jsCryptoRandomUUID(JsCrypto(JsValue(idx: 0))) == ""
+    check jsCryptoSecureRandomUUID() == ""
+
+  test "GetRandomValues returns zero on non-wasm":
+    var c = JsCrypto(JsValue(idx: 0))
+    var buf = JsValue(idx: 0)
+    check JsValue(jsCryptoGetRandomValues(c, buf)).idx == 0
+
+suite "IndexedDB — types":
+  test "IndexedDB types are distinct JsValue":
+    check JsValue(JsIDBFactory(JsValue(idx: 1))).idx == 1
+    check JsValue(JsIDBDatabase(JsValue(idx: 2))).idx == 2
+    check JsValue(JsIDBObjectStore(JsValue(idx: 3))).idx == 3
+    check JsValue(JsIDBTransaction(JsValue(idx: 4))).idx == 4
+    check JsValue(JsIDBIndex(JsValue(idx: 5))).idx == 5
+    check JsValue(JsIDBCursor(JsValue(idx: 6))).idx == 6
+    check JsValue(JsIDBRequest(JsValue(idx: 7))).idx == 7
+    check JsValue(JsIDBCursorWithValue(JsValue(idx: 8))).idx == 8
+    check JsValue(JsIDBOpenDBRequest(JsValue(idx: 9))).idx == 9
+
+  test "IDBFactory returns zero on non-wasm":
+    var factory = jsGetIDBFactory()
+    check JsValue(factory).idx == 0
+
+  test "IDBDatabase name returns empty on non-wasm":
+    var db = JsIDBDatabase(JsValue(idx: 0))
+    check jsIDBDatabaseName(db) == ""
+
+  test "IDBDatabase version returns 0 on non-wasm":
+    var db = JsIDBDatabase(JsValue(idx: 0))
+    check jsIDBDatabaseVersion(db) == 0
+
+  test "IDBDatabase objectStoreNames returns zero on non-wasm":
+    var db = JsIDBDatabase(JsValue(idx: 0))
+    check JsValue(jsIDBDatabaseObjectStoreNames(db)).idx == 0
+
+  test "IDBObjectStore name returns empty on non-wasm":
+    var store = JsIDBObjectStore(JsValue(idx: 0))
+    check jsIDBObjectStoreName(store) == ""
+
+  test "IDBObjectStore keyPath returns zero on non-wasm":
+    var store = JsIDBObjectStore(JsValue(idx: 0))
+    check JsValue(jsIDBObjectStoreKeyPath(store)).idx == 0
+
+  test "IDBObjectStore autoIncrement returns false on non-wasm":
+    var store = JsIDBObjectStore(JsValue(idx: 0))
+    check jsIDBObjectStoreAutoIncrement(store) == false
+
+  test "IDBTransaction mode returns empty on non-wasm":
+    var tx = JsIDBTransaction(JsValue(idx: 0))
+    check jsIDBTransactionMode(tx) == ""
+
+  test "IDBIndex name returns empty on non-wasm":
+    var idx = JsIDBIndex(JsValue(idx: 0))
+    check jsIDBIndexName(idx) == ""
+
+  test "IDBIndex multiEntry returns false on non-wasm":
+    var idx = JsIDBIndex(JsValue(idx: 0))
+    check jsIDBIndexMultiEntry(idx) == false
+
+  test "IDBIndex unique returns false on non-wasm":
+    var idx = JsIDBIndex(JsValue(idx: 0))
+    check jsIDBIndexUnique(idx) == false
+
+  test "IDBCursor direction returns empty on non-wasm":
+    var cursor = JsIDBCursor(JsValue(idx: 0))
+    check jsIDBCursorDirection(cursor) == ""
+
+  test "IDBCursor key returns zero on non-wasm":
+    var cursor = JsIDBCursor(JsValue(idx: 0))
+    check JsValue(jsIDBCursorKey(cursor)).idx == 0
+
+  test "IDBCursor primaryKey returns zero on non-wasm":
+    var cursor = JsIDBCursor(JsValue(idx: 0))
+    check JsValue(jsIDBCursorPrimaryKey(cursor)).idx == 0
+
+  test "IDBCursor value returns zero on non-wasm":
+    var cursor = JsIDBCursor(JsValue(idx: 0))
+    check JsValue(jsIDBCursorValue(cursor)).idx == 0
+
+  test "IDBRequest readyState returns empty on non-wasm":
+    var req = JsIDBRequest(JsValue(idx: 0))
+    check jsIDBRequestReadyState(req) == ""
+
+  test "IDBRequest result returns zero on non-wasm":
+    var req = JsIDBRequest(JsValue(idx: 0))
+    check JsValue(jsIDBRequestResult(req)).idx == 0
+
+  test "IDBRequest source returns zero on non-wasm":
+    var req = JsIDBRequest(JsValue(idx: 0))
+    check JsValue(jsIDBRequestSource(req)).idx == 0
+
+  test "IDBRequest transaction returns zero on non-wasm":
+    var req = JsIDBRequest(JsValue(idx: 0))
+    check JsValue(jsIDBRequestTransaction(req)).idx == 0
+
+  test "IDBRequest error returns zero on non-wasm":
+    var req = JsIDBRequest(JsValue(idx: 0))
+    check JsValue(jsIDBRequestError(req)).idx == 0
+
+  test "IDBFactory open returns zero on non-wasm":
+    var factory = JsIDBFactory(JsValue(idx: 0))
+    check JsValue(jsIDBFactoryOpen(factory, "testdb", 1)).idx == 0
+
+  test "IDBFactory deleteDatabase returns zero on non-wasm":
+    var factory = JsIDBFactory(JsValue(idx: 0))
+    check JsValue(jsIDBFactoryDeleteDatabase(factory, "testdb")).idx == 0
+
+  test "IDBDatabase createObjectStore returns zero on non-wasm":
+    var db = JsIDBDatabase(JsValue(idx: 0))
+    check JsValue(jsIDBDatabaseCreateObjectStore(db, "store")).idx == 0
+
+  test "IDBDatabase transaction returns zero on non-wasm":
+    var db = JsIDBDatabase(JsValue(idx: 0))
+    var names = JsValue(idx: 0)
+    check JsValue(jsIDBDatabaseTransaction(db, names)).idx == 0
+
+  test "IDBObjectStore add returns zero on non-wasm":
+    var store = JsIDBObjectStore(JsValue(idx: 0))
+    var value = JsValue(idx: 0)
+    check JsValue(jsIDBObjectStoreAdd(store, value)).idx == 0
+
+  test "IDBObjectStore put returns zero on non-wasm":
+    var store = JsIDBObjectStore(JsValue(idx: 0))
+    var value = JsValue(idx: 0)
+    check JsValue(jsIDBObjectStorePut(store, value)).idx == 0
+
+  test "IDBObjectStore get returns zero on non-wasm":
+    var store = JsIDBObjectStore(JsValue(idx: 0))
+    var key = JsValue(idx: 0)
+    check JsValue(jsIDBObjectStoreGet(store, key)).idx == 0
+
+  test "IDBObjectStore getAll returns zero on non-wasm":
+    var store = JsIDBObjectStore(JsValue(idx: 0))
+    check JsValue(jsIDBObjectStoreGetAll(store)).idx == 0
+
+  test "IDBObjectStore delete returns zero on non-wasm":
+    var store = JsIDBObjectStore(JsValue(idx: 0))
+    var key = JsValue(idx: 0)
+    check JsValue(jsIDBObjectStoreDelete(store, key)).idx == 0
+
+  test "IDBObjectStore clear returns zero on non-wasm":
+    var store = JsIDBObjectStore(JsValue(idx: 0))
+    check JsValue(jsIDBObjectStoreClear(store)).idx == 0
+
+  test "IDBObjectStore count returns zero on non-wasm":
+    var store = JsIDBObjectStore(JsValue(idx: 0))
+    check JsValue(jsIDBObjectStoreCount(store)).idx == 0
+
+  test "IDBObjectStore createIndex returns zero on non-wasm":
+    var store = JsIDBObjectStore(JsValue(idx: 0))
+    var keyPath = JsValue(idx: 0)
+    check JsValue(jsIDBObjectStoreCreateIndex(store, "idx", keyPath)).idx == 0
+
+  test "IDBObjectStore index returns zero on non-wasm":
+    var store = JsIDBObjectStore(JsValue(idx: 0))
+    check JsValue(jsIDBObjectStoreIndex(store, "idx")).idx == 0
+
+  test "IDBObjectStore openCursor returns zero on non-wasm":
+    var store = JsIDBObjectStore(JsValue(idx: 0))
+    check JsValue(jsIDBObjectStoreOpenCursor(store)).idx == 0
+
+  test "IDBIndex get returns zero on non-wasm":
+    var idx = JsIDBIndex(JsValue(idx: 0))
+    var key = JsValue(idx: 0)
+    check JsValue(jsIDBIndexGet(idx, key)).idx == 0
+
+  test "IDBIndex getAll returns zero on non-wasm":
+    var idx = JsIDBIndex(JsValue(idx: 0))
+    check JsValue(jsIDBIndexGetAll(idx)).idx == 0
+
+  test "IDBIndex openCursor returns zero on non-wasm":
+    var idx = JsIDBIndex(JsValue(idx: 0))
+    check JsValue(jsIDBIndexOpenCursor(idx)).idx == 0
+
+  test "IDBIndex count returns zero on non-wasm":
+    var idx = JsIDBIndex(JsValue(idx: 0))
+    check JsValue(jsIDBIndexCount(idx)).idx == 0
+
+  test "IDBCursor continue compiles on non-wasm":
+    var cursor = JsIDBCursor(JsValue(idx: 0))
+    jsIDBCursorContinue(cursor)
+
+  test "IDBCursor advance compiles on non-wasm":
+    var cursor = JsIDBCursor(JsValue(idx: 0))
+    jsIDBCursorAdvance(cursor, 1)
+
+  test "IDBCursor delete returns zero on non-wasm":
+    var cursor = JsIDBCursor(JsValue(idx: 0))
+    check JsValue(jsIDBCursorDelete(cursor)).idx == 0
+
+  test "IDBCursor update returns zero on non-wasm":
+    var cursor = JsIDBCursor(JsValue(idx: 0))
+    var value = JsValue(idx: 0)
+    check JsValue(jsIDBCursorUpdate(cursor, value)).idx == 0
+
+  test "IDBKeyRange lowerBound returns zero on non-wasm":
+    var lower = JsValue(idx: 0)
+    check JsValue(jsCreateIDBKeyRangeLowerBound(lower, false)).idx == 0
+
+  test "IDBKeyRange upperBound returns zero on non-wasm":
+    var upper = JsValue(idx: 0)
+    check JsValue(jsCreateIDBKeyRangeUpperBound(upper, false)).idx == 0
+
+  test "IDBKeyRange bound returns zero on non-wasm":
+    var lower = JsValue(idx: 0)
+    var upper = JsValue(idx: 0)
+    check JsValue(jsCreateIDBKeyRangeBound(lower, upper, false, false)).idx == 0
+
+  test "IDBKeyRange only returns zero on non-wasm":
+    var value = JsValue(idx: 0)
+    check JsValue(jsCreateIDBKeyRangeOnly(value)).idx == 0
+
+suite "Geolocation — types":
+  test "Geolocation types are distinct JsValue":
+    check JsValue(JsGeolocation(JsValue(idx: 1))).idx == 1
+    check JsValue(JsGeolocationPosition(JsValue(idx: 2))).idx == 2
+    check JsValue(JsGeolocationCoordinates(JsValue(idx: 3))).idx == 3
+    check JsValue(JsGeolocationPositionError(JsValue(idx: 4))).idx == 4
+
+  test "Navigator geolocation returns zero on non-wasm":
+    var geo = jsNavigatorGeolocation()
+    check JsValue(geo).idx == 0
+
+  test "GeolocationCoordinates properties return defaults on non-wasm":
+    var coords = JsGeolocationCoordinates(JsValue(idx: 0))
+    check jsGeolocationCoordinatesLatitude(coords) == 0.0
+    check jsGeolocationCoordinatesLongitude(coords) == 0.0
+    check jsGeolocationCoordinatesAltitude(coords) == 0.0
+    check jsGeolocationCoordinatesAccuracy(coords) == 0.0
+    check jsGeolocationCoordinatesAltitudeAccuracy(coords) == 0.0
+    check jsGeolocationCoordinatesHeading(coords) == 0.0
+    check jsGeolocationCoordinatesSpeed(coords) == 0.0
+
+  test "GeolocationPosition timestamp returns 0 on non-wasm":
+    var pos = JsGeolocationPosition(JsValue(idx: 0))
+    check jsGeolocationPositionTimestamp(pos) == 0
+
+  test "GeolocationPosition coords returns zero on non-wasm":
+    var pos = JsGeolocationPosition(JsValue(idx: 0))
+    check JsValue(jsGeolocationPositionCoords(pos)).idx == 0
+
+  test "GeolocationPositionError code returns 0 on non-wasm":
+    var err = JsGeolocationPositionError(JsValue(idx: 0))
+    check jsGeolocationPositionErrorCode(err) == 0
+
+  test "GeolocationPositionError message returns empty on non-wasm":
+    var err = JsGeolocationPositionError(JsValue(idx: 0))
+    check jsGeolocationPositionErrorMessage(err) == ""
+
+  test "PositionOptions creation":
+    var opts = jsCreatePositionOptions(false, 5000, 0)
+    check JsValue(opts).idx == 0
+
+suite "Service Workers — types":
+  test "ServiceWorker types are distinct JsValue":
+    check JsValue(JsServiceWorkerContainer(JsValue(idx: 1))).idx == 1
+    check JsValue(JsServiceWorkerRegistration(JsValue(idx: 2))).idx == 2
+    check JsValue(JsServiceWorker(JsValue(idx: 3))).idx == 3
+    check JsValue(JsNavigationPreloadManager(JsValue(idx: 4))).idx == 4
+
+  test "Navigator serviceWorker returns zero on non-wasm":
+    var container = jsNavigatorServiceWorker()
+    check JsValue(container).idx == 0
+
+  test "ServiceWorkerContainer register returns Promise on non-wasm":
+    var container = JsServiceWorkerContainer(JsValue(idx: 0))
+    check JsValue(jsServiceWorkerContainerRegister(container, "/sw.js")).idx == 0
+
+  test "ServiceWorkerContainer ready returns Promise on non-wasm":
+    var container = JsServiceWorkerContainer(JsValue(idx: 0))
+    check JsValue(jsServiceWorkerContainerReady(container)).idx == 0
+
+  test "ServiceWorkerContainer getRegistration returns Promise on non-wasm":
+    var container = JsServiceWorkerContainer(JsValue(idx: 0))
+    check JsValue(jsServiceWorkerContainerGetRegistration(container, "/")).idx == 0
+
+  test "ServiceWorkerRegistration active returns zero on non-wasm":
+    var reg = JsServiceWorkerRegistration(JsValue(idx: 0))
+    check JsValue(jsServiceWorkerRegistrationActive(reg)).idx == 0
+
+  test "ServiceWorkerRegistration installing returns zero on non-wasm":
+    var reg = JsServiceWorkerRegistration(JsValue(idx: 0))
+    check JsValue(jsServiceWorkerRegistrationInstalling(reg)).idx == 0
+
+  test "ServiceWorkerRegistration waiting returns zero on non-wasm":
+    var reg = JsServiceWorkerRegistration(JsValue(idx: 0))
+    check JsValue(jsServiceWorkerRegistrationWaiting(reg)).idx == 0
+
+  test "ServiceWorkerRegistration scope returns empty on non-wasm":
+    var reg = JsServiceWorkerRegistration(JsValue(idx: 0))
+    check jsServiceWorkerRegistrationScope(reg) == ""
+
+  test "ServiceWorkerRegistration update returns Promise on non-wasm":
+    var reg = JsServiceWorkerRegistration(JsValue(idx: 0))
+    check JsValue(jsServiceWorkerRegistrationUpdate(reg)).idx == 0
+
+  test "ServiceWorkerRegistration unregister returns Promise on non-wasm":
+    var reg = JsServiceWorkerRegistration(JsValue(idx: 0))
+    check JsValue(jsServiceWorkerRegistrationUnregister(reg)).idx == 0
+
+  test "ServiceWorkerRegistration navigationPreload returns zero on non-wasm":
+    var reg = JsServiceWorkerRegistration(JsValue(idx: 0))
+    check JsValue(jsServiceWorkerRegistrationNavigationPreload(reg)).idx == 0
+
+  test "ServiceWorker state returns empty on non-wasm":
+    var worker = JsServiceWorker(JsValue(idx: 0))
+    check jsServiceWorkerState(worker) == ""
+
+  test "ServiceWorker scriptURL returns empty on non-wasm":
+    var worker = JsServiceWorker(JsValue(idx: 0))
+    check jsServiceWorkerScriptURL(worker) == ""
+
+  test "ServiceWorker postMessage compiles on non-wasm":
+    var worker = JsServiceWorker(JsValue(idx: 0))
+    var msg = JsValue(idx: 0)
+    jsServiceWorkerPostMessage(worker, msg)
+
+  test "NavigationPreloadManager enable returns Promise on non-wasm":
+    var manager = JsNavigationPreloadManager(JsValue(idx: 0))
+    check JsValue(jsNavigationPreloadManagerEnable(manager)).idx == 0
+
+  test "NavigationPreloadManager disable returns Promise on non-wasm":
+    var manager = JsNavigationPreloadManager(JsValue(idx: 0))
+    check JsValue(jsNavigationPreloadManagerDisable(manager)).idx == 0
+
+  test "NavigationPreloadManager setHeaderValue returns Promise on non-wasm":
+    var manager = JsNavigationPreloadManager(JsValue(idx: 0))
+    check JsValue(jsNavigationPreloadManagerSetHeaderValue(manager, "test")).idx == 0
+
+  test "NavigationPreloadManager getState returns Promise on non-wasm":
+    var manager = JsNavigationPreloadManager(JsValue(idx: 0))
+    check JsValue(jsNavigationPreloadManagerGetState(manager)).idx == 0
+
+suite "Web Workers — types":
+  test "Worker types are distinct JsValue":
+    check JsValue(JsWorker(JsValue(idx: 1))).idx == 1
+    check JsValue(JsSharedWorker(JsValue(idx: 2))).idx == 2
+    check JsValue(JsMessagePort(JsValue(idx: 3))).idx == 3
+    check JsValue(JsMessageEvent(JsValue(idx: 4))).idx == 4
+
+  test "Worker creation returns zero on non-wasm":
+    var worker = jsNewWorker("/worker.js")
+    check JsValue(worker).idx == 0
+
+  test "Worker type classic returns zero on non-wasm":
+    var worker = jsCreateWorkerTypeClassic("/worker.js")
+    check JsValue(worker).idx == 0
+
+  test "Worker type module returns zero on non-wasm":
+    var worker = jsCreateWorkerTypeModule("/worker.js")
+    check JsValue(worker).idx == 0
+
+  test "Worker postMessage compiles on non-wasm":
+    var worker = JsWorker(JsValue(idx: 0))
+    var msg = JsValue(idx: 0)
+    jsWorkerPostMessage(worker, msg)
+
+  test "Worker addEventListener compiles on non-wasm":
+    var worker = JsWorker(JsValue(idx: 0))
+    var handler = JsValue(idx: 0)
+    jsWorkerAddEventListener(worker, "message", handler)
+
+  test "Worker onMessage compiles on non-wasm":
+    var worker = JsWorker(JsValue(idx: 0))
+    var handler = JsValue(idx: 0)
+    jsWorkerOnMessage(worker, handler)
+
+  test "Worker dispatchEvent returns false on non-wasm":
+    var worker = JsWorker(JsValue(idx: 0))
+    var event = JsValue(idx: 0)
+    check jsWorkerDispatchEvent(worker, event) == false
+
+  test "SharedWorker creation returns zero on non-wasm":
+    var worker = jsNewSharedWorker("/worker.js")
+    check JsValue(worker).idx == 0
+
+  test "SharedWorker port returns zero on non-wasm":
+    var worker = JsSharedWorker(JsValue(idx: 0))
+    check JsValue(jsSharedWorkerPort(worker)).idx == 0
+
+  test "MessagePort postMessage compiles on non-wasm":
+    var port = JsMessagePort(JsValue(idx: 0))
+    var msg = JsValue(idx: 0)
+    jsMessagePortPostMessage(port, msg)
+
+  test "MessagePort onMessage compiles on non-wasm":
+    var port = JsMessagePort(JsValue(idx: 0))
+    var handler = JsValue(idx: 0)
+    jsMessagePortOnMessage(port, handler)
+
+  test "MessageEvent data returns zero on non-wasm":
+    var event = JsMessageEvent(JsValue(idx: 0))
+    check JsValue(jsMessageEventData(event)).idx == 0
+
+  test "MessageEvent origin returns empty on non-wasm":
+    var event = JsMessageEvent(JsValue(idx: 0))
+    check jsMessageEventOrigin(event) == ""
+
+  test "MessageEvent source returns zero on non-wasm":
+    var event = JsMessageEvent(JsValue(idx: 0))
+    check JsValue(jsMessageEventSource(event)).idx == 0
+
+  test "WorkerOptions creation":
+    var opts = jsCreateWorkerOptions("classic", "same-origin")
+    check JsValue(opts).idx == 0
+
+suite "WebRTC — types":
+  test "WebRTC types are distinct JsValue":
+    check JsValue(JsRTCPeerConnection(JsValue(idx: 1))).idx == 1
+    check JsValue(JsRTCSessionDescription(JsValue(idx: 2))).idx == 2
+    check JsValue(JsRTCIceCandidate(JsValue(idx: 3))).idx == 3
+    check JsValue(JsRTCDataChannel(JsValue(idx: 4))).idx == 4
+    check JsValue(JsRTCRtpSender(JsValue(idx: 5))).idx == 5
+    check JsValue(JsRTCRtpReceiver(JsValue(idx: 6))).idx == 6
+    check JsValue(JsRTCRtpTransceiver(JsValue(idx: 7))).idx == 7
+
+  test "RTCPeerConnection creation returns zero on non-wasm":
+    var pc = jsNewRTCPeerConnection()
+    check JsValue(pc).idx == 0
+
+  test "RTCPeerConnection signalingState returns empty on non-wasm":
+    var pc = JsRTCPeerConnection(JsValue(idx: 0))
+    check jsRTCPeerConnectionSignalingState(pc) == ""
+
+  test "RTCPeerConnection iceConnectionState returns empty on non-wasm":
+    var pc = JsRTCPeerConnection(JsValue(idx: 0))
+    check jsRTCPeerConnectionIceConnectionState(pc) == ""
+
+  test "RTCPeerConnection iceGatheringState returns empty on non-wasm":
+    var pc = JsRTCPeerConnection(JsValue(idx: 0))
+    check jsRTCPeerConnectionIceGatheringState(pc) == ""
+
+  test "RTCPeerConnection localDescription returns zero on non-wasm":
+    var pc = JsRTCPeerConnection(JsValue(idx: 0))
+    check JsValue(jsRTCPeerConnectionLocalDescription(pc)).idx == 0
+
+  test "RTCPeerConnection remoteDescription returns zero on non-wasm":
+    var pc = JsRTCPeerConnection(JsValue(idx: 0))
+    check JsValue(jsRTCPeerConnectionRemoteDescription(pc)).idx == 0
+
+  test "RTCPeerConnection createOffer returns Promise on non-wasm":
+    var pc = JsRTCPeerConnection(JsValue(idx: 0))
+    check JsValue(jsRTCPeerConnectionCreateOffer(pc)).idx == 0
+
+  test "RTCPeerConnection createAnswer returns Promise on non-wasm":
+    var pc = JsRTCPeerConnection(JsValue(idx: 0))
+    check JsValue(jsRTCPeerConnectionCreateAnswer(pc)).idx == 0
+
+  test "RTCPeerConnection setLocalDescription returns Promise on non-wasm":
+    var pc = JsRTCPeerConnection(JsValue(idx: 0))
+    var desc = JsValue(idx: 0)
+    check JsValue(jsRTCPeerConnectionSetLocalDescription(pc, desc)).idx == 0
+
+  test "RTCPeerConnection setRemoteDescription returns Promise on non-wasm":
+    var pc = JsRTCPeerConnection(JsValue(idx: 0))
+    var desc = JsValue(idx: 0)
+    check JsValue(jsRTCPeerConnectionSetRemoteDescription(pc, desc)).idx == 0
+
+  test "RTCPeerConnection addIceCandidate returns Promise on non-wasm":
+    var pc = JsRTCPeerConnection(JsValue(idx: 0))
+    var cand = JsValue(idx: 0)
+    check JsValue(jsRTCPeerConnectionAddIceCandidate(pc, cand)).idx == 0
+
+  test "RTCPeerConnection createDataChannel returns zero on non-wasm":
+    var pc = JsRTCPeerConnection(JsValue(idx: 0))
+    check JsValue(jsRTCPeerConnectionCreateDataChannel(pc, "test")).idx == 0
+
+  test "RTCPeerConnection getTransceivers returns zero on non-wasm":
+    var pc = JsRTCPeerConnection(JsValue(idx: 0))
+    check JsValue(jsRTCPeerConnectionGetTransceivers(pc)).idx == 0
+
+  test "RTCSessionDescription type returns empty on non-wasm":
+    var desc = JsRTCSessionDescription(JsValue(idx: 0))
+    check jsRTCSessionDescriptionType(desc) == ""
+
+  test "RTCSessionDescription sdp returns empty on non-wasm":
+    var desc = JsRTCSessionDescription(JsValue(idx: 0))
+    check jsRTCSessionDescriptionSdp(desc) == ""
+
+  test "RTCIceCandidate candidate returns empty on non-wasm":
+    var cand = JsRTCIceCandidate(JsValue(idx: 0))
+    check jsRTCIceCandidateCandidate(cand) == ""
+
+  test "RTCIceCandidate sdpMid returns empty on non-wasm":
+    var cand = JsRTCIceCandidate(JsValue(idx: 0))
+    check jsRTCIceCandidateSdpMid(cand) == ""
+
+  test "RTCIceCandidate sdpMLineIndex returns 0 on non-wasm":
+    var cand = JsRTCIceCandidate(JsValue(idx: 0))
+    check jsRTCIceCandidateSdpMLineIndex(cand) == 0
+
+  test "RTCDataChannel label returns empty on non-wasm":
+    var channel = JsRTCDataChannel(JsValue(idx: 0))
+    check jsRTCDataChannelLabel(channel) == ""
+
+  test "RTCDataChannel ordered returns false on non-wasm":
+    var channel = JsRTCDataChannel(JsValue(idx: 0))
+    check jsRTCDataChannelOrdered(channel) == false
+
+  test "RTCDataChannel protocol returns empty on non-wasm":
+    var channel = JsRTCDataChannel(JsValue(idx: 0))
+    check jsRTCDataChannelProtocol(channel) == ""
+
+  test "RTCDataChannel readyState returns empty on non-wasm":
+    var channel = JsRTCDataChannel(JsValue(idx: 0))
+    check jsRTCDataChannelReadyState(channel) == ""
+
+  test "RTCDataChannel bufferedAmount returns 0 on non-wasm":
+    var channel = JsRTCDataChannel(JsValue(idx: 0))
+    check jsRTCDataChannelBufferedAmount(channel) == 0
+
+  test "RTCDataChannel send returns false on non-wasm":
+    var channel = JsRTCDataChannel(JsValue(idx: 0))
+    var data = JsValue(idx: 0)
+    check jsRTCDataChannelSend(channel, data) == false
+
+  test "RTCDataChannelOnOpen compiles on non-wasm":
+    var channel = JsRTCDataChannel(JsValue(idx: 0))
+    var handler = JsValue(idx: 0)
+    jsRTCDataChannelOnOpen(channel, handler)
+
+  test "RTCDataChannelOnMessage compiles on non-wasm":
+    var channel = JsRTCDataChannel(JsValue(idx: 0))
+    var handler = JsValue(idx: 0)
+    jsRTCDataChannelOnMessage(channel, handler)
+
+  test "RTCRtpSender track returns zero on non-wasm":
+    var sender = JsRTCRtpSender(JsValue(idx: 0))
+    check JsValue(jsRTCRtpSenderTrack(sender)).idx == 0
+
+  test "RTCRtpReceiver track returns zero on non-wasm":
+    var receiver = JsRTCRtpReceiver(JsValue(idx: 0))
+    check JsValue(jsRTCRtpReceiverTrack(receiver)).idx == 0
+
+  test "RTCRtpTransceiver mid returns empty on non-wasm":
+    var transceiver = JsRTCRtpTransceiver(JsValue(idx: 0))
+    check jsRTCRtpTransceiverMid(transceiver) == ""
+
+suite "WebGL / WebGPU — types":
+  test "WebGL types are distinct JsValue":
+    check JsValue(JsWebGLRenderingContext(JsValue(idx: 1))).idx == 1
+    check JsValue(JsWebGLBuffer(JsValue(idx: 2))).idx == 2
+    check JsValue(JsWebGLFramebuffer(JsValue(idx: 3))).idx == 3
+    check JsValue(JsWebGLProgram(JsValue(idx: 4))).idx == 4
+    check JsValue(JsWebGLShader(JsValue(idx: 5))).idx == 5
+    check JsValue(JsWebGLTexture(JsValue(idx: 6))).idx == 6
+    check JsValue(JsWebGLUniformLocation(JsValue(idx: 7))).idx == 7
+    check JsValue(JsWebGL2RenderingContext(JsValue(idx: 8))).idx == 8
+    check JsValue(JsGPUDevice(JsValue(idx: 9))).idx == 9
+    check JsValue(JsGPUSwapChain(JsValue(idx: 10))).idx == 10
+
+  test "HTMLCanvasElement getContextWebGL returns zero on non-wasm":
+    var canvas = JsHTMLCanvasElement(JsValue(idx: 0))
+    check JsValue(jsHTMLCanvasElementGetContextWebGL(canvas)).idx == 0
+
+  test "HTMLCanvasElement getContextWebGL2 returns zero on non-wasm":
+    var canvas = JsHTMLCanvasElement(JsValue(idx: 0))
+    check JsValue(jsHTMLCanvasElementGetContextWebGL2(canvas)).idx == 0
+
+  test "WebGLRenderingContext clearColor compiles on non-wasm":
+    var ctx = JsWebGLRenderingContext(JsValue(idx: 0))
+    jsWebGLClearColor(ctx, 0.0, 0.0, 0.0, 1.0)
+
+  test "WebGLRenderingContext viewport compiles on non-wasm":
+    var ctx = JsWebGLRenderingContext(JsValue(idx: 0))
+    jsWebGLViewport(ctx, 0, 0, 800, 600)
+
+  test "WebGLRenderingContext createShader returns zero on non-wasm":
+    var ctx = JsWebGLRenderingContext(JsValue(idx: 0))
+    check JsValue(jsWebGLCreateShader(ctx, 0)).idx == 0
+
+  test "WebGLRenderingContext createProgram returns zero on non-wasm":
+    var ctx = JsWebGLRenderingContext(JsValue(idx: 0))
+    check JsValue(jsWebGLCreateProgram(ctx)).idx == 0
+
+  test "WebGLRenderingContext createBuffer returns zero on non-wasm":
+    var ctx = JsWebGLRenderingContext(JsValue(idx: 0))
+    check JsValue(jsWebGLCreateBuffer(ctx)).idx == 0
+
+  test "WebGLRenderingContext createTexture returns zero on non-wasm":
+    var ctx = JsWebGLRenderingContext(JsValue(idx: 0))
+    check JsValue(jsWebGLCreateTexture(ctx)).idx == 0
+
+  test "WebGLRenderingContext createFramebuffer returns zero on non-wasm":
+    var ctx = JsWebGLRenderingContext(JsValue(idx: 0))
+    check JsValue(jsWebGLCreateFramebuffer(ctx)).idx == 0
+
+  test "WebGLRenderingContext getAttribLocation returns -1 on non-wasm":
+    var ctx = JsWebGLRenderingContext(JsValue(idx: 0))
+    var program = JsWebGLProgram(JsValue(idx: 0))
+    check jsWebGLGetAttribLocation(program, "position") == -1
+
+  test "WebGLRenderingContext getUniformLocation returns zero on non-wasm":
+    var program = JsWebGLProgram(JsValue(idx: 0))
+    check JsValue(jsWebGLGetUniformLocation(program, "modelViewProjection")).idx == 0
+
+  test "WebGLRenderingContext uniform1f compiles on non-wasm":
+    var loc = JsWebGLUniformLocation(JsValue(idx: 0))
+    jsWebGLUniform1f(loc, 1.0)
+
+  test "WebGLRenderingContext uniform2f compiles on non-wasm":
+    var loc = JsWebGLUniformLocation(JsValue(idx: 0))
+    jsWebGLUniform2f(loc, 1.0, 2.0)
+
+  test "WebGLRenderingContext uniform3f compiles on non-wasm":
+    var loc = JsWebGLUniformLocation(JsValue(idx: 0))
+    jsWebGLUniform3f(loc, 1.0, 2.0, 3.0)
+
+  test "WebGLRenderingContext uniform4f compiles on non-wasm":
+    var loc = JsWebGLUniformLocation(JsValue(idx: 0))
+    jsWebGLUniform4f(loc, 1.0, 2.0, 3.0, 4.0)
+
+  test "WebGLRenderingContext drawArrays compiles on non-wasm":
+    var ctx = JsWebGLRenderingContext(JsValue(idx: 0))
+    jsWebGLDrawArrays(ctx, 0, 0, 3)
+
+  test "WebGLRenderingContext getError returns 0 on non-wasm":
+    var ctx = JsWebGLRenderingContext(JsValue(idx: 0))
+    check jsWebGLGetError(ctx) == 0
+
+  test "WebGL2RenderingContext createVertexArray returns zero on non-wasm":
+    var ctx = JsWebGL2RenderingContext(JsValue(idx: 0))
+    check JsValue(jsWebGLCreateVertexArray(ctx)).idx == 0
+
+  test "GPUCanvasContext getContextGPU returns zero on non-wasm":
+    var canvas = JsHTMLCanvasElement(JsValue(idx: 0))
+    check JsValue(jsHTMLCanvasElementGetContextGPU(canvas)).idx == 0
+
+  test "GPUTexture width returns 0 on non-wasm":
+    var texture = JsGPUTexture(JsValue(idx: 0))
+    check jsGPUTextureWidth(texture) == 0
+
+  test "GPUTexture height returns 0 on non-wasm":
+    var texture = JsGPUTexture(JsValue(idx: 0))
+    check jsGPUTextureHeight(texture) == 0
+
+  test "GPUTexture depth returns 0 on non-wasm":
+    var texture = JsGPUTexture(JsValue(idx: 0))
+    check jsGPUTextureDepth(texture) == 0
+
+  test "GPUCommandBuffer label returns empty on non-wasm":
+    var buffer = JsGPUCommandBuffer(JsValue(idx: 0))
+    check jsGPUCommandBufferLabel(buffer) == ""
+
+suite "Intl — DateTimeFormat & NumberFormat":
+  test "Intl types are distinct JsValue":
+    check JsValue(JsIntlDateTimeFormat(JsValue(idx: 1))).idx == 1
+    check JsValue(JsIntlNumberFormat(JsValue(idx: 2))).idx == 2
+    check JsValue(JsIntlPluralRules(JsValue(idx: 3))).idx == 3
+    check JsValue(JsIntlCollator(JsValue(idx: 4))).idx == 4
+
+  test "DateTimeFormat format returns empty on non-wasm":
+    var fmt = JsIntlDateTimeFormat(JsValue(idx: 0))
+    var date = JsValue(idx: 0)
+    check jsIntlDateTimeFormatFormat(fmt, date) == ""
+
+  test "DateTimeFormat formatRange returns empty on non-wasm":
+    var fmt = JsIntlDateTimeFormat(JsValue(idx: 0))
+    var startDate = JsValue(idx: 0)
+    var endDate = JsValue(idx: 0)
+    check jsIntlDateTimeFormatFormatRange(fmt, startDate, endDate) == ""
+
+  test "DateTimeFormat resolvedOptions returns zero on non-wasm":
+    var fmt = JsIntlDateTimeFormat(JsValue(idx: 0))
+    check JsValue(jsIntlDateTimeFormatResolvedOptions(fmt)).idx == 0
+
+  test "NumberFormat format returns empty on non-wasm":
+    var fmt = JsIntlNumberFormat(JsValue(idx: 0))
+    var number = JsValue(idx: 0)
+    check jsIntlNumberFormatFormat(fmt, number) == ""
+
+  test "NumberFormat formatToParts returns zero on non-wasm":
+    var fmt = JsIntlNumberFormat(JsValue(idx: 0))
+    var number = JsValue(idx: 0)
+    check JsValue(jsIntlNumberFormatFormatToParts(fmt, number)).idx == 0
+
+  test "NumberFormat resolvedOptions returns zero on non-wasm":
+    var fmt = JsIntlNumberFormat(JsValue(idx: 0))
+    check JsValue(jsIntlNumberFormatResolvedOptions(fmt)).idx == 0
+
+  test "PluralRules select returns empty on non-wasm":
+    var rules = JsIntlPluralRules(JsValue(idx: 0))
+    check jsIntlPluralRulesSelect(rules, 5) == ""
+
+  test "Collator compare returns 0 on non-wasm":
+    var collator = JsIntlCollator(JsValue(idx: 0))
+    check jsIntlCollatorCompare(collator, "a", "b") == 0
+
+  test "Collator resolvedOptions returns zero on non-wasm":
+    var collator = JsIntlCollator(JsValue(idx: 0))
+    check JsValue(jsIntlCollatorResolvedOptions(collator)).idx == 0
