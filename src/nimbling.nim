@@ -26,6 +26,7 @@ import nimbling/runtime
 import nimbling/macroimpl
 import nimbling/jscast
 import nimbling/js_sys
+import nimbling/web_sys
 import nimbling/web_sys_generated
 
 # Re-export core types
@@ -38,6 +39,7 @@ export macroimpl.wasmBindgenType
 export macroimpl.wasmBindgenFinalize
 export jscast
 export js_sys.JsObject
+export web_sys
 export web_sys_generated
 
 when defined(wasm32):

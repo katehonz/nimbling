@@ -281,7 +281,7 @@ macro wasmBindgen*(body: untyped): untyped =
   if not describeImportDeclared:
     let descFn = ident("__nbg_describe")
     wasmBody.add quote do:
-      proc `descFn`(v: uint32) {.importc, nodecl.}
+      proc `descFn`(v: uint32) {.importc.}
     describeImportDeclared = true
 
   # Export wrapper

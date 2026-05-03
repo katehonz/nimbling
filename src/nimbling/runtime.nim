@@ -27,17 +27,20 @@ when defined(wasm32):
 proc `=destroy`*(v: var JsValue) =
   ## Drop the JS object reference.
   when defined(wasm32):
-    {.emit: "__nbg_object_drop_ref(`v`.idx);".}
+    let idx = v.idx
+    {.emit: "__nbg_object_drop_ref(`idx`);".}
 
 proc `=copy`*(dest: var JsValue, src: JsValue) =
   ## Shallow copy — both share the same idx.
   dest.idx = src.idx
   when defined(wasm32):
-    {.emit: "__nbg_object_clone_ref(`dest`.idx);".}
+    let idx = dest.idx
+    {.emit: "__nbg_object_clone_ref(`idx`);".}
 
 proc `=destroy`*[T](c: var Closure[T]) =
   when defined(wasm32):
-    {.emit: "__nbg_closure_drop(`c`.idx);".}
+    let idx = c.idx
+    {.emit: "__nbg_closure_drop(`idx`);".}
 
 # ─── Memory allocator + boxed string helpers ───
 # These are wasm exports — the JS glue calls them.
