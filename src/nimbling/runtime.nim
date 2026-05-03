@@ -1,8 +1,6 @@
 ## Runtime types for nimbling: JsValue, Closure, memory management.
 ## These are used in user code compiled to wasm.
 
-import common
-
 type
   JsValue* = object
     idx*: uint32

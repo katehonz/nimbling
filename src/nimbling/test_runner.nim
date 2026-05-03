@@ -403,17 +403,17 @@ proc generateTestHtml*(wasmFile: string, tests: seq[TestEntry]): string =
 template consoleLog*(args: varargs[string, `$`]) =
   ## Log to browser/Node console. Only active when compiled for wasm32.
   when defined(wasm32):
-    {.emit: "console.log(...);".}
+    {.emit: "/* console.log placeholder */".}
 
 template consoleError*(args: varargs[string, `$`]) =
   ## Log error to browser/Node console. Only active when compiled for wasm32.
   when defined(wasm32):
-    {.emit: "console.error(...);".}
+    {.emit: "/* console.error placeholder */".}
 
 template consoleWarn*(args: varargs[string, `$`]) =
   ## Log warning to browser/Node console. Only active when compiled for wasm32.
   when defined(wasm32):
-    {.emit: "console.warn(...);".}
+    {.emit: "/* console.warn placeholder */".}
 
 # ══════════════════════════════════════════════════════════════════════════════
 # 7. Test runner CLI
@@ -800,17 +800,16 @@ proc emitTestSectionPragma*(tests: seq[TestEntry]): string =
   result &= byteStr
   result &= "};"
   result &= """.}.}"""
-  result = ""
 
 proc generateTestSectionEmit*(tests: seq[TestEntry]): NimNode =
   ## Generate an {.emit.} pragma node that embeds test metadata
   ## into the wasm custom section. Returns a NimNode for use in macros.
   let data = encodeTestSection(tests)
-  var hexLit = ""
+  var hexBytes: seq[string] = @[]
   for b in data:
-    hexLit.add(&"\\x{b:02X}")
+    hexBytes.add(&"0x{b:02X}")
 
-  let emitStr = "static const unsigned char __nimbling_test_data[] __attribute__((section(\"__nimbling_test_unstable\"))) = \"" & hexLit & "\";"
+  let emitStr = "static const unsigned char __nimbling_test_data[] __attribute__((section(\"__nimbling_test_unstable\"))) = {" & hexBytes.join(", ") & "};"
 
   result = nnkPragma.newTree(
     newColonExpr(

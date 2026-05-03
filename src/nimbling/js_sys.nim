@@ -1,7 +1,6 @@
 ## js-sys equivalent for nimbling: bindings to JavaScript built-in APIs.
 ## Mirrors Rust's js-sys crate.
 
-import common
 import runtime
 
 # ─── Array ───

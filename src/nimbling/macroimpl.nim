@@ -494,7 +494,7 @@ proc buildStructFreeShim(ns: NimStruct): NimNode =
 
   var body = newStmtList()
   body.add quote do:
-    `freeFn`(memPtr, sizeof(`structType`).uint32, 4)
+    `freeFn`(ptr, sizeof(`structType`).uint32, 4)
 
   let pragmas = nnkPragmaExpr.newTree(
     shimName,

@@ -1,7 +1,6 @@
 ## web-sys equivalent for nimbling: bindings to Web APIs (DOM, Events, Canvas, Fetch, etc).
 ## Mirrors Rust's web-sys crate.
 
-import common
 import runtime
 import js_sys
 

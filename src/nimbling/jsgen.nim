@@ -111,9 +111,9 @@ function passArray8ToWasm(arg) {
 
 // ─── Intrinsics: Memory & Module Access ───
 function __nbg_memory() { return wasm.memory; }
-function __nbg_module() { return __nbg_init.__wbindgen_wasm_module; }
+function __nbg_module() { return null; }
 function __nbg_exports() { return wasm; }
-function __nbg_instance() { return result.instance; }
+function __nbg_instance() { return null; }
 function __nbg_function_table() { return wasm.__indirect_function_table; }
 function __nbg_panic_error(msg, len) {
   throw new Error(getStringFromWasm(msg, len));

@@ -37,7 +37,7 @@ proc parseArgs(): CliConfig =
     of cmdArgument:
       result.input = key
       if result.wasmName.len == 0:
-        result.wasmName = key.extractFilename().split('.')[0]
+        result.wasmName = key.extractFilename().splitFile().name
     of cmdLongOption, cmdShortOption:
       case key
       of "out-dir", "o":
