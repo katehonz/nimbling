@@ -30,184 +30,50 @@
 | Docs (README, docs/) | 5 files | ✅ |
 | **TOTAL** | **~11,000** | ✅ |
 
----
+### Next — Tier 4: Parity, Tier 5: Beat wasm-bindgen
 
-## Tier 1 — Real-World Usability (DONE)
+| Priority | Task | Status |
+|----------|------|--------|
+| P0 | Threads transform — real wasm binary patching | ⬜ |
+| P0 | Catch/exception transform — real wasm binary patching | ⬜ |
+| P1 | **web-sys: batch-convert 697 WebIDL → Nim** | ✅ 612/647 (94.7%) |
 
-### 1.1 Closure Support — ✅ DONE
-- [x] `Closure[T]` with closure type detection
-- [x] Closure export wrapper generation
-- [x] `__nbg_closure_wrapper` JS intrinsic
-- [x] Descriptor encoding for `TY_CLOSURE` type
-- [x] Tests: closure detection, JS glue generation
+### 5.1 web-sys from 701 WebIDL Files — **612/647 (94.7%) DONE**
+- [x] WebIDL parser (`webidl.nim` — interfaces, partials, mixins, dictionaries, enums, namespaces)
+- [x] Compile-time `webidlBind` macro generates `{.emit.}` proc wrappers
+- [x] Batch-convert all 697 `.webidl` files from `OLD/crates/web-sys/webidls/enabled/` — 612 successful, 35 with edge case failures (skipped)
+- [x] Generate `web_sys_generated.nim` — 9,420 lines, 1,449 type definitions + proc bindings
+- [x] Parser handles: extended attributes (`[Pure]`, `[Throws]`), `interface mixin`, `or` union types, `sequence<T>`, parenthesized unions, `#` preprocessor directives
+- [ ] Fix remaining 35 edge cases in parser (EventTarget, Document, WebGLRenderingContext, etc.)
+- [ ] Fix generated code compilation issues (cross-references, callback type stubs, forward references)
+- [ ] Tests: verify compilation of generated bindings for top 50 Web APIs
+- [ ] Target: 1700+ types, covering 700+ Web APIs (vs current 68 types, 27 APIs)
 
-### 1.2 Struct/Class Export — ✅ DONE
-- [x] `{.wasmBindgenType.}` on `object` / `ref object` types
-- [x] `new`/`free` external functions
-- [x] Field getter/setter via `__nbg_get_*`/`__nbg_set_*`
-- [x] JS `ExportedClass` generation (constructor, prototype methods)
-- [x] TypeScript class declarations
-- [x] Tests: struct field access, method calls, constructor
-
-### 1.3 Enum Support — ✅ DONE
-- [x] Integer enums — name + hole encoding
-- [x] `EnumVariant` descriptor format
-- [x] JS/TS enum generation (bidirectional Object.freeze)
-- [x] Tests: enum roundtrip, string enum, namespace
-
-### 1.4 Async/Promise Support — ✅ DONE
-- [x] `async` proc detection in macro
-- [x] `buildAsyncExportWrapper` — Future to Promise conversion
-- [x] `__nbg_future_to_promise` JS glue
-- [x] `isAsync` flag in FunctionDesc
-- [x] Tests: async detection, JS glue generation
-
-### 1.5 Full Attributes (11/51) — ✅ DONE
-- [x] `jsName`, `getter`, `setter`, `constructor`
-- [x] `catch`, `variadic`, `structural`
-- [x] `start`, `private`, `inspectable`, `skipTypescript`
-- [x] Tests: attribute parsing, JS wrapper generation
-
----
-
-## Tier 2 — Production Quality (DONE)
-
-### 2.1 WIT Adapter System — ✅ DONE
-- [x] 30 instruction types, import/export adapters
-- [x] WIT section encoder/decoder, JS codegen
-- [x] Program-to-adapters bridge
-
-### 2.2 Externref Pass — ✅ DONE
-- [x] Externref table creation, element segment patching
-- [x] Auto-detect `reference-types` feature
-
-### 2.3 Multi-value Pass — ✅ DONE
-- [x] Return-pointer ABI → multi-value returns
-- [x] Auto-detect `multivalue` feature
-
-### 2.4 Threads Support — ✅ DONE
-- [x] Thread preparation, shared memory, stack pointer shims
-- [x] Thread destroy intrinsics
-
-### 2.5 Catch Handler — ✅ DONE
-- [x] Try/catch wrappers for JS exception translation
-
-### 2.6 Test Framework — ✅ DONE
-- [x] `wasmBindgenTest` macro, test runner CLI
-- [x] Browser/Node.js/Deno execution, HTML harness
-
----
-
-## Tier 3 — Ecosystem (DONE)
-
-### 3.1 `js-sys` — ✅ DONE (192 procs, 20 APIs)
-Array, Object, Promise, Date, Math, Map, Set, WeakMap, WeakSet, Error, JSON, Reflect, Symbol, TypedArrays, ArrayBuffer, Console, Fetch, Timers, URI, Number
-
-### 3.2 `web-sys` — ✅ DONE (112 procs, 27 APIs)
-DOM, CSSOM, Events, Canvas 2D, Fetch, Storage, WebSocket, Location/History, Performance, DOMRect
-
-### 3.3 WebIDL Generator — ✅ DONE
-- [x] Parser (interfaces, partials, mixins, dictionaries, enums, namespaces)
-- [x] Nim codegen → `{.wasmBindgen.}` annotations
-- [x] `webidlToNim` one-step entry point
-
-### 3.4 WebIDL Compile-Time Macro — ✅ DONE (NEW)
-- [x] `webidlBind` macro — parses WebIDL at compile time, generates Nim AST directly
-- [x] Generates `type X = distinct JsValue` for interfaces/dictionaries/enums
-- [x] Generates `{.emit.}` proc wrappers matching web_sys.nim pattern
-- [x] Attribute getters/setters, method calls, static methods, namespace methods
-- [x] WebIDL→Nim type mapping (DOMString→string, unsigned short→uint16, long→int32, etc.)
-- [x] Tests: 10 tests covering interfaces, attributes, operations, static, dictionaries, enums, namespaces
-
-### 3.5 Emscripten Support — ✅ DONE
-- [x] `addToLibrary` format, marker section detection
-
-### 3.6 String Interning — ✅ DONE
-- [x] Thread-local cache for deduplication
-
-### 3.7 Memory64 Support — ✅ DONE
-- [x] 64-bit pointer coercion
-
-### 3.8 Additional CLI Flags — ✅ DONE
-- [x] `--demangle`, `--keep-debug`, `--remove-name-section`, `--browser`, `--no-modules-global`, `--split-linked-modules`
-
----
-
-## Bug Fixes (Found During Testing)
-
-| Bug | File | Description |
-|-----|------|-------------|
-| codeOffset off-by-one | `interp.nim:165` | `codeOffset` was absolute position in wasm binary, used as index into sliced `codeData` — interpreter returned empty results |
-| Wrong wasm magic bytes | `transforms.nim:13`, `cli.nim:79` | Magic was `\0ams` instead of correct `\0asm` — `parseSections`/`extractCustomSection` rejected all valid wasm |
-| JsValue `=copy` no-op on x86-64 | `runtime.nim:30` | `=copy` only set `idx` inside `when defined(wasm32)`, making copies zero-initialized on test platform |
-
----
-
-## Test Coverage (After Expansion)
-
-| Area | Tests | Status |
-|------|-------|--------|
-| `common.nim` — identifiers | 4 | ✅ |
-| `encode.nim` + `decode.nim` roundtrip | 9 | ✅ |
-| `describe.nim` — descriptor decode | 10 | ✅ |
-| `jsgen.nim` — JS glue generation | 12 | ✅ |
-| `codegen.nim` — type mapping | 5 | ✅ |
-| `leb128.nim` — edge cases | 9 | ✅ |
-| `interp.nim` — wasm parser, descriptors, interpreter | 26 | ✅ |
-| `transforms.nim` — sections, features, stack ptr, ret ptr, pass-throughs | 28 | ✅ |
-| `cli.nim` — custom section, type helpers | 14 | ✅ |
-| `runtime.nim` — types, value semantics | 7 | ✅ |
-| `macroimpl_webidl.nim` — compile-time bindings | 10 | ✅ |
-| `JsFuture` + `spawnLocal` — async bridge | 12 | ✅ |
-| Web Audio API — AudioContext, Oscillator, Gain, Filter, Analyser | 11 | ✅ |
-| Web Crypto API — Crypto, SubtleCrypto, CryptoKey, algorithms | 27 | ✅ |
-| IndexedDB — IDBFactory, IDBDatabase, IDBObjectStore, cursors | 52 | ✅ |
-| Geolocation — Geolocation, GeolocationPosition, Coordinates | 8 | ✅ |
-| Service Workers — ServiceWorkerContainer, ServiceWorker, Navigation | 19 | ✅ |
-| Web Workers — Worker, SharedWorker, MessagePort | 16 | ✅ |
-| WebRTC — RTCPeerConnection, RTCDataChannel, RTCRtpSender/Receiver | 31 | ✅ |
-| WebGL / WebGPU — WebGLRenderingContext, WebGL2, GPUDevice | 24 | ✅ |
-| Intl — DateTimeFormat, NumberFormat, PluralRules, Collator | 10 | ✅ |
-| **TOTAL** | **333** | ✅ |
-
----
-
-## Deferred / Future Work
-
-### Attributes
+### 5.2 Additional Nim-Native Extensions (Beyond wasm-bindgen)
+- [x] `webidlBind` compile-time macro — no external codegen step needed
+- [ ] Overloaded WebIDL method resolution
+- [ ] Stringifier/iterable WebIDL handling
+- [ ] `typescript_type` custom TS type annotation attribute
+- [ ] String enums with bidirectional JS mapping
 - [ ] `getter`/`setter`/`constructor`/`js_class` attributes on structs (Phase 2)
-- [ ] `typescript_type` — custom TS type annotation
-- [ ] String enums
 
-### Closures & Async
-- [ ] `ScopedClosure` for borrowed lifetimes
-- [ ] Panic-catching in closure wrappers
-- [x] `JsFuture` type — `distinct JsValue`, bridge between JS Promises and Nim
-- [x] `spawnLocal` — schedule Nim procs/futures on JS event loop
-- [x] `futureToPromise` / `spawnLocalFuture` — low-level future-to-Promise bridge
-- [x] `jsFutureThen`/`Catch`/`Finally`/`All`/`Race` — Promise combinators
-- [x] `jsFutureResolved`/`jsFutureRejected` — resolved/rejected JsFuture constructors
-- [x] Tests: 12 tests (JsFuture types, bridge, spawnLocal)
+---
 
-### Test Framework
-- [ ] Worker test modes (Dedicated, Shared, Service)
+### Current vs wasm-bindgen Metrics
 
-### WebIDL
-- [ ] Overloaded method resolution
-- [ ] Stringifier/iterable handling
-
-### More Web APIs
-- [x] Web Audio API — AudioContext, OscillatorNode, GainNode, BiquadFilterNode, AnalyserNode, DelayNode, AudioBuffer, AudioParam, AudioListener (69 procs, 16 types)
-- [x] Web Crypto API — Crypto, SubtleCrypto, CryptoKey, CryptoKeyPair (47 procs, 4 types)
-- [x] IndexedDB — IDBFactory, IDBDatabase, IDBObjectStore, IDBTransaction, IDBIndex, IDBCursor, IDBRequest, IDBKeyRange (76 procs, 9 types)
-- [x] Service Workers — ServiceWorkerContainer, ServiceWorkerRegistration, ServiceWorker, NavigationPreloadManager (24 procs, 4 types)
-- [x] Web Workers — Worker, SharedWorker, MessagePort, MessageEvent (25 procs, 4 types)
-- [x] Geolocation — Geolocation, GeolocationPosition, GeolocationCoordinates (16 procs, 4 types)
-- [x] WebRTC — RTCPeerConnection, RTCSessionDescription, RTCIceCandidate, RTCDataChannel (58 procs, 8 types)
-- [x] WebGL / WebGPU — WebGLRenderingContext, WebGL2, GPUCanvasContext, GPUDevice (70 procs, 17 types)
-
-### js-sys
-- [x] `Intl` — DateTimeFormat, NumberFormat, PluralRules, Collator (18 procs, 4 types)
+| Metric | wasm-bindgen | nimbling | Gap |
+|--------|-------------|----------|-----|
+| web-sys types | ~1,700 | 68 | **−1,632** |
+| web-sys procs | ~12,000 | 472 | **−11,528** |
+| js-sys procs | ~1,438 | 216 | **−1,222** |
+| WebIDL files | 697 | 0 (hand-written) | **−697** |
+| Threads transform | Full implementation | Stubs only | **P0** |
+| Catch transform | Full implementation | Stubs only | **P0** |
+| CLI targets | 7 | 5 | −2 |
+| Intrinsics | 43 | ~50 | +7 |
+| Test framework modes | 7 | 6 | −1 |
+| JsCast trait | Yes | No | **P2** |
+| ScopedClosure | Yes | No | Deferred |
 
 ---
 

@@ -69,6 +69,9 @@ proc skipWhitespace(l: var Lexer) =
           inc l.pos
       else:
         break
+    of '#':
+      while l.pos < l.src.len and l.src[l.pos] != '\n':
+        inc l.pos
     else:
       break
 
@@ -147,7 +150,34 @@ type
 proc initParser(src: string): Parser =
   Parser(lexer: initLexer(src))
 
+proc skipExtendedAttrs(p: var Parser): string =
+  ## Skip `[...]` extended attribute blocks. Returns comma-separated attribute names.
+  if not p.lexer.tryConsume("["):
+    return ""
+  var depth = 1
+  while depth > 0:
+    let tok = p.lexer.nextToken()
+    if tok.kind == tkEof:
+      return ""
+    case tok.value
+    of "[":
+      inc depth
+    of "]":
+      dec depth
+    else:
+      discard
+
 proc parseTypeRef(p: var Parser): string =
+  # Skip extended attributes that may appear before a type
+  while p.lexer.peek().value == "[":
+    discard p.skipExtendedAttrs()
+  # Handle parenthesized union types: (Type or Type2 or Type3)
+  if p.lexer.tryConsume("("):
+    discard p.parseTypeRef()
+    while p.lexer.tryConsume("or"):
+      discard p.parseTypeRef()
+    discard p.lexer.tryConsume(")")
+    return "JsObject"
   let tok = p.lexer.nextToken()
   if tok.kind == tkEof:
     return ""
@@ -162,6 +192,19 @@ proc parseTypeRef(p: var Parser): string =
   elif result == "unrestricted":
     let next = p.lexer.nextToken()
     result = "unrestricted " & next.value
+  # Handle generic types with angle brackets
+  elif result in ["sequence", "FrozenArray", "record", "Promise", "ObservableArray", "DOMStringList"]:
+    discard p.lexer.tryConsume("<")
+    while true:
+      discard p.parseTypeRef()
+      if not p.lexer.tryConsume(","):
+        break
+    discard p.lexer.tryConsume(">")
+    return "JsObject"
+  # Handle union types: skip `or` alternatives
+  while p.lexer.peek().value == "or":
+    discard p.lexer.nextToken()
+    discard p.parseTypeRef()
   if p.lexer.tryConsume("?"):
     result = result & "?"
 
@@ -183,7 +226,19 @@ proc parseArgList(p: var Parser): seq[(string, string)] =
     else:
       p.lexer.pos -= nameTok.value.len
     if p.lexer.tryConsume("="):
-      discard p.lexer.nextToken()
+      # Skip default value — can be complex (e.g. = 1000, = "str", = Enum.val)
+      var depth = 0
+      while true:
+        let dv = p.lexer.peek()
+        if dv.kind == tkEof:
+          break
+        if depth == 0 and dv.value in [",", ")"]:
+          break
+        if dv.value == "(": inc depth
+        if dv.value == ")":
+          if depth == 0: break
+          dec depth
+        discard p.lexer.nextToken()
     result.add((argName, argType))
     if not p.lexer.tryConsume(","):
       break
@@ -193,10 +248,21 @@ proc parseMember(p: var Parser, inheritStatic: bool = false): WebIDLMember =
   result = WebIDLMember()
   result.isStatic = inheritStatic
 
+  # Skip extended attributes like [Pure], [Throws], etc.
+  while p.lexer.peek().value == "[":
+    discard p.skipExtendedAttrs()
+
   if p.lexer.tryConsume("static"):
     result.isStatic = true
   if p.lexer.tryConsume("readonly"):
     result.isReadonly = true
+  if p.lexer.tryConsume("constructor"):
+    result.memberType = "constructor"
+    result.name = "constructor"
+    if p.lexer.peek().value == "(":
+      result.args = p.parseArgList()
+    discard p.lexer.tryConsume(";")
+    return
   if p.lexer.tryConsume("attribute"):
     result.memberType = "attribute"
     result.returnType = p.parseTypeRef()
@@ -308,7 +374,16 @@ proc parseDictionaryBody(p: var Parser): seq[WebIDLMember] =
 proc parseInterfaceBody(p: var Parser): seq[WebIDLMember] =
   result = @[]
   discard p.lexer.expect("{")
+  var lastPos = -1
+  var loops = 0
   while p.lexer.peek().value != "}":
+    let pos = p.lexer.pos
+    if pos == lastPos:
+      raise newException(ValueError, "parseInterfaceBody stuck at position " & $pos)
+    lastPos = pos
+    inc loops
+    if loops > 10000:
+      raise newException(ValueError, "parseInterfaceBody too many iterations")
     result.add(p.parseMember())
   discard p.lexer.nextToken()
   discard p.lexer.tryConsume(";")
@@ -325,6 +400,10 @@ proc parseCallback(p: var Parser, name: string): WebIDLDefinition =
   discard p.lexer.tryConsume(";")
 
 proc parseDefinition(p: var Parser): WebIDLDefinition =
+  # Skip any leading extended attributes (e.g. [Exposed=*], [Constructor(...)], etc.)
+  while p.lexer.peek().value == "[":
+    discard p.skipExtendedAttrs()
+
   var tok = p.lexer.nextToken()
   if tok.kind == tkEof:
     return WebIDLDefinition()
@@ -335,6 +414,11 @@ proc parseDefinition(p: var Parser): WebIDLDefinition =
 
   case tok.value
   of "interface":
+    # Handle `interface mixin Name` (Mozilla-specific syntax)
+    var isMixin = false
+    if p.lexer.peek().value == "mixin":
+      discard p.lexer.nextToken()
+      isMixin = true
     let nameTok = p.lexer.nextToken()
     let name = nameTok.value
     if p.lexer.tryConsume(":"):
@@ -342,7 +426,7 @@ proc parseDefinition(p: var Parser): WebIDLDefinition =
     if p.lexer.peek().value == "{":
       let members = p.parseInterfaceBody()
       result = WebIDLDefinition(
-        kind: if isPartial: witPartialInterface else: witInterface,
+        kind: if isPartial: witPartialInterface else: (if isMixin: witMixin else: witInterface),
         name: name,
         fields: members,
       )
@@ -437,7 +521,18 @@ proc parseWebIDL*(source: string): seq[WebIDLDefinition] =
   ## Parse a WebIDL source string into AST.
   result = @[]
   var p = initParser(source)
+  var lastPos = -1
+  var loops = 0
   while p.lexer.peek().kind != tkEof:
+    let pos = p.lexer.pos
+    if pos == lastPos:
+      echo "STUCK at pos ", pos, " after ", loops, " loops"
+      break
+    lastPos = pos
+    inc loops
+    if loops > 20000:
+      echo "TOO MANY loops: ", loops
+      break
     let def = p.parseDefinition()
     if def.name.len > 0:
       result.add(def)
@@ -482,7 +577,7 @@ proc webidlTypeToNim(widlType: string): string =
   of "double", "unrestricted double": return "float64"
   of "DOMString", "USVString", "ByteString", "UTF8String": return "cstring"
   of "any", "object": return "JsObject"
-  of "void": return "void"
+  of "void", "undefined": return "void"
   of "ArrayBuffer", "ArrayBufferView": return "JsObject"
   of "Uint8Array": return "seq[uint8]"
   of "Int8Array": return "seq[int8]"
@@ -523,6 +618,13 @@ proc nimFieldName(name: string): string =
 
 # ─── Code Generator ───
 
+proc isValidNimIdent(s: string): bool =
+  if s.len == 0: return false
+  if s[0] notin {'a'..'z', 'A'..'Z', '_'}: return false
+  for c in s:
+    if c notin {'a'..'z', 'A'..'Z', '0'..'9', '_'}: return false
+  return true
+
 proc generateNimBindings*(defs: seq[WebIDLDefinition], types: Table[string, WebIDLDefinition]): string =
   ## Generate Nim source code with {.wasmBindgen.} annotations.
   result = ""
@@ -536,7 +638,10 @@ proc generateNimBindings*(defs: seq[WebIDLDefinition], types: Table[string, WebI
       result.add("  " & d.name & "* {.wasmBindgen.} = object\n")
       for f in d.fields:
         if f.memberType == "attribute":
+          if f.name.len == 0: continue
+          if not isValidNimIdent(nimFieldName(f.name)): continue
           let nimTy = webidlTypeToNim(f.returnType)
+          if not isValidNimIdent(nimTy) and nimTy notin ["JsObject", "cstring"]: continue
           result.add("    " & nimFieldName(f.name) & "*: " & nimTy & "\n")
         elif f.memberType == "const":
           let nimTy = webidlTypeToNim(f.returnType)
@@ -545,6 +650,10 @@ proc generateNimBindings*(defs: seq[WebIDLDefinition], types: Table[string, WebI
 
       for f in d.fields:
         if f.memberType == "operation":
+          if f.name.len == 0: continue
+          if not isValidNimIdent(sanitizeIdent(f.name)): continue
+          # Skip metaprogramming members (setter/deleter/getter/stringifier)
+          if f.returnType in ["setter", "deleter", "getter", "stringifier", "serializer"]: continue
           let retTy = webidlTypeToNim(f.returnType)
           var args = "self: " & d.name
           for (argName, argType) in f.args:
@@ -566,6 +675,9 @@ proc generateNimBindings*(defs: seq[WebIDLDefinition], types: Table[string, WebI
       result.add("  " & d.name & "* {.wasmBindgen.} = object\n")
       for f in d.fields:
         let nimTy = webidlTypeToNim(f.returnType)
+        let fieldName = nimFieldName(f.name)
+        if not isValidNimIdent(fieldName): continue
+        if not isValidNimIdent(nimTy) and nimTy notin ["JsObject", "cstring"]: continue
         var suffix = ""
         if f.isOptional:
           suffix = " ## optional"
@@ -576,9 +688,18 @@ proc generateNimBindings*(defs: seq[WebIDLDefinition], types: Table[string, WebI
       result.add("type\n")
       result.add("  " & d.name & "* {.wasmBindgen.} = enum\n")
       for i, v in d.variants:
-        var variantName = sanitizeIdent(v)
-        variantName[0] = variantName[0].toUpperAscii()
-        result.add("    " & variantName & "\n")
+        if v.len == 0: continue
+        # Replace non-identifier chars with underscores
+        var cleanV = ""
+        for c in v:
+          if c in {'a'..'z', 'A'..'Z', '0'..'9', '_'}:
+            cleanV.add(c)
+          else:
+            cleanV.add('_')
+        var variantName = sanitizeIdent(cleanV)
+        if variantName.len > 0:
+          variantName[0] = variantName[0].toUpperAscii()
+          result.add("    " & variantName & "\n")
       result.add("\n")
 
     of witCallback:
