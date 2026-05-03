@@ -15,6 +15,8 @@ type
     jsNoModules   # classic script, no modules
     jsNode        # Node.js commonjs
     jsDeno        # Deno module
+    jsNodeModule  # Node.js ESM (experimental-nodejs-module)
+    jsModule      # Source-phase import WASM module
 
   JsGen* = object
     target*: JsGenTarget
@@ -558,6 +560,12 @@ proc generate*(g: var JsGen): string =
 
   of jsNode:
     g.addLine(&"const wasm = require('./{g.wasmName}_bg.js');")
+  of jsNodeModule:
+    g.addLine(&"import * as wasm from './{g.wasmName}_bg.js';")
+    g.addLine(&"let imports = {{}};")
+  of jsModule:
+    g.addLine(&"import source wasmModule from './{g.wasmName}.wasm';")
+    g.addLine(&"let imports = {{}};")
   g.add("")
 
   # Apply linked modules
@@ -618,6 +626,15 @@ proc generate*(g: var JsGen): string =
   of jsDeno:
     g.addLine("const imports = {};")
     g.addLine("const result = await __nbg_load(input, imports);")
+  of jsNodeModule:
+    g.addLine(&"const imports = {{}};")
+    g.addLine("const wasmUrl = new URL('./{g.wasmName}_bg.wasm', import.meta.url);")
+    g.addLine("const wasmBytes = (await import('node:fs')).readFileSync(wasmUrl);")
+    g.addLine("const wasmModule = new WebAssembly.Module(wasmBytes);")
+    g.addLine("const result = new WebAssembly.Instance(wasmModule, imports);")
+  of jsModule:
+    g.addLine(&"const imports = {{}};")
+    g.addLine("const result = new WebAssembly.Instance(wasmModule, imports);")
 
   g.addLine("wasm = result.instance.exports;")
   g.addLine("__nbg_init.__wbindgen_wasm_module = result.instance;")
@@ -627,7 +644,10 @@ proc generate*(g: var JsGen): string =
   g.add("")
 
   # Default export
-  g.addLine("export default init;")
+  if g.target != jsModule:
+    g.addLine("export default init;")
+  else:
+    g.addLine("export const __nbg_wasm_module = wasmModule;")
   g.add("")
 
   # Generate enum exports

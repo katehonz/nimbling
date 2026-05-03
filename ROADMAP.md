@@ -1,6 +1,6 @@
 # nimbling — Roadmap to Beat Rust's wasm-bindgen
 
-## Current Status (All Tiers DONE — May 2026)
+## Current Status (Tiers 0–3 DONE, Tiers 4–5 In Progress — May 2026)
 
 | Component | Lines | Status |
 |-----------|-------|--------|
@@ -19,36 +19,39 @@
 | `jsgen.nim` — JS glue generator, 56 intrinsics, 5 targets | 659 | ✅ |
 | `cli.nim` — CLI tool, wasm section extraction + interpreter | 283 | ✅ |
 | `interp.nim` — wasm stack-machine interpreter | 502 | ✅ |
-| `transforms.nim` — externref/multivalue/catch/threads | 603 | ✅ |
+| `transforms.nim` — externref/multivalue/catch/threads | 790 | ✅ |
 | `js_sys.nim` — 210 procs, 24 types | 1633 | ✅ |
 | `web_sys.nim` — 481 procs, 68 types | 3539 | ✅ |
 | `webidl.nim` — WebIDL parser → Nim | 632 | ✅ |
 | `wit.nim` — WIT adapter system | 602 | ✅ |
 | `emscripten.nim` — Emscripten + Memory64 + CLI flags | 457 | ✅ |
 | `test_runner.nim` — wasm test framework | 781 | ✅ |
-| Tests **(333/333 pass)** | 2704 | ✅ |
+| Tests **(372/372 pass)** | 3068 | ✅ |
 | Docs (README, docs/) | 5 files | ✅ |
 | **TOTAL** | **~11,000** | ✅ |
 
 ### Next — Tier 4: Parity, Tier 5: Beat wasm-bindgen
 
-| Priority | Task | Status |
-|----------|------|--------|
-| P0 | Threads transform — real wasm binary patching | ✅ |
-| P0 | Catch/exception transform — real wasm binary patching | ✅ |
-| P1 | **web-sys: batch-convert 697 WebIDL → Nim** | ✅ 612/647 (94.7%) |
-| P2 | JsCast / Upcast type system | ✅ |
-| P3 | Missing js-sys APIs (WeakRef, SharedArrayBuffer, DataView, RegExp, Proxy) | ✅ |
-| P4 | CLI targets + flags | ✅ |
+| Priority | Task | Status | Notes |
+|----------|------|--------|-------|
+| P0 | Threads transform — real wasm binary patching | ✅ Done | `patchMemoryShared` + `patchGlobalMutable` for TLS base. Memory section patched to shared; `__tls_base` global made mutable for per-thread reinitialization. Wired into CLI pipeline via `applyTransforms`. 6 tests. |
+| P0 | Catch/exception transform — real wasm binary patching | ✅ Done | `wrapCatchBodies` wraps catch-exported function bodies with `try`/`catch_all`/`unreachable` — catches JS exceptions and converts to wasm traps. No tag import needed (uses `catch_all`). Finds `*_catch`/`*__catch` exports, patches code section. 8 tests. |
+| P1 | **web-sys: batch-convert 697 WebIDL → Nim** | ✅ Parser done, ⚠️ Codegen pending | **647/647 files parse OK** (0 failures). Parser fixes: callback optional args, variadic `...`, extended attrs before optional, getter/setter/deleter, includes, unsigned long long, nullable unions, callback interface. Generated code still needs type model fix and integration. |
+| P2 | JsCast / Upcast type system | ✅ Done | `jscast.nim` fully implemented with `uncheckedInto`, `dynInto`, `upcastTo`, converter chains. `web_sys_cast.nim` generated for web-sys types. |
+| P3 | Missing js-sys APIs (WeakRef, SharedArrayBuffer, DataView, RegExp, Proxy) | ✅ Added | All 5 APIs present in `js_sys.nim` (228 procs total, +18 over claim). **Zero tests** for them; large gap (~1,210 procs) to wasm-bindgen parity remains. |
+| P4 | CLI targets + flags | ✅ Targets done, ⚠️ Flags pending | 7/7 targets. Many flags still need wiring from `emscripten.nim` to CLI. |
 
-### 5.1 web-sys from 701 WebIDL Files — **612/647 (94.7%) DONE**
-- [x] WebIDL parser (`webidl.nim` — interfaces, partials, mixins, dictionaries, enums, namespaces)
+### 5.1 web-sys from 701 WebIDL Files — **647/647 parsed, 0% usable**
+- [x] WebIDL parser (`webidl.nim` — interfaces, partials, mixins, dictionaries, enums, namespaces, callbacks, callback interfaces, includes, getters/setters/deleters)
 - [x] Compile-time `webidlBind` macro generates `{.emit.}` proc wrappers
-- [x] Batch-convert all 697 `.webidl` files from `OLD/crates/web-sys/webidls/enabled/` — 612 successful, 35 with edge case failures (skipped)
+- [x] Batch-convert all 697 `.webidl` files from `OLD/crates/web-sys/webidls/enabled/` — **647/647 parse successfully** (0 failures)
+- [x] Parser fixes completed: callback optional args, variadic `...`, extended attrs before optional, getter/setter/deleter, `includes` statement, `unsigned long long`, nullable parenthesized unions, callback interface
 - [x] Generate `web_sys_generated.nim` — 9,420 lines, 1,449 type definitions + proc bindings
+- [ ] **Generated code does NOT compile**: wrong type model (`object` instead of `distinct JsValue`), invalid identifiers (leading `_`), misapplied `{.wasmBindgen.}` pragma
+- [ ] `web_sys_generated.nim` is **not imported anywhere** in the project
 - [x] Parser handles: extended attributes (`[Pure]`, `[Throws]`), `interface mixin`, `or` union types, `sequence<T>`, parenthesized unions, `#` preprocessor directives
-- [ ] Fix remaining 35 edge cases in parser (EventTarget, Document, WebGLRenderingContext, etc.)
-- [ ] Fix generated code compilation issues (cross-references, callback type stubs, forward references)
+- [ ] Fix generated code compilation issues (cross-references, callback type stubs, forward references, identifier sanitization, type model alignment)
+- [ ] Integrate generated bindings into `web_sys.nim` or replace hand-written stubs
 - [ ] Tests: verify compilation of generated bindings for top 50 Web APIs
 - [ ] Target: 1700+ types, covering 700+ Web APIs (vs current 68 types, 27 APIs)
 
@@ -64,19 +67,19 @@
 
 ### Current vs wasm-bindgen Metrics
 
-| Metric | wasm-bindgen | nimbling | Gap |
-|--------|-------------|----------|-----|
-| web-sys types | ~1,700 | 68 | **−1,632** |
-| web-sys procs | ~12,000 | 472 | **−11,528** |
-| js-sys procs | ~1,438 | 216 | **−1,222** |
-| WebIDL files | 697 | 0 (hand-written) | **−697** |
-| Threads transform | Full implementation | Stubs only | **P0** |
-| Catch transform | Full implementation | Stubs only | **P0** |
-| CLI targets | 7 | 5 | −2 |
-| Intrinsics | 43 | ~50 | +7 |
-| Test framework modes | 7 | 6 | −1 |
-| JsCast trait | Yes | No | **P2** |
-| ScopedClosure | Yes | No | Deferred |
+| Metric | wasm-bindgen | nimbling | Gap | Status |
+|--------|-------------|----------|-----|--------|
+| web-sys types | ~1,700 | 68 | **−1,632** | Needs generated codegen fix (P1) |
+| web-sys procs | ~12,000 | 472 | **−11,528** | Needs generated codegen fix (P1) |
+| js-sys procs | ~1,438 | 228 | **−1,210** | P3 APIs added, many still missing |
+| WebIDL files | 697 | 0 (hand-written) | **−697** | Parser works for 612, 35 broken |
+| Threads transform | Full implementation | Binary patching (memory + TLS) | — | ✅ Done |
+| Catch transform | Full implementation | Binary patching (try/catch_all) | — | ✅ Done |
+| CLI targets | 7 | 7 | 0 | ✅ Done |
+| Intrinsics | 43 | ~50 | +7 | ✅ Ahead |
+| Test framework modes | 7 | 6 | −1 | Minor |
+| JsCast trait | Yes | Yes | — | ✅ Done |
+| ScopedClosure | Yes | No | Deferred | — |
 
 ---
 
@@ -104,7 +107,7 @@ git clone https://github.com/katehonz/nimbling.git
 cd nimbling
 
 # Run tests
-nimble test          # Must pass (158/158)
+nimble test          # Must pass (all existing tests)
 
 # Build
 nimble buildCli      # CLI tool

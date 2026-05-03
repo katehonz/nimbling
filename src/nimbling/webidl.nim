@@ -4,6 +4,7 @@
 
 import std/strutils
 import std/tables
+import std/sets
 
 import common
 
@@ -11,7 +12,7 @@ import common
 
 type
   WebIDLType* = enum
-    witInterface, witPartialInterface, witDictionary, witEnum,
+    witInterface, witPartialInterface, witDictionary, witPartialDictionary, witEnum,
     witCallback, witCallbackInterface, witTypedef, witMixin,
     witIncludes, witNamespace
 
@@ -120,6 +121,10 @@ proc nextToken(l: var Lexer): Token =
         inc l.pos
     return Token(kind: tkNumber, value: s)
 
+  if c == '.' and l.pos + 2 < l.src.len and l.src[l.pos + 1] == '.' and l.src[l.pos + 2] == '.':
+    l.pos += 3
+    return Token(kind: tkSymbol, value: "...")
+
   inc l.pos
   return Token(kind: tkSymbol, value: $c)
 
@@ -177,7 +182,10 @@ proc parseTypeRef(p: var Parser): string =
     while p.lexer.tryConsume("or"):
       discard p.parseTypeRef()
     discard p.lexer.tryConsume(")")
-    return "JsObject"
+    result = "JsObject"
+    if p.lexer.tryConsume("?"):
+      result = result & "?"
+    return result
   let tok = p.lexer.nextToken()
   if tok.kind == tkEof:
     return ""
@@ -185,6 +193,9 @@ proc parseTypeRef(p: var Parser): string =
   if result == "unsigned":
     let next = p.lexer.nextToken()
     result = "unsigned " & next.value
+    if next.value == "long" and p.lexer.peek().value == "long":
+      discard p.lexer.nextToken()
+      result = "unsigned long long"
   elif result == "long":
     if p.lexer.peek().value == "long":
       discard p.lexer.nextToken()
@@ -200,7 +211,10 @@ proc parseTypeRef(p: var Parser): string =
       if not p.lexer.tryConsume(","):
         break
     discard p.lexer.tryConsume(">")
-    return "JsObject"
+    result = "JsObject"
+    if p.lexer.tryConsume("?"):
+      result = result & "?"
+    return result
   # Handle union types: skip `or` alternatives
   while p.lexer.peek().value == "or":
     discard p.lexer.nextToken()
@@ -215,10 +229,15 @@ proc parseArgList(p: var Parser): seq[(string, string)] =
     discard p.lexer.nextToken()
     return result
   while true:
+    # Skip extended attributes before optional/type
+    while p.lexer.peek().value == "[":
+      discard p.skipExtendedAttrs()
     var isOptional = false
     if p.lexer.tryConsume("optional"):
       isOptional = true
     let argType = p.parseTypeRef()
+    # Handle variadic type syntax: Type... Name
+    discard p.lexer.tryConsume("...")
     var argName = ""
     let nameTok = p.lexer.nextToken()
     if nameTok.kind == tkIdent:
@@ -289,6 +308,20 @@ proc parseMember(p: var Parser, inheritStatic: bool = false): WebIDLMember =
     result.memberType = "serializer"
     if p.lexer.tryConsume(";"):
       return
+  if p.lexer.tryConsume("inherit"):
+    discard
+  if p.lexer.tryConsume("getter") or p.lexer.tryConsume("setter") or p.lexer.tryConsume("deleter"):
+    result.memberType = "operation"
+    result.returnType = p.parseTypeRef()
+    let nameTok = p.lexer.nextToken()
+    if nameTok.kind == tkIdent:
+      result.name = nameTok.value
+    else:
+      p.lexer.pos -= nameTok.value.len
+    if p.lexer.peek().value == "(":
+      result.args = p.parseArgList()
+    discard p.lexer.tryConsume(";")
+    return
   if p.lexer.tryConsume("iterable"):
     result.memberType = "iterable"
     discard p.lexer.tryConsume("<")
@@ -357,6 +390,9 @@ proc parseDictionaryBody(p: var Parser): seq[WebIDLMember] =
   while p.lexer.peek().value != "}":
     var m = WebIDLMember()
     m.memberType = "field"
+    # Skip extended attributes before required/optional
+    while p.lexer.peek().value == "[":
+      discard p.skipExtendedAttrs()
     if p.lexer.tryConsume("required"):
       m.isOptional = false
     elif p.lexer.tryConsume("optional"):
@@ -391,12 +427,7 @@ proc parseInterfaceBody(p: var Parser): seq[WebIDLMember] =
 proc parseCallback(p: var Parser, name: string): WebIDLDefinition =
   result = WebIDLDefinition(kind: witCallback, name: name)
   discard p.parseTypeRef()
-  discard p.lexer.expect("(")
-  while p.lexer.peek().value != ")":
-    discard p.parseTypeRef()
-    discard p.lexer.nextToken()
-    discard p.lexer.tryConsume(",")
-  discard p.lexer.nextToken()
+  discard p.parseArgList()  # consume args to advance lexer, no storage field available
   discard p.lexer.tryConsume(";")
 
 proc parseDefinition(p: var Parser): WebIDLDefinition =
@@ -441,7 +472,7 @@ proc parseDefinition(p: var Parser): WebIDLDefinition =
       parent = p.parseTypeRef()
     let fields = p.parseDictionaryBody()
     result = WebIDLDefinition(
-      kind: witDictionary,
+      kind: if isPartial: witPartialDictionary else: witDictionary,
       name: name,
       fields: fields,
       parent: parent,
@@ -456,20 +487,29 @@ proc parseDefinition(p: var Parser): WebIDLDefinition =
       variants: variants,
     )
   of "callback":
-    let nameTok = p.lexer.nextToken()
-    let name = nameTok.value
-    if p.lexer.tryConsume("="):
-      result = p.parseCallback(name)
-    elif p.lexer.peek().value == "{":
+    var nameTok = p.lexer.nextToken()
+    if nameTok.value == "interface":
+      let ifaceName = p.lexer.nextToken().value
       let members = p.parseInterfaceBody()
       result = WebIDLDefinition(
         kind: witCallbackInterface,
-        name: name,
+        name: ifaceName,
         fields: members,
       )
     else:
-      result = WebIDLDefinition(kind: witCallback, name: name)
-      discard p.lexer.tryConsume(";")
+      let name = nameTok.value
+      if p.lexer.tryConsume("="):
+        result = p.parseCallback(name)
+      elif p.lexer.peek().value == "{":
+        let members = p.parseInterfaceBody()
+        result = WebIDLDefinition(
+          kind: witCallbackInterface,
+          name: name,
+          fields: members,
+        )
+      else:
+        result = WebIDLDefinition(kind: witCallback, name: name)
+        discard p.lexer.tryConsume(";")
   of "typedef":
     discard p.parseTypeRef()
     let nameTok = p.lexer.nextToken()
@@ -506,7 +546,16 @@ proc parseDefinition(p: var Parser): WebIDLDefinition =
       namespace: name,
     )
   else:
-    if p.lexer.tryConsume("interface"):
+    if p.lexer.tryConsume("includes"):
+      let name = tok.value
+      let mixinName = p.lexer.nextToken().value
+      result = WebIDLDefinition(
+        kind: witIncludes,
+        name: name,
+        parent: mixinName,
+      )
+      discard p.lexer.tryConsume(";")
+    elif p.lexer.tryConsume("interface"):
       let name = tok.value
       let members = p.parseInterfaceBody()
       result = WebIDLDefinition(
@@ -545,9 +594,9 @@ proc analyzeTypes*(defs: seq[WebIDLDefinition]): Table[string, WebIDLDefinition]
   for d in defs:
     if d.name.len > 0:
       result[d.name] = d
-  # Resolve partial interfaces: merge fields into the primary definition
+  # Resolve partial interfaces/dictionaries: merge fields into the primary definition
   for d in defs:
-    if d.kind == witPartialInterface:
+    if d.kind == witPartialInterface or d.kind == witPartialDictionary:
       if d.name in result:
         var primary = result[d.name]
         primary.fields.add(d.fields)
@@ -576,9 +625,11 @@ proc webidlTypeToNim(widlType: string): string =
   of "float", "unrestricted float": return "float32"
   of "double", "unrestricted double": return "float64"
   of "DOMString", "USVString", "ByteString", "UTF8String": return "cstring"
+  of "DOMTimeStamp": return "uint64"
+  of "PredefinedColorSpace": return "JsObject"
   of "any", "object": return "JsObject"
   of "void", "undefined": return "void"
-  of "ArrayBuffer", "ArrayBufferView": return "JsObject"
+  of "ArrayBuffer", "ArrayBufferView", "BufferSource": return "JsObject"
   of "Uint8Array": return "seq[uint8]"
   of "Int8Array": return "seq[int8]"
   of "Uint16Array": return "seq[uint16]"
@@ -591,11 +642,19 @@ proc webidlTypeToNim(widlType: string): string =
   else:
     if widlType.endsWith("?"):
       return "Option[" & webidlTypeToNim(widlType[0..^2]) & "]"
-    return widlType
+    # Unknown types fall back to JsObject to avoid undeclared identifier errors.
+    # This covers missing typedefs, external types, and types from skipped files.
+    return "JsObject"
 
 proc sanitizeIdent(name: string): string =
   ## Make a WebIDL identifier safe for Nim.
   result = name
+  # Strip leading underscores (invalid in Nim identifiers)
+  while result.len > 0 and result[0] == '_':
+    result = result[1..^1]
+  # Prefix leading digits (invalid in Nim identifiers)
+  if result.len > 0 and result[0] in '0'..'9':
+    result = "n" & result
   if result.len > 0 and result[0] in 'A'..'Z':
     result[0] = result[0].toLowerAscii()
   const reserved = ["addr", "and", "as", "asm", "bind", "block", "break", "case",
@@ -605,7 +664,7 @@ proc sanitizeIdent(name: string): string =
                     "if", "import", "in", "include", "interface", "is", "isnot",
                     "iterator", "let", "macro", "method", "mixin", "mod", "nil",
                     "not", "notin", "object", "of", "or", "out", "proc", "ptr",
-                    "raise", "ref", "return", "shl", "shr", "static", "template",
+                    "raise", "ref", "result", "return", "shl", "shr", "static", "template",
                     "try", "tuple", "type", "using", "var", "when", "while", "with",
                     "without", "xor", "yield"]
   if result.toLowerAscii() in reserved:
@@ -625,71 +684,45 @@ proc isValidNimIdent(s: string): bool =
     if c notin {'a'..'z', 'A'..'Z', '0'..'9', '_'}: return false
   return true
 
+
 proc generateNimBindings*(defs: seq[WebIDLDefinition], types: Table[string, WebIDLDefinition]): string =
   ## Generate Nim source code with {.wasmBindgen.} annotations.
-  result = ""
-  result.add("## Auto-generated WebIDL bindings for nimbling.\n")
-  result.add("import nimbling\n\n")
+  ## Two-pass: types first, then procs, to avoid forward-reference errors.
+  var typeSection = ""
+  var procSection = ""
 
   for d in defs:
     case d.kind
     of witInterface:
-      result.add("type\n")
-      result.add("  " & d.name & "* {.wasmBindgen.} = object\n")
-      for f in d.fields:
-        if f.memberType == "attribute":
-          if f.name.len == 0: continue
-          if not isValidNimIdent(nimFieldName(f.name)): continue
-          let nimTy = webidlTypeToNim(f.returnType)
-          if not isValidNimIdent(nimTy) and nimTy notin ["JsObject", "cstring"]: continue
-          result.add("    " & nimFieldName(f.name) & "*: " & nimTy & "\n")
-        elif f.memberType == "const":
-          let nimTy = webidlTypeToNim(f.returnType)
-          result.add("    " & nimFieldName(f.name) & "*: " & nimTy & "\n")
-      result.add("\n")
-
-      for f in d.fields:
-        if f.memberType == "operation":
-          if f.name.len == 0: continue
-          if not isValidNimIdent(sanitizeIdent(f.name)): continue
-          # Skip metaprogramming members (setter/deleter/getter/stringifier)
-          if f.returnType in ["setter", "deleter", "getter", "stringifier", "serializer"]: continue
-          let retTy = webidlTypeToNim(f.returnType)
-          var args = "self: " & d.name
-          for (argName, argType) in f.args:
-            args.add("; " & nimFieldName(argName) & ": " & webidlTypeToNim(argType))
-          if f.isStatic:
-            args = ""
-            for i, (argName, argType) in f.args:
-              if i > 0: args.add("; ")
-              args.add(nimFieldName(argName) & ": " & webidlTypeToNim(argType))
-            if args.len > 0:
-              args = "; " & args
-            result.add("proc " & sanitizeIdent(f.name) & "*(self: typedesc[" & d.name & "]" & args & "): " & retTy & " {.wasmBindgen.}\n")
-          else:
-            result.add("proc " & sanitizeIdent(f.name) & "*(" & args & "): " & retTy & " {.wasmBindgen.}\n")
-      result.add("\n")
+      typeSection.add("  " & d.name & "* = distinct JsValue\n")
 
     of witDictionary:
-      result.add("type\n")
-      result.add("  " & d.name & "* {.wasmBindgen.} = object\n")
+      # Use separate type block for each dictionary to avoid field name conflicts
+      typeSection.add("\n  " & d.name & "* = object\n")
+      var usedFields = initHashSet[string]()
       for f in d.fields:
         let nimTy = webidlTypeToNim(f.returnType)
-        let fieldName = nimFieldName(f.name)
+        var fieldName = nimFieldName(f.name)
         if not isValidNimIdent(fieldName): continue
         if not isValidNimIdent(nimTy) and nimTy notin ["JsObject", "cstring"]: continue
+        # Avoid duplicate field names within the same dictionary (Nim is case-insensitive)
+        let baseName = fieldName.toLowerAscii()
+        var uniqueName = fieldName
+        var counter = 2
+        while uniqueName.toLowerAscii() in usedFields:
+          uniqueName = fieldName & $counter
+          inc counter
+        usedFields.incl(uniqueName.toLowerAscii())
+        fieldName = uniqueName
         var suffix = ""
         if f.isOptional:
           suffix = " ## optional"
-        result.add("    " & nimFieldName(f.name) & "*: " & nimTy & suffix & "\n")
-      result.add("\n")
+        typeSection.add("    " & fieldName & "*: " & nimTy & suffix & "\n")
 
     of witEnum:
-      result.add("type\n")
-      result.add("  " & d.name & "* {.wasmBindgen.} = enum\n")
+      typeSection.add("  " & d.name & "* = enum\n")
       for i, v in d.variants:
         if v.len == 0: continue
-        # Replace non-identifier chars with underscores
         var cleanV = ""
         for c in v:
           if c in {'a'..'z', 'A'..'Z', '0'..'9', '_'}:
@@ -699,21 +732,81 @@ proc generateNimBindings*(defs: seq[WebIDLDefinition], types: Table[string, WebI
         var variantName = sanitizeIdent(cleanV)
         if variantName.len > 0:
           variantName[0] = variantName[0].toUpperAscii()
-          result.add("    " & variantName & "\n")
-      result.add("\n")
+          # Prefix with enum name to avoid conflicts with interface types
+          typeSection.add("    " & d.name & variantName & "\n")
 
     of witCallback:
-      result.add("type\n")
-      result.add("  " & d.name & "* = proc" & "\n")
-      result.add("\n")
+      typeSection.add("  " & d.name & "* = proc\n")
+
+    of witCallbackInterface:
+      typeSection.add("  " & d.name & "* = proc\n")
 
     of witTypedef:
-      result.add("type\n")
-      result.add("  " & d.name & "* = JsObject\n")
-      result.add("\n")
+      typeSection.add("  " & d.name & "* = JsObject\n")
 
     of witNamespace:
-      result.add("proc " & d.name & "Val*() {.wasmBindgen.}\n")
+      discard  # namespace types are not emitted as distinct types
+
+    of witPartialInterface, witPartialDictionary, witMixin, witIncludes:
+      discard
+
+  # Second pass: procs and constants
+  var generatedProcs = initHashSet[string]()
+  for d in defs:
+    case d.kind
+    of witInterface:
+      for f in d.fields:
+        if f.memberType == "attribute":
+          if f.name.len == 0: continue
+          if not isValidNimIdent(nimFieldName(f.name)): continue
+          let nimTy = webidlTypeToNim(f.returnType)
+          if not isValidNimIdent(nimTy) and nimTy notin ["JsObject", "cstring"]: continue
+          let getterName = "js" & d.name & nimFieldName(f.name)[0].toUpperAscii() & nimFieldName(f.name)[1..^1]
+          if getterName in generatedProcs:
+            continue
+          generatedProcs.incl(getterName)
+          procSection.add("proc " & getterName & "*(self: " & d.name & "): " & nimTy & " {.wasmBindgen.} =\n  discard\n")
+        elif f.memberType == "const":
+          let nimTy = webidlTypeToNim(f.returnType)
+          if nimTy == "JsObject":
+            continue  # skip consts with unknown/object types
+          let constName = "js" & d.name & f.name[0].toUpperAscii() & f.name[1..^1]
+          if constName in generatedProcs:
+            continue
+          generatedProcs.incl(constName)
+          procSection.add("const " & constName & "* : " & nimTy & " = 0\n")
+
+      for f in d.fields:
+        if f.memberType == "operation":
+          if f.name.len == 0: continue
+          if not isValidNimIdent(sanitizeIdent(f.name)): continue
+          if f.returnType in ["setter", "deleter", "getter", "stringifier", "serializer"]: continue
+          let retTy = webidlTypeToNim(f.returnType)
+          var args = "self: " & d.name
+          for (argName, argType) in f.args:
+            args.add("; " & nimFieldName(argName) & ": " & webidlTypeToNim(argType))
+          let procBaseName = "js" & sanitizeIdent(f.name)[0].toUpperAscii() & sanitizeIdent(f.name)[1..^1]
+          let procSignature = procBaseName & "(" & args & "):" & retTy
+          if procSignature in generatedProcs:
+            continue
+          generatedProcs.incl(procSignature)
+          if f.isStatic:
+            args = ""
+            for i, (argName, argType) in f.args:
+              if i > 0: args.add("; ")
+              args.add(nimFieldName(argName) & ": " & webidlTypeToNim(argType))
+            if args.len > 0:
+              args = "; " & args
+            procSection.add("proc " & procBaseName & "*(self: typedesc[" & d.name & "]" & args & "): " & retTy & " {.wasmBindgen.} =\n  discard\n")
+          else:
+            procSection.add("proc " & procBaseName & "*(" & args & "): " & retTy & " {.wasmBindgen.} =\n  discard\n")
+      procSection.add("\n")
+
+    of witNamespace:
+      let valProc = d.name & "Val"
+      if valProc notin generatedProcs:
+        generatedProcs.incl(valProc)
+        procSection.add("proc " & valProc & "*() {.wasmBindgen.} =\n  discard\n")
       for f in d.fields:
         if f.memberType == "operation":
           let retTy = webidlTypeToNim(f.returnType)
@@ -721,33 +814,22 @@ proc generateNimBindings*(defs: seq[WebIDLDefinition], types: Table[string, WebI
           for i, (argName, argType) in f.args:
             if i > 0: args.add("; ")
             args.add(nimFieldName(argName) & ": " & webidlTypeToNim(argType))
-          result.add("proc " & sanitizeIdent(f.name) & "*(" & args & "): " & retTy & " {.wasmBindgen.}\n")
-      result.add("\n")
+          let nsProc = sanitizeIdent(f.name)
+          if nsProc in generatedProcs:
+            continue
+          generatedProcs.incl(nsProc)
+          procSection.add("proc " & nsProc & "*(" & args & "): " & retTy & " {.wasmBindgen.} =\n  discard\n")
+      procSection.add("\n")
 
-    of witPartialInterface, witMixin, witIncludes, witCallbackInterface:
+    else:
       discard
 
-proc webidlToNim*(webidlSource: string): string =
-  ## Parse WebIDL and generate Nim bindings in one step.
-  let defs = parseWebIDL(webidlSource)
-  let types = analyzeTypes(defs)
-  result = generateNimBindings(defs, types)
-
-when isMainModule:
-  let testIdl = """
-  interface Node {
-    readonly attribute unsigned short nodeType;
-    attribute DOMString? nodeName;
-    Node appendChild(Node newChild);
-    static Node createDocument();
-  };
-
-  dictionary ScrollOptions {
-    required ScrollBehavior behavior;
-  };
-
-  enum ScrollBehavior { "auto", "instant", "smooth" };
-  """
-
-  let nimCode = webidlToNim(testIdl)
-  echo nimCode
+  result = ""
+  result.add("## Auto-generated WebIDL bindings for nimbling.\n")
+  result.add("import nimbling/runtime\n")
+  result.add("import nimbling/js_sys\n")
+  result.add("import nimbling/macroimpl\n")
+  result.add("import std/options\n\n")
+  if typeSection.len > 0:
+    result.add("type\n" & typeSection & "\n")
+  result.add(procSection)

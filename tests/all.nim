@@ -2,6 +2,7 @@
 
 import std/unittest
 import std/strutils
+import std/times
 
 import nimbling/common
 import nimbling/encode
@@ -17,6 +18,9 @@ import nimbling/cli
 import nimbling/macroimpl_webidl
 import nimbling/js_sys
 import nimbling/web_sys
+import nimbling/jscast
+import nimbling/web_sys_cast
+import nimbling/webidl
 
 suite "common - identifiers":
   test "valid JS identifiers":
@@ -416,6 +420,23 @@ suite "jsgen - JS glue generation":
     let output = jsg.generate()
     check output.contains("import * as wasm from './hello';")
 
+  test "generates module header for experimental-nodejs-module target":
+    var prog = Program(uniqueCrateIdentifier: "test")
+    var jsg = newJsGen(prog, jsNodeModule, "hello")
+    let output = jsg.generate()
+    check output.contains("import * as wasm from './hello_bg.js';")
+    check output.contains("import.meta.url")
+    check output.contains("node:fs")
+
+  test "generates module header for module (source-phase import) target":
+    var prog = Program(uniqueCrateIdentifier: "test")
+    var jsg = newJsGen(prog, jsModule, "hello")
+    let output = jsg.generate()
+    check output.contains("import source wasmModule from './hello.wasm';")
+    check output.contains("new WebAssembly.Instance(wasmModule")
+    check not output.contains("export default init")
+    check output.contains("export const __nbg_wasm_module")
+
   test "generates struct class with constructor and getters":
     var prog = Program(
       uniqueCrateIdentifier: "test",
@@ -708,6 +729,29 @@ proc buildWasmCodeSection(fns: seq[tuple[locals: seq[(uint32, byte)], body: seq[
     codePayload.add(bodyPayload)
     payload.add(codePayload)
   result = buildWasmSection(10, payload)
+
+proc buildWasmMemorySection(initial: uint32, maxPages: uint32, shared: bool): seq[byte] =
+  var payload: seq[byte] = @[]
+  writeUleb128(payload, 1'u32)  # 1 memory
+  var flags: byte = 0x01  # max present
+  if shared: flags = flags or 0x02
+  payload.add(flags)
+  writeUleb128(payload, initial)
+  writeUleb128(payload, maxPages)
+  result = buildWasmSection(5, payload)
+
+proc buildWasmGlobalSection(globals: seq[tuple[valtype: byte, mutable: bool, initVal: int32]]): seq[byte] =
+  var payload: seq[byte] = @[]
+  writeUleb128(payload, uint32(globals.len))
+  for g in globals:
+    payload.add(g.valtype)
+    payload.add(if g.mutable: 0x01'u8 else: 0x00'u8)
+    payload.add(0x41'u8)  # i32.const
+    var valBuf: seq[byte] = @[]
+    writeSleb128(valBuf, g.initVal)
+    payload.add(valBuf)
+    payload.add(0x0B'u8)  # end
+  result = buildWasmSection(6, payload)
 
 proc buildMinimalWasm(types: seq[tuple[params: seq[byte], results: seq[byte]]],
                        imports: seq[tuple[modName: string, fieldName: string, kind: byte, typeIdx: uint32]],
@@ -1518,6 +1562,181 @@ suite "transforms — transform pass-throughs":
     check transCfg.multivalue.enabled == true
     check transCfg.catch.enabled == true
     check transCfg.threads.enabled == true
+
+# ─── transforms — catch wrapping ───
+
+suite "transforms — catch transform":
+  test "transformCatch wraps catch-exported function body with try/catch_all":
+    let wasm = buildMinimalWasm(
+      types = @[(params: noByteSeq, results: noByteSeq)],
+      imports = noImportSeq,
+      funcTypeIndices = @[0'u32],
+      exports = @[(name: "my_func_catch", kind: 0x00'u8, idx: 0'u32)],
+      codes = @[(locals: newSeq[(uint32, byte)](), body: @[0x0B'u8])],
+    )
+    let result = transformCatch(wasm, defaultCatchConfig())
+    check result.len > wasm.len
+    let OpTry = 0x06'u8
+    let OpCatchAll = 0x19'u8
+    let hasTry = result.find(OpTry) >= 0
+    let hasCatchAll = result.find(OpCatchAll) >= 0
+    check hasTry
+    check hasCatchAll
+
+  test "transformCatch no-ops when no catch exports":
+    let wasm = buildMinimalWasm(
+      types = @[(params: noByteSeq, results: noByteSeq)],
+      imports = noImportSeq,
+      funcTypeIndices = @[0'u32],
+      exports = @[(name: "regular_func", kind: 0x00'u8, idx: 0'u32)],
+      codes = @[(locals: newSeq[(uint32, byte)](), body: @[0x0B'u8])],
+    )
+    let result = transformCatch(wasm, defaultCatchConfig())
+    check result == wasm
+
+  test "transformCatch wraps __catch suffix variant":
+    let wasm = buildMinimalWasm(
+      types = @[(params: noByteSeq, results: noByteSeq)],
+      imports = noImportSeq,
+      funcTypeIndices = @[0'u32],
+      exports = @[(name: "my_func__catch", kind: 0x00'u8, idx: 0'u32)],
+      codes = @[(locals: newSeq[(uint32, byte)](), body: @[0x0B'u8])],
+    )
+    let result = transformCatch(wasm, defaultCatchConfig())
+    check result.len > wasm.len
+
+  test "transformCatch wraps function with locals and instructions":
+    let wasm = buildMinimalWasm(
+      types = @[(params: noByteSeq, results: noByteSeq)],
+      imports = noImportSeq,
+      funcTypeIndices = @[0'u32],
+      exports = @[(name: "fn_catch", kind: 0x00'u8, idx: 0'u32)],
+      codes = @[(locals: @[(1'u32, 0x7F'u8)], body: @[0x20'u8, 0x00'u8, 0x0B'u8])],
+    )
+    let result = transformCatch(wasm, defaultCatchConfig())
+    let OpTry = 0x06'u8
+    let OpCatchAll = 0x19'u8
+    check result.find(OpTry) >= 0
+    check result.find(OpCatchAll) >= 0
+    check result.len > wasm.len
+
+  test "transformCatch wraps only catch exports, leaves others unchanged":
+    let wasm = buildMinimalWasm(
+      types = @[(params: noByteSeq, results: noByteSeq), (params: noByteSeq, results: noByteSeq)],
+      imports = noImportSeq,
+      funcTypeIndices = @[0'u32, 1'u32],
+      exports = @[
+        (name: "fn_catch", kind: 0x00'u8, idx: 0'u32),
+        (name: "fn_normal", kind: 0x00'u8, idx: 1'u32),
+      ],
+      codes = @[
+        (locals: newSeq[(uint32, byte)](), body: @[0x0B'u8]),
+        (locals: newSeq[(uint32, byte)](), body: @[0x0B'u8]),
+      ],
+    )
+    let result = transformCatch(wasm, defaultCatchConfig())
+    let OpTry = 0x06'u8
+    check result.find(OpTry) >= 0
+
+  test "transformCatch with empty data":
+    let cfg = defaultCatchConfig()
+    check transformCatch(noByteSeq, cfg) == noByteSeq
+
+  test "transformCatch with non-catch-matched suffix is no-op":
+    let wasm = buildMinimalWasm(
+      types = @[(params: noByteSeq, results: noByteSeq)],
+      imports = noImportSeq,
+      funcTypeIndices = @[0'u32],
+      exports = @[(name: "my_func_catcher", kind: 0x00'u8, idx: 0'u32)],
+      codes = @[(locals: newSeq[(uint32, byte)](), body: @[0x0B'u8])],
+    )
+    let result = transformCatch(wasm, defaultCatchConfig())
+    check result == wasm
+
+  test "transformCatch passes through when disabled":
+    var cfg = defaultCatchConfig()
+    cfg.enabled = false
+    let wasm = buildMinimalWasm(
+      types = @[(params: noByteSeq, results: noByteSeq)],
+      imports = noImportSeq,
+      funcTypeIndices = @[0'u32],
+      exports = @[(name: "fn_catch", kind: 0x00'u8, idx: 0'u32)],
+      codes = @[(locals: newSeq[(uint32, byte)](), body: @[0x0B'u8])],
+    )
+    let result = transformCatch(wasm, cfg)
+    check result == wasm
+
+# ─── transforms — threads transform ───
+
+suite "transforms — threads transform":
+  test "transformThreads patches memory to shared":
+    var importPayload: seq[byte] = @[]
+    writeUleb128(importPayload, 1'u32)
+    writeUleb128String(importPayload, "env")
+    writeUleb128String(importPayload, "__stack_pointer")
+    importPayload.add(0x03'u8)
+    importPayload.add(0x7F'u8)
+    importPayload.add(0x01'u8)
+    let importSec = buildWasmSection(2, importPayload)
+    let memSec = buildWasmMemorySection(initial = 256, maxPages = 512, shared = false)
+    let wasm = buildWasmHeader() &
+      buildWasmTypeSection(@[(params: @[0x7F'u8], results: noByteSeq)]) &
+      importSec & memSec &
+      buildWasmFunctionSection(@[0'u32]) &
+      buildWasmCodeSection(@[(locals: newSeq[(uint32, byte)](), body: @[0x0B'u8])])
+    let result = transformThreads(wasm, defaultThreadsConfig())
+    check result.len > wasm.len
+    check isMemoryShared(result) == true
+
+  test "transformThreads no-ops without stack pointer":
+    let wasm = buildMinimalWasm(
+      types = @[(params: noByteSeq, results: noByteSeq)],
+      imports = noImportSeq,
+      funcTypeIndices = noU32Seq,
+      exports = noExportSeq,
+      codes = noCodeSeq,
+    )
+    let result = transformThreads(wasm, defaultThreadsConfig())
+    check result == wasm
+
+  test "transformThreads no-ops with already-shared memory":
+    var importPayload: seq[byte] = @[]
+    writeUleb128(importPayload, 1'u32)
+    writeUleb128String(importPayload, "env")
+    writeUleb128String(importPayload, "__stack_pointer")
+    importPayload.add(0x03'u8)
+    importPayload.add(0x7F'u8)
+    importPayload.add(0x01'u8)
+    let importSec = buildWasmSection(2, importPayload)
+    let memSec = buildWasmMemorySection(initial = 256, maxPages = 512, shared = true)
+    let wasm = buildWasmHeader() &
+      buildWasmTypeSection(@[(params: @[0x7F'u8], results: noByteSeq)]) &
+      importSec & memSec &
+      buildWasmFunctionSection(@[0'u32]) &
+      buildWasmCodeSection(@[(locals: newSeq[(uint32, byte)](), body: @[0x0B'u8])])
+    let result = transformThreads(wasm, defaultThreadsConfig())
+    check result.len == wasm.len
+
+  test "transformThreads passes through when disabled":
+    var cfg = defaultThreadsConfig()
+    cfg.enabled = false
+    let wasm = buildMinimalWasm(
+      types = @[(params: noByteSeq, results: noByteSeq)],
+      imports = noImportSeq,
+      funcTypeIndices = noU32Seq,
+      exports = noExportSeq,
+      codes = noCodeSeq,
+    )
+    check transformThreads(wasm, cfg) == wasm
+
+  test "transformThreads passes through empty data":
+    let cfg = defaultThreadsConfig()
+    check transformThreads(noByteSeq, cfg) == noByteSeq
+
+  test "transformThreads passes through invalid magic":
+    let cfg = defaultThreadsConfig()
+    let wasm = @[0xFF'u8, 0xFF'u8, 0xFF'u8, 0xFF'u8, 0x01'u8, 0x00'u8, 0x00'u8, 0x00'u8]
+    check transformThreads(wasm, cfg) == wasm
 
 # ─── cli — custom section extraction ───
 
@@ -2702,3 +2921,158 @@ suite "Intl — DateTimeFormat & NumberFormat":
   test "Collator resolvedOptions returns zero on non-wasm":
     var collator = JsIntlCollator(JsValue(idx: 0))
     check JsValue(jsIntlCollatorResolvedOptions(collator)).idx == 0
+
+
+suite "jscast — JsCast / Upcast type system":
+  test "uncheckedTo casts JsValue to distinct type (method call)":
+    var raw = JsValue(idx: 42)
+    var el = raw.uncheckedTo(JsElement)
+    check JsValue(el).idx == 42
+
+  test "uncheckedInto generic casts JsValue to distinct type":
+    var raw = JsValue(idx: 42)
+    var el = uncheckedInto[JsElement](raw)
+    check JsValue(el).idx == 42
+
+  test "uncheckedFrom casts distinct type back to JsValue":
+    var el = JsElement(JsValue(idx: 7))
+    var raw = el.uncheckedFrom()
+    check raw.idx == 7
+
+  test "uncheckedTo casts between distinct types":
+    var el = JsElement(JsValue(idx: 99))
+    var node = el.uncheckedTo(JsNode)
+    check JsValue(node).idx == 99
+
+  test "upcastTo explicit proc":
+    var canvas = JsHTMLCanvasElement(JsValue(idx: 3))
+    var el = canvas.upcastTo(JsElement)
+    check JsValue(el).idx == 3
+
+  test "converter chain: JsHTMLCanvasElement -> JsHTMLElement -> JsElement -> JsNode -> JsValue":
+    var canvas = JsHTMLCanvasElement(JsValue(idx: 123))
+    # Implicit conversions should chain through the hierarchy
+    var htmlEl: JsHTMLElement = canvas
+    var el: JsElement = htmlEl
+    var node: JsNode = el
+    var raw: JsValue = node
+    check raw.idx == 123
+
+  test "converter: JsMouseEvent -> JsEvent -> JsValue":
+    var ev = JsMouseEvent(JsValue(idx: 55))
+    var base: JsEvent = ev
+    var raw: JsValue = base
+    check raw.idx == 55
+
+  test "converter: JsKeyboardEvent -> JsEvent":
+    var ev = JsKeyboardEvent(JsValue(idx: 66))
+    var base: JsEvent = ev
+    check JsValue(base).idx == 66
+
+  test "converter: JsDocument -> JsNode -> JsValue":
+    var doc = JsDocument(JsValue(idx: 77))
+    var node: JsNode = doc
+    var raw: JsValue = node
+    check raw.idx == 77
+
+  test "jsClassName compile-time constants":
+    check jsClassName(JsElement) == "Element"
+    check jsClassName(JsNode) == "Node"
+    check jsClassName(JsDocument) == "Document"
+    check jsClassName(JsHTMLElement) == "HTMLElement"
+    check jsClassName(JsHTMLCanvasElement) == "HTMLCanvasElement"
+    check jsClassName(JsMouseEvent) == "MouseEvent"
+    check jsClassName(JsWindow) == "Window"
+    check jsClassName(JsEvent) == "Event"
+
+  test "dynTo on non-wasm returns none for mismatched type":
+    # On non-wasm32 isInstanceOf always returns false
+    var raw = JsValue(idx: 1)
+    var opt = raw.dynTo(JsElement)
+    check opt.isNone
+
+  test "dynInto generic on same-typed value returns some on wasm32":
+    var el = JsElement(JsValue(idx: 1))
+    var opt = dynInto[JsElement](el)
+    when defined(wasm32):
+      check opt.isSome
+      check JsValue(opt.get).idx == 1
+    else:
+      # On non-wasm isInstanceOf always returns false, so dynInto returns none
+      check opt.isNone
+
+  test "dynTo with target typedesc":
+    var raw = JsValue(idx: 1)
+    var opt = raw.dynTo(JsElement)
+    check opt.isNone  # non-wasm: instanceof fails
+
+
+suite "webidl parser — regression fixes":
+  test "parses callback with optional args (EventHandler style)":
+    let src = "callback OnErrorEventHandlerNonNull = undefined (DOMString event, optional DOMString source = \"\", optional unsigned long lineno = 0, optional unsigned long colno = 0);"
+    let defs = parseWebIDL(src)
+    check defs.len == 1
+    check defs[0].kind == witCallback
+    check defs[0].name == "OnErrorEventHandlerNonNull"
+
+  test "parses variadic arguments":
+    let src = "interface Console { undefined debug(any... data); undefined log(any... data); };"
+    let defs = parseWebIDL(src)
+    check defs.len == 1
+    check defs[0].fields.len == 2
+
+  test "parses extended attributes before optional":
+    let src = "interface Foo { undefined bar([EnforceRange] optional unsigned long long x = 0); };"
+    let defs = parseWebIDL(src)
+    check defs.len == 1
+    check defs[0].fields.len == 1
+
+  test "parses getter/setter/deleter":
+    let src = "interface Foo { getter object (DOMString name); setter undefined (DOMString name, object value); deleter undefined (DOMString name); };"
+    let defs = parseWebIDL(src)
+    check defs.len == 1
+    check defs[0].fields.len == 3
+
+  test "parses includes statement":
+    let src = "interface Foo {}; interface Bar {}; Foo includes Bar;"
+    let defs = parseWebIDL(src)
+    check defs.len == 3
+    check defs[2].kind == witIncludes
+    check defs[2].name == "Foo"
+    check defs[2].parent == "Bar"
+
+  test "parses unsigned long long type":
+    let src = "interface Foo { attribute unsigned long long bytesWritten; };"
+    let defs = parseWebIDL(src)
+    check defs.len == 1
+    check defs[0].fields[0].returnType == "unsigned long long"
+
+  test "parses nullable parenthesized union type":
+    let src = "interface Foo { undefined bar(optional (HTMLElement or long)? before = null); };"
+    let defs = parseWebIDL(src)
+    check defs.len == 1
+    check defs[0].fields.len == 1
+
+  test "parses callback interface":
+    let src = "callback interface FileSystemEntryCallback { undefined handleEvent(FileSystemEntry entry); };"
+    let defs = parseWebIDL(src)
+    check defs.len == 1
+    check defs[0].kind == witCallbackInterface
+    check defs[0].name == "FileSystemEntryCallback"
+    check defs[0].fields.len == 1
+
+  test "parses full Window.webidl without infinite loop":
+    let src = readFile("OLD/crates/web-sys/webidls/enabled/Window.webidl")
+    let t0 = cpuTime()
+    let defs = parseWebIDL(src)
+    let dt = cpuTime() - t0
+    check defs.len >= 1
+    check dt < 1.0  # must not infinite-loop
+
+  test "parses full Streams.webidl without infinite loop":
+    let src = readFile("OLD/crates/web-sys/webidls/enabled/Streams.webidl")
+    let t0 = cpuTime()
+    let defs = parseWebIDL(src)
+    let dt = cpuTime() - t0
+    check defs.len >= 1
+    check dt < 1.0

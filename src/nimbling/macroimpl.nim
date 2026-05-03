@@ -232,7 +232,8 @@ macro wasmBindgen*(body: untyped): untyped =
     error("wasmBindgen can only be applied to proc definitions", body)
 
   let procDef  = body
-  let procName = procDef[0].strVal
+  let procNameNode = procDef[0]
+  let procName = if procNameNode.kind == nnkPostfix: procNameNode[1].strVal else: procNameNode.strVal
   let params   = procDef[3]
   let retType  = params[0]
   let isVoid   = isVoidNode(retType)

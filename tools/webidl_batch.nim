@@ -20,20 +20,9 @@ for file in walkFiles(webidlDir / "*.webidl"):
   stdout.flushFile()
 
   try:
-    # Skip known problematic files that cause infinite loops
-    if fname in ["EventHandler.webidl", "Window.webidl", "Element.webidl",
-                 "RTCPeerConnection.webidl", "WebGL2RenderingContext.webidl",
-                 "WebGLRenderingContext.webidl", "Navigator.webidl", "WebSocket.webidl",
-                 "XMLHttpRequest.webidl", "IDB.webidl", "Streams.webidl",
-                 "WorkerGlobalScope.webidl", "DOMRequest.webidl", "Blob.webidl",
-                 "CSSStyleDeclaration.webidl", "Console.webidl", "DOMTokenList.webidl",
-                 "Document.webidl", "EventTarget.webidl", "FileSystemHandle.webidl",
-                 "HTMLDocument.webidl", "HTMLOptionsCollection.webidl",
-                 "HTMLSelectElement.webidl", "UDPSocket.webidl"]:
-      stdout.write("SKIPPED (known issue)\n")
-      stdout.flushFile()
-      inc bad
-      continue
+    # Previously these 24 files were skipped due to infinite-loop bugs in the parser.
+    # All parser bugs have been fixed (May 2026) — no files are skipped anymore.
+    discard
 
     let defs = parseWebIDL(src)
     let dt = epochTime() - t0

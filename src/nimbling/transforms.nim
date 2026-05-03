@@ -54,6 +54,15 @@ const
   OpTableGet* = 0x25'u8
   OpTableSet* = 0x26'u8
 
+  OpTry* = 0x06'u8
+  OpCatch* = 0x07'u8
+  OpThrow* = 0x08'u8
+  OpRethrow* = 0x09'u8
+  OpCatchAll* = 0x19'u8
+  OpUnreachable* = 0x00'u8
+
+  BlockTypeEmpty* = 0x40'u8
+
   # Table element types
   ElemFuncRef* = 0x70'u8
   ElemExternRef* = 0x6F'u8
@@ -462,6 +471,50 @@ proc patchMemoryShared*(data: var seq[byte]): bool =
       return true
   return false
 
+proc patchGlobalMutable*(data: var seq[byte], globalIdx: int) =
+  if globalIdx < 0:
+    return
+
+  let parsed = parseSections(data)
+  for sec in parsed.sections:
+    if sec.id == SecGlobal:
+      let payload = parsed.sectionPayload(sec)
+      var p = 0
+      let count = int(readUleb128(payload, p))
+      if globalIdx >= count:
+        return
+
+      var rp = p
+      for i in 0 ..< globalIdx:
+        discard readByte(payload, rp)
+        discard readByte(payload, rp)
+        while true:
+          let b = readByte(payload, rp)
+          if b == OpEnd: break
+
+      let valtype = payload[rp]; inc rp
+      let mutPos = sec.payloadOffset + (rp - p)
+
+      if data[mutPos] == 0x01'u8:
+        return
+
+      var newPayload: seq[byte] = @[]
+      writeUleb128(newPayload, uint32(count))
+      newPayload.add(payload[0 ..< (mutPos - sec.payloadOffset)])
+      newPayload.add(0x01'u8)
+      newPayload.add(payload[(mutPos - sec.payloadOffset + 1) .. ^1])
+
+      var newData: seq[byte] = @[]
+      newData.add(data[0 ..< sec.offset])
+      newData.add(byte(SecGlobal))
+      writeUleb128(newData, uint32(newPayload.len))
+      newData.add(newPayload)
+      let afterEnd = sec.payloadOffset + sec.size
+      if afterEnd < data.len:
+        newData.add(data[afterEnd ..< data.len])
+      data = newData
+      return
+
 proc findImportGlobal*(data: seq[byte], name: string): int =
   result = -1
   let parsed = parseSections(data)
@@ -575,6 +628,9 @@ proc transformThreads*(wasmData: seq[byte], config: ThreadsConfig): seq[byte] =
     if patchMemoryShared(result):
       state.hasSharedMemory = true
 
+  if state.hasSharedMemory and state.tlsInfo.baseGlobalIdx >= 0:
+    patchGlobalMutable(result, state.tlsInfo.baseGlobalIdx)
+
 proc findCatchFuncs*(data: seq[byte]): seq[string] =
   result = @[]
   let parsed = parseSections(data)
@@ -590,6 +646,80 @@ proc findCatchFuncs*(data: seq[byte]): seq[string] =
         if kind == ExtFunc and (name.endsWith("_catch") or name.endsWith("__catch")):
           result.add(name)
 
+proc wrapCatchBodies(data: var seq[byte], catchedFuncIndices: seq[int]) =
+  ## Wrap catch function bodies with try/catch_all blocks.
+  ## For each function body:
+  ##   try $blocktype
+  ##     <original body instructions>
+  ##   catch_all
+  ##     unreachable
+  ##   end
+  ## This catches JS-originated exceptions and converts them to wasm traps.
+  if catchedFuncIndices.len == 0:
+    return
+
+  let parsed = parseSections(data)
+
+  for sec in parsed.sections:
+    if sec.id == SecCode:
+      let payload = parsed.sectionPayload(sec)
+      var p = 0
+      let funcCount = int(readUleb128(payload, p))
+
+      var newPayload: seq[byte] = @[]
+      writeUleb128(newPayload, uint32(funcCount))
+
+      for f in 0 ..< funcCount:
+        let bodySize = int(readUleb128(payload, p))
+        let bodyStart = p
+        let bodyEnd = bodyStart + bodySize
+        let bodyData = payload[bodyStart ..< bodyEnd]
+
+        if f in catchedFuncIndices:
+
+          let origBodyLen = bodyData.len
+
+          var bp = 0
+          let localCount = int(readUleb128(bodyData, bp))
+
+          var newBody: seq[byte] = @[]
+          writeUleb128(newBody, uint32(localCount))
+          for l in 0 ..< localCount:
+            let n = int(readUleb128(bodyData, bp))
+            let t = bodyData[bp]; inc bp
+            writeUleb128(newBody, uint32(n))
+            newBody.add(t)
+
+          newBody.add(OpTry)
+          newBody.add(BlockTypeEmpty)
+
+          if origBodyLen - 1 > bp:
+            newBody.add(bodyData[bp .. ^2])
+
+          newBody.add(OpCatchAll)
+          newBody.add(OpUnreachable)
+          newBody.add(OpEnd)
+          newBody.add(OpEnd)
+
+          writeUleb128(newPayload, uint32(newBody.len))
+          newPayload.add(newBody)
+        else:
+          writeUleb128(newPayload, uint32(bodySize))
+          newPayload.add(bodyData)
+
+        p = bodyEnd
+
+      var newData: seq[byte] = @[]
+      newData.add(data[0 ..< sec.offset])
+      newData.add(byte(SecCode))
+      writeUleb128(newData, uint32(newPayload.len))
+      newData.add(newPayload)
+      let afterEnd = sec.payloadOffset + sec.size
+      if afterEnd < data.len:
+        newData.add(data[afterEnd ..< data.len])
+      data = newData
+      return
+
 proc transformCatch*(wasmData: seq[byte], config: CatchConfig): seq[byte] =
   if not config.enabled:
     return wasmData
@@ -599,7 +729,25 @@ proc transformCatch*(wasmData: seq[byte], config: CatchConfig): seq[byte] =
     return wasmData
 
   result = wasmData
-  let catchFuncs = findCatchFuncs(result)
+  let catchNames = findCatchFuncs(result)
+  if catchNames.len == 0:
+    return
+
+  let parsed = parseSections(result)
+  var catchedIndices: seq[int] = @[]
+  for sec in parsed.sections:
+    if sec.id == SecExport:
+      let payload = parsed.sectionPayload(sec)
+      var p = 0
+      let count = int(readUleb128(payload, p))
+      for i in 0 ..< count:
+        let name = readUleb128String(payload, p)
+        let kind = readByte(payload, p)
+        let idx = int(readUleb128(payload, p))
+        if kind == ExtFunc and name in catchNames:
+          catchedIndices.add(idx)
+
+  wrapCatchBodies(result, catchedIndices)
 
 # ─── Feature detection ───
 

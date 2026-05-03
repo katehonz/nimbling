@@ -13,6 +13,7 @@ import common
 import decode
 import interp
 import jsgen
+import transforms
 
 type
   CliConfig* = object
@@ -49,6 +50,8 @@ proc parseArgs(): CliConfig =
         of "no-modules":   result.target = jsNoModules
         of "nodejs":       result.target = jsNode
         of "deno":         result.target = jsDeno
+        of "experimental-nodejs-module": result.target = jsNodeModule
+        of "module":       result.target = jsModule
         else:
           echo &"Unknown target: {val}, using bundler"
       of "debug", "d":
@@ -175,9 +178,13 @@ proc runCli*() =
     quit(1)
 
   let wasmStr = readFile(config.input)
-  let wasmData = cast[seq[byte]](wasmStr)
+  var wasmData = cast[seq[byte]](wasmStr)
   if config.debug:
     echo &"Read {wasmData.len} bytes from {config.input}"
+
+  wasmData = applyTransforms(wasmData, defaultTransformConfig())
+  if config.debug:
+    echo &"After transforms: {wasmData.len} bytes"
 
   # Extract custom section
   let customData = extractCustomSection(wasmData, CustomSectionName)

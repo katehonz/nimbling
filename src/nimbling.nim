@@ -24,6 +24,9 @@
 import nimbling/common
 import nimbling/runtime
 import nimbling/macroimpl
+import nimbling/jscast
+import nimbling/js_sys
+import nimbling/web_sys_generated
 
 # Re-export core types
 export common
@@ -33,6 +36,9 @@ export runtime.fromIdx
 export macroimpl.wasmBindgen
 export macroimpl.wasmBindgenType
 export macroimpl.wasmBindgenFinalize
+export jscast
+export js_sys.JsObject
+export web_sys_generated
 
 when defined(wasm32):
   export runtime.nbgMalloc
