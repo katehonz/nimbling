@@ -221,6 +221,38 @@ nimbling/
 | WebIDL macro | No | **Yes** — compile-time `webidlBind` |
 | js-sys | ~250 procs | 192 procs (20 APIs) |
 
+## Real-World Examples
+
+The [NimLeptos](https://github.com/katehonz/brenan/tree/main/nimleptos) framework uses `nimbling` for WebAssembly/JS interop in production-like applications. See the [`nimleptos/examples`](https://github.com/katehonz/brenan/tree/main/nimleptos/examples) directory for:
+
+### Featured: `wasm_counter`
+
+The [`wasm_counter`](https://github.com/katehonz/brenan/tree/main/nimleptos/examples/wasm_counter) example is the most complete end-to-end demo. It shows:
+
+- **Reactive signals** (`createSignal`, `createMemo`, `createEffect`) running in WASM
+- **Emscripten build** with `build.sh` — compiles Nim → C → wasm via `emcc`
+- **EM_ASM DOM helpers** — direct DOM manipulation from Nim through Emscripten macros
+- **JS ↔ WASM interop** — exported procs (`increment`, `decrement`, `render`) called from HTML via `Module.ccall`
+- **Polished HTML demo** (`index.html`) with CSS animations and reactive hot-state
+
+```bash
+cd nimleptos/examples/wasm_counter
+./build.sh        # Requires Emscripten SDK
+firefox index.html
+```
+
+### Other Examples
+
+| Example | Description |
+|---------|-------------|
+| [`counter`](https://github.com/katehonz/brenan/tree/main/nimleptos/examples/counter) | Minimal counter example |
+| [`blog`](https://github.com/katehonz/brenan/tree/main/nimleptos/examples/blog) | Fullstack blog with Nim backend + wasm frontend |
+| [`todo_app.nim`](https://github.com/katehonz/brenan/blob/main/nimleptos/examples/todo_app.nim) | Todo app server |
+| [`wasm_reactive.nim`](https://github.com/katehonz/brenan/blob/main/nimleptos/examples/wasm_reactive.nim) + [`wasm_reactive.html`](https://github.com/katehonz/brenan/blob/main/nimleptos/examples/wasm_reactive.html) | Reactive wasm DOM updates |
+| [`conditional_client.nim`](https://github.com/katehonz/brenan/blob/main/nimleptos/examples/conditional_client.nim) + [`conditional_client.html`](https://github.com/katehonz/brenan/blob/main/nimleptos/examples/conditional_client.html) | Conditional rendering example |
+| [`hybrid_client.nim`](https://github.com/katehonz/brenan/blob/main/nimleptos/examples/hybrid_client.nim) + [`hybrid_client.html`](https://github.com/katehonz/brenan/blob/main/nimleptos/examples/hybrid_client.html) | Hybrid server + client rendering |
+| [`server_app.nim`](https://github.com/katehonz/brenan/blob/main/nimleptos/examples/server_app.nim) | Full server application |
+
 ## License
 
 MIT

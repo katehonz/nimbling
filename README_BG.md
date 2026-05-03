@@ -154,6 +154,38 @@ nimbling/
 └── OLD/                         # Reference: wasm-bindgen (Rust) source
 ```
 
+## Реални примери (Real-World Examples)
+
+Фреймуъркът [NimLeptos](https://github.com/katehonz/brenan/tree/main/nimleptos) използва `nimbling` за WebAssembly/JS interop в приложения близки до production. Виж директорията [`nimleptos/examples`](https://github.com/katehonz/brenan/tree/main/nimleptos/examples):
+
+### На фокус: `wasm_counter`
+
+Примерът [`wasm_counter`](https://github.com/katehonz/brenan/tree/main/nimleptos/examples/wasm_counter) е най-пълният end-to-end demo. Показва:
+
+- **Reactive signals** (`createSignal`, `createMemo`, `createEffect`) в WASM
+- **Emscripten build** с `build.sh` — компилира Nim → C → wasm през `emcc`
+- **EM_ASM DOM helpers** — директна DOM манипулация от Nim чрез Emscripten макроси
+- **JS ↔ WASM interop** — експортнати proc-ове (`increment`, `decrement`, `render`), викани от HTML през `Module.ccall`
+- **Стилна HTML демо страница** (`index.html`) с CSS анимации и reactive hot-state
+
+```bash
+cd nimleptos/examples/wasm_counter
+./build.sh        # Изисква Emscripten SDK
+firefox index.html
+```
+
+### Други примери
+
+| Пример | Описание |
+|---------|-------------|
+| [`counter`](https://github.com/katehonz/brenan/tree/main/nimleptos/examples/counter) | Минимален counter пример |
+| [`blog`](https://github.com/katehonz/brenan/tree/main/nimleptos/examples/blog) | Fullstack blog с Nim backend + wasm frontend |
+| [`todo_app.nim`](https://github.com/katehonz/brenan/blob/main/nimleptos/examples/todo_app.nim) | Todo app сървър |
+| [`wasm_reactive.nim`](https://github.com/katehonz/brenan/blob/main/nimleptos/examples/wasm_reactive.nim) + [`wasm_reactive.html`](https://github.com/katehonz/brenan/blob/main/nimleptos/examples/wasm_reactive.html) | Реактивни wasm DOM updates |
+| [`conditional_client.nim`](https://github.com/katehonz/brenan/blob/main/nimleptos/examples/conditional_client.nim) + [`conditional_client.html`](https://github.com/katehonz/brenan/blob/main/nimleptos/examples/conditional_client.html) | Conditional rendering пример |
+| [`hybrid_client.nim`](https://github.com/katehonz/brenan/blob/main/nimleptos/examples/hybrid_client.nim) + [`hybrid_client.html`](https://github.com/katehonz/brenan/blob/main/nimleptos/examples/hybrid_client.html) | Хибридно server + client рендиране |
+| [`server_app.nim`](https://github.com/katehonz/brenan/blob/main/nimleptos/examples/server_app.nim) | Пълноценно сървърно приложение |
+
 ## Лиценз
 
 MIT
