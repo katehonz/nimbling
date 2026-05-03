@@ -5,6 +5,8 @@
 import common
 import std/strformat
 import std/strutils
+import macroimpl_closure
+import macroimpl_async
 
 type
   JsGenTarget* = enum
@@ -298,6 +300,8 @@ proc intrinsicName*(k: IntrinsicKind): string =
 
 proc generateHelpers(g: var JsGen) =
   g.add(jsHelpers)
+  g.add(generateClosureGlueJs())
+  g.add(generateAsyncGlueJs())
 
 # ─── Type analysis helpers ───
 

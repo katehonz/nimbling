@@ -10,6 +10,9 @@ import std/tables
 import common
 import encode
 import codegen
+import macroimpl_closure
+import macroimpl_async
+import macroimpl_attrs
 
 # ─── Build an {.exportc, cdecl.} wrapper proc ───
 
@@ -238,6 +241,22 @@ macro wasmBindgen*(body: untyped): untyped =
 
   let args = parseFormalParams(params)
 
+  # Parse wasmBindgen attributes from proc pragmas
+  let attrs = parseBindgenAttrs(procDef[4])
+  let exportJsName = exportJsName(attrs, procName)
+
+  # Check for closure types in args/return
+  var hasClosure = false
+  for (_, ptype) in args:
+    if isClosureType(ptype):
+      hasClosure = true
+      break
+  if not hasClosure and not isVoid and isClosureType(retTypeStr):
+    hasClosure = true
+
+  # Check for async
+  let async = isAsyncProc(procDef)
+
   # Accumulate export in compile-time program metadata
   var funcArgs = newSeq[FunctionArgumentData]()
   for (aname, atype) in args:
@@ -245,10 +264,12 @@ macro wasmBindgen*(body: untyped): untyped =
 
   compileTimeProgram.exports.add(Export(
     function: FunctionDesc(
-      name: procName,
+      name: exportJsName,
       args: funcArgs,
       retTyOverride: retTypeStr,
+      isAsync: async,
     ),
+    methodKind: if baConstructor in attrs.flags: mkConstructor else: mkOperation,
   ))
 
   if compileTimeProgram.uniqueCrateIdentifier.len == 0:
@@ -270,10 +291,18 @@ macro wasmBindgen*(body: untyped): untyped =
     describeImportDeclared = true
 
   # Export wrapper
-  wasmBody.add(buildShimProc(procName, args, retTypeStr, isVoid))
+  if hasClosure:
+    wasmBody.add(buildClosureExportWrapper(procName, args, retTypeStr, isVoid, params))
+  elif async:
+    wasmBody.add(buildAsyncExportWrapper(procName, args, retTypeStr))
+  else:
+    wasmBody.add(buildShimProc(procName, args, retTypeStr, isVoid))
 
   # Descriptor function
-  wasmBody.add(buildDescribeProc(procName, args, retTyId, retTypeStr, isVoid))
+  if async:
+    emitAsyncDescriptor(wasmBody, procName, args, retTyId)
+  else:
+    wasmBody.add(buildDescribeProc(procName, args, retTyId, retTypeStr, isVoid))
 
   # Build: when defined(wasm32): <wasmBody>
   let whenBranch = nnkElifBranch.newTree(
