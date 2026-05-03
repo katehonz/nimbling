@@ -27,3 +27,4 @@ src/nimbling/common
 src/nimbling/macroimpl
 src/nimbling/macroimpl_closure
 src/nimbling/macroimpl_async
+src/nimbling/macroimpl_webidl
