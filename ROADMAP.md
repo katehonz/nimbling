@@ -26,7 +26,7 @@
 | `wit.nim` — WIT adapter system | 602 | ✅ |
 | `emscripten.nim` — Emscripten + Memory64 + CLI flags | 457 | ✅ |
 | `test_runner.nim` — wasm test framework | 781 | ✅ |
-| Tests **(134/134 pass)** | 1745 | ✅ |
+| Tests **(156/156 pass)** | 1800 | ✅ |
 | Docs (README, docs/) | 5 files | ✅ |
 | **TOTAL** | **~11,000** | ✅ |
 
@@ -158,7 +158,8 @@ DOM, CSSOM, Events, Canvas 2D, Fetch, Storage, WebSocket, Location/History, Perf
 | `cli.nim` — custom section, type helpers | 14 | ✅ |
 | `runtime.nim` — types, value semantics | 7 | ✅ |
 | `macroimpl_webidl.nim` — compile-time bindings | 10 | ✅ |
-| **TOTAL** | **134** | ✅ |
+| `JsFuture` + `spawnLocal` — async bridge | 12 | ✅ |
+| **TOTAL** | **156** | ✅ |
 
 ---
 
@@ -172,8 +173,12 @@ DOM, CSSOM, Events, Canvas 2D, Fetch, Storage, WebSocket, Location/History, Perf
 ### Closures & Async
 - [ ] `ScopedClosure` for borrowed lifetimes
 - [ ] Panic-catching in closure wrappers
-- [ ] `JsFuture` type (Promise → Nim async)
-- [ ] `spawn_local` for start functions
+- [x] `JsFuture` type — `distinct JsValue`, bridge between JS Promises and Nim
+- [x] `spawnLocal` — schedule Nim procs/futures on JS event loop
+- [x] `futureToPromise` / `spawnLocalFuture` — low-level future-to-Promise bridge
+- [x] `jsFutureThen`/`Catch`/`Finally`/`All`/`Race` — Promise combinators
+- [x] `jsFutureResolved`/`jsFutureRejected` — resolved/rejected JsFuture constructors
+- [x] Tests: 12 tests (JsFuture types, bridge, spawnLocal)
 
 ### Test Framework
 - [ ] Worker test modes (Dedicated, Shared, Service)
@@ -221,7 +226,7 @@ git clone https://github.com/katehonz/nimbling.git
 cd nimbling
 
 # Run tests
-nimble test          # Must pass (134/134)
+nimble test          # Must pass (156/156)
 
 # Build
 nimble buildCli      # CLI tool

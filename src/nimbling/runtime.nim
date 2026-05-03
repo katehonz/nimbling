@@ -1,4 +1,4 @@
-## Runtime types for nimbling: JsValue, Closure, memory management.
+## Runtime types for nimbling: JsValue, Closure, JsFuture, memory management.
 ## These are used in user code compiled to wasm.
 
 type
@@ -7,6 +7,22 @@ type
 
   Closure*[T] = object
     idx*: uint32
+
+  JsFuture* = distinct JsValue
+    ## A handle to a JS Promise that can be awaited from Nim async code.
+    ## Use `spawnLocal` to run Nim async code on the JS event loop.
+
+# ─── JS object heap stubs (needed by =destroy/=copy emit blocks) ───
+# These are C stubs; real implementation will come from JS glue.
+when defined(wasm32):
+  {.emit: """
+  static void __nbg_object_drop_ref(unsigned int idx) { (void)idx; }
+  static void __nbg_object_clone_ref(unsigned int idx) { (void)idx; }
+  static void __nbg_closure_drop(unsigned int idx) { (void)idx; }
+  static void __nbg_throw(void *ptr, int len) { (void)ptr; (void)len; }
+  static void __nbg_rethrow(unsigned int idx) { (void)idx; }
+  static void __nbg_panic_error(void *ptr, int len) { (void)ptr; (void)len; }
+  """.}
 
 # ─── JS object heap stubs (needed by =destroy/=copy emit blocks) ───
 # These are C stubs; real implementation will come from JS glue.
@@ -72,3 +88,62 @@ when defined(wasm32):
 
 proc fromIdx*(T: typedesc[JsValue], idx: uint32): JsValue {.inline.} =
   JsValue(idx: idx)
+
+# ─── JsFuture helpers ───
+
+proc jsFuture*(promise: JsValue): JsFuture {.inline.} =
+  ## Wrap a raw JsValue (expected to be a JS Promise) as a JsFuture.
+  JsFuture(promise)
+
+proc promise*(future: JsFuture): JsValue {.inline.} =
+  ## Get the underlying JsValue handle.
+  JsValue(future)
+
+# ─── spawnLocal: run Nim code on the JS event loop ───
+
+proc spawnLocal*(callback: proc()) =
+  ## Schedule a proc to run on the JS event loop (next tick).
+  ## Equivalent to `setTimeout(callback, 0)` in JS.
+  when defined(wasm32):
+    {.emit: """
+    var fn = heap[`callback`.idx];
+    if (typeof fn === 'function') {
+      setTimeout(fn, 0);
+    }
+    """.}
+  else:
+    callback()
+
+proc spawnLocalFuture*(futurePtr: uint32) =
+  ## Low-level: register a Nim future for polling on the JS event loop.
+  ## The existing async polling infrastructure (`__nbg_async_tasks`) will
+  ## tick the future on each interval until completion.
+  ##
+  ## `futurePtr` is obtained via `cast[uint32](cast[pointer](myFuture))`.
+  when defined(wasm32):
+    {.emit: """
+    var idx = `futurePtr` >>> 0;
+    if (typeof __nbg_async_tasks !== 'undefined') {
+      __nbg_async_tasks.set(idx, {
+        future_idx: idx,
+        resolve: function() {},
+        reject: function(err) { console.error('spawnLocal error:', err); }
+      });
+      __nbg_async_start_polling();
+    }
+    """.}
+
+proc futureToPromise*(futurePtr: uint32): uint32 =
+  ## Low-level: convert a Nim future pointer to a JS Promise heap index.
+  ## `futurePtr` is obtained via `cast[uint32](cast[pointer](myFuture))`.
+  ## Returns the heap index of the created Promise.
+  when defined(wasm32):
+    {.emit: """
+    if (typeof __nbg_future_to_promise !== 'undefined') {
+      `result` = __nbg_future_to_promise(`futurePtr`);
+    } else {
+      `result` = 0;
+    }
+    """.}
+  else:
+    result = 0

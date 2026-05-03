@@ -268,6 +268,50 @@ proc jsPromiseFinally*(promise: JsPromise, onFinally: JsValue): JsPromise =
   else:
     result = JsPromise(JsValue(idx: 0))
 
+# ─── JsFuture — Promise bridge for async/await ───
+
+proc jsFutureToPromise*(future: JsFuture): JsPromise {.inline.} =
+  ## Convert a JsFuture to a JsPromise.
+  JsPromise(JsValue(future))
+
+proc jsPromiseToFuture*(promise: JsPromise): JsFuture {.inline.} =
+  ## Convert a JsPromise to a JsFuture.
+  JsFuture(JsValue(promise))
+
+proc jsFutureResolved*(value: JsValue): JsFuture =
+  ## Create a JsFuture that is already resolved with `value`.
+  jsPromiseToFuture(jsPromiseResolve(value))
+
+proc jsFutureRejected*(reason: JsValue): JsFuture =
+  ## Create a JsFuture that is already rejected with `reason`.
+  jsPromiseToFuture(jsPromiseReject(reason))
+
+proc jsFutureThen*(future: JsFuture, onFulfilled: JsValue): JsFuture =
+  ## Add a fulfillment callback. Returns a new JsFuture for chaining.
+  jsPromiseToFuture(jsPromiseThen(jsFutureToPromise(future), onFulfilled))
+
+proc jsFutureCatch*(future: JsFuture, onRejected: JsValue): JsFuture =
+  ## Add a rejection callback. Returns a new JsFuture for chaining.
+  jsPromiseToFuture(jsPromiseCatch(jsFutureToPromise(future), onRejected))
+
+proc jsFutureFinally*(future: JsFuture, onFinally: JsValue): JsFuture =
+  ## Add a finally callback. Returns a new JsFuture for chaining.
+  jsPromiseToFuture(jsPromiseFinally(jsFutureToPromise(future), onFinally))
+
+proc jsFutureAll*(futures: seq[JsFuture]): JsFuture =
+  ## Wait for all futures to resolve.
+  let arr = newJsArray()
+  for f in futures:
+    jsArrayPush(arr, JsValue(f))
+  jsPromiseToFuture(jsPromiseAll(arr))
+
+proc jsFutureRace*(futures: seq[JsFuture]): JsFuture =
+  ## Wait for the first future to resolve/reject.
+  let arr = newJsArray()
+  for f in futures:
+    jsArrayPush(arr, JsValue(f))
+  jsPromiseToFuture(jsPromiseRace(arr))
+
 # ─── Date ───
 
 type JsDate* = distinct JsValue

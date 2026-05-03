@@ -15,6 +15,7 @@ import nimbling/transforms
 import nimbling/runtime
 import nimbling/cli
 import nimbling/macroimpl_webidl
+import nimbling/js_sys
 
 suite "common - identifiers":
   test "valid JS identifiers":
@@ -1743,3 +1744,78 @@ suite "webidlBind macro — generated procs":
   test "namespace method compiles":
     var jv = JsValue(idx: 0)
     log(jv)
+
+# ─── JsFuture + spawnLocal ───
+
+suite "JsFuture — type basics":
+  test "JsFuture from JsValue":
+    let jv = JsValue(idx: 42)
+    let jf = jsFuture(jv)
+    check JsValue(jf).idx == 42
+
+  test "JsFuture promise accessor":
+    let jf = JsFuture(JsValue(idx: 99))
+    let p = promise(jf)
+    check p.idx == 99
+
+  test "JsFuture distinct from JsValue":
+    var jf = JsFuture(JsValue(idx: 10))
+    var jv = JsValue(jf)
+    check jv.idx == 10
+    jv.idx = 20
+    check JsValue(jf).idx == 10  # distinct type, copy semantics
+
+suite "JsFuture — js_sys bridge":
+  test "jsFutureToPromise roundtrip":
+    let jf = JsFuture(JsValue(idx: 5))
+    let jp = jsFutureToPromise(jf)
+    check JsValue(jp).idx == 5
+    let jf2 = jsPromiseToFuture(jp)
+    check JsValue(jf2).idx == 5
+
+  test "jsFutureResolved creates resolved future":
+    # On non-wasm, returns JsFuture(JsValue(idx: 0)) — no JS runtime
+    let val = JsValue(idx: 123)
+    let jf = jsFutureResolved(val)
+    check JsValue(jf).idx == 0
+
+  test "jsFutureRejected creates rejected future":
+    let err = JsValue(idx: 456)
+    let jf = jsFutureRejected(err)
+    check JsValue(jf).idx == 0
+
+  test "jsFutureThen returns new future":
+    let jf = JsFuture(JsValue(idx: 1))
+    let cb = JsValue(idx: 2)
+    let chained = jsFutureThen(jf, cb)
+    check JsValue(chained).idx == 0
+
+  test "jsFutureCatch returns new future":
+    let jf = JsFuture(JsValue(idx: 1))
+    let cb = JsValue(idx: 2)
+    let caught = jsFutureCatch(jf, cb)
+    check JsValue(caught).idx == 0
+
+  test "jsFutureFinally returns new future":
+    let jf = JsFuture(JsValue(idx: 1))
+    let cb = JsValue(idx: 2)
+    let fin = jsFutureFinally(jf, cb)
+    check JsValue(fin).idx == 0
+
+suite "spawnLocal — proc callback":
+  test "spawnLocal callback compiles":
+    var called = false
+    proc myCallback() =
+      called = true
+    spawnLocal(myCallback)
+    # On non-wasm, spawnLocal calls the callback directly
+    check called == true
+
+suite "spawnLocal — future primitives":
+  test "spawnLocalFuture compiles with zero":
+    # Just verify it compiles — actual async polling needs wasm
+    spawnLocalFuture(0'u32)
+
+  test "futureToPromise returns zero on non-wasm":
+    let result = futureToPromise(0'u32)
+    check result == 0
