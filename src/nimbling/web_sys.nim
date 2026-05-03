@@ -94,7 +94,7 @@ proc jsDocumentBody*(doc: JsDocument): JsElement =
   when defined(emscripten):
     var docIdx = cast[JsValue](doc).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].body); });", `docIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].body); }, `docIdx`);".}
     result = JsElement(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`doc`.idx].body)};".}
@@ -104,7 +104,7 @@ proc jsDocumentHead*(doc: JsDocument): JsElement =
   when defined(emscripten):
     var docIdx = cast[JsValue](doc).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].head); });", `docIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].head); }, `docIdx`);".}
     result = JsElement(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`doc`.idx].head)};".}
@@ -155,7 +155,7 @@ proc jsElementClassList*(el: JsElement): JsDOMTokenList =
   when defined(emscripten):
     var elIdx = cast[JsValue](el).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].classList); });", `elIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].classList); }, `elIdx`);".}
     result = JsDOMTokenList(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`el`.idx].classList)};".}
@@ -222,7 +222,7 @@ proc jsElementAppendChild*(parent: JsElement, child: JsNode): JsNode =
     var parentIdx = cast[JsValue](parent).idx
     var childIdx = cast[JsValue](child).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].appendChild(heap[$1])); });", `parentIdx`, `childIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].appendChild(heap[$1])); }, `parentIdx`, `childIdx`);".}
     result = JsNode(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`parent`.idx].appendChild(heap[`child`.idx]))};".}
@@ -233,7 +233,7 @@ proc jsElementRemoveChild*(parent: JsElement, child: JsNode): JsNode =
     var parentIdx = cast[JsValue](parent).idx
     var childIdx = cast[JsValue](child).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].removeChild(heap[$1])); });", `parentIdx`, `childIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].removeChild(heap[$1])); }, `parentIdx`, `childIdx`);".}
     result = JsNode(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`parent`.idx].removeChild(heap[`child`.idx]))};".}
@@ -271,7 +271,7 @@ proc jsElementStyle*(el: JsElement): JsCSSStyleDeclaration =
   when defined(emscripten):
     var elIdx = cast[JsValue](el).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].style); });", `elIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].style); }, `elIdx`);".}
     result = JsCSSStyleDeclaration(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`el`.idx].style)};".}
@@ -281,7 +281,7 @@ proc jsElementGetBoundingClientRect*(el: JsElement): JsDOMRect =
   when defined(emscripten):
     var elIdx = cast[JsValue](el).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].getBoundingClientRect()); });", `elIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].getBoundingClientRect()); }, `elIdx`);".}
     result = JsDOMRect(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`el`.idx].getBoundingClientRect())};".}
@@ -293,7 +293,7 @@ proc jsNodeListLen*(list: JsNodeList): int =
   when defined(emscripten):
     var listIdx = cast[JsValue](list).idx
     var val: int
-    {.emit: "`val` = EM_ASM_INT({ return heap[$0].length; });", `listIdx`.}
+    {.emit: "`val` = EM_ASM_INT({ return heap[$0].length; }, `listIdx`);".}
     result = val
   elif defined(wasm32):
     {.emit: "`result` = heap[`list`.idx].length;".}
@@ -304,7 +304,7 @@ proc jsNodeListItem*(list: JsNodeList, idx: int): JsNode =
     var listIdx = cast[JsValue](list).idx
     var idxVal = idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0][$1]); });", `listIdx`, `idxVal`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0][$1]); }, `listIdx`, `idxVal`);".}
     result = JsNode(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`list`.idx][`idx`])};".}
@@ -316,7 +316,7 @@ proc jsEventTarget*(e: JsEvent): JsElement =
   when defined(emscripten):
     var eIdx = cast[JsValue](e).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].target); });", `eIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].target); }, `eIdx`);".}
     result = JsElement(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`e`.idx].target)};".}
@@ -350,7 +350,7 @@ proc jsMouseEventClientX*(e: JsMouseEvent): int =
   when defined(emscripten):
     var eIdx = cast[JsValue](e).idx
     var val: int
-    {.emit: "`val` = EM_ASM_INT({ return heap[$0].clientX; });", `eIdx`.}
+    {.emit: "`val` = EM_ASM_INT({ return heap[$0].clientX; }, `eIdx`);".}
     result = val
   elif defined(wasm32):
     {.emit: "`result` = heap[`e`.idx].clientX;".}
@@ -360,7 +360,7 @@ proc jsMouseEventClientY*(e: JsMouseEvent): int =
   when defined(emscripten):
     var eIdx = cast[JsValue](e).idx
     var val: int
-    {.emit: "`val` = EM_ASM_INT({ return heap[$0].clientY; });", `eIdx`.}
+    {.emit: "`val` = EM_ASM_INT({ return heap[$0].clientY; }, `eIdx`);".}
     result = val
   elif defined(wasm32):
     {.emit: "`result` = heap[`e`.idx].clientY;".}
@@ -370,7 +370,7 @@ proc jsMouseEventButton*(e: JsMouseEvent): int =
   when defined(emscripten):
     var eIdx = cast[JsValue](e).idx
     var val: int
-    {.emit: "`val` = EM_ASM_INT({ return heap[$0].button; });", `eIdx`.}
+    {.emit: "`val` = EM_ASM_INT({ return heap[$0].button; }, `eIdx`);".}
     result = val
   elif defined(wasm32):
     {.emit: "`result` = heap[`e`.idx].button;".}
@@ -459,7 +459,7 @@ proc jsWindowInnerWidth*(win: JsWindow): int =
   when defined(emscripten):
     var winIdx = cast[JsValue](win).idx
     var val: int
-    {.emit: "`val` = EM_ASM_INT({ return heap[$0].innerWidth; });", `winIdx`.}
+    {.emit: "`val` = EM_ASM_INT({ return heap[$0].innerWidth; }, `winIdx`);".}
     result = val
   elif defined(wasm32):
     {.emit: "`result` = heap[`win`.idx].innerWidth;".}
@@ -469,7 +469,7 @@ proc jsWindowInnerHeight*(win: JsWindow): int =
   when defined(emscripten):
     var winIdx = cast[JsValue](win).idx
     var val: int
-    {.emit: "`val` = EM_ASM_INT({ return heap[$0].innerHeight; });", `winIdx`.}
+    {.emit: "`val` = EM_ASM_INT({ return heap[$0].innerHeight; }, `winIdx`);".}
     result = val
   elif defined(wasm32):
     {.emit: "`result` = heap[`win`.idx].innerHeight;".}
@@ -479,7 +479,7 @@ proc jsWindowLocation*(win: JsWindow): JsLocation =
   when defined(emscripten):
     var winIdx = cast[JsValue](win).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].location); });", `winIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].location); }, `winIdx`);".}
     result = JsLocation(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`win`.idx].location)};".}
@@ -489,7 +489,7 @@ proc jsWindowHistory*(win: JsWindow): JsHistory =
   when defined(emscripten):
     var winIdx = cast[JsValue](win).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].history); });", `winIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].history); }, `winIdx`);".}
     result = JsHistory(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`win`.idx].history)};".}
@@ -499,7 +499,7 @@ proc jsWindowLocalStorage*(win: JsWindow): JsStorage =
   when defined(emscripten):
     var winIdx = cast[JsValue](win).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].localStorage); });", `winIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].localStorage); }, `winIdx`);".}
     result = JsStorage(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`win`.idx].localStorage)};".}
@@ -509,7 +509,7 @@ proc jsWindowSessionStorage*(win: JsWindow): JsStorage =
   when defined(emscripten):
     var winIdx = cast[JsValue](win).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].sessionStorage); });", `winIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].sessionStorage); }, `winIdx`);".}
     result = JsStorage(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`win`.idx].sessionStorage)};".}
@@ -534,7 +534,7 @@ proc jsWindowRequestAnimationFrame*(win: JsWindow, callback: JsValue): int =
     var winIdx = cast[JsValue](win).idx
     var callbackIdx = cast[JsValue](callback).idx
     var val: int
-    {.emit: "`val` = EM_ASM_INT({ return heap[$0].requestAnimationFrame(heap[$1]); });", `winIdx`, `callbackIdx`.}
+    {.emit: "`val` = EM_ASM_INT({ return heap[$0].requestAnimationFrame(heap[$1]); }, `winIdx`, `callbackIdx`);".}
     result = val
   elif defined(wasm32):
     {.emit: "`result` = heap[`win`.idx].requestAnimationFrame(heap[`callback`.idx]);".}
@@ -553,7 +553,7 @@ proc jsWindowPerformance*(win: JsWindow): JsPerformance =
   when defined(emscripten):
     var winIdx = cast[JsValue](win).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].performance); });", `winIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].performance); }, `winIdx`);".}
     result = JsPerformance(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`win`.idx].performance)};".}
@@ -863,7 +863,7 @@ proc jsStorageLen*(storage: JsStorage): int =
   when defined(emscripten):
     var storageIdx = cast[JsValue](storage).idx
     var val: int
-    {.emit: "`val` = EM_ASM_INT({ return heap[$0].length; });", `storageIdx`.}
+    {.emit: "`val` = EM_ASM_INT({ return heap[$0].length; }, `storageIdx`);".}
     result = val
   elif defined(wasm32):
     {.emit: "`result` = heap[`storage`.idx].length;".}
@@ -914,7 +914,7 @@ proc jsWebSocketReadyState*(ws: JsWebSocket): int =
   when defined(emscripten):
     var wsIdx = cast[JsValue](ws).idx
     var val: int
-    {.emit: "`val` = EM_ASM_INT({ return heap[$0].readyState; });", `wsIdx`.}
+    {.emit: "`val` = EM_ASM_INT({ return heap[$0].readyState; }, `wsIdx`);".}
     result = val
   elif defined(wasm32):
     {.emit: "`result` = heap[`ws`.idx].readyState;".}
@@ -980,7 +980,7 @@ proc jsResponseOk*(resp: JsResponse): bool =
   when defined(emscripten):
     var respIdx = cast[JsValue](resp).idx
     var val: int
-    {.emit: "`val` = EM_ASM_INT({ return heap[$0].ok ? 1 : 0; });", `respIdx`.}
+    {.emit: "`val` = EM_ASM_INT({ return heap[$0].ok ? 1 : 0; }, `respIdx`);".}
     result = val != 0
   elif defined(wasm32):
     {.emit: "`result` = heap[`resp`.idx].ok ? 1 : 0;".}
@@ -990,7 +990,7 @@ proc jsResponseStatus*(resp: JsResponse): int =
   when defined(emscripten):
     var respIdx = cast[JsValue](resp).idx
     var val: int
-    {.emit: "`val` = EM_ASM_INT({ return heap[$0].status; });", `respIdx`.}
+    {.emit: "`val` = EM_ASM_INT({ return heap[$0].status; }, `respIdx`);".}
     result = val
   elif defined(wasm32):
     {.emit: "`result` = heap[`resp`.idx].status;".}
@@ -1019,7 +1019,7 @@ proc jsResponseHeaders*(resp: JsResponse): JsHeaders =
   when defined(emscripten):
     var respIdx = cast[JsValue](resp).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].headers); });", `respIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].headers); }, `respIdx`);".}
     result = JsHeaders(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`resp`.idx].headers)};".}
@@ -1029,7 +1029,7 @@ proc jsResponseText*(resp: JsResponse): JsPromise =
   when defined(emscripten):
     var respIdx = cast[JsValue](resp).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].text()); });", `respIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].text()); }, `respIdx`);".}
     result = JsPromise(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`resp`.idx].text())};".}
@@ -1039,7 +1039,7 @@ proc jsResponseJson*(resp: JsResponse): JsPromise =
   when defined(emscripten):
     var respIdx = cast[JsValue](resp).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].json()); });", `respIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].json()); }, `respIdx`);".}
     result = JsPromise(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`resp`.idx].json())};".}
@@ -1049,7 +1049,7 @@ proc jsResponseArrayBuffer*(resp: JsResponse): JsPromise =
   when defined(emscripten):
     var respIdx = cast[JsValue](resp).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].arrayBuffer()); });", `respIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].arrayBuffer()); }, `respIdx`);".}
     result = JsPromise(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`resp`.idx].arrayBuffer())};".}
@@ -1059,7 +1059,7 @@ proc jsResponseBlob*(resp: JsResponse): JsPromise =
   when defined(emscripten):
     var respIdx = cast[JsValue](resp).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].blob()); });", `respIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].blob()); }, `respIdx`);".}
     result = JsPromise(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`resp`.idx].blob())};".}
@@ -1224,7 +1224,7 @@ proc jsPerformanceNow*(perf: JsPerformance): float64 =
   when defined(emscripten):
     var perfIdx = cast[JsValue](perf).idx
     var val: float64
-    {.emit: "`val` = EM_ASM_DOUBLE({ return heap[$0].now(); });", `perfIdx`.}
+    {.emit: "`val` = EM_ASM_DOUBLE({ return heap[$0].now(); }, `perfIdx`);".}
     result = val
   elif defined(wasm32):
     {.emit: "`result` = heap[`perf`.idx].now();".}
@@ -1236,7 +1236,7 @@ proc jsDOMRectX*(rect: JsDOMRect): float64 =
   when defined(emscripten):
     var rectIdx = cast[JsValue](rect).idx
     var val: float64
-    {.emit: "`val` = EM_ASM_DOUBLE({ return heap[$0].x; });", `rectIdx`.}
+    {.emit: "`val` = EM_ASM_DOUBLE({ return heap[$0].x; }, `rectIdx`);".}
     result = val
   elif defined(wasm32):
     {.emit: "`result` = heap[`rect`.idx].x;".}
@@ -1246,7 +1246,7 @@ proc jsDOMRectY*(rect: JsDOMRect): float64 =
   when defined(emscripten):
     var rectIdx = cast[JsValue](rect).idx
     var val: float64
-    {.emit: "`val` = EM_ASM_DOUBLE({ return heap[$0].y; });", `rectIdx`.}
+    {.emit: "`val` = EM_ASM_DOUBLE({ return heap[$0].y; }, `rectIdx`);".}
     result = val
   elif defined(wasm32):
     {.emit: "`result` = heap[`rect`.idx].y;".}
@@ -1256,7 +1256,7 @@ proc jsDOMRectWidth*(rect: JsDOMRect): float64 =
   when defined(emscripten):
     var rectIdx = cast[JsValue](rect).idx
     var val: float64
-    {.emit: "`val` = EM_ASM_DOUBLE({ return heap[$0].width; });", `rectIdx`.}
+    {.emit: "`val` = EM_ASM_DOUBLE({ return heap[$0].width; }, `rectIdx`);".}
     result = val
   elif defined(wasm32):
     {.emit: "`result` = heap[`rect`.idx].width;".}
@@ -1266,7 +1266,7 @@ proc jsDOMRectHeight*(rect: JsDOMRect): float64 =
   when defined(emscripten):
     var rectIdx = cast[JsValue](rect).idx
     var val: float64
-    {.emit: "`val` = EM_ASM_DOUBLE({ return heap[$0].height; });", `rectIdx`.}
+    {.emit: "`val` = EM_ASM_DOUBLE({ return heap[$0].height; }, `rectIdx`);".}
     result = val
   elif defined(wasm32):
     {.emit: "`result` = heap[`rect`.idx].height;".}
@@ -1348,7 +1348,7 @@ proc jsAudioContextDestination*(ctx: JsAudioContext): JsAudioDestinationNode =
   when defined(emscripten):
     var ctxIdx = cast[JsValue](ctx).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].destination); });", `ctxIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].destination); }, `ctxIdx`);".}
     result = JsAudioDestinationNode(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`ctx`.idx].destination)};".}
@@ -1358,7 +1358,7 @@ proc jsAudioContextListener*(ctx: JsAudioContext): JsAudioListener =
   when defined(emscripten):
     var ctxIdx = cast[JsValue](ctx).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].listener); });", `ctxIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].listener); }, `ctxIdx`);".}
     result = JsAudioListener(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`ctx`.idx].listener)};".}
@@ -1368,7 +1368,7 @@ proc jsAudioContextSampleRate*(ctx: JsAudioContext): float64 =
   when defined(emscripten):
     var ctxIdx = cast[JsValue](ctx).idx
     var val: float64
-    {.emit: "`val` = EM_ASM_DOUBLE({ return heap[$0].sampleRate; });", `ctxIdx`.}
+    {.emit: "`val` = EM_ASM_DOUBLE({ return heap[$0].sampleRate; }, `ctxIdx`);".}
     result = val
   elif defined(wasm32):
     {.emit: "`result` = heap[`ctx`.idx].sampleRate;".}
@@ -1378,7 +1378,7 @@ proc jsAudioContextCurrentTime*(ctx: JsAudioContext): float64 =
   when defined(emscripten):
     var ctxIdx = cast[JsValue](ctx).idx
     var val: float64
-    {.emit: "`val` = EM_ASM_DOUBLE({ return heap[$0].currentTime; });", `ctxIdx`.}
+    {.emit: "`val` = EM_ASM_DOUBLE({ return heap[$0].currentTime; }, `ctxIdx`);".}
     result = val
   elif defined(wasm32):
     {.emit: "`result` = heap[`ctx`.idx].currentTime;".}
@@ -1431,7 +1431,7 @@ proc jsAudioContextCreateOscillator*(ctx: JsAudioContext): JsOscillatorNode =
   when defined(emscripten):
     var ctxIdx = cast[JsValue](ctx).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].createOscillator()); });", `ctxIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].createOscillator()); }, `ctxIdx`);".}
     result = JsOscillatorNode(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`ctx`.idx].createOscillator())};".}
@@ -1441,7 +1441,7 @@ proc jsAudioContextCreateGain*(ctx: JsAudioContext): JsGainNode =
   when defined(emscripten):
     var ctxIdx = cast[JsValue](ctx).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].createGain()); });", `ctxIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].createGain()); }, `ctxIdx`);".}
     result = JsGainNode(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`ctx`.idx].createGain())};".}
@@ -1451,7 +1451,7 @@ proc jsAudioContextCreateBiquadFilter*(ctx: JsAudioContext): JsBiquadFilterNode 
   when defined(emscripten):
     var ctxIdx = cast[JsValue](ctx).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].createBiquadFilter()); });", `ctxIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].createBiquadFilter()); }, `ctxIdx`);".}
     result = JsBiquadFilterNode(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`ctx`.idx].createBiquadFilter())};".}
@@ -1461,7 +1461,7 @@ proc jsAudioContextCreateAnalyser*(ctx: JsAudioContext): JsAnalyserNode =
   when defined(emscripten):
     var ctxIdx = cast[JsValue](ctx).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].createAnalyser()); });", `ctxIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].createAnalyser()); }, `ctxIdx`);".}
     result = JsAnalyserNode(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`ctx`.idx].createAnalyser())};".}
@@ -1517,7 +1517,7 @@ proc jsAudioContextCreateBufferSource*(ctx: JsAudioContext): JsAudioBufferSource
   when defined(emscripten):
     var ctxIdx = cast[JsValue](ctx).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].createBufferSource()); });", `ctxIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].createBufferSource()); }, `ctxIdx`);".}
     result = JsAudioBufferSourceNode(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`ctx`.idx].createBufferSource())};".}
@@ -1528,7 +1528,7 @@ proc jsAudioContextCreateMediaStreamSource*(ctx: JsAudioContext, stream: JsValue
     var ctxIdx = cast[JsValue](ctx).idx
     var streamIdx = cast[JsValue](stream).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].createMediaStreamSource(heap[$1])); });", `ctxIdx`, `streamIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].createMediaStreamSource(heap[$1])); }, `ctxIdx`, `streamIdx`);".}
     result = JsMediaStreamAudioSourceNode(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`ctx`.idx].createMediaStreamSource(heap[`stream`.idx]))};".}
@@ -1539,7 +1539,7 @@ proc jsAudioContextCreateMediaElementSource*(ctx: JsAudioContext, element: JsVal
     var ctxIdx = cast[JsValue](ctx).idx
     var elementIdx = cast[JsValue](element).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].createMediaElementSource(heap[$1])); });", `ctxIdx`, `elementIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].createMediaElementSource(heap[$1])); }, `ctxIdx`, `elementIdx`);".}
     result = JsMediaElementAudioSourceNode(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`ctx`.idx].createMediaElementSource(heap[`element`.idx]))};".}
@@ -1598,7 +1598,7 @@ proc jsOscillatorFrequency*(osc: JsOscillatorNode): JsAudioParam =
   when defined(emscripten):
     var oscIdx = cast[JsValue](osc).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].frequency); });", `oscIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].frequency); }, `oscIdx`);".}
     result = JsAudioParam(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`osc`.idx].frequency)};".}
@@ -1608,7 +1608,7 @@ proc jsOscillatorDetune*(osc: JsOscillatorNode): JsAudioParam =
   when defined(emscripten):
     var oscIdx = cast[JsValue](osc).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].detune); });", `oscIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].detune); }, `oscIdx`);".}
     result = JsAudioParam(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`osc`.idx].detune)};".}
@@ -1638,7 +1638,7 @@ proc jsGainNodeGain*(node: JsGainNode): JsAudioParam =
   when defined(emscripten):
     var nodeIdx = cast[JsValue](node).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].gain); });", `nodeIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].gain); }, `nodeIdx`);".}
     result = JsAudioParam(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`node`.idx].gain)};".}
@@ -1650,7 +1650,7 @@ proc jsAudioParamValue*(param: JsAudioParam): float64 =
   when defined(emscripten):
     var paramIdx = cast[JsValue](param).idx
     var val: float64
-    {.emit: "`val` = EM_ASM_DOUBLE({ return heap[$0].value; });", `paramIdx`.}
+    {.emit: "`val` = EM_ASM_DOUBLE({ return heap[$0].value; }, `paramIdx`);".}
     result = val
   elif defined(wasm32):
     {.emit: "`result` = heap[`param`.idx].value;".}
@@ -1749,7 +1749,7 @@ proc jsBiquadFilterFrequency*(node: JsBiquadFilterNode): JsAudioParam =
   when defined(emscripten):
     var nodeIdx = cast[JsValue](node).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].frequency); });", `nodeIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].frequency); }, `nodeIdx`);".}
     result = JsAudioParam(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`node`.idx].frequency)};".}
@@ -1759,7 +1759,7 @@ proc jsBiquadFilterQ*(node: JsBiquadFilterNode): JsAudioParam =
   when defined(emscripten):
     var nodeIdx = cast[JsValue](node).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].Q); });", `nodeIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].Q); }, `nodeIdx`);".}
     result = JsAudioParam(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`node`.idx].Q)};".}
@@ -1769,7 +1769,7 @@ proc jsBiquadFilterGain*(node: JsBiquadFilterNode): JsAudioParam =
   when defined(emscripten):
     var nodeIdx = cast[JsValue](node).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].gain); });", `nodeIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].gain); }, `nodeIdx`);".}
     result = JsAudioParam(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`node`.idx].gain)};".}
@@ -1792,7 +1792,7 @@ proc jsAnalyserFftSize*(node: JsAnalyserNode): int =
   when defined(emscripten):
     var nodeIdx = cast[JsValue](node).idx
     var val: int
-    {.emit: "`val` = EM_ASM_INT({ return heap[$0].fftSize; });", `nodeIdx`.}
+    {.emit: "`val` = EM_ASM_INT({ return heap[$0].fftSize; }, `nodeIdx`);".}
     result = val
   elif defined(wasm32):
     {.emit: "`result` = heap[`node`.idx].fftSize;".}
@@ -1811,7 +1811,7 @@ proc jsAnalyserFrequencyBinCount*(node: JsAnalyserNode): int =
   when defined(emscripten):
     var nodeIdx = cast[JsValue](node).idx
     var val: int
-    {.emit: "`val` = EM_ASM_INT({ return heap[$0].frequencyBinCount; });", `nodeIdx`.}
+    {.emit: "`val` = EM_ASM_INT({ return heap[$0].frequencyBinCount; }, `nodeIdx`);".}
     result = val
   elif defined(wasm32):
     {.emit: "`result` = heap[`node`.idx].frequencyBinCount;".}
@@ -1857,7 +1857,7 @@ proc jsAnalyserMinDecibels*(node: JsAnalyserNode): float64 =
   when defined(emscripten):
     var nodeIdx = cast[JsValue](node).idx
     var val: float64
-    {.emit: "`val` = EM_ASM_DOUBLE({ return heap[$0].minDecibels; });", `nodeIdx`.}
+    {.emit: "`val` = EM_ASM_DOUBLE({ return heap[$0].minDecibels; }, `nodeIdx`);".}
     result = val
   elif defined(wasm32):
     {.emit: "`result` = heap[`node`.idx].minDecibels;".}
@@ -1876,7 +1876,7 @@ proc jsAnalyserMaxDecibels*(node: JsAnalyserNode): float64 =
   when defined(emscripten):
     var nodeIdx = cast[JsValue](node).idx
     var val: float64
-    {.emit: "`val` = EM_ASM_DOUBLE({ return heap[$0].maxDecibels; });", `nodeIdx`.}
+    {.emit: "`val` = EM_ASM_DOUBLE({ return heap[$0].maxDecibels; }, `nodeIdx`);".}
     result = val
   elif defined(wasm32):
     {.emit: "`result` = heap[`node`.idx].maxDecibels;".}
@@ -1895,7 +1895,7 @@ proc jsAnalyserSmoothingTimeConstant*(node: JsAnalyserNode): float64 =
   when defined(emscripten):
     var nodeIdx = cast[JsValue](node).idx
     var val: float64
-    {.emit: "`val` = EM_ASM_DOUBLE({ return heap[$0].smoothingTimeConstant; });", `nodeIdx`.}
+    {.emit: "`val` = EM_ASM_DOUBLE({ return heap[$0].smoothingTimeConstant; }, `nodeIdx`);".}
     result = val
   elif defined(wasm32):
     {.emit: "`result` = heap[`node`.idx].smoothingTimeConstant;".}
@@ -1916,7 +1916,7 @@ proc jsDelayNodeDelay*(node: JsDelayNode): JsAudioParam =
   when defined(emscripten):
     var nodeIdx = cast[JsValue](node).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].delayTime); });", `nodeIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].delayTime); }, `nodeIdx`);".}
     result = JsAudioParam(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`node`.idx].delayTime)};".}
@@ -1928,7 +1928,7 @@ proc jsAudioBufferDuration*(buf: JsAudioBuffer): float64 =
   when defined(emscripten):
     var bufIdx = cast[JsValue](buf).idx
     var val: float64
-    {.emit: "`val` = EM_ASM_DOUBLE({ return heap[$0].duration; });", `bufIdx`.}
+    {.emit: "`val` = EM_ASM_DOUBLE({ return heap[$0].duration; }, `bufIdx`);".}
     result = val
   elif defined(wasm32):
     {.emit: "`result` = heap[`buf`.idx].duration;".}
@@ -1938,7 +1938,7 @@ proc jsAudioBufferLength*(buf: JsAudioBuffer): int =
   when defined(emscripten):
     var bufIdx = cast[JsValue](buf).idx
     var val: int
-    {.emit: "`val` = EM_ASM_INT({ return heap[$0].length; });", `bufIdx`.}
+    {.emit: "`val` = EM_ASM_INT({ return heap[$0].length; }, `bufIdx`);".}
     result = val
   elif defined(wasm32):
     {.emit: "`result` = heap[`buf`.idx].length;".}
@@ -1948,7 +1948,7 @@ proc jsAudioBufferSampleRate*(buf: JsAudioBuffer): float64 =
   when defined(emscripten):
     var bufIdx = cast[JsValue](buf).idx
     var val: float64
-    {.emit: "`val` = EM_ASM_DOUBLE({ return heap[$0].sampleRate; });", `bufIdx`.}
+    {.emit: "`val` = EM_ASM_DOUBLE({ return heap[$0].sampleRate; }, `bufIdx`);".}
     result = val
   elif defined(wasm32):
     {.emit: "`result` = heap[`buf`.idx].sampleRate;".}
@@ -1958,7 +1958,7 @@ proc jsAudioBufferNumberOfChannels*(buf: JsAudioBuffer): int =
   when defined(emscripten):
     var bufIdx = cast[JsValue](buf).idx
     var val: int
-    {.emit: "`val` = EM_ASM_INT({ return heap[$0].numberOfChannels; });", `bufIdx`.}
+    {.emit: "`val` = EM_ASM_INT({ return heap[$0].numberOfChannels; }, `bufIdx`);".}
     result = val
   elif defined(wasm32):
     {.emit: "`result` = heap[`buf`.idx].numberOfChannels;".}
@@ -1990,7 +1990,7 @@ proc jsAudioBufferSourceLoop*(node: JsAudioBufferSourceNode): bool =
   when defined(emscripten):
     var nodeIdx = cast[JsValue](node).idx
     var val: int
-    {.emit: "`val` = EM_ASM_INT({ return heap[$0].loop ? 1 : 0; });", `nodeIdx`.}
+    {.emit: "`val` = EM_ASM_INT({ return heap[$0].loop ? 1 : 0; }, `nodeIdx`);".}
     result = val != 0
   elif defined(wasm32):
     {.emit: "`result` = heap[`node`.idx].loop ? 1 : 0;".}
@@ -2079,7 +2079,7 @@ proc jsCryptoSubtle*(c: JsCrypto): JsSubtleCrypto =
   when defined(emscripten):
     var cIdx = cast[JsValue](c).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].subtle); });", `cIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].subtle); }, `cIdx`);".}
     result = JsSubtleCrypto(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`c`.idx].subtle)};".}
@@ -2090,7 +2090,7 @@ proc jsCryptoGetRandomValues*(c: JsCrypto, buffer: JsValue): JsValue =
     var cIdx = cast[JsValue](c).idx
     var bufferIdx = cast[JsValue](buffer).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].getRandomValues(heap[$1])); });", `cIdx`, `bufferIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].getRandomValues(heap[$1])); }, `cIdx`, `bufferIdx`);".}
     result = JsValue(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`c`.idx].getRandomValues(heap[`buffer`.idx]))};".}
@@ -2320,7 +2320,7 @@ proc jsCryptoKeyExtractable*(key: JsCryptoKey): bool =
   when defined(emscripten):
     var keyIdx = cast[JsValue](key).idx
     var val: int
-    {.emit: "`val` = EM_ASM_INT({ return heap[$0].extractable ? 1 : 0; });", `keyIdx`.}
+    {.emit: "`val` = EM_ASM_INT({ return heap[$0].extractable ? 1 : 0; }, `keyIdx`);".}
     result = val != 0
   elif defined(wasm32):
     {.emit: "`result` = heap[`key`.idx].extractable ? 1 : 0;".}
@@ -2330,7 +2330,7 @@ proc jsCryptoKeyUsages*(key: JsCryptoKey): JsValue =
   when defined(emscripten):
     var keyIdx = cast[JsValue](key).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].usages); });", `keyIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].usages); }, `keyIdx`);".}
     result = JsValue(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`key`.idx].usages)};".}
@@ -2340,7 +2340,7 @@ proc jsCryptoKeyAlgorithm*(key: JsCryptoKey): JsValue =
   when defined(emscripten):
     var keyIdx = cast[JsValue](key).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].algorithm); });", `keyIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].algorithm); }, `keyIdx`);".}
     result = JsValue(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`key`.idx].algorithm)};".}
@@ -2350,7 +2350,7 @@ proc jsCryptoKeyPairPrivateKey*(pair: JsCryptoKeyPair): JsCryptoKey =
   when defined(emscripten):
     var pairIdx = cast[JsValue](pair).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].privateKey); });", `pairIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].privateKey); }, `pairIdx`);".}
     result = JsCryptoKey(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`pair`.idx].privateKey)};".}
@@ -2360,7 +2360,7 @@ proc jsCryptoKeyPairPublicKey*(pair: JsCryptoKeyPair): JsCryptoKey =
   when defined(emscripten):
     var pairIdx = cast[JsValue](pair).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].publicKey); });", `pairIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].publicKey); }, `pairIdx`);".}
     result = JsCryptoKey(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`pair`.idx].publicKey)};".}
@@ -2400,7 +2400,7 @@ proc jsUint8ArrayLen*(arr: JsValue): int =
   when defined(emscripten):
     var arrIdx = cast[JsValue](arr).idx
     var val: int
-    {.emit: "`val` = EM_ASM_INT({ return heap[$0].length; });", `arrIdx`.}
+    {.emit: "`val` = EM_ASM_INT({ return heap[$0].length; }, `arrIdx`);".}
     result = val
   elif defined(wasm32):
     {.emit: "`result` = heap[`arr`.idx].length;".}
@@ -2440,7 +2440,7 @@ proc jsArrayBufferByteLength*(buf: JsValue): int =
   when defined(emscripten):
     var bufIdx = cast[JsValue](buf).idx
     var val: int
-    {.emit: "`val` = EM_ASM_INT({ return heap[$0].byteLength; });", `bufIdx`.}
+    {.emit: "`val` = EM_ASM_INT({ return heap[$0].byteLength; }, `bufIdx`);".}
     result = val
   elif defined(wasm32):
     {.emit: "`result` = heap[`buf`.idx].byteLength;".}
@@ -2666,7 +2666,7 @@ proc jsIDBDatabaseVersion*(db: JsIDBDatabase): int =
   when defined(emscripten):
     var dbIdx = cast[JsValue](db).idx
     var val: int
-    {.emit: "`val` = EM_ASM_INT({ return heap[$0].version; });", `dbIdx`.}
+    {.emit: "`val` = EM_ASM_INT({ return heap[$0].version; }, `dbIdx`);".}
     result = val
   elif defined(wasm32):
     {.emit: "`result` = heap[`db`.idx].version;".}
@@ -2676,7 +2676,7 @@ proc jsIDBDatabaseObjectStoreNames*(db: JsIDBDatabase): JsValue =
   when defined(emscripten):
     var dbIdx = cast[JsValue](db).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].objectStoreNames); });", `dbIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].objectStoreNames); }, `dbIdx`);".}
     result = JsValue(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`db`.idx].objectStoreNames)};".}
@@ -2740,7 +2740,7 @@ proc jsIDBObjectStoreKeyPath*(store: JsIDBObjectStore): JsValue =
   when defined(emscripten):
     var storeIdx = cast[JsValue](store).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].keyPath); });", `storeIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].keyPath); }, `storeIdx`);".}
     result = JsValue(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`store`.idx].keyPath)};".}
@@ -2750,7 +2750,7 @@ proc jsIDBObjectStoreIndexNames*(store: JsIDBObjectStore): JsValue =
   when defined(emscripten):
     var storeIdx = cast[JsValue](store).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].indexNames); });", `storeIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].indexNames); }, `storeIdx`);".}
     result = JsValue(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`store`.idx].indexNames)};".}
@@ -2760,7 +2760,7 @@ proc jsIDBObjectStoreAutoIncrement*(store: JsIDBObjectStore): bool =
   when defined(emscripten):
     var storeIdx = cast[JsValue](store).idx
     var val: int
-    {.emit: "`val` = EM_ASM_INT({ return heap[$0].autoIncrement ? 1 : 0; });", `storeIdx`.}
+    {.emit: "`val` = EM_ASM_INT({ return heap[$0].autoIncrement ? 1 : 0; }, `storeIdx`);".}
     result = val != 0
   elif defined(wasm32):
     {.emit: "`result` = heap[`store`.idx].autoIncrement ? 1 : 0;".}
@@ -2799,7 +2799,7 @@ proc jsIDBObjectStoreGet*(store: JsIDBObjectStore, key: JsValue): JsIDBRequest =
     var storeIdx = cast[JsValue](store).idx
     var keyIdx = cast[JsValue](key).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].get(heap[$1])); });", `storeIdx`, `keyIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].get(heap[$1])); }, `storeIdx`, `keyIdx`);".}
     result = JsIDBRequest(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`store`.idx].get(heap[`key`.idx]))};".}
@@ -2838,7 +2838,7 @@ proc jsIDBObjectStoreDelete*(store: JsIDBObjectStore, key: JsValue): JsIDBReques
     var storeIdx = cast[JsValue](store).idx
     var keyIdx = cast[JsValue](key).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].delete(heap[$1])); });", `storeIdx`, `keyIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].delete(heap[$1])); }, `storeIdx`, `keyIdx`);".}
     result = JsIDBRequest(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`store`.idx].delete(heap[`key`.idx]))};".}
@@ -2848,7 +2848,7 @@ proc jsIDBObjectStoreClear*(store: JsIDBObjectStore): JsIDBRequest =
   when defined(emscripten):
     var storeIdx = cast[JsValue](store).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].clear()); });", `storeIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].clear()); }, `storeIdx`);".}
     result = JsIDBRequest(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`store`.idx].clear())};".}
@@ -2939,7 +2939,7 @@ proc jsIDBTransactionDb*(tx: JsIDBTransaction): JsIDBDatabase =
   when defined(emscripten):
     var txIdx = cast[JsValue](tx).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].db); });", `txIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].db); }, `txIdx`);".}
     result = JsIDBDatabase(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`tx`.idx].db)};".}
@@ -2949,7 +2949,7 @@ proc jsIDBTransactionObjectStoreNames*(tx: JsIDBTransaction): JsValue =
   when defined(emscripten):
     var txIdx = cast[JsValue](tx).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].objectStoreNames); });", `txIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].objectStoreNames); }, `txIdx`);".}
     result = JsValue(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`tx`.idx].objectStoreNames)};".}
@@ -2994,7 +2994,7 @@ proc jsIDBIndexKeyPath*(idx: JsIDBIndex): JsValue =
   when defined(emscripten):
     var idxIdx = cast[JsValue](idx).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].keyPath); });", `idxIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].keyPath); }, `idxIdx`);".}
     result = JsValue(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`idx`.idx].keyPath)};".}
@@ -3004,7 +3004,7 @@ proc jsIDBIndexMultiEntry*(idx: JsIDBIndex): bool =
   when defined(emscripten):
     var idxIdx = cast[JsValue](idx).idx
     var val: int
-    {.emit: "`val` = EM_ASM_INT({ return heap[$0].multiEntry ? 1 : 0; });", `idxIdx`.}
+    {.emit: "`val` = EM_ASM_INT({ return heap[$0].multiEntry ? 1 : 0; }, `idxIdx`);".}
     result = val != 0
   elif defined(wasm32):
     {.emit: "`result` = heap[`idx`.idx].multiEntry ? 1 : 0;".}
@@ -3014,7 +3014,7 @@ proc jsIDBIndexUnique*(idx: JsIDBIndex): bool =
   when defined(emscripten):
     var idxIdx = cast[JsValue](idx).idx
     var val: int
-    {.emit: "`val` = EM_ASM_INT({ return heap[$0].unique ? 1 : 0; });", `idxIdx`.}
+    {.emit: "`val` = EM_ASM_INT({ return heap[$0].unique ? 1 : 0; }, `idxIdx`);".}
     result = val != 0
   elif defined(wasm32):
     {.emit: "`result` = heap[`idx`.idx].unique ? 1 : 0;".}
@@ -3025,7 +3025,7 @@ proc jsIDBIndexGet*(idx: JsIDBIndex, key: JsValue): JsIDBRequest =
     var idxIdx = cast[JsValue](idx).idx
     var keyIdx = cast[JsValue](key).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].get(heap[$1])); });", `idxIdx`, `keyIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].get(heap[$1])); }, `idxIdx`, `keyIdx`);".}
     result = JsIDBRequest(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`idx`.idx].get(heap[`key`.idx]))};".}
@@ -3091,7 +3091,7 @@ proc jsIDBCursorSource*(cursor: JsIDBCursor): JsValue =
   when defined(emscripten):
     var cursorIdx = cast[JsValue](cursor).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].source); });", `cursorIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].source); }, `cursorIdx`);".}
     result = JsValue(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`cursor`.idx].source)};".}
@@ -3120,7 +3120,7 @@ proc jsIDBCursorKey*(cursor: JsIDBCursor): JsValue =
   when defined(emscripten):
     var cursorIdx = cast[JsValue](cursor).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].key); });", `cursorIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].key); }, `cursorIdx`);".}
     result = JsValue(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`cursor`.idx].key)};".}
@@ -3130,7 +3130,7 @@ proc jsIDBCursorPrimaryKey*(cursor: JsIDBCursor): JsValue =
   when defined(emscripten):
     var cursorIdx = cast[JsValue](cursor).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].primaryKey); });", `cursorIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].primaryKey); }, `cursorIdx`);".}
     result = JsValue(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`cursor`.idx].primaryKey)};".}
@@ -3140,7 +3140,7 @@ proc jsIDBCursorValue*(cursor: JsIDBCursor): JsValue =
   when defined(emscripten):
     var cursorIdx = cast[JsValue](cursor).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].value); });", `cursorIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].value); }, `cursorIdx`);".}
     result = JsValue(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`cursor`.idx].value)};".}
@@ -3183,7 +3183,7 @@ proc jsIDBCursorDelete*(cursor: JsIDBCursor): JsIDBRequest =
   when defined(emscripten):
     var cursorIdx = cast[JsValue](cursor).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].delete()); });", `cursorIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].delete()); }, `cursorIdx`);".}
     result = JsIDBRequest(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`cursor`.idx].delete())};".}
@@ -3194,7 +3194,7 @@ proc jsIDBCursorUpdate*(cursor: JsIDBCursor, value: JsValue): JsIDBRequest =
     var cursorIdx = cast[JsValue](cursor).idx
     var valueIdx = cast[JsValue](value).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].update(heap[$1])); });", `cursorIdx`, `valueIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].update(heap[$1])); }, `cursorIdx`, `valueIdx`);".}
     result = JsIDBRequest(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`cursor`.idx].update(heap[`value`.idx]))};".}
@@ -3204,7 +3204,7 @@ proc jsIDBRequestResult*(req: JsIDBRequest): JsValue =
   when defined(emscripten):
     var reqIdx = cast[JsValue](req).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].result); });", `reqIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].result); }, `reqIdx`);".}
     result = JsValue(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`req`.idx].result)};".}
@@ -3214,7 +3214,7 @@ proc jsIDBRequestError*(req: JsIDBRequest): JsValue =
   when defined(emscripten):
     var reqIdx = cast[JsValue](req).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].error); });", `reqIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].error); }, `reqIdx`);".}
     result = JsValue(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`req`.idx].error)};".}
@@ -3224,7 +3224,7 @@ proc jsIDBRequestSource*(req: JsIDBRequest): JsValue =
   when defined(emscripten):
     var reqIdx = cast[JsValue](req).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].source); });", `reqIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].source); }, `reqIdx`);".}
     result = JsValue(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`req`.idx].source)};".}
@@ -3234,7 +3234,7 @@ proc jsIDBRequestTransaction*(req: JsIDBRequest): JsValue =
   when defined(emscripten):
     var reqIdx = cast[JsValue](req).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].transaction); });", `reqIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].transaction); }, `reqIdx`);".}
     result = JsValue(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`req`.idx].transaction)};".}
@@ -3371,7 +3371,7 @@ proc jsGeolocationPositionCoords*(position: JsGeolocationPosition): JsGeolocatio
   when defined(emscripten):
     var positionIdx = cast[JsValue](position).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].coords); });", `positionIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].coords); }, `positionIdx`);".}
     result = JsGeolocationCoordinates(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`position`.idx].coords)};".}
@@ -3381,7 +3381,7 @@ proc jsGeolocationPositionTimestamp*(position: JsGeolocationPosition): int =
   when defined(emscripten):
     var positionIdx = cast[JsValue](position).idx
     var val: int
-    {.emit: "`val` = EM_ASM_INT({ return heap[$0].timestamp; });", `positionIdx`.}
+    {.emit: "`val` = EM_ASM_INT({ return heap[$0].timestamp; }, `positionIdx`);".}
     result = val
   elif defined(wasm32):
     {.emit: "`result` = heap[`position`.idx].timestamp;".}
@@ -3391,7 +3391,7 @@ proc jsGeolocationCoordinatesLatitude*(coords: JsGeolocationCoordinates): float6
   when defined(emscripten):
     var coordsIdx = cast[JsValue](coords).idx
     var val: float64
-    {.emit: "`val` = EM_ASM_DOUBLE({ return heap[$0].latitude; });", `coordsIdx`.}
+    {.emit: "`val` = EM_ASM_DOUBLE({ return heap[$0].latitude; }, `coordsIdx`);".}
     result = val
   elif defined(wasm32):
     {.emit: "`result` = heap[`coords`.idx].latitude;".}
@@ -3401,7 +3401,7 @@ proc jsGeolocationCoordinatesLongitude*(coords: JsGeolocationCoordinates): float
   when defined(emscripten):
     var coordsIdx = cast[JsValue](coords).idx
     var val: float64
-    {.emit: "`val` = EM_ASM_DOUBLE({ return heap[$0].longitude; });", `coordsIdx`.}
+    {.emit: "`val` = EM_ASM_DOUBLE({ return heap[$0].longitude; }, `coordsIdx`);".}
     result = val
   elif defined(wasm32):
     {.emit: "`result` = heap[`coords`.idx].longitude;".}
@@ -3411,7 +3411,7 @@ proc jsGeolocationCoordinatesAltitude*(coords: JsGeolocationCoordinates): float6
   when defined(emscripten):
     var coordsIdx = cast[JsValue](coords).idx
     var val: float64
-    {.emit: "`val` = EM_ASM_DOUBLE({ return heap[$0].altitude; });", `coordsIdx`.}
+    {.emit: "`val` = EM_ASM_DOUBLE({ return heap[$0].altitude; }, `coordsIdx`);".}
     result = val
   elif defined(wasm32):
     {.emit: "`result` = heap[`coords`.idx].altitude;".}
@@ -3421,7 +3421,7 @@ proc jsGeolocationCoordinatesAccuracy*(coords: JsGeolocationCoordinates): float6
   when defined(emscripten):
     var coordsIdx = cast[JsValue](coords).idx
     var val: float64
-    {.emit: "`val` = EM_ASM_DOUBLE({ return heap[$0].accuracy; });", `coordsIdx`.}
+    {.emit: "`val` = EM_ASM_DOUBLE({ return heap[$0].accuracy; }, `coordsIdx`);".}
     result = val
   elif defined(wasm32):
     {.emit: "`result` = heap[`coords`.idx].accuracy;".}
@@ -3431,7 +3431,7 @@ proc jsGeolocationCoordinatesAltitudeAccuracy*(coords: JsGeolocationCoordinates)
   when defined(emscripten):
     var coordsIdx = cast[JsValue](coords).idx
     var val: float64
-    {.emit: "`val` = EM_ASM_DOUBLE({ return heap[$0].altitudeAccuracy; });", `coordsIdx`.}
+    {.emit: "`val` = EM_ASM_DOUBLE({ return heap[$0].altitudeAccuracy; }, `coordsIdx`);".}
     result = val
   elif defined(wasm32):
     {.emit: "`result` = heap[`coords`.idx].altitudeAccuracy;".}
@@ -3441,7 +3441,7 @@ proc jsGeolocationCoordinatesHeading*(coords: JsGeolocationCoordinates): float64
   when defined(emscripten):
     var coordsIdx = cast[JsValue](coords).idx
     var val: float64
-    {.emit: "`val` = EM_ASM_DOUBLE({ return heap[$0].heading; });", `coordsIdx`.}
+    {.emit: "`val` = EM_ASM_DOUBLE({ return heap[$0].heading; }, `coordsIdx`);".}
     result = val
   elif defined(wasm32):
     {.emit: "`result` = heap[`coords`.idx].heading;".}
@@ -3451,7 +3451,7 @@ proc jsGeolocationCoordinatesSpeed*(coords: JsGeolocationCoordinates): float64 =
   when defined(emscripten):
     var coordsIdx = cast[JsValue](coords).idx
     var val: float64
-    {.emit: "`val` = EM_ASM_DOUBLE({ return heap[$0].speed; });", `coordsIdx`.}
+    {.emit: "`val` = EM_ASM_DOUBLE({ return heap[$0].speed; }, `coordsIdx`);".}
     result = val
   elif defined(wasm32):
     {.emit: "`result` = heap[`coords`.idx].speed;".}
@@ -3461,7 +3461,7 @@ proc jsGeolocationPositionErrorCode*(error: JsGeolocationPositionError): int =
   when defined(emscripten):
     var errorIdx = cast[JsValue](error).idx
     var val: int
-    {.emit: "`val` = EM_ASM_INT({ return heap[$0].code; });", `errorIdx`.}
+    {.emit: "`val` = EM_ASM_INT({ return heap[$0].code; }, `errorIdx`);".}
     result = val
   elif defined(wasm32):
     {.emit: "`result` = heap[`error`.idx].code;".}
@@ -3529,7 +3529,7 @@ proc jsServiceWorkerContainerReady*(container: JsServiceWorkerContainer): JsProm
   when defined(emscripten):
     var containerIdx = cast[JsValue](container).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].ready); });", `containerIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].ready); }, `containerIdx`);".}
     result = JsPromise(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`container`.idx].ready)};".}
@@ -3550,7 +3550,7 @@ proc jsServiceWorkerContainerGetRegistrations*(container: JsServiceWorkerContain
   when defined(emscripten):
     var containerIdx = cast[JsValue](container).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].getRegistrations()); });", `containerIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].getRegistrations()); }, `containerIdx`);".}
     result = JsPromise(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`container`.idx].getRegistrations())};".}
@@ -3560,7 +3560,7 @@ proc jsServiceWorkerRegistrationActive*(reg: JsServiceWorkerRegistration): JsSer
   when defined(emscripten):
     var regIdx = cast[JsValue](reg).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].active); });", `regIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].active); }, `regIdx`);".}
     result = JsServiceWorker(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`reg`.idx].active)};".}
@@ -3570,7 +3570,7 @@ proc jsServiceWorkerRegistrationInstalling*(reg: JsServiceWorkerRegistration): J
   when defined(emscripten):
     var regIdx = cast[JsValue](reg).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].installing); });", `regIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].installing); }, `regIdx`);".}
     result = JsServiceWorker(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`reg`.idx].installing)};".}
@@ -3580,7 +3580,7 @@ proc jsServiceWorkerRegistrationWaiting*(reg: JsServiceWorkerRegistration): JsSe
   when defined(emscripten):
     var regIdx = cast[JsValue](reg).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].waiting); });", `regIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].waiting); }, `regIdx`);".}
     result = JsServiceWorker(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`reg`.idx].waiting)};".}
@@ -3609,7 +3609,7 @@ proc jsServiceWorkerRegistrationUpdate*(reg: JsServiceWorkerRegistration): JsPro
   when defined(emscripten):
     var regIdx = cast[JsValue](reg).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].update()); });", `regIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].update()); }, `regIdx`);".}
     result = JsPromise(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`reg`.idx].update())};".}
@@ -3619,7 +3619,7 @@ proc jsServiceWorkerRegistrationUnregister*(reg: JsServiceWorkerRegistration): J
   when defined(emscripten):
     var regIdx = cast[JsValue](reg).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].unregister()); });", `regIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].unregister()); }, `regIdx`);".}
     result = JsPromise(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`reg`.idx].unregister())};".}
@@ -3629,7 +3629,7 @@ proc jsServiceWorkerRegistrationNavigationPreload*(reg: JsServiceWorkerRegistrat
   when defined(emscripten):
     var regIdx = cast[JsValue](reg).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].navigationPreload); });", `regIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].navigationPreload); }, `regIdx`);".}
     result = JsNavigationPreloadManager(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`reg`.idx].navigationPreload)};".}
@@ -3699,7 +3699,7 @@ proc jsNavigationPreloadManagerEnable*(manager: JsNavigationPreloadManager): JsP
   when defined(emscripten):
     var managerIdx = cast[JsValue](manager).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].enable()); });", `managerIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].enable()); }, `managerIdx`);".}
     result = JsPromise(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`manager`.idx].enable())};".}
@@ -3709,7 +3709,7 @@ proc jsNavigationPreloadManagerDisable*(manager: JsNavigationPreloadManager): Js
   when defined(emscripten):
     var managerIdx = cast[JsValue](manager).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].disable()); });", `managerIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].disable()); }, `managerIdx`);".}
     result = JsPromise(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`manager`.idx].disable())};".}
@@ -3730,7 +3730,7 @@ proc jsNavigationPreloadManagerGetState*(manager: JsNavigationPreloadManager): J
   when defined(emscripten):
     var managerIdx = cast[JsValue](manager).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].getState()); });", `managerIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].getState()); }, `managerIdx`);".}
     result = JsPromise(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`manager`.idx].getState())};".}
@@ -3881,7 +3881,7 @@ proc jsSharedWorkerPort*(worker: JsSharedWorker): JsMessagePort =
   when defined(emscripten):
     var workerIdx = cast[JsValue](worker).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].port); });", `workerIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].port); }, `workerIdx`);".}
     result = JsMessagePort(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`worker`.idx].port)};".}
@@ -3930,7 +3930,7 @@ proc jsMessageEventData*(event: JsMessageEvent): JsValue =
   when defined(emscripten):
     var eventIdx = cast[JsValue](event).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].data); });", `eventIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].data); }, `eventIdx`);".}
     result = JsValue(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`event`.idx].data)};".}
@@ -3978,7 +3978,7 @@ proc jsMessageEventSource*(event: JsMessageEvent): JsValue =
   when defined(emscripten):
     var eventIdx = cast[JsValue](event).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].source); });", `eventIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].source); }, `eventIdx`);".}
     result = JsValue(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`event`.idx].source)};".}
@@ -3988,7 +3988,7 @@ proc jsMessageEventPorts*(event: JsMessageEvent): JsValue =
   when defined(emscripten):
     var eventIdx = cast[JsValue](event).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].ports); });", `eventIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].ports); }, `eventIdx`);".}
     result = JsValue(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`event`.idx].ports)};".}
@@ -4029,7 +4029,7 @@ proc jsRTCPeerConnectionCreateOffer*(pc: JsRTCPeerConnection): JsPromise =
   when defined(emscripten):
     var pcIdx = cast[JsValue](pc).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].createOffer()); });", `pcIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].createOffer()); }, `pcIdx`);".}
     result = JsPromise(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`pc`.idx].createOffer())};".}
@@ -4039,7 +4039,7 @@ proc jsRTCPeerConnectionCreateAnswer*(pc: JsRTCPeerConnection): JsPromise =
   when defined(emscripten):
     var pcIdx = cast[JsValue](pc).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].createAnswer()); });", `pcIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].createAnswer()); }, `pcIdx`);".}
     result = JsPromise(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`pc`.idx].createAnswer())};".}
@@ -4050,7 +4050,7 @@ proc jsRTCPeerConnectionSetLocalDescription*(pc: JsRTCPeerConnection, desc: JsVa
     var pcIdx = cast[JsValue](pc).idx
     var descIdx = cast[JsValue](desc).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].setLocalDescription(heap[$1])); });", `pcIdx`, `descIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].setLocalDescription(heap[$1])); }, `pcIdx`, `descIdx`);".}
     result = JsPromise(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`pc`.idx].setLocalDescription(heap[`desc`.idx]))};".}
@@ -4061,7 +4061,7 @@ proc jsRTCPeerConnectionSetRemoteDescription*(pc: JsRTCPeerConnection, desc: JsV
     var pcIdx = cast[JsValue](pc).idx
     var descIdx = cast[JsValue](desc).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].setRemoteDescription(heap[$1])); });", `pcIdx`, `descIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].setRemoteDescription(heap[$1])); }, `pcIdx`, `descIdx`);".}
     result = JsPromise(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`pc`.idx].setRemoteDescription(heap[`desc`.idx]))};".}
@@ -4071,7 +4071,7 @@ proc jsRTCPeerConnectionLocalDescription*(pc: JsRTCPeerConnection): JsRTCSession
   when defined(emscripten):
     var pcIdx = cast[JsValue](pc).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].localDescription); });", `pcIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].localDescription); }, `pcIdx`);".}
     result = JsRTCSessionDescription(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`pc`.idx].localDescription)};".}
@@ -4081,7 +4081,7 @@ proc jsRTCPeerConnectionRemoteDescription*(pc: JsRTCPeerConnection): JsRTCSessio
   when defined(emscripten):
     var pcIdx = cast[JsValue](pc).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].remoteDescription); });", `pcIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].remoteDescription); }, `pcIdx`);".}
     result = JsRTCSessionDescription(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`pc`.idx].remoteDescription)};".}
@@ -4091,7 +4091,7 @@ proc jsRTCPeerConnectionPendingLocalDescription*(pc: JsRTCPeerConnection): JsVal
   when defined(emscripten):
     var pcIdx = cast[JsValue](pc).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].pendingLocalDescription); });", `pcIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].pendingLocalDescription); }, `pcIdx`);".}
     result = JsValue(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`pc`.idx].pendingLocalDescription)};".}
@@ -4101,7 +4101,7 @@ proc jsRTCPeerConnectionCurrentLocalDescription*(pc: JsRTCPeerConnection): JsVal
   when defined(emscripten):
     var pcIdx = cast[JsValue](pc).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].currentLocalDescription); });", `pcIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].currentLocalDescription); }, `pcIdx`);".}
     result = JsValue(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`pc`.idx].currentLocalDescription)};".}
@@ -4111,7 +4111,7 @@ proc jsRTCPeerConnectionCurrentRemoteDescription*(pc: JsRTCPeerConnection): JsVa
   when defined(emscripten):
     var pcIdx = cast[JsValue](pc).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].currentRemoteDescription); });", `pcIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].currentRemoteDescription); }, `pcIdx`);".}
     result = JsValue(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`pc`.idx].currentRemoteDescription)};".}
@@ -4179,7 +4179,7 @@ proc jsRTCPeerConnectionAddIceCandidate*(pc: JsRTCPeerConnection, candidate: JsV
     var pcIdx = cast[JsValue](pc).idx
     var candidateIdx = cast[JsValue](candidate).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].addIceCandidate(heap[$1])); });", `pcIdx`, `candidateIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].addIceCandidate(heap[$1])); }, `pcIdx`, `candidateIdx`);".}
     result = JsPromise(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`pc`.idx].addIceCandidate(heap[`candidate`.idx]))};".}
@@ -4203,7 +4203,7 @@ proc jsRTCPeerConnectionGetTransceivers*(pc: JsRTCPeerConnection): JsValue =
   when defined(emscripten):
     var pcIdx = cast[JsValue](pc).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].getTransceivers()); });", `pcIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].getTransceivers()); }, `pcIdx`);".}
     result = JsValue(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`pc`.idx].getTransceivers())};".}
@@ -4213,7 +4213,7 @@ proc jsRTCPeerConnectionGetSenders*(pc: JsRTCPeerConnection): JsValue =
   when defined(emscripten):
     var pcIdx = cast[JsValue](pc).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].getSenders()); });", `pcIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].getSenders()); }, `pcIdx`);".}
     result = JsValue(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`pc`.idx].getSenders())};".}
@@ -4223,7 +4223,7 @@ proc jsRTCPeerConnectionGetReceivers*(pc: JsRTCPeerConnection): JsValue =
   when defined(emscripten):
     var pcIdx = cast[JsValue](pc).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].getReceivers()); });", `pcIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].getReceivers()); }, `pcIdx`);".}
     result = JsValue(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`pc`.idx].getReceivers())};".}
@@ -4338,7 +4338,7 @@ proc jsRTCIceCandidateSdpMLineIndex*(cand: JsRTCIceCandidate): int =
   when defined(emscripten):
     var candIdx = cast[JsValue](cand).idx
     var val: int
-    {.emit: "`val` = EM_ASM_INT({ return heap[$0].sdpMLineIndex; });", `candIdx`.}
+    {.emit: "`val` = EM_ASM_INT({ return heap[$0].sdpMLineIndex; }, `candIdx`);".}
     result = val
   elif defined(wasm32):
     {.emit: "`result` = heap[`cand`.idx].sdpMLineIndex;".}
@@ -4379,7 +4379,7 @@ proc jsRTCDataChannelOrdered*(channel: JsRTCDataChannel): bool =
   when defined(emscripten):
     var channelIdx = cast[JsValue](channel).idx
     var val: int
-    {.emit: "`val` = EM_ASM_INT({ return heap[$0].ordered ? 1 : 0; });", `channelIdx`.}
+    {.emit: "`val` = EM_ASM_INT({ return heap[$0].ordered ? 1 : 0; }, `channelIdx`);".}
     result = val != 0
   elif defined(wasm32):
     {.emit: "`result` = heap[`channel`.idx].ordered ? 1 : 0;".}
@@ -4389,7 +4389,7 @@ proc jsRTCDataChannelMaxPacketLifeTime*(channel: JsRTCDataChannel): int =
   when defined(emscripten):
     var channelIdx = cast[JsValue](channel).idx
     var val: int
-    {.emit: "`val` = EM_ASM_INT({ return heap[$0].maxPacketLifeTime; });", `channelIdx`.}
+    {.emit: "`val` = EM_ASM_INT({ return heap[$0].maxPacketLifeTime; }, `channelIdx`);".}
     result = val
   elif defined(wasm32):
     {.emit: "`result` = heap[`channel`.idx].maxPacketLifeTime;".}
@@ -4399,7 +4399,7 @@ proc jsRTCDataChannelMaxRetransmits*(channel: JsRTCDataChannel): int =
   when defined(emscripten):
     var channelIdx = cast[JsValue](channel).idx
     var val: int
-    {.emit: "`val` = EM_ASM_INT({ return heap[$0].maxRetransmits; });", `channelIdx`.}
+    {.emit: "`val` = EM_ASM_INT({ return heap[$0].maxRetransmits; }, `channelIdx`);".}
     result = val
   elif defined(wasm32):
     {.emit: "`result` = heap[`channel`.idx].maxRetransmits;".}
@@ -4428,7 +4428,7 @@ proc jsRTCDataChannelNegotiated*(channel: JsRTCDataChannel): bool =
   when defined(emscripten):
     var channelIdx = cast[JsValue](channel).idx
     var val: int
-    {.emit: "`val` = EM_ASM_INT({ return heap[$0].negotiated ? 1 : 0; });", `channelIdx`.}
+    {.emit: "`val` = EM_ASM_INT({ return heap[$0].negotiated ? 1 : 0; }, `channelIdx`);".}
     result = val != 0
   elif defined(wasm32):
     {.emit: "`result` = heap[`channel`.idx].negotiated ? 1 : 0;".}
@@ -4457,7 +4457,7 @@ proc jsRTCDataChannelBufferedAmount*(channel: JsRTCDataChannel): int =
   when defined(emscripten):
     var channelIdx = cast[JsValue](channel).idx
     var val: int
-    {.emit: "`val` = EM_ASM_INT({ return heap[$0].bufferedAmount; });", `channelIdx`.}
+    {.emit: "`val` = EM_ASM_INT({ return heap[$0].bufferedAmount; }, `channelIdx`);".}
     result = val
   elif defined(wasm32):
     {.emit: "`result` = heap[`channel`.idx].bufferedAmount;".}
@@ -4567,7 +4567,7 @@ proc jsRTCRtpSenderTrack*(sender: JsRTCRtpSender): JsValue =
   when defined(emscripten):
     var senderIdx = cast[JsValue](sender).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].track); });", `senderIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].track); }, `senderIdx`);".}
     result = JsValue(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`sender`.idx].track)};".}
@@ -4577,7 +4577,7 @@ proc jsRTCRtpReceiverTrack*(receiver: JsRTCRtpReceiver): JsValue =
   when defined(emscripten):
     var receiverIdx = cast[JsValue](receiver).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].track); });", `receiverIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].track); }, `receiverIdx`);".}
     result = JsValue(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`receiver`.idx].track)};".}
@@ -4774,7 +4774,7 @@ proc jsWebGLCreateProgram*(ctx: JsWebGLRenderingContext): JsWebGLProgram =
   when defined(emscripten):
     var ctxIdx = cast[JsValue](ctx).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].createProgram()); });", `ctxIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].createProgram()); }, `ctxIdx`);".}
     result = JsWebGLProgram(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`ctx`.idx].createProgram())};".}
@@ -4848,7 +4848,7 @@ proc jsWebGLCreateBuffer*(ctx: JsWebGLRenderingContext): JsWebGLBuffer =
   when defined(emscripten):
     var ctxIdx = cast[JsValue](ctx).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].createBuffer()); });", `ctxIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].createBuffer()); }, `ctxIdx`);".}
     result = JsWebGLBuffer(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`ctx`.idx].createBuffer())};".}
@@ -4888,7 +4888,7 @@ proc jsWebGLCreateTexture*(ctx: JsWebGLRenderingContext): JsWebGLTexture =
   when defined(emscripten):
     var ctxIdx = cast[JsValue](ctx).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].createTexture()); });", `ctxIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].createTexture()); }, `ctxIdx`);".}
     result = JsWebGLTexture(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`ctx`.idx].createTexture())};".}
@@ -4931,7 +4931,7 @@ proc jsWebGLCreateFramebuffer*(ctx: JsWebGLRenderingContext): JsWebGLFramebuffer
   when defined(emscripten):
     var ctxIdx = cast[JsValue](ctx).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].createFramebuffer()); });", `ctxIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].createFramebuffer()); }, `ctxIdx`);".}
     result = JsWebGLFramebuffer(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`ctx`.idx].createFramebuffer())};".}
@@ -5125,7 +5125,7 @@ proc jsWebGLGetError*(ctx: JsWebGLRenderingContext): int =
   when defined(emscripten):
     var ctxIdx = cast[JsValue](ctx).idx
     var val: int
-    {.emit: "`val` = EM_ASM_INT({ return heap[$0].getError(); });", `ctxIdx`.}
+    {.emit: "`val` = EM_ASM_INT({ return heap[$0].getError(); }, `ctxIdx`);".}
     result = val
   elif defined(wasm32):
     {.emit: "`result` = heap[`ctx`.idx].getError();".}
@@ -5161,7 +5161,7 @@ proc jsWebGLGenBuffers*(ctx: JsWebGLRenderingContext, count: int): JsValue =
   when defined(emscripten):
     var ctxIdx = cast[JsValue](ctx).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].createBuffer()); });", `ctxIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].createBuffer()); }, `ctxIdx`);".}
     result = JsValue(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`ctx`.idx].createBuffer())};".}
@@ -5171,7 +5171,7 @@ proc jsWebGLGenTextures*(ctx: JsWebGLRenderingContext, count: int): JsValue =
   when defined(emscripten):
     var ctxIdx = cast[JsValue](ctx).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].createTexture()); });", `ctxIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].createTexture()); }, `ctxIdx`);".}
     result = JsValue(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`ctx`.idx].createTexture())};".}
@@ -5181,7 +5181,7 @@ proc jsWebGLCreateVertexArray*(ctx: JsWebGL2RenderingContext): JsWebGLVertexArra
   when defined(emscripten):
     var ctxIdx = cast[JsValue](ctx).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].createVertexArray()); });", `ctxIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].createVertexArray()); }, `ctxIdx`);".}
     result = JsWebGLVertexArrayObject(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`ctx`.idx].createVertexArray())};".}
@@ -5238,7 +5238,7 @@ proc jsGPUDeviceCreateSwapChain*(device: JsGPUDevice, canvas: JsGPUCanvasContext
     var deviceIdx = cast[JsValue](device).idx
     var canvasIdx = cast[JsValue](canvas).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].createSwapChain(heap[$1])); });", `deviceIdx`, `canvasIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].createSwapChain(heap[$1])); }, `deviceIdx`, `canvasIdx`);".}
     result = JsGPUSwapChain(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`device`.idx].createSwapChain(heap[`canvas`.idx]))};".}
@@ -5248,7 +5248,7 @@ proc jsGPUSwapChainGetCurrentTexture*(swapChain: JsGPUSwapChain): JsGPUTexture =
   when defined(emscripten):
     var swapChainIdx = cast[JsValue](swapChain).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].getCurrentTexture()); });", `swapChainIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].getCurrentTexture()); }, `swapChainIdx`);".}
     result = JsGPUTexture(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`swapChain`.idx].getCurrentTexture())};".}
@@ -5258,7 +5258,7 @@ proc jsGPUCommandEncoderFinish*(encoder: JsGPUCommandEncoder): JsGPUCommandBuffe
   when defined(emscripten):
     var encoderIdx = cast[JsValue](encoder).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].finish()); });", `encoderIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].finish()); }, `encoderIdx`);".}
     result = JsGPUCommandBuffer(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`encoder`.idx].finish())};".}
@@ -5287,7 +5287,7 @@ proc jsGPUTextureWidth*(texture: JsGPUTexture): int =
   when defined(emscripten):
     var textureIdx = cast[JsValue](texture).idx
     var val: int
-    {.emit: "`val` = EM_ASM_INT({ return heap[$0].width; });", `textureIdx`.}
+    {.emit: "`val` = EM_ASM_INT({ return heap[$0].width; }, `textureIdx`);".}
     result = val
   elif defined(wasm32):
     {.emit: "`result` = heap[`texture`.idx].width;".}
@@ -5297,7 +5297,7 @@ proc jsGPUTextureHeight*(texture: JsGPUTexture): int =
   when defined(emscripten):
     var textureIdx = cast[JsValue](texture).idx
     var val: int
-    {.emit: "`val` = EM_ASM_INT({ return heap[$0].height; });", `textureIdx`.}
+    {.emit: "`val` = EM_ASM_INT({ return heap[$0].height; }, `textureIdx`);".}
     result = val
   elif defined(wasm32):
     {.emit: "`result` = heap[`texture`.idx].height;".}
@@ -5307,7 +5307,7 @@ proc jsGPUTextureDepth*(texture: JsGPUTexture): int =
   when defined(emscripten):
     var textureIdx = cast[JsValue](texture).idx
     var val: int
-    {.emit: "`val` = EM_ASM_INT({ return heap[$0].depth; });", `textureIdx`.}
+    {.emit: "`val` = EM_ASM_INT({ return heap[$0].depth; }, `textureIdx`);".}
     result = val
   elif defined(wasm32):
     {.emit: "`result` = heap[`texture`.idx].depth;".}
@@ -5366,7 +5366,7 @@ proc jsGPUDeviceCreateRenderPipeline*(device: JsGPUDevice, descriptor: JsValue):
     var deviceIdx = cast[JsValue](device).idx
     var descriptorIdx = cast[JsValue](descriptor).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].createRenderPipeline(heap[$1])); });", `deviceIdx`, `descriptorIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].createRenderPipeline(heap[$1])); }, `deviceIdx`, `descriptorIdx`);".}
     result = JsValue(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`device`.idx].createRenderPipeline(heap[`descriptor`.idx]))};".}
@@ -5377,7 +5377,7 @@ proc jsGPUDeviceCreateBuffer*(device: JsGPUDevice, descriptor: JsValue): JsValue
     var deviceIdx = cast[JsValue](device).idx
     var descriptorIdx = cast[JsValue](descriptor).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].createBuffer(heap[$1])); });", `deviceIdx`, `descriptorIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].createBuffer(heap[$1])); }, `deviceIdx`, `descriptorIdx`);".}
     result = JsValue(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`device`.idx].createBuffer(heap[`descriptor`.idx]))};".}
@@ -5387,7 +5387,7 @@ proc jsGPUDeviceQueue*(device: JsGPUDevice): JsValue =
   when defined(emscripten):
     var deviceIdx = cast[JsValue](device).idx
     var idx: uint32
-    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].queue); });", `deviceIdx`.}
+    {.emit: "`idx` = EM_ASM_INT({ return addHeapObject(heap[$0].queue); }, `deviceIdx`);".}
     result = JsValue(JsValue(idx: idx))
   elif defined(wasm32):
     {.emit: "`result` = {idx: addHeapObject(heap[`device`.idx].queue)};".}
