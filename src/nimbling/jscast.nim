@@ -20,7 +20,7 @@ template jsClassName*(T: typedesc[JsValue]): string = "Object"
 # ─── Runtime instanceof checks ───
 
 proc isInstanceOf*(val: JsValue, className: string): bool =
-  when defined(wasm32):
+  when defined(wasm32) and not defined(emscripten):
     {.emit: """
     var cn = `className`;
     var ctor = globalThis[cn];
@@ -35,7 +35,7 @@ proc isInstanceOf*(val: JsValue, className: string): bool =
 
 proc isInstanceOfByName*(val: JsValue, dottedName: string): bool =
   ## Dotted name like "WebGL.RenderingContext".
-  when defined(wasm32):
+  when defined(wasm32) and not defined(emscripten):
     {.emit: """
     var parts = `dottedName`.split('.');
     var cur = globalThis;
@@ -52,7 +52,7 @@ proc isInstanceOfByName*(val: JsValue, dottedName: string): bool =
     result = false
 
 proc jsTypeName*(val: JsValue): string =
-  when defined(wasm32):
+  when defined(wasm32) and not defined(emscripten):
     {.emit: """
     var obj = heap[`val`.idx];
     var s;

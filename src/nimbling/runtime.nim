@@ -95,7 +95,7 @@ proc promise*(future: JsFuture): JsValue {.inline.} =
 proc spawnLocal*(callback: proc()) =
   ## Schedule a proc to run on the JS event loop (next tick).
   ## Equivalent to `setTimeout(callback, 0)` in JS.
-  when defined(wasm32):
+  when defined(wasm32) and not defined(emscripten):
     {.emit: """
     var fn = heap[`callback`.idx];
     if (typeof fn === 'function') {
@@ -111,7 +111,7 @@ proc spawnLocalFuture*(futurePtr: uint32) =
   ## tick the future on each interval until completion.
   ##
   ## `futurePtr` is obtained via `cast[uint32](cast[pointer](myFuture))`.
-  when defined(wasm32):
+  when defined(wasm32) and not defined(emscripten):
     {.emit: """
     var idx = `futurePtr` >>> 0;
     if (typeof __nbg_async_tasks !== 'undefined') {
@@ -128,7 +128,7 @@ proc futureToPromise*(futurePtr: uint32): uint32 =
   ## Low-level: convert a Nim future pointer to a JS Promise heap index.
   ## `futurePtr` is obtained via `cast[uint32](cast[pointer](myFuture))`.
   ## Returns the heap index of the created Promise.
-  when defined(wasm32):
+  when defined(wasm32) and not defined(emscripten):
     {.emit: """
     if (typeof __nbg_future_to_promise !== 'undefined') {
       `result` = __nbg_future_to_promise(`futurePtr`);
