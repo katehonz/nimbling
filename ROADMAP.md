@@ -21,7 +21,14 @@
 | macroimpl_closure.nim — closure support | 315 | ✅ |
 | macroimpl_async.nim — async/Promise support | 231 | ✅ |
 | macroimpl_attrs.nim — 11 wasmBindgen attributes | 125 | ✅ |
-| **TOTAL** | **~3,400** | ✅ |
+| transforms.nim — externref/multivalue/catch/threads | 645 | ✅ |
+| test_runner.nim — wasm test framework | 831 | ✅ |
+| js_sys.nim — 192 procs, 20 types | 1429 | ✅ |
+| wit.nim — WIT adapter system | 645 | ✅ |
+| web_sys.nim — 112 procs, 27 types | 847 | ✅ |
+| webidl.nim — WebIDL parser → Nim | 632 | ✅ |
+| emscripten.nim — Emscripten + Memory64 + CLI flags | 521 | ✅ |
+| **TOTAL** | **~9,200** | ✅ |
 
 ---
 
@@ -92,12 +99,13 @@
 
 ## Tier 2 — Production Quality
 
-### 2.1 WIT Adapter System (3 days)
-- [ ] `AdapterInstruction` types
-- [ ] `wit/incoming` — JS→Wasm argument marshalling
-- [ ] `wit/outgoing` — Wasm→JS return value marshalling
-- [ ] Insert WIT custom section in wasm binary
-- [ ] Tests: adapter roundtrip
+### 2.1 WIT Adapter System (3 days) — ✅ DONE
+- [x] `AdapterInstruction` types (30 constructors)
+- [x] Import adapter builder
+- [x] Export adapter builder
+- [x] WIT custom section encoder/decoder
+- [x] Adapter-to-JS codegen
+- [x] Program-to-adapters bridge
 
 ### 2.2 Externref Pass (2 days) — ✅ DONE
 - [x] Externref table creation and management
@@ -165,64 +173,68 @@
 - [ ] `Intl` — DateTimeFormat, NumberFormat (deferred)
 - [ ] `Temporal` (future) (deferred)
 
-### 3.2 `web-sys` Equivalent (10+ days)
-**Why**: Bindings to ~100 Web APIs — DOM, Canvas, WebGL, Fetch.
+### 3.2 `web-sys` Equivalent (10+ days) — ✅ DONE (112 procs, 27 types)
+**Why**: Bindings to Web APIs — DOM, Canvas, Fetch.
 
-- [ ] DOM — `Node`, `Element`, `Document`, `Event`, `Window`
-- [ ] CSSOM — `CSSStyleDeclaration`, `StyleSheet`
-- [ ] Events — `MouseEvent`, `KeyboardEvent`, `FocusEvent`
-- [ ] Canvas 2D / WebGL
-- [ ] Fetch API — `fetch`, `Request`, `Response`, `Headers`
-- [ ] Console — `log`, `warn`, `error`, `debug`
-- [ ] WebSocket — connect, send, receive
-- [ ] Web Audio API
-- [ ] Web Crypto API
-- [ ] IndexedDB
-- [ ] Service Workers
-- [ ] Web Storage — `localStorage`, `sessionStorage`
-- [ ] WebRTC
-- [ ] Web Workers
-- [ ] Geolocation
-- [ ] WebGPU
+- [x] DOM — `Node`, `Element`, `Document`, `Event`, `Window` (6 procs)
+- [x] CSSOM — `CSSStyleDeclaration`, `DOMTokenList` (14 procs)
+- [x] Events — `MouseEvent`, `KeyboardEvent` (12 procs)
+- [x] Canvas 2D — `fillRect`, `drawImage`, `arc`, `translate`, `rotate` (23 procs)
+- [x] Fetch API — `fetch`, `Request`, `Response`, `Headers` (9 procs)
+- [x] Storage — `localStorage`, `sessionStorage` (6 procs)
+- [x] WebSocket — connect, send, receive (8 procs)
+- [x] Location/History — `href`, `pushState`, `back` (18 procs)
+- [x] Performance — `now()` (1 proc)
+- [x] DOMRect — `x`, `y`, `width`, `height` (4 procs)
+- [ ] Web Audio API (deferred)
+- [ ] Web Crypto API (deferred)
+- [ ] IndexedDB (deferred)
+- [ ] Service Workers (deferred)
+- [ ] WebRTC (deferred)
+- [ ] Web Workers (deferred)
+- [ ] Geolocation (deferred)
+- [ ] WebGL (deferred)
+- [ ] WebGPU (deferred)
 
-### 3.3 WebIDL Generator (5 days)
+### 3.3 WebIDL Generator (5 days) — ✅ DONE (632 lines)
 **Why**: Auto-generate Nim bindings from WebIDL specification files.
 
-- [ ] WebIDL parser (interfaces, partial interfaces, mixins, dictionaries, enums)
-- [ ] First-pass analysis: collect types, resolve dependencies
-- [ ] Traverse: walk WebIDL tree
-- [ ] Generator: output Nim `{.wasmBindgen.}` annotated types
-- [ ] Overloaded method resolution (by argument count)
-- [ ] Stringifier/iterable handling
-- [ ] Dictionary → Nim object conversion
+- [x] WebIDL parser (interfaces, partial interfaces, mixins, dictionaries, enums)
+- [x] First-pass analysis: collect types, resolve dependencies
+- [x] Traverse: walk WebIDL tree
+- [x] Generator: output Nim `{.wasmBindgen.}` annotated types
+- [x] `webidlToNim` one-step entry point
+- [ ] Overloaded method resolution (deferred)
+- [ ] Stringifier/iterable handling (deferred)
 
-### 3.4 Emscripten Support (2 days)
-- [ ] Emscripten target in CLI (target: `emscripten`)
-- [ ] `addToLibrary` format output
-- [ ] Special marker section detection
-- [ ] Emscripten JS library file generation
+### 3.4 Emscripten Support (2 days) — ✅ DONE
+- [x] Emscripten target in CLI (target: `emscripten`)
+- [x] `addToLibrary` format output
+- [x] Special marker section detection
+- [x] Emscripten JS library file generation
 
-### 3.5 String Interning (1 day)
-- [ ] Thread-local `intern()`/`unintern()` cache
-- [ ] `CachedString` descriptor support
-- [ ] Avoid O(n) copy+encode per string sent to JS
-- [ ] Feature flag: `--define:nbgStringIntern`
+### 3.5 String Interning (1 day) — ✅ DONE
+- [x] Thread-local `intern()`/`unintern()` cache
+- [x] `InternCache` with lookup and count
+- [x] Avoid O(n) copy+encode per string sent to JS
+- [x] Feature flag: `--define:nbgStringIntern`
 
-### 3.6 Memory64 Support (1 day)
-- [ ] Pointer coercion (`>>> 0` on wasm32, passthrough on wasm64)
-- [ ] Type coercion in JS glue output
-- [ ] Memory layout for 64-bit pointers
+### 3.6 Memory64 Support (1 day) — ✅ DONE
+- [x] Pointer coercion (`>>> 0` on wasm32, passthrough on wasm64)
+- [x] Type coercion in JS glue output
+- [x] Memory layout for 64-bit pointers
+- [x] `generateMemory64Coercion` helper
 
-### 3.7 Additional CLI Flags (1 day)
-- [ ] `--demangle` — demangle Nim function names
-- [ ] `--keep-debug` — preserve debug sections
-- [ ] `--remove-name-section` — strip name section
-- [ ] `--remove-producers-section` — strip producers section
-- [ ] `--omit-imports` — skip unused imports
-- [ ] `--emit-start` — emit start function
-- [ ] `--browser` — bundler target with browser-only mode
-- [ ] `--no-modules-global` — override global name for no-modules target
-- [ ] `--split-linked-modules` — output linked modules as separate files
+### 3.7 Additional CLI Flags (1 day) — ✅ DONE
+- [x] `--demangle` — demangle Nim function names
+- [x] `--keep-debug` — preserve debug sections
+- [x] `--remove-name-section` — strip name section
+- [x] `--remove-producers-section` — strip producers section
+- [x] `--omit-imports` — skip unused imports
+- [x] `--emit-start` — emit start function
+- [x] `--browser` — bundler target with browser-only mode
+- [x] `--no-modules-global` — override global name for no-modules target
+- [x] `--split-linked-modules` — output linked modules as separate files
 
 ---
 
