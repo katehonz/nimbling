@@ -3,8 +3,10 @@
 
 import std/options
 import std/strutils
+import leb128
 
 export options
+export leb128
 
 const SchemaVersion* = "0.2.0"
 

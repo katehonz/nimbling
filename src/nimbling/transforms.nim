@@ -4,6 +4,7 @@
 
 import std/strutils
 import common
+import leb128
 
 # ─── Wasm binary constants ───
 
@@ -63,49 +64,6 @@ const
   ExtMemory* = 0x02'u8
   ExtGlobal* = 0x03'u8
 
-# ─── LEB128 helpers ───
-
-proc readU32LEB(data: openArray[byte], pos: var int): uint32 =
-  var shift = 0
-  while pos < data.len:
-    let b = data[pos]
-    inc pos
-    result = result or ((uint32(b) and 0x7F) shl shift)
-    if (b and 0x80) == 0:
-      break
-    shift += 7
-
-proc readS32LEB(data: openArray[byte], pos: var int): int32 =
-  var shift = 0
-  var b: byte
-  while pos < data.len:
-    b = data[pos]
-    inc pos
-    result = result or ((int32(b) and 0x7F) shl shift)
-    if (b and 0x80) == 0:
-      break
-    shift += 7
-  if (shift < 32) and ((b and 0x40) != 0):
-    result = result or ((not 0'i32) shl shift)
-
-proc readByte(data: openArray[byte], pos: var int): byte =
-  result = data[pos]
-  inc pos
-
-proc writeU32LEB(buf: var seq[byte], v: uint32) =
-  var val = v
-  while val > 0x7F'u32:
-    buf.add(byte((val and 0x7F'u32) or 0x80'u32))
-    val = val shr 7
-  buf.add(byte(val))
-
-proc readName(data: openArray[byte], pos: var int): string =
-  let len = int(readU32LEB(data, pos))
-  result = newString(len)
-  for i in 0 ..< len:
-    result[i] = char(data[pos + i])
-  pos += len
-
 # ─── Section iteration helpers ───
 
 type
@@ -136,7 +94,7 @@ proc parseSections*(data: seq[byte]): WasmSections =
     var sec = SectionInfo()
     sec.id = int(readByte(data, pos))
     sec.offset = pos - 1
-    sec.size = int(readU32LEB(data, pos))
+    sec.size = int(readUleb128(data, pos))
     sec.payloadOffset = pos
     result.sections.add(sec)
     pos += sec.size
@@ -170,16 +128,16 @@ proc ensureExternrefTable(data: var seq[byte], state: var ExternrefSectionState,
     if sec.id == SecTable:
       let payload = parsed.sectionPayload(sec)
       var p = 0
-      let count = int(readU32LEB(payload, p))
+      let count = int(readUleb128(payload, p))
       for i in 0 ..< count:
         let elemType = readByte(payload, p)
         if elemType == ElemExternRef:
           hasExternrefTable = true
           break
         let flags = readByte(payload, p)
-        discard readU32LEB(payload, p)  # initial
+        discard readUleb128(payload, p)  # initial
         if (flags and 0x01) != 0:
-          discard readU32LEB(payload, p)  # max
+          discard readUleb128(payload, p)  # max
 
   if not hasExternrefTable:
     state.externrefTableAdded = true
@@ -192,7 +150,7 @@ proc patchElementSegments(data: var seq[byte], state: var ExternrefSectionState)
     if sec.id == SecElement:
       let payload = parsed.sectionPayload(sec)
       var p = 0
-      let count = int(readU32LEB(payload, p))
+      let count = int(readUleb128(payload, p))
       state.elementCount += count
 
 proc rewriteHeapAccessors(data: var seq[byte], state: var ExternrefSectionState) =
@@ -202,9 +160,9 @@ proc rewriteHeapAccessors(data: var seq[byte], state: var ExternrefSectionState)
     if sec.id == SecCode:
       let payload = parsed.sectionPayload(sec)
       var p = 0
-      let funcCount = int(readU32LEB(payload, p))
+      let funcCount = int(readUleb128(payload, p))
       for f in 0 ..< funcCount:
-        let bodySize = int(readU32LEB(payload, p))
+        let bodySize = int(readUleb128(payload, p))
         let bodyStart = p
         # Walk opcodes in this function body looking for table.get / table.set
         # patterns that should use externref instead of funcref.
@@ -217,24 +175,24 @@ proc rewriteHeapAccessors(data: var seq[byte], state: var ExternrefSectionState)
           of OpTableGet, OpTableSet:
             # This instruction accesses a table; if targeting funcref table,
             # it may need rewriting to externref table.
-            let tableIdx = int(readU32LEB(payload, ip))
+            let tableIdx = int(readUleb128(payload, ip))
             inc state.patchCount
           of OpBlock, OpLoop, OpIf:
             discard readByte(payload, ip)  # blocktype
           of OpCall:
-            discard readU32LEB(payload, ip)  # funcidx
+            discard readUleb128(payload, ip)  # funcidx
           of OpLocalGet, OpLocalSet, OpLocalTee:
-            discard readU32LEB(payload, ip)  # localidx
+            discard readUleb128(payload, ip)  # localidx
           of OpGlobalGet, OpGlobalSet:
-            discard readU32LEB(payload, ip)  # globalidx
+            discard readUleb128(payload, ip)  # globalidx
           of OpI32Load:
-            discard readU32LEB(payload, ip)  # align
-            discard readU32LEB(payload, ip)  # offset
+            discard readUleb128(payload, ip)  # align
+            discard readUleb128(payload, ip)  # offset
           of OpI32Store:
-            discard readU32LEB(payload, ip)  # align
-            discard readU32LEB(payload, ip)  # offset
+            discard readUleb128(payload, ip)  # align
+            discard readUleb128(payload, ip)  # offset
           of OpI32Const:
-            discard readS32LEB(payload, ip)
+            discard readSleb128(payload, ip)
           of OpRefNull:
             discard readByte(payload, ip)  # reftype
           of OpEnd, OpElse, OpRefIsNull:
@@ -306,10 +264,10 @@ proc findReturnPointerFuncs(data: seq[byte]): seq[RetPtrInfo] =
     if sec.id == SecFunction:
       let payload = parsed.sectionPayload(sec)
       var p = 0
-      let count = int(readU32LEB(payload, p))
+      let count = int(readUleb128(payload, p))
       funcTypes = newSeq[int](count)
       for i in 0 ..< count:
-        funcTypes[i] = int(readU32LEB(payload, p))
+        funcTypes[i] = int(readUleb128(payload, p))
 
   # Scan type section for functions with i32 last param and no results
   var types: seq[tuple[params: seq[byte], results: seq[byte]]] = @[]
@@ -317,16 +275,16 @@ proc findReturnPointerFuncs(data: seq[byte]): seq[RetPtrInfo] =
     if sec.id == SecType:
       let payload = parsed.sectionPayload(sec)
       var p = 0
-      let count = int(readU32LEB(payload, p))
+      let count = int(readUleb128(payload, p))
       types = newSeq[tuple[params: seq[byte], results: seq[byte]]](count)
       for i in 0 ..< count:
         let magic = readByte(payload, p)
         assert magic == 0x60
-        let paramCount = int(readU32LEB(payload, p))
+        let paramCount = int(readUleb128(payload, p))
         types[i].params = newSeq[byte](paramCount)
         for j in 0 ..< paramCount:
           types[i].params[j] = readByte(payload, p)
-        let resultCount = int(readU32LEB(payload, p))
+        let resultCount = int(readUleb128(payload, p))
         types[i].results = newSeq[byte](resultCount)
         for j in 0 ..< resultCount:
           types[i].results[j] = readByte(payload, p)
@@ -400,11 +358,11 @@ proc findCatchFuncs(data: seq[byte], config: CatchConfig): seq[CatchFuncInfo] =
     if sec.id == SecExport:
       let payload = parsed.sectionPayload(sec)
       var p = 0
-      let count = int(readU32LEB(payload, p))
+      let count = int(readUleb128(payload, p))
       for i in 0 ..< count:
-        let name = readName(payload, p)
+        let name = readUleb128String(payload, p)
         let kind = readByte(payload, p)
-        let idx = int(readU32LEB(payload, p))
+        let idx = int(readUleb128(payload, p))
         if kind == ExtFunc and name.startsWith(NbgPrefix) and name.endsWith("_catch"):
           result.add(CatchFuncInfo(funcIdx: idx, shimName: name))
 
@@ -476,27 +434,27 @@ proc findStackPointer(data: seq[byte]): int =
     if sec.id == SecImport:
       let payload = parsed.sectionPayload(sec)
       var p = 0
-      let count = int(readU32LEB(payload, p))
+      let count = int(readUleb128(payload, p))
       var globalIdx = 0
       for i in 0 ..< count:
-        let modName = readName(payload, p)
-        let fieldName = readName(payload, p)
+        let modName = readUleb128String(payload, p)
+        let fieldName = readUleb128String(payload, p)
         let kind = readByte(payload, p)
         case kind
         of ExtFunc:
-          discard readU32LEB(payload, p)  # typeidx
+          discard readUleb128(payload, p)  # typeidx
           inc globalIdx
         of ExtTable:
           discard readByte(payload, p)    # elemtype
           let flags = readByte(payload, p)
-          discard readU32LEB(payload, p)  # initial
+          discard readUleb128(payload, p)  # initial
           if (flags and 0x01) != 0:
-            discard readU32LEB(payload, p)
+            discard readUleb128(payload, p)
         of ExtMemory:
           let flags = readByte(payload, p)
-          discard readU32LEB(payload, p)  # initial
+          discard readUleb128(payload, p)  # initial
           if (flags and 0x01) != 0:
-            discard readU32LEB(payload, p)
+            discard readUleb128(payload, p)
         of ExtGlobal:
           let valType = readByte(payload, p)
           let mut = readByte(payload, p)
@@ -590,12 +548,12 @@ proc detectFeatures*(wasmData: seq[byte]): TargetFeatures =
     if sec.id == SecCustom:
       let payload = parsed.sectionPayload(sec)
       var p = 0
-      let name = readName(payload, p)
+      let name = readUleb128String(payload, p)
       if name == "target_features":
-        let featureCount = int(readU32LEB(payload, p))
+        let featureCount = int(readUleb128(payload, p))
         for i in 0 ..< featureCount:
           let prefix = char(readByte(payload, p))
-          let featName = readName(payload, p)
+          let featName = readUleb128String(payload, p)
           if prefix == '+':
             case featName
             of "reference-types":

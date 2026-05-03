@@ -2,6 +2,7 @@
 ## Writes varint-encoded program descriptor — equivalent to encode.rs
 
 import common
+import leb128
 
 type
   Encoder* = object
@@ -13,22 +14,15 @@ proc newEncoder*(): Encoder =
 proc putByte(e: var Encoder, b: byte) =
   e.buf.add(b)
 
-proc varint32(e: var Encoder, v: uint32) =
-  var val = v
-  while val > 0x7F'u32:
-    putByte(e, byte((val and 0x7F'u32) or 0x80'u32))
-    val = val shr 7
-  putByte(e, byte(val))
-
 proc encode*(e: var Encoder, b: bool) =
   putByte(e, if b: 1'u8 else: 0'u8)
 
 proc encode*(e: var Encoder, v: uint32) =
-  e.varint32(v)
+  writeUleb128(e.buf, v)
 
 proc encode*(e: var Encoder, v: int) =
   assert v >= 0
-  e.varint32(uint32(v))
+  writeUleb128(e.buf, uint32(v))
 
 proc encode*(e: var Encoder, s: string) =
   e.encode(s.len)

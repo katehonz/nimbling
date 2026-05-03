@@ -199,6 +199,8 @@ function __nbg_loose_eq(a, b) { return a == b ? 1 : 0; }
 // ─── Intrinsics: Object Operations ───
 function __nbg_object_add(idx_a, idx_b) { return addHeapObject(heap[idx_a] + heap[idx_b]); }
 function __nbg_object_sub(idx_a, idx_b) { return addHeapObject(heap[idx_a] - heap[idx_b]); }
+function __nbg_delete_prop(idx, prop) { return delete heap[idx][prop] ? 1 : 0; }
+function __nbg_instanceof(idx_a, idx_b) { return heap[idx_a] instanceof heap[idx_b] ? 1 : 0; }
 
 // ─── Intrinsics: JS Property Access ───
 function __nbg_js_get(idx, prop_idx) {

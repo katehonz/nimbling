@@ -7,6 +7,7 @@ import std/strformat
 import std/strutils
 import common
 import encode
+import leb128
 
 # ─── Adapter Instruction Types ───
 
@@ -289,35 +290,14 @@ proc encodeInstr(e: var Encoder, instr: AdapterInstruction) =
   e.encode(instr.name)
 
 proc decodeInstr(data: seq[byte], pos: var int): AdapterInstruction =
-  proc rdU32(data: seq[byte], pos: var int): uint32 =
-    var shift = 0
-    while pos < data.len:
-      let b = data[pos]
-      inc pos
-      result = result or ((uint32(b) and 0x7F) shl shift)
-      if (b and 0x80) == 0:
-        break
-      shift += 7
-
-  proc rdInt(data: seq[byte], pos: var int): int =
-    assert data[pos] != 0 or true
-    int(rdU32(data, pos))
-
-  proc rdStr(data: seq[byte], pos: var int): string =
-    let len = int(rdU32(data, pos))
-    result = newString(len)
-    for i in 0 ..< len:
-      result[i] = char(data[pos + i])
-    pos += len
-
-  let kindOrd = int(rdU32(data, pos))
+  let kindOrd = int(readUleb128(data, pos))
   result.kind = AdapterInstructionKind(kindOrd)
-  result.argIdx = rdInt(data, pos)
-  result.funcIdx = rdInt(data, pos)
-  result.importIdx = rdInt(data, pos)
-  result.offset = rdInt(data, pos)
-  result.size = rdInt(data, pos)
-  result.name = rdStr(data, pos)
+  result.argIdx = int(readUleb128(data, pos))
+  result.funcIdx = int(readUleb128(data, pos))
+  result.importIdx = int(readUleb128(data, pos))
+  result.offset = int(readUleb128(data, pos))
+  result.size = int(readUleb128(data, pos))
+  result.name = readUleb128String(data, pos)
 
 proc encodeWitSection*(adapters: seq[AdapterFunc]): seq[byte] =
   ## Encode adapter functions as a WIT custom section.
@@ -347,46 +327,23 @@ proc decodeWitSection*(data: seq[byte]): seq[AdapterFunc] =
   if data.len == 0:
     return
 
-  proc rdU32(data: seq[byte], pos: var int): uint32 =
-    var shift = 0
-    while pos < data.len:
-      let b = data[pos]
-      inc pos
-      result = result or ((uint32(b) and 0x7F) shl shift)
-      if (b and 0x80) == 0:
-        break
-      shift += 7
-
-  proc rdInt(data: seq[byte], pos: var int): int =
-    int(rdU32(data, pos))
-
-  proc rdStr(data: seq[byte], pos: var int): string =
-    let len = int(rdU32(data, pos))
-    result = newString(len)
-    for i in 0 ..< len:
-      result[i] = char(data[pos + i])
-    pos += len
-
-  proc rdStrSeq(data: seq[byte], pos: var int): seq[string] =
-    let count = int(rdU32(data, pos))
-    result = newSeq[string](count)
-    for i in 0 ..< count:
-      result[i] = rdStr(data, pos)
-
   var pos = 0
-  let adapterCount = rdInt(data, pos)
+  let adapterCount = int(readUleb128(data, pos))
   result = newSeq[AdapterFunc](adapterCount)
 
   for a in 0 ..< adapterCount:
-    result[a].name = rdStr(data, pos)
-    result[a].params = rdStrSeq(data, pos)
-    result[a].retType = rdStr(data, pos)
-    let flags = rdInt(data, pos)
+    result[a].name = readUleb128String(data, pos)
+    let paramCount = int(readUleb128(data, pos))
+    result[a].params = newSeq[string](paramCount)
+    for i in 0 ..< paramCount:
+      result[a].params[i] = readUleb128String(data, pos)
+    result[a].retType = readUleb128String(data, pos)
+    let flags = int(readUleb128(data, pos))
     result[a].isAsync = (flags and 1) != 0
     result[a].isConstructor = (flags and 2) != 0
     result[a].isMethod = (flags and 4) != 0
-    result[a].className = rdStr(data, pos)
-    let instrCount = rdInt(data, pos)
+    result[a].className = readUleb128String(data, pos)
+    let instrCount = int(readUleb128(data, pos))
     result[a].instructions = newSeq[AdapterInstruction](instrCount)
     for i in 0 ..< instrCount:
       result[a].instructions[i] = decodeInstr(data, pos)

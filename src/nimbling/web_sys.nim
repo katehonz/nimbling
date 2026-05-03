@@ -86,7 +86,7 @@ proc jsDocumentHead*(doc: JsDocument): JsElement =
 proc jsElementGetAttribute*(el: JsElement, name: string): string =
   when defined(wasm32):
     {.emit: """
-    var s = heap[`el`.idx].getAttribute(`name`) || '';
+    var s = heap[`el`.idx].getAttribute(`name`) || "";
     var len = s.length;
     var ptr = __nbg_malloc(len, 1);
     for (var i = 0; i < len; i++) ptr[i] = s.charCodeAt(i);
@@ -510,7 +510,7 @@ proc jsCanvasCtxScale*(ctx: JsCanvasRenderingContext2D, x, y: float64) =
 proc jsStorageGetItem*(storage: JsStorage, key: string): string =
   when defined(wasm32):
     {.emit: """
-    var s = heap[`storage`.idx].getItem(`key`) || '';
+    var s = heap[`storage`.idx].getItem(`key`) || "";
     var len = s.length;
     var ptr = __nbg_malloc(len, 1);
     for (var i = 0; i < len; i++) ptr[i] = s.charCodeAt(i);
@@ -540,7 +540,7 @@ proc jsStorageClear*(storage: JsStorage) =
 proc jsStorageKey*(storage: JsStorage, idx: int): string =
   when defined(wasm32):
     {.emit: """
-    var s = heap[`storage`.idx].key(`idx`) || '';
+    var s = heap[`storage`.idx].key(`idx`) || "";
     var len = s.length;
     var ptr = __nbg_malloc(len, 1);
     for (var i = 0; i < len; i++) ptr[i] = s.charCodeAt(i);
@@ -576,7 +576,7 @@ proc jsWebSocketClose*(ws: JsWebSocket, code: int = 1000, reason: string = "") =
   when defined(wasm32):
     {.emit: """
     var r = `reason`;
-    if (r === '') {
+    if (r == "") {
       heap[`ws`.idx].close(`code`);
     } else {
       heap[`ws`.idx].close(`code`, r);
@@ -622,7 +622,7 @@ proc newJsRequest*(url: string, init: JsValue = JsValue(idx: 0)): JsRequest =
     {.emit: """
     var u = `url`;
     var i = `init`;
-    if (i === 0) {
+    if (i == 0) {
       `result` = {idx: addHeapObject(new Request(u))};
     } else {
       `result` = {idx: addHeapObject(new Request(u, heap[i]))};

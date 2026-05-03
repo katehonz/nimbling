@@ -7,6 +7,7 @@ import std/strformat
 import std/tables
 
 import common
+import leb128
 
 # ─── Emscripten Output Mode ───
 
@@ -290,29 +291,6 @@ const
 
 # ─── Wasm section helpers ───
 
-proc readLeb128(data: seq[byte], pos: var int): uint32 =
-  result = 0
-  var shift = 0
-  while pos < data.len:
-    let b = data[pos]
-    inc pos
-    result = result or (uint32(b and 0x7F) shl shift)
-    if (b and 0x80) == 0:
-      break
-    shift += 7
-
-proc writeLeb128(val: uint32): seq[byte] =
-  result = @[]
-  var v = val
-  while true:
-    var b = byte(v and 0x7F)
-    v = v shr 7
-    if v != 0:
-      b = b or 0x80
-    result.add(b)
-    if v == 0:
-      break
-
 proc stripSection(wasmData: seq[byte], sectionId: byte): seq[byte] =
   ## Remove all instances of a section type from wasm binary.
   if wasmData.len < 8:
@@ -326,18 +304,10 @@ proc stripSection(wasmData: seq[byte], sectionId: byte): seq[byte] =
     let sid = wasmData[pos]
     inc pos
 
-    var size: int = 0
-    var shift = 0
     let sizeStart = pos
-    while pos < wasmData.len:
-      let b = wasmData[pos]
-      inc pos
-      size = size or ((int(b) and 0x7F) shl shift)
-      if (b and 0x80) == 0:
-        break
-      shift += 7
-
+    let size = int(readUleb128(wasmData, pos))
     let payloadStart = pos
+
     if sid == sectionId:
       pos = payloadStart + size
       continue
@@ -362,30 +332,13 @@ proc stripCustomSection(wasmData: seq[byte], name: string): seq[byte] =
     let sectionId = wasmData[pos]
     inc pos
 
-    var size: int = 0
-    var shift = 0
     let sizeStart = pos
-    while pos < wasmData.len:
-      let b = wasmData[pos]
-      inc pos
-      size = size or ((int(b) and 0x7F) shl shift)
-      if (b and 0x80) == 0:
-        break
-      shift += 7
-
+    let size = int(readUleb128(wasmData, pos))
     let payloadStart = pos
 
     if sectionId == 0:
       # Custom section — read name
-      var nameLen: int = 0
-      var nameShift = 0
-      while pos < payloadStart + size and pos < wasmData.len:
-        let b = wasmData[pos]
-        inc pos
-        nameLen = nameLen or ((int(b) and 0x7F) shl nameShift)
-        if (b and 0x80) == 0:
-          break
-        nameShift += 7
+      let nameLen = int(readUleb128(wasmData, pos))
 
       let nameBytes = wasmData[pos..<(pos + nameLen)]
       let sectionName = cast[string](nameBytes)
@@ -407,15 +360,7 @@ proc hasSection(wasmData: seq[byte], sectionId: byte): bool =
   while pos < wasmData.len:
     let sid = wasmData[pos]
     inc pos
-    var size: int = 0
-    var shift = 0
-    while pos < wasmData.len:
-      let b = wasmData[pos]
-      inc pos
-      size = size or ((int(b) and 0x7F) shl shift)
-      if (b and 0x80) == 0:
-        break
-      shift += 7
+    let size = int(readUleb128(wasmData, pos))
     if sid == sectionId:
       return true
     pos += size
@@ -435,25 +380,16 @@ proc injectStartSection(wasmData: seq[byte], startFuncIdx: uint32): seq[byte] =
     let sectionId = wasmData[pos]
     inc pos
 
-    var size: int = 0
-    var shift = 0
     let sizeStart = pos
-    while pos < wasmData.len:
-      let b = wasmData[pos]
-      inc pos
-      size = size or ((int(b) and 0x7F) shl shift)
-      if (b and 0x80) == 0:
-        break
-      shift += 7
-
+    let size = int(readUleb128(wasmData, pos))
     let payloadStart = pos
 
     # Inject start section before Code section (id=10) or at end
     if not injected and sectionId >= SecCode:
-      let payload = writeLeb128(startFuncIdx)
+      var payload: seq[byte] = @[]
+      writeUleb128(payload, startFuncIdx)
       result.add(byte(SecStart))
-      let sz = writeLeb128(uint32(payload.len))
-      result.add(sz)
+      writeUleb128(result, uint32(payload.len))
       result.add(payload)
       injected = true
 
@@ -466,10 +402,10 @@ proc injectStartSection(wasmData: seq[byte], startFuncIdx: uint32): seq[byte] =
     pos = payloadStart + size
 
   if not injected:
-    let payload = writeLeb128(startFuncIdx)
+    var payload: seq[byte] = @[]
+    writeUleb128(payload, startFuncIdx)
     result.add(byte(SecStart))
-    let sz = writeLeb128(uint32(payload.len))
-    result.add(sz)
+    writeUleb128(result, uint32(payload.len))
     result.add(payload)
 
 proc applyCliFlags*(wasmData: seq[byte], flags: CliFlags): seq[byte] =

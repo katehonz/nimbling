@@ -4,6 +4,60 @@
 
 import std/strutils
 import common
+import leb128
+
+type
+  InterpError* = object of CatchableError
+
+proc readByte(data: openArray[byte], pos: var int): byte =
+  if pos >= data.len:
+    raise newException(InterpError, "unexpected end of data in readByte at pos " & $pos)
+  result = leb128.readByte(data, pos)
+
+proc readUleb128(data: openArray[byte], pos: var int): uint32 =
+  var iterations = 0
+  var p = pos
+  while p < data.len:
+    if iterations >= 5:
+      raise newException(InterpError, "LEB128 u32 exceeds 5 bytes at pos " & $p)
+    inc iterations
+    let b = data[p]
+    inc p
+    result = result or (uint32(b and 0x7F) shl ((iterations - 1) * 7))
+    if (b and 0x80) == 0:
+      pos = p
+      return
+  pos = p
+
+proc readSleb128(data: openArray[byte], pos: var int): int32 =
+  var shift = 0
+  var b: byte
+  var iterations = 0
+  var p = pos
+  while p < data.len:
+    if iterations >= 5:
+      raise newException(InterpError, "LEB128 s32 exceeds 5 bytes at pos " & $p)
+    inc iterations
+    b = data[p]
+    inc p
+    result = result or (int32(b and 0x7F) shl shift)
+    shift += 7
+    if (b and 0x80) == 0:
+      pos = p
+      if shift < 32 and (b and 0x40) != 0:
+        result = result or (int32(not 0) shl shift)
+      return
+  pos = p
+
+proc popChecked(stack: var seq[uint32], context: string): uint32 =
+  if stack.len == 0:
+    raise newException(InterpError, "stack underflow in " & context)
+  result = stack.pop()
+
+proc peekChecked(stack: seq[uint32], context: string): uint32 =
+  if stack.len == 0:
+    raise newException(InterpError, "stack underflow (peek) in " & context)
+  result = stack[^1]
 
 type
   WasmFuncType* = object
@@ -22,35 +76,6 @@ type
     codeData*: seq[byte]
     numImports*: int       ## count of imported functions
 
-# ─── LEB128 helpers ───
-
-proc readU32BE(data: openArray[byte], pos: var int): uint32 =
-  var shift = 0
-  while pos < data.len:
-    let b = data[pos]
-    inc pos
-    result = result or ((uint32(b) and 0x7F) shl shift)
-    if (b and 0x80) == 0:
-      break
-    shift += 7
-
-proc readS32BE(data: openArray[byte], pos: var int): int32 =
-  var shift = 0
-  var b: byte
-  while pos < data.len:
-    b = data[pos]
-    inc pos
-    result = result or ((int32(b) and 0x7F) shl shift)
-    if (b and 0x80) == 0:
-      break
-    shift += 7
-  if (shift < 32) and ((b and 0x40) != 0):
-    result = result or ((not 0'i32) shl shift)
-
-proc readByte(data: openArray[byte], pos: var int): byte =
-  result = data[pos]
-  inc pos
-
 # ─── Wasm binary parser ───
 
 proc parseWasmModule*(data: seq[byte]): WasmModule =
@@ -64,48 +89,50 @@ proc parseWasmModule*(data: seq[byte]): WasmModule =
   while pos < data.len:
     let sectionId = data[pos]
     inc pos
-    let sectionSize = int(readU32BE(data, pos))
+    let sectionSize = int(readUleb128(data, pos))
     let sectionEnd = pos + sectionSize
+    if sectionEnd > data.len:
+      break
 
     case sectionId
     of 1: # Type section
-      let count = int(readU32BE(data, pos))
+      let count = int(readUleb128(data, pos))
       result.types = newSeq[WasmFuncType](count)
       for i in 0 ..< count:
         let magic = readByte(data, pos)
         assert magic == 0x60, "expected functype magic 0x60, got 0x" & $magic
-        let paramCount = int(readU32BE(data, pos))
+        let paramCount = int(readUleb128(data, pos))
         result.types[i].params = newSeq[byte](paramCount)
         for j in 0 ..< paramCount:
           result.types[i].params[j] = readByte(data, pos)
-        let resultCount = int(readU32BE(data, pos))
+        let resultCount = int(readUleb128(data, pos))
         result.types[i].results = newSeq[byte](resultCount)
         for j in 0 ..< resultCount:
           result.types[i].results[j] = readByte(data, pos)
 
     of 2: # Import section
-      let count = int(readU32BE(data, pos))
+      let count = int(readUleb128(data, pos))
       for i in 0 ..< count:
-        let modLen = int(readU32BE(data, pos))
+        let modLen = int(readUleb128(data, pos))
         pos += modLen
-        let fieldLen = int(readU32BE(data, pos))
+        let fieldLen = int(readUleb128(data, pos))
         pos += fieldLen
         let importKind = readByte(data, pos)
         case importKind
         of 0x00: # function import
           inc result.numImports
-          discard readU32BE(data, pos)  # type index
+          discard readUleb128(data, pos)  # type index
         of 0x01: # table import
           discard readByte(data, pos)   # elemtype
           let flags = readByte(data, pos)
-          discard readU32BE(data, pos)  # initial
+          discard readUleb128(data, pos)  # initial
           if (flags and 0x01) != 0:
-            discard readU32BE(data, pos)  # max
+            discard readUleb128(data, pos)  # max
         of 0x02: # memory import
           let flags = readByte(data, pos)
-          discard readU32BE(data, pos)  # initial
+          discard readUleb128(data, pos)  # initial
           if (flags and 0x01) != 0:
-            discard readU32BE(data, pos)  # max
+            discard readUleb128(data, pos)  # max
         of 0x03: # global import
           discard readByte(data, pos)   # valtype
           discard readByte(data, pos)   # mutability
@@ -113,24 +140,24 @@ proc parseWasmModule*(data: seq[byte]): WasmModule =
           discard
 
     of 3: # Function section
-      let count = int(readU32BE(data, pos))
+      let count = int(readUleb128(data, pos))
       funcSectionTypes = newSeq[int](count)
       for i in 0 ..< count:
-        funcSectionTypes[i] = int(readU32BE(data, pos))
+        funcSectionTypes[i] = int(readUleb128(data, pos))
 
     of 10: # Code section
-      let count = int(readU32BE(data, pos))
+      let count = int(readUleb128(data, pos))
       result.funcs = newSeq[FuncDecl](count)
       let codeDataStart = pos
       for i in 0 ..< count:
-        let codeSize = int(readU32BE(data, pos))
+        let codeSize = int(readUleb128(data, pos))
         let bodyStart = pos
 
         # local declarations
-        let localGroupCount = int(readU32BE(data, pos))
+        let localGroupCount = int(readUleb128(data, pos))
         var localTypes: seq[byte] = @[]
         for j in 0 ..< localGroupCount:
-          let groupCount = int(readU32BE(data, pos))
+          let groupCount = int(readUleb128(data, pos))
           let valType = readByte(data, pos)
           for k in 0 ..< groupCount:
             localTypes.add(valType)
@@ -138,7 +165,8 @@ proc parseWasmModule*(data: seq[byte]): WasmModule =
         let bodyEnd = bodyStart + codeSize
         result.funcs[i].codeOffset = pos
         result.funcs[i].codeLen = bodyEnd - pos
-        result.funcs[i].typeIdx = funcSectionTypes[i]
+        if i < funcSectionTypes.len:
+          result.funcs[i].typeIdx = funcSectionTypes[i]
         result.funcs[i].locals = localTypes
 
         pos = bodyEnd
@@ -161,20 +189,22 @@ proc findDescribeImportIdx*(data: seq[byte]): int =
   while pos < data.len:
     let sectionId = data[pos]
     inc pos
-    let sectionSize = int(readU32BE(data, pos))
+    let sectionSize = int(readUleb128(data, pos))
     let sectionEnd = pos + sectionSize
+    if sectionEnd > data.len:
+      break
 
     if sectionId == 2: # Import section
-      let count = int(readU32BE(data, pos))
+      let count = int(readUleb128(data, pos))
       for i in 0 ..< count:
-        let modLen = int(readU32BE(data, pos))
+        let modLen = int(readUleb128(data, pos))
         pos += modLen
-        let fieldLen = int(readU32BE(data, pos))
+        let fieldLen = int(readUleb128(data, pos))
         let fieldData = data[pos ..< pos + fieldLen]
         pos += fieldLen
         let importKind = readByte(data, pos)
         if importKind == 0x00: # function import
-          discard readU32BE(data, pos)  # type index
+          discard readUleb128(data, pos)  # type index
           if cast[string](fieldData) == "__nbg_describe":
             return funcIdx
           inc funcIdx
@@ -182,14 +212,14 @@ proc findDescribeImportIdx*(data: seq[byte]): int =
           if importKind == 0x01:
             discard readByte(data, pos)
             let flags = readByte(data, pos)
-            discard readU32BE(data, pos)
+            discard readUleb128(data, pos)
             if (flags and 0x01) != 0:
-              discard readU32BE(data, pos)
+              discard readUleb128(data, pos)
           elif importKind == 0x02:
             let flags = readByte(data, pos)
-            discard readU32BE(data, pos)
+            discard readUleb128(data, pos)
             if (flags and 0x01) != 0:
-              discard readU32BE(data, pos)
+              discard readUleb128(data, pos)
           elif importKind == 0x03:
             discard readByte(data, pos)
             discard readByte(data, pos)
@@ -210,17 +240,19 @@ proc findDescriptorExports*(data: seq[byte]): seq[(string, int)] =
   while pos < data.len:
     let sectionId = data[pos]
     inc pos
-    let sectionSize = int(readU32BE(data, pos))
+    let sectionSize = int(readUleb128(data, pos))
     let sectionEnd = pos + sectionSize
+    if sectionEnd > data.len:
+      break
 
     if sectionId == 7: # Export section
-      let count = int(readU32BE(data, pos))
+      let count = int(readUleb128(data, pos))
       for i in 0 ..< count:
-        let nameLen = int(readU32BE(data, pos))
+        let nameLen = int(readUleb128(data, pos))
         let nameBytes = data[pos ..< pos + nameLen]
         pos += nameLen
         let exportKind = readByte(data, pos)
-        let exportIdx = int(readU32BE(data, pos))
+        let exportIdx = int(readUleb128(data, pos))
         let name = cast[string](nameBytes)
         if exportKind == 0x00 and name.startsWith(DescribeFnPrefix):
           result.add((name, exportIdx))
@@ -276,6 +308,8 @@ proc runDescriptorFunction(
   let fi = module.funcs[definedIdx]
 
   # Build local slots: params (from type) + declared locals
+  if fi.typeIdx < 0 or fi.typeIdx >= module.types.len:
+    return @[]
   let ft = module.types[fi.typeIdx]
   var localCount = ft.params.len + fi.locals.len
   var locals: seq[uint32]
@@ -284,6 +318,8 @@ proc runDescriptorFunction(
   # IP within the code section byte array
   var ip = fi.codeOffset
   let codeEnd = fi.codeOffset + fi.codeLen
+  if fi.codeOffset < 0 or codeEnd > module.codeData.len:
+    return @[]
 
   var stack: seq[uint32] = @[]
 
@@ -303,7 +339,7 @@ proc runDescriptorFunction(
 
     of OP_IF:
       discard readByte(module.codeData, ip)
-      let cond = stack.pop()
+      let cond = popChecked(stack, "OP_IF")
       if cond == 0:
         # skip to else or end — simplified: skip past matching end
         var depth = 1
@@ -344,100 +380,106 @@ proc runDescriptorFunction(
       break
 
     of OP_BR:
-      discard readU32BE(module.codeData, ip)
+      discard readUleb128(module.codeData, ip)
       break
 
     of OP_BR_IF:
-      discard readU32BE(module.codeData, ip)
-      if stack.pop() != 0:
+      discard readUleb128(module.codeData, ip)
+      if popChecked(stack, "OP_BR_IF") != 0:
         break
 
     of OP_RETURN:
       break
 
     of OP_CALL:
-      let calleeIdx = int(readU32BE(module.codeData, ip))
+      let calleeIdx = int(readUleb128(module.codeData, ip))
       if calleeIdx == describeImportIdx:
         # __nbg_describe(v): pop v and collect it
-        result.add(stack.pop())
+        result.add(popChecked(stack, "OP_CALL __nbg_describe"))
       else:
         # other calls (shouldn't happen in descriptor functions)
         discard
 
     of OP_DROP:
-      discard stack.pop()
+      discard popChecked(stack, "OP_DROP")
 
     of OP_LOCAL_GET:
-      let idx = int(readU32BE(module.codeData, ip))
+      let idx = int(readUleb128(module.codeData, ip))
+      if idx < 0 or idx >= locals.len:
+        raise newException(InterpError, "OP_LOCAL_GET index out of bounds: " & $idx)
       stack.add(locals[idx])
 
     of OP_LOCAL_SET:
-      let idx = int(readU32BE(module.codeData, ip))
-      locals[idx] = stack.pop()
+      let idx = int(readUleb128(module.codeData, ip))
+      if idx < 0 or idx >= locals.len:
+        raise newException(InterpError, "OP_LOCAL_SET index out of bounds: " & $idx)
+      locals[idx] = popChecked(stack, "OP_LOCAL_SET")
 
     of OP_LOCAL_TEE:
-      let idx = int(readU32BE(module.codeData, ip))
-      locals[idx] = stack[^1]
+      let idx = int(readUleb128(module.codeData, ip))
+      if idx < 0 or idx >= locals.len:
+        raise newException(InterpError, "OP_LOCAL_TEE index out of bounds: " & $idx)
+      locals[idx] = peekChecked(stack, "OP_LOCAL_TEE")
 
     of OP_GLOBAL_GET:
-      discard readU32BE(module.codeData, ip)
+      discard readUleb128(module.codeData, ip)
       stack.add(0)
 
     of OP_GLOBAL_SET:
-      discard readU32BE(module.codeData, ip)
-      discard stack.pop()
+      discard readUleb128(module.codeData, ip)
+      discard popChecked(stack, "OP_GLOBAL_SET")
 
     of OP_I32_CONST:
-      let val = readS32BE(module.codeData, ip)
+      let val = readSleb128(module.codeData, ip)
       stack.add(uint32(cast[uint64](int64(val)) and 0xFFFFFFFF'u64))
 
     of OP_I32_EQZ:
-      let a = stack.pop()
+      let a = popChecked(stack, "OP_I32_EQZ")
       stack.add(if a == 0: 1'u32 else: 0'u32)
 
     of OP_I32_EQ:
-      let b = stack.pop()
-      let a = stack.pop()
+      let b = popChecked(stack, "OP_I32_EQ")
+      let a = popChecked(stack, "OP_I32_EQ")
       stack.add(if a == b: 1'u32 else: 0'u32)
 
     of OP_I32_NE:
-      let b = stack.pop()
-      let a = stack.pop()
+      let b = popChecked(stack, "OP_I32_NE")
+      let a = popChecked(stack, "OP_I32_NE")
       stack.add(if a != b: 1'u32 else: 0'u32)
 
     of OP_I32_LT_S:
-      let b = cast[int32](stack.pop())
-      let a = cast[int32](stack.pop())
+      let b = cast[int32](popChecked(stack, "OP_I32_LT_S"))
+      let a = cast[int32](popChecked(stack, "OP_I32_LT_S"))
       stack.add(if a < b: 1'u32 else: 0'u32)
 
     of OP_I32_LT_U:
-      let b = stack.pop()
-      let a = stack.pop()
+      let b = popChecked(stack, "OP_I32_LT_U")
+      let a = popChecked(stack, "OP_I32_LT_U")
       stack.add(if a < b: 1'u32 else: 0'u32)
 
     of OP_I32_GT_S:
-      let b = cast[int32](stack.pop())
-      let a = cast[int32](stack.pop())
+      let b = cast[int32](popChecked(stack, "OP_I32_GT_S"))
+      let a = cast[int32](popChecked(stack, "OP_I32_GT_S"))
       stack.add(if a > b: 1'u32 else: 0'u32)
 
     of OP_I32_GT_U:
-      let b = stack.pop()
-      let a = stack.pop()
+      let b = popChecked(stack, "OP_I32_GT_U")
+      let a = popChecked(stack, "OP_I32_GT_U")
       stack.add(if a > b: 1'u32 else: 0'u32)
 
     of OP_I32_ADD:
-      let b = stack.pop()
-      let a = stack.pop()
+      let b = popChecked(stack, "OP_I32_ADD")
+      let a = popChecked(stack, "OP_I32_ADD")
       stack.add(a + b)
 
     of OP_I32_SUB:
-      let b = stack.pop()
-      let a = stack.pop()
+      let b = popChecked(stack, "OP_I32_SUB")
+      let a = popChecked(stack, "OP_I32_SUB")
       stack.add(a - b)
 
     of OP_I32_MUL:
-      let b = stack.pop()
-      let a = stack.pop()
+      let b = popChecked(stack, "OP_I32_MUL")
+      let a = popChecked(stack, "OP_I32_MUL")
       stack.add(a * b)
 
     else:

@@ -3,40 +3,30 @@
 ## Equivalent to shared program decode path in wasm-bindgen CLI.
 
 import common
-import std/streams
+import leb128
 
 type
   Decoder* = object
-    stream*: StringStream
+    data*: seq[byte]
     pos*: int
 
   DecodeError* = object of CatchableError
 
 proc newDecoder*(data: seq[byte]): Decoder =
-  let s = newStringStream(cast[string](data))
-  Decoder(stream: s)
+  Decoder(data: data, pos: 0)
 
 proc readByte(d: var Decoder): byte =
-  result = byte(d.stream.readChar())
+  result = d.data[d.pos]
   inc d.pos
-
-proc readVarint32(d: var Decoder): uint32 =
-  var shift = 0'u32
-  while true:
-    let b = d.readByte()
-    result = result or ((uint32(b) and 0x7F'u32) shl shift)
-    if (b and 0x80) == 0:
-      break
-    shift += 7
 
 proc decodeBool(d: var Decoder): bool =
   d.readByte() != 0
 
 proc decodeU32(d: var Decoder): uint32 =
-  d.readVarint32()
+  readUleb128(d.data, d.pos)
 
 proc decodeInt(d: var Decoder): int =
-  int(d.readVarint32())
+  int(readUleb128(d.data, d.pos))
 
 proc decodeString(d: var Decoder): string =
   let len = d.decodeInt()

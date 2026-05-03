@@ -9,6 +9,7 @@ import std/os
 import std/parseopt
 
 import common
+import leb128
 
 # ══════════════════════════════════════════════════════════════════════════════
 # 1. Test configuration types
@@ -165,24 +166,10 @@ macro wasmBindgenTest*(body: untyped): untyped =
 # 4. Test custom section encoding (binary, varint LEB128)
 # ══════════════════════════════════════════════════════════════════════════════
 
-proc encodeVarint(buf: var seq[byte], v: uint32) =
-  ## Encode a uint32 as unsigned LEB128.
-  var val = v
-  while val > 0x7F'u32:
-    buf.add(byte((val and 0x7F'u32) or 0x80'u32))
-    val = val shr 7
-  buf.add(byte(val))
-
-proc encodeString(buf: var seq[byte], s: string) =
-  ## Encode a string as varint length + raw bytes.
-  encodeVarint(buf, uint32(s.len))
-  for c in s:
-    buf.add(byte(c))
-
 proc encodeTestEntry*(buf: var seq[byte], entry: TestEntry) =
   ## Encode a single TestEntry into the binary test section format.
   ## Format: name_len(varint), name_bytes, config_flags(u8), timeout(varint)
-  encodeString(buf, entry.name)
+  writeUleb128String(buf, entry.name)
 
   # config_flags: bitfield of TestConfig ordinals
   var flags: uint8 = 0
@@ -190,45 +177,26 @@ proc encodeTestEntry*(buf: var seq[byte], entry: TestEntry) =
     flags = flags or (1'u8 shl ord(cfg).uint8)
   buf.add(flags)
 
-  encodeVarint(buf, uint32(entry.timeout))
+  writeUleb128(buf, uint32(entry.timeout))
 
 proc encodeTestSection*(tests: seq[TestEntry]): seq[byte] =
   ## Encode the full test metadata section.
   ## Format: count(varint), then each TestEntry sequentially.
   result = @[]
-  encodeVarint(result, uint32(tests.len))
+  writeUleb128(result, uint32(tests.len))
   for entry in tests:
     encodeTestEntry(result, entry)
 
-proc decodeVarint(data: seq[byte], pos: var int): uint32 =
-  ## Decode an unsigned LEB128 value.
-  var shift = 0
-  while pos < data.len:
-    let b = data[pos]
-    inc pos
-    result = result or ((uint32(b) and 0x7F'u32) shl shift)
-    if (b and 0x80) == 0:
-      return
-    shift += 7
-
-proc decodeString(data: seq[byte], pos: var int): string =
-  ## Decode a varint-length-prefixed string.
-  let len = decodeVarint(data, pos).int
-  result = newString(len)
-  for i in 0..<len:
-    result[i] = char(data[pos])
-    inc pos
-
 proc decodeTestEntry(data: seq[byte], pos: var int): TestEntry =
   ## Decode a single TestEntry from binary data.
-  result.name = decodeString(data, pos)
+  result.name = readUleb128String(data, pos)
   let flags = data[pos]
   inc pos
   result.config = {}
   for i in 0..5:
     if (flags and (1'u8 shl i.uint8)) != 0:
       result.config.incl(TestConfig(i))
-  result.timeout = int(decodeVarint(data, pos))
+  result.timeout = int(readUleb128(data, pos))
 
 proc decodeTestSection*(data: seq[byte]): seq[TestEntry] =
   ## Decode the test metadata section from binary.
@@ -236,7 +204,7 @@ proc decodeTestSection*(data: seq[byte]): seq[TestEntry] =
   if data.len == 0:
     return
   var pos = 0
-  let count = decodeVarint(data, pos).int
+  let count = readUleb128(data, pos).int
   for i in 0..<count:
     result.add(decodeTestEntry(data, pos))
 
@@ -495,29 +463,12 @@ proc extractTestCustomSection*(wasmData: seq[byte]): seq[byte] =
     let sectionId = wasmData[pos]
     inc pos
 
-    # Read LEB128 varuint32 for section size
-    var size: int = 0
-    var shift = 0
-    while pos < wasmData.len:
-      let b = wasmData[pos]
-      inc pos
-      size = size or ((int(b) and 0x7F) shl shift)
-      if (b and 0x80) == 0:
-        break
-      shift += 7
+    let size = int(readUleb128(wasmData, pos))
 
     if sectionId == 0:
       # Custom section — read name
-      var nameLen: int = 0
-      shift = 0
       let nameStart = pos
-      while pos < nameStart + size and pos < wasmData.len:
-        let b = wasmData[pos]
-        inc pos
-        nameLen = nameLen or ((int(b) and 0x7F) shl shift)
-        if (b and 0x80) == 0:
-          break
-        shift += 7
+      let nameLen = int(readUleb128(wasmData, pos))
 
       let nameBytes = wasmData[pos..<pos + nameLen]
       pos += nameLen

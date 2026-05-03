@@ -192,7 +192,7 @@ proc jsObjectHas*(obj: JsObject, prop: string): bool =
 
 proc jsObjectDelete*(obj: JsObject, prop: string): bool =
   when defined(wasm32):
-    {.emit: "`result` = delete heap[`obj`.idx][`prop`] ? 1 : 0;".}
+    {.emit: "`result` = __nbg_delete_prop(`obj`.idx, `prop`);".}
   else:
     result = false
 
@@ -832,7 +832,7 @@ proc jsErrorMessage*(err: JsError): string =
 proc jsErrorStack*(err: JsError): string =
   when defined(wasm32):
     {.emit: """
-    var s = heap[`err`.idx].stack || '';
+    var s = heap[`err`.idx].stack || "";
     var len = s.length;
     var ptr = __nbg_malloc(len, 1);
     for (var i = 0; i < len; i++) ptr[i] = s.charCodeAt(i);
@@ -1252,7 +1252,7 @@ proc jsEval*(code: string): JsValue =
 proc jsTypeOf*(val: JsValue): string =
   when defined(wasm32):
     {.emit: """
-    var s = typeof heap[`val`.idx];
+    var s = __nbg_typeof(`val`.idx);
     var len = s.length;
     var ptr = __nbg_malloc(len, 1);
     for (var i = 0; i < len; i++) ptr[i] = s.charCodeAt(i);
@@ -1263,7 +1263,7 @@ proc jsTypeOf*(val: JsValue): string =
 
 proc jsInstanceOf*(val: JsValue, constructor: JsValue): bool =
   when defined(wasm32):
-    {.emit: "`result` = heap[`val`.idx] instanceof heap[`constructor`.idx] ? 1 : 0;".}
+    {.emit: "`result` = __nbg_instanceof(`val`.idx, `constructor`.idx);".}
   else:
     result = false
 
