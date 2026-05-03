@@ -78,10 +78,10 @@ JS object -> addHeapObject(obj) -> idx: u32 -> Nim: JsValue(idx: u32)
 | WebIDL parser → Nim codegen | `webidl.nim` | Done |
 | **WebIDL compile-time macro** | **`macroimpl_webidl.nim`** | **Done** |
 | `js-sys` bindings (192 procs, 20 APIs) | `js_sys.nim` | Done |
-| `web-sys` bindings (112 procs, 27 APIs) | `web_sys.nim` | Done |
+| `web-sys` bindings (112+ procs, 27+ APIs) | `web_sys.nim` | Done |
 | Test framework (browser/Node/Deno) | `test_runner.nim` | Done |
 | Emscripten / Memory64 support | `emscripten.nim` | Done |
-| Unit tests (156 tests, all passing) | `tests/all.nim` | Done |
+| Unit tests (158 tests, all passing) | `tests/all.nim` | Done |
 
 ### `webidlBind` — Compile-Time WebIDL Macro
 
@@ -127,7 +127,7 @@ nimble buildCli
 
 | Command | Description |
 |---------|-------------|
-| `nimble test` | Run unit tests (156 tests) |
+| `nimble test` | Run unit tests (158 tests) |
 | `nimble buildCli` | Build CLI binary (release mode) |
 | `nimble wasm` | Build hello example for wasm |
 

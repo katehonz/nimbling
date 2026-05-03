@@ -26,7 +26,7 @@
 | `wit.nim` — WIT adapter system | 602 | ✅ |
 | `emscripten.nim` — Emscripten + Memory64 + CLI flags | 457 | ✅ |
 | `test_runner.nim` — wasm test framework | 781 | ✅ |
-| Tests **(156/156 pass)** | 1800 | ✅ |
+| Tests **(158/158 pass)** | 1850 | ✅ |
 | Docs (README, docs/) | 5 files | ✅ |
 | **TOTAL** | **~11,000** | ✅ |
 
@@ -159,7 +159,8 @@ DOM, CSSOM, Events, Canvas 2D, Fetch, Storage, WebSocket, Location/History, Perf
 | `runtime.nim` — types, value semantics | 7 | ✅ |
 | `macroimpl_webidl.nim` — compile-time bindings | 10 | ✅ |
 | `JsFuture` + `spawnLocal` — async bridge | 12 | ✅ |
-| **TOTAL** | **156** | ✅ |
+| Web Audio API — AudioContext, Oscillator, Gain, Filter, Analyser | 11 | ✅ |
+| **TOTAL** | **158** | ✅ |
 
 ---
 
@@ -188,7 +189,8 @@ DOM, CSSOM, Events, Canvas 2D, Fetch, Storage, WebSocket, Location/History, Perf
 - [ ] Stringifier/iterable handling
 
 ### More Web APIs
-- [ ] Web Audio API
+- [x] Web Audio API — AudioContext, OscillatorNode, GainNode, BiquadFilterNode, AnalyserNode, DelayNode, AudioBuffer, AudioParam, AudioListener (69 procs, 16 types)
+- [ ] Web Crypto API
 - [ ] Web Crypto API
 - [ ] IndexedDB
 - [ ] Service Workers
@@ -226,7 +228,7 @@ git clone https://github.com/katehonz/nimbling.git
 cd nimbling
 
 # Run tests
-nimble test          # Must pass (156/156)
+nimble test          # Must pass (158/158)
 
 # Build
 nimble buildCli      # CLI tool

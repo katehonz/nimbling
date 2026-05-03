@@ -16,6 +16,7 @@ import nimbling/runtime
 import nimbling/cli
 import nimbling/macroimpl_webidl
 import nimbling/js_sys
+import nimbling/web_sys
 
 suite "common - identifiers":
   test "valid JS identifiers":
@@ -1819,3 +1820,87 @@ suite "spawnLocal — future primitives":
   test "futureToPromise returns zero on non-wasm":
     let result = futureToPromise(0'u32)
     check result == 0
+
+# ─── Web Audio API ───
+
+suite "Web Audio — AudioContext":
+  test "AudioContext types are distinct JsValue":
+    var ctx = JsAudioContext(JsValue(idx: 0))
+    check JsValue(ctx).idx == 0
+
+  test "AudioContext properties return defaults on non-wasm":
+    var ctx = JsAudioContext(JsValue(idx: 0))
+    check jsAudioContextSampleRate(ctx) == 0.0
+    check jsAudioContextCurrentTime(ctx) == 0.0
+    check jsAudioContextState(ctx) == ""
+
+  test "AudioContext factory methods return zero on non-wasm":
+    var ctx = JsAudioContext(JsValue(idx: 0))
+    check JsValue(jsAudioContextCreateOscillator(ctx)).idx == 0
+    check JsValue(jsAudioContextCreateGain(ctx)).idx == 0
+    check JsValue(jsAudioContextCreateBiquadFilter(ctx)).idx == 0
+    check JsValue(jsAudioContextCreateAnalyser(ctx)).idx == 0
+    check JsValue(jsAudioContextCreateDelay(ctx)).idx == 0
+    check JsValue(jsAudioContextCreateChannelMerger(ctx)).idx == 0
+    check JsValue(jsAudioContextCreateChannelSplitter(ctx)).idx == 0
+    check JsValue(jsAudioContextCreateBuffer(ctx, 2, 44100, 44100.0)).idx == 0
+    check JsValue(jsAudioContextCreateBufferSource(ctx)).idx == 0
+    check JsValue(jsAudioContextDestination(ctx)).idx == 0
+    check JsValue(jsAudioContextListener(ctx)).idx == 0
+
+suite "Web Audio — OscillatorNode":
+  test "OscillatorNode properties":
+    var osc = JsOscillatorNode(JsValue(idx: 0))
+    check jsOscillatorType(osc) == ""
+    check JsValue(jsOscillatorFrequency(osc)).idx == 0
+    check JsValue(jsOscillatorDetune(osc)).idx == 0
+
+suite "Web Audio — GainNode":
+  test "GainNode gain param":
+    var gain = JsGainNode(JsValue(idx: 0))
+    check JsValue(jsGainNodeGain(gain)).idx == 0
+
+suite "Web Audio — AudioParam":
+  test "AudioParam value":
+    var param = JsAudioParam(JsValue(idx: 0))
+    check jsAudioParamValue(param) == 0.0
+
+suite "Web Audio — BiquadFilterNode":
+  test "BiquadFilterNode properties":
+    var node = JsBiquadFilterNode(JsValue(idx: 0))
+    check jsBiquadFilterType(node) == ""
+    check JsValue(jsBiquadFilterFrequency(node)).idx == 0
+    check JsValue(jsBiquadFilterQ(node)).idx == 0
+    check JsValue(jsBiquadFilterGain(node)).idx == 0
+
+suite "Web Audio — AnalyserNode":
+  test "AnalyserNode properties":
+    var node = JsAnalyserNode(JsValue(idx: 0))
+    check jsAnalyserFftSize(node) == 0
+    check jsAnalyserFrequencyBinCount(node) == 0
+    check jsAnalyserMinDecibels(node) == 0.0
+    check jsAnalyserMaxDecibels(node) == 0.0
+    check jsAnalyserSmoothingTimeConstant(node) == 0.0
+
+suite "Web Audio — AudioBuffer":
+  test "AudioBuffer properties":
+    var buf = JsAudioBuffer(JsValue(idx: 0))
+    check jsAudioBufferDuration(buf) == 0.0
+    check jsAudioBufferLength(buf) == 0
+    check jsAudioBufferSampleRate(buf) == 0.0
+    check jsAudioBufferNumberOfChannels(buf) == 0
+
+suite "Web Audio — DelayNode":
+  test "DelayNode delay param":
+    var node = JsDelayNode(JsValue(idx: 0))
+    check JsValue(jsDelayNodeDelay(node)).idx == 0
+
+suite "Web Audio — type aliases":
+  test "All Web Audio types are distinct JsValue":
+    check JsValue(JsAudioDestinationNode(JsValue(idx: 1))).idx == 1
+    check JsValue(JsAudioBufferSourceNode(JsValue(idx: 2))).idx == 2
+    check JsValue(JsChannelMergerNode(JsValue(idx: 3))).idx == 3
+    check JsValue(JsChannelSplitterNode(JsValue(idx: 4))).idx == 4
+    check JsValue(JsMediaStreamAudioSourceNode(JsValue(idx: 5))).idx == 5
+    check JsValue(JsMediaElementAudioSourceNode(JsValue(idx: 6))).idx == 6
+    check JsValue(JsAudioListener(JsValue(idx: 7))).idx == 7

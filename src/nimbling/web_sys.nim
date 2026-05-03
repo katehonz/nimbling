@@ -844,3 +844,476 @@ proc jsDOMTokenListContains*(list: JsDOMTokenList, token: string): bool =
     {.emit: "`result` = heap[`list`.idx].contains(`token`) ? 1 : 0;".}
   else:
     result = false
+
+# ─── Web Audio API ───
+
+type
+  JsAudioContext* = distinct JsValue
+  JsAudioDestinationNode* = distinct JsValue
+  JsAudioBuffer* = distinct JsValue
+  JsAudioBufferSourceNode* = distinct JsValue
+  JsOscillatorNode* = distinct JsValue
+  JsGainNode* = distinct JsValue
+  JsBiquadFilterNode* = distinct JsValue
+  JsAnalyserNode* = distinct JsValue
+  JsDelayNode* = distinct JsValue
+  JsChannelMergerNode* = distinct JsValue
+  JsChannelSplitterNode* = distinct JsValue
+  JsMediaStreamAudioSourceNode* = distinct JsValue
+  JsMediaElementAudioSourceNode* = distinct JsValue
+  JsAudioListener* = distinct JsValue
+  JsAudioParam* = distinct JsValue
+
+# ─── AudioContext ───
+
+proc jsNewAudioContext*(): JsAudioContext =
+  when defined(wasm32):
+    {.emit: "`result` = {idx: addHeapObject(new AudioContext())};".}
+  else:
+    result = JsAudioContext(JsValue(idx: 0))
+
+proc jsAudioContextDestination*(ctx: JsAudioContext): JsAudioDestinationNode =
+  when defined(wasm32):
+    {.emit: "`result` = {idx: addHeapObject(heap[`ctx`.idx].destination)};".}
+  else:
+    result = JsAudioDestinationNode(JsValue(idx: 0))
+
+proc jsAudioContextListener*(ctx: JsAudioContext): JsAudioListener =
+  when defined(wasm32):
+    {.emit: "`result` = {idx: addHeapObject(heap[`ctx`.idx].listener)};".}
+  else:
+    result = JsAudioListener(JsValue(idx: 0))
+
+proc jsAudioContextSampleRate*(ctx: JsAudioContext): float64 =
+  when defined(wasm32):
+    {.emit: "`result` = heap[`ctx`.idx].sampleRate;".}
+  else:
+    result = 0.0
+
+proc jsAudioContextCurrentTime*(ctx: JsAudioContext): float64 =
+  when defined(wasm32):
+    {.emit: "`result` = heap[`ctx`.idx].currentTime;".}
+  else:
+    result = 0.0
+
+proc jsAudioContextState*(ctx: JsAudioContext): string =
+  when defined(wasm32):
+    {.emit: """
+    var s = heap[`ctx`.idx].state;
+    var len = s.length;
+    var ptr = __nbg_malloc(len, 1);
+    for (var i = 0; i < len; i++) ptr[i] = s.charCodeAt(i);
+    `result` = {Field0: ptr, Field1: len};
+    """.}
+  else:
+    result = ""
+
+proc jsAudioContextResume*(ctx: JsAudioContext) =
+  when defined(wasm32):
+    {.emit: "heap[`ctx`.idx].resume();".}
+  else:
+    discard
+
+proc jsAudioContextSuspend*(ctx: JsAudioContext) =
+  when defined(wasm32):
+    {.emit: "heap[`ctx`.idx].suspend();".}
+  else:
+    discard
+
+proc jsAudioContextClose*(ctx: JsAudioContext) =
+  when defined(wasm32):
+    {.emit: "heap[`ctx`.idx].close();".}
+  else:
+    discard
+
+proc jsAudioContextCreateOscillator*(ctx: JsAudioContext): JsOscillatorNode =
+  when defined(wasm32):
+    {.emit: "`result` = {idx: addHeapObject(heap[`ctx`.idx].createOscillator())};".}
+  else:
+    result = JsOscillatorNode(JsValue(idx: 0))
+
+proc jsAudioContextCreateGain*(ctx: JsAudioContext): JsGainNode =
+  when defined(wasm32):
+    {.emit: "`result` = {idx: addHeapObject(heap[`ctx`.idx].createGain())};".}
+  else:
+    result = JsGainNode(JsValue(idx: 0))
+
+proc jsAudioContextCreateBiquadFilter*(ctx: JsAudioContext): JsBiquadFilterNode =
+  when defined(wasm32):
+    {.emit: "`result` = {idx: addHeapObject(heap[`ctx`.idx].createBiquadFilter())};".}
+  else:
+    result = JsBiquadFilterNode(JsValue(idx: 0))
+
+proc jsAudioContextCreateAnalyser*(ctx: JsAudioContext): JsAnalyserNode =
+  when defined(wasm32):
+    {.emit: "`result` = {idx: addHeapObject(heap[`ctx`.idx].createAnalyser())};".}
+  else:
+    result = JsAnalyserNode(JsValue(idx: 0))
+
+proc jsAudioContextCreateDelay*(ctx: JsAudioContext, maxDelay: float64 = 1.0): JsDelayNode =
+  when defined(wasm32):
+    {.emit: "`result` = {idx: addHeapObject(heap[`ctx`.idx].createDelay(`maxDelay`))};".}
+  else:
+    result = JsDelayNode(JsValue(idx: 0))
+
+proc jsAudioContextCreateChannelMerger*(ctx: JsAudioContext, count: int = 6): JsChannelMergerNode =
+  when defined(wasm32):
+    {.emit: "`result` = {idx: addHeapObject(heap[`ctx`.idx].createChannelMerger(`count`))};".}
+  else:
+    result = JsChannelMergerNode(JsValue(idx: 0))
+
+proc jsAudioContextCreateChannelSplitter*(ctx: JsAudioContext, count: int = 6): JsChannelSplitterNode =
+  when defined(wasm32):
+    {.emit: "`result` = {idx: addHeapObject(heap[`ctx`.idx].createChannelSplitter(`count`))};".}
+  else:
+    result = JsChannelSplitterNode(JsValue(idx: 0))
+
+proc jsAudioContextCreateBuffer*(ctx: JsAudioContext, channels: int, length: int, sampleRate: float64): JsAudioBuffer =
+  when defined(wasm32):
+    {.emit: "`result` = {idx: addHeapObject(heap[`ctx`.idx].createBuffer(`channels`, `length`, `sampleRate`))};".}
+  else:
+    result = JsAudioBuffer(JsValue(idx: 0))
+
+proc jsAudioContextCreateBufferSource*(ctx: JsAudioContext): JsAudioBufferSourceNode =
+  when defined(wasm32):
+    {.emit: "`result` = {idx: addHeapObject(heap[`ctx`.idx].createBufferSource())};".}
+  else:
+    result = JsAudioBufferSourceNode(JsValue(idx: 0))
+
+proc jsAudioContextCreateMediaStreamSource*(ctx: JsAudioContext, stream: JsValue): JsMediaStreamAudioSourceNode =
+  when defined(wasm32):
+    {.emit: "`result` = {idx: addHeapObject(heap[`ctx`.idx].createMediaStreamSource(heap[`stream`.idx]))};".}
+  else:
+    result = JsMediaStreamAudioSourceNode(JsValue(idx: 0))
+
+proc jsAudioContextCreateMediaElementSource*(ctx: JsAudioContext, element: JsValue): JsMediaElementAudioSourceNode =
+  when defined(wasm32):
+    {.emit: "`result` = {idx: addHeapObject(heap[`ctx`.idx].createMediaElementSource(heap[`element`.idx]))};".}
+  else:
+    result = JsMediaElementAudioSourceNode(JsValue(idx: 0))
+
+# ─── AudioNode (shared connect/disconnect) ───
+
+proc jsAudioNodeConnect*(source: JsValue, destination: JsValue) =
+  when defined(wasm32):
+    {.emit: "heap[`source`.idx].connect(heap[`destination`.idx]);".}
+  else:
+    discard
+
+proc jsAudioNodeDisconnect*(source: JsValue) =
+  when defined(wasm32):
+    {.emit: "heap[`source`.idx].disconnect();".}
+  else:
+    discard
+
+# ─── OscillatorNode ───
+
+proc jsOscillatorType*(osc: JsOscillatorNode): string =
+  when defined(wasm32):
+    {.emit: """
+    var s = heap[`osc`.idx].type;
+    var len = s.length;
+    var ptr = __nbg_malloc(len, 1);
+    for (var i = 0; i < len; i++) ptr[i] = s.charCodeAt(i);
+    `result` = {Field0: ptr, Field1: len};
+    """.}
+  else:
+    result = ""
+
+proc `jsOscillatorType=`*(osc: JsOscillatorNode, t: string) =
+  when defined(wasm32):
+    {.emit: "heap[`osc`.idx].type = `t`;".}
+  else:
+    discard
+
+proc jsOscillatorFrequency*(osc: JsOscillatorNode): JsAudioParam =
+  when defined(wasm32):
+    {.emit: "`result` = {idx: addHeapObject(heap[`osc`.idx].frequency)};".}
+  else:
+    result = JsAudioParam(JsValue(idx: 0))
+
+proc jsOscillatorDetune*(osc: JsOscillatorNode): JsAudioParam =
+  when defined(wasm32):
+    {.emit: "`result` = {idx: addHeapObject(heap[`osc`.idx].detune)};".}
+  else:
+    result = JsAudioParam(JsValue(idx: 0))
+
+proc jsOscillatorStart*(osc: JsOscillatorNode, startTime: float64 = 0.0) =
+  when defined(wasm32):
+    {.emit: "heap[`osc`.idx].start(`startTime`);".}
+  else:
+    discard
+
+proc jsOscillatorStop*(osc: JsOscillatorNode, stopTime: float64 = 0.0) =
+  when defined(wasm32):
+    {.emit: "heap[`osc`.idx].stop(`stopTime`);".}
+  else:
+    discard
+
+# ─── GainNode ───
+
+proc jsGainNodeGain*(node: JsGainNode): JsAudioParam =
+  when defined(wasm32):
+    {.emit: "`result` = {idx: addHeapObject(heap[`node`.idx].gain)};".}
+  else:
+    result = JsAudioParam(JsValue(idx: 0))
+
+# ─── AudioParam ───
+
+proc jsAudioParamValue*(param: JsAudioParam): float64 =
+  when defined(wasm32):
+    {.emit: "`result` = heap[`param`.idx].value;".}
+  else:
+    result = 0.0
+
+proc `jsAudioParamValue=`*(param: JsAudioParam, val: float64) =
+  when defined(wasm32):
+    {.emit: "heap[`param`.idx].value = `val`;".}
+  else:
+    discard
+
+proc jsAudioParamSetValueAtTime*(param: JsAudioParam, value: float64, time: float64) =
+  when defined(wasm32):
+    {.emit: "heap[`param`.idx].setValueAtTime(`value`, `time`);".}
+  else:
+    discard
+
+proc jsAudioParamLinearRampToValueAtTime*(param: JsAudioParam, value: float64, time: float64) =
+  when defined(wasm32):
+    {.emit: "heap[`param`.idx].linearRampToValueAtTime(`value`, `time`);".}
+  else:
+    discard
+
+proc jsAudioParamExponentialRampToValueAtTime*(param: JsAudioParam, value: float64, time: float64) =
+  when defined(wasm32):
+    {.emit: "heap[`param`.idx].exponentialRampToValueAtTime(`value`, `time`);".}
+  else:
+    discard
+
+proc jsAudioParamSetTargetAtTime*(param: JsAudioParam, target: float64, time: float64, tau: float64) =
+  when defined(wasm32):
+    {.emit: "heap[`param`.idx].setTargetAtTime(`target`, `time`, `tau`);".}
+  else:
+    discard
+
+proc jsAudioParamCancelScheduledValues*(param: JsAudioParam, time: float64) =
+  when defined(wasm32):
+    {.emit: "heap[`param`.idx].cancelScheduledValues(`time`);".}
+  else:
+    discard
+
+# ─── BiquadFilterNode ───
+
+proc jsBiquadFilterType*(node: JsBiquadFilterNode): string =
+  when defined(wasm32):
+    {.emit: """
+    var s = heap[`node`.idx].type;
+    var len = s.length;
+    var ptr = __nbg_malloc(len, 1);
+    for (var i = 0; i < len; i++) ptr[i] = s.charCodeAt(i);
+    `result` = {Field0: ptr, Field1: len};
+    """.}
+  else:
+    result = ""
+
+proc `jsBiquadFilterType=`*(node: JsBiquadFilterNode, t: string) =
+  when defined(wasm32):
+    {.emit: "heap[`node`.idx].type = `t`;".}
+  else:
+    discard
+
+proc jsBiquadFilterFrequency*(node: JsBiquadFilterNode): JsAudioParam =
+  when defined(wasm32):
+    {.emit: "`result` = {idx: addHeapObject(heap[`node`.idx].frequency)};".}
+  else:
+    result = JsAudioParam(JsValue(idx: 0))
+
+proc jsBiquadFilterQ*(node: JsBiquadFilterNode): JsAudioParam =
+  when defined(wasm32):
+    {.emit: "`result` = {idx: addHeapObject(heap[`node`.idx].Q)};".}
+  else:
+    result = JsAudioParam(JsValue(idx: 0))
+
+proc jsBiquadFilterGain*(node: JsBiquadFilterNode): JsAudioParam =
+  when defined(wasm32):
+    {.emit: "`result` = {idx: addHeapObject(heap[`node`.idx].gain)};".}
+  else:
+    result = JsAudioParam(JsValue(idx: 0))
+
+proc jsBiquadFilterGetFrequencyResponse*(node: JsBiquadFilterNode, freqArray: JsValue, magArray: JsValue, phaseArray: JsValue) =
+  when defined(wasm32):
+    {.emit: "heap[`node`.idx].getFrequencyResponse(heap[`freqArray`.idx], heap[`magArray`.idx], heap[`phaseArray`.idx]);".}
+  else:
+    discard
+
+# ─── AnalyserNode ───
+
+proc jsAnalyserFftSize*(node: JsAnalyserNode): int =
+  when defined(wasm32):
+    {.emit: "`result` = heap[`node`.idx].fftSize;".}
+  else:
+    result = 0
+
+proc `jsAnalyserFftSize=`*(node: JsAnalyserNode, size: int) =
+  when defined(wasm32):
+    {.emit: "heap[`node`.idx].fftSize = `size`;".}
+  else:
+    discard
+
+proc jsAnalyserFrequencyBinCount*(node: JsAnalyserNode): int =
+  when defined(wasm32):
+    {.emit: "`result` = heap[`node`.idx].frequencyBinCount;".}
+  else:
+    result = 0
+
+proc jsAnalyserGetFloatFrequencyData*(node: JsAnalyserNode, array: JsValue) =
+  when defined(wasm32):
+    {.emit: "heap[`node`.idx].getFloatFrequencyData(heap[`array`.idx]);".}
+  else:
+    discard
+
+proc jsAnalyserGetByteFrequencyData*(node: JsAnalyserNode, array: JsValue) =
+  when defined(wasm32):
+    {.emit: "heap[`node`.idx].getByteFrequencyData(heap[`array`.idx]);".}
+  else:
+    discard
+
+proc jsAnalyserGetFloatTimeDomainData*(node: JsAnalyserNode, array: JsValue) =
+  when defined(wasm32):
+    {.emit: "heap[`node`.idx].getFloatTimeDomainData(heap[`array`.idx]);".}
+  else:
+    discard
+
+proc jsAnalyserGetByteTimeDomainData*(node: JsAnalyserNode, array: JsValue) =
+  when defined(wasm32):
+    {.emit: "heap[`node`.idx].getByteTimeDomainData(heap[`array`.idx]);".}
+  else:
+    discard
+
+proc jsAnalyserMinDecibels*(node: JsAnalyserNode): float64 =
+  when defined(wasm32):
+    {.emit: "`result` = heap[`node`.idx].minDecibels;".}
+  else:
+    result = 0.0
+
+proc `jsAnalyserMinDecibels=`*(node: JsAnalyserNode, val: float64) =
+  when defined(wasm32):
+    {.emit: "heap[`node`.idx].minDecibels = `val`;".}
+  else:
+    discard
+
+proc jsAnalyserMaxDecibels*(node: JsAnalyserNode): float64 =
+  when defined(wasm32):
+    {.emit: "`result` = heap[`node`.idx].maxDecibels;".}
+  else:
+    result = 0.0
+
+proc `jsAnalyserMaxDecibels=`*(node: JsAnalyserNode, val: float64) =
+  when defined(wasm32):
+    {.emit: "heap[`node`.idx].maxDecibels = `val`;".}
+  else:
+    discard
+
+proc jsAnalyserSmoothingTimeConstant*(node: JsAnalyserNode): float64 =
+  when defined(wasm32):
+    {.emit: "`result` = heap[`node`.idx].smoothingTimeConstant;".}
+  else:
+    result = 0.0
+
+proc `jsAnalyserSmoothingTimeConstant=`*(node: JsAnalyserNode, val: float64) =
+  when defined(wasm32):
+    {.emit: "heap[`node`.idx].smoothingTimeConstant = `val`;".}
+  else:
+    discard
+
+# ─── DelayNode ───
+
+proc jsDelayNodeDelay*(node: JsDelayNode): JsAudioParam =
+  when defined(wasm32):
+    {.emit: "`result` = {idx: addHeapObject(heap[`node`.idx].delayTime)};".}
+  else:
+    result = JsAudioParam(JsValue(idx: 0))
+
+# ─── AudioBuffer ───
+
+proc jsAudioBufferDuration*(buf: JsAudioBuffer): float64 =
+  when defined(wasm32):
+    {.emit: "`result` = heap[`buf`.idx].duration;".}
+  else:
+    result = 0.0
+
+proc jsAudioBufferLength*(buf: JsAudioBuffer): int =
+  when defined(wasm32):
+    {.emit: "`result` = heap[`buf`.idx].length;".}
+  else:
+    result = 0
+
+proc jsAudioBufferSampleRate*(buf: JsAudioBuffer): float64 =
+  when defined(wasm32):
+    {.emit: "`result` = heap[`buf`.idx].sampleRate;".}
+  else:
+    result = 0.0
+
+proc jsAudioBufferNumberOfChannels*(buf: JsAudioBuffer): int =
+  when defined(wasm32):
+    {.emit: "`result` = heap[`buf`.idx].numberOfChannels;".}
+  else:
+    result = 0
+
+proc jsAudioBufferGetChannelData*(buf: JsAudioBuffer, channel: int): JsValue =
+  when defined(wasm32):
+    {.emit: "`result` = {idx: addHeapObject(heap[`buf`.idx].getChannelData(`channel`))};".}
+  else:
+    result = JsValue(idx: 0)
+
+# ─── AudioBufferSourceNode ───
+
+proc `jsAudioBufferSourceBuffer=`*(node: JsAudioBufferSourceNode, buf: JsAudioBuffer) =
+  when defined(wasm32):
+    {.emit: "heap[`node`.idx].buffer = heap[`buf`.idx];".}
+  else:
+    discard
+
+proc jsAudioBufferSourceLoop*(node: JsAudioBufferSourceNode): bool =
+  when defined(wasm32):
+    {.emit: "`result` = heap[`node`.idx].loop ? 1 : 0;".}
+  else:
+    result = false
+
+proc `jsAudioBufferSourceLoop=`*(node: JsAudioBufferSourceNode, val: bool) =
+  when defined(wasm32):
+    {.emit: "heap[`node`.idx].loop = `val`;".}
+  else:
+    discard
+
+proc jsAudioBufferSourceStart*(node: JsAudioBufferSourceNode, startTime: float64 = 0.0, offset: float64 = 0.0, duration: float64 = 0.0) =
+  when defined(wasm32):
+    {.emit: """
+    if (`duration` > 0) {
+      heap[`node`.idx].start(`startTime`, `offset`, `duration`);
+    } else {
+      heap[`node`.idx].start(`startTime`, `offset`);
+    }
+    """.}
+  else:
+    discard
+
+proc jsAudioBufferSourceStop*(node: JsAudioBufferSourceNode, stopTime: float64 = 0.0) =
+  when defined(wasm32):
+    {.emit: "heap[`node`.idx].stop(`stopTime`);".}
+  else:
+    discard
+
+# ─── AudioListener ───
+
+proc jsAudioListenerSetPosition*(listener: JsAudioListener, x, y, z: float64) =
+  when defined(wasm32):
+    {.emit: "heap[`listener`.idx].setPosition(`x`, `y`, `z`);".}
+  else:
+    discard
+
+proc jsAudioListenerSetOrientation*(listener: JsAudioListener, fx, fy, fz, ux, uy, uz: float64) =
+  when defined(wasm32):
+    {.emit: "heap[`listener`.idx].setOrientation(`fx`, `fy`, `fz`, `ux`, `uy`, `uz`);".}
+  else:
+    discard
