@@ -21,6 +21,9 @@ import nimbling
 
 proc greet(name: string): string {.wasmBindgen.} =
   result = "Hello, " & name & "!"
+
+# Must be called once per module after all wasmBindgen procs
+wasmBindgenFinalize()
 ```
 
 The `wasmBindgen` macro at compile time:
@@ -81,7 +84,7 @@ JS object -> addHeapObject(obj) -> idx: u32 -> Nim: JsValue(idx: u32)
 | `web-sys` bindings (112+ procs, 27+ APIs) | `web_sys.nim` | Done |
 | Test framework (browser/Node/Deno) | `test_runner.nim` | Done |
 | Emscripten / Memory64 support | `emscripten.nim` | Done |
-| Unit tests (333 tests, all passing) | `tests/all.nim` | Done |
+| Unit tests (372 tests, all passing) | `tests/all.nim` | Done |
 
 ### `webidlBind` — Compile-Time WebIDL Macro
 
@@ -106,6 +109,15 @@ webidlBind("""
 
 Generates `type Node = distinct JsValue`, attribute getters/setters, method calls — all with `{.emit.}` blocks following the same pattern as `web_sys.nim`.
 
+### Known Limitations
+
+| Area | Status | Notes |
+|------|--------|-------|
+| End-to-end pipeline | ⚠️ Partially tested | Compiles to C for `wasm32`; full `C → WASM → CLI → JS` needs wasi-sdk or emscripten |
+| `web_sys_generated.nim` | ⚠️ Compiles, not integrated | 1,449 types from 647 WebIDL files parse OK, but bindings are stubs without `{.wasmBindgen.}` |
+| `wasmBindgenFinalize()` | Required | Must be called once per module to embed the custom wasm section |
+| Emscripten CLI flags | ⚠️ Partial | Targets work, many emscripten flags are not yet wired to CLI |
+
 ## Quick Start
 
 ```bash
@@ -127,9 +139,9 @@ nimble buildCli
 
 | Command | Description |
 |---------|-------------|
-| `nimble test` | Run unit tests (333 tests) |
+| `nimble test` | Run unit tests (372 tests) |
 | `nimble buildCli` | Build CLI binary (release mode) |
-| `nimble wasm` | Build hello example for wasm |
+| `nimble wasm` | Build hello example for wasm (requires wasi-sdk) |
 
 ## Project Structure
 

@@ -126,14 +126,11 @@ proc buildShimProc(procName: string, args: seq[(string, string)],
     body.add(nnkReturnStmt.newTree(call))
 
   # ── assemble proc def ──
-  let pragmas = nnkPragmaExpr.newTree(
-    shimName,
-    nnkPragma.newTree(ident("exportc"), ident("cdecl"))
-  )
-
   result = nnkProcDef.newTree(
-    pragmas, newEmptyNode(), newEmptyNode(),
-    formalParams, newEmptyNode(), newEmptyNode(),
+    shimName, newEmptyNode(), newEmptyNode(),
+    formalParams,
+    nnkPragma.newTree(ident("exportc"), ident("cdecl")),
+    newEmptyNode(),
     body
   )
 
@@ -196,15 +193,11 @@ proc buildDescribeProc(procName: string, args: seq[(string, string)],
   else:
     body.add(newCall(descCall, newLit(retTyId)))
 
-  let pragmas = nnkPragmaExpr.newTree(
-    descFnName,
-    nnkPragma.newTree(ident("exportc"), ident("cdecl"))
-  )
-
   result = nnkProcDef.newTree(
-    pragmas, newEmptyNode(), newEmptyNode(),
+    descFnName, newEmptyNode(), newEmptyNode(),
     nnkFormalParams.newTree(newEmptyNode()),
-    newEmptyNode(), newEmptyNode(),
+    nnkPragma.newTree(ident("exportc"), ident("cdecl")),
+    newEmptyNode(),
     body
   )
 
@@ -474,13 +467,11 @@ proc buildStructNewShim(ns: NimStruct): NimNode =
     else:
       formalParams.add(newIdentDefs(ident(field.name), ident(nimTypeToWasmAbiType(field.tyOverride))))
 
-  let pragmas = nnkPragmaExpr.newTree(
-    shimName,
-    nnkPragma.newTree(ident("exportc"), ident("cdecl"))
-  )
   result = nnkProcDef.newTree(
-    pragmas, newEmptyNode(), newEmptyNode(),
-    formalParams, newEmptyNode(), newEmptyNode(),
+    shimName, newEmptyNode(), newEmptyNode(),
+    formalParams,
+    nnkPragma.newTree(ident("exportc"), ident("cdecl")),
+    newEmptyNode(),
     body
   )
 
@@ -497,13 +488,11 @@ proc buildStructFreeShim(ns: NimStruct): NimNode =
   body.add quote do:
     `freeFn`(ptr, sizeof(`structType`).uint32, 4)
 
-  let pragmas = nnkPragmaExpr.newTree(
-    shimName,
-    nnkPragma.newTree(ident("exportc"), ident("cdecl"))
-  )
   result = nnkProcDef.newTree(
-    pragmas, newEmptyNode(), newEmptyNode(),
-    formalParams, newEmptyNode(), newEmptyNode(),
+    shimName, newEmptyNode(), newEmptyNode(),
+    formalParams,
+    nnkPragma.newTree(ident("exportc"), ident("cdecl")),
+    newEmptyNode(),
     body
   )
 
@@ -547,13 +536,11 @@ proc buildStructGetterShim(ns: NimStruct, field: StructField): NimNode =
     let fieldAccess = newDotExpr(castNode, ident(field.name))
     body.add(nnkReturnStmt.newTree(fieldAccess))
 
-  let pragmas = nnkPragmaExpr.newTree(
-    shimName,
-    nnkPragma.newTree(ident("exportc"), ident("cdecl"))
-  )
   result = nnkProcDef.newTree(
-    pragmas, newEmptyNode(), newEmptyNode(),
-    formalParams, newEmptyNode(), newEmptyNode(),
+    shimName, newEmptyNode(), newEmptyNode(),
+    formalParams,
+    nnkPragma.newTree(ident("exportc"), ident("cdecl")),
+    newEmptyNode(),
     body
   )
 
@@ -592,13 +579,11 @@ proc buildStructSetterShim(ns: NimStruct, field: StructField): NimNode =
     let fieldAccess = newDotExpr(castNode, ident(field.name))
     body.add(newAssignment(fieldAccess, ident(field.name)))
 
-  let pragmas = nnkPragmaExpr.newTree(
-    shimName,
-    nnkPragma.newTree(ident("exportc"), ident("cdecl"))
-  )
   result = nnkProcDef.newTree(
-    pragmas, newEmptyNode(), newEmptyNode(),
-    formalParams, newEmptyNode(), newEmptyNode(),
+    shimName, newEmptyNode(), newEmptyNode(),
+    formalParams,
+    nnkPragma.newTree(ident("exportc"), ident("cdecl")),
+    newEmptyNode(),
     body
   )
 

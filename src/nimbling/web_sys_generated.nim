@@ -1,7 +1,6 @@
 ## Auto-generated WebIDL bindings for nimbling.
 import nimbling/runtime
 import nimbling/js_sys
-import nimbling/macroimpl
 import std/options
 
 type
@@ -3641,420 +3640,420 @@ type
   XSLTProcessor* = distinct JsValue
   nsISupports* = JsObject
 
-proc jsAbortControllerSignal*(self: AbortController): JsObject {.wasmBindgen.} =
+proc jsAbortControllerSignal*(self: AbortController): JsObject =
   discard
-proc jsAbort*(self: AbortController; reason: JsObject): void {.wasmBindgen.} =
-  discard
-
-proc jsAbortSignalAborted*(self: AbortSignal): bool {.wasmBindgen.} =
-  discard
-proc jsAbortSignalReason*(self: AbortSignal): JsObject {.wasmBindgen.} =
-  discard
-proc jsAbortSignalOnabort*(self: AbortSignal): JsObject {.wasmBindgen.} =
-  discard
-proc jsAbort*(self: typedesc[AbortSignal]; reason: JsObject): JsObject {.wasmBindgen.} =
-  discard
-proc jsTimeout*(self: typedesc[AbortSignal]; milliseconds: uint64): JsObject {.wasmBindgen.} =
-  discard
-proc jsAny*(self: typedesc[AbortSignal]; signals: JsObject): JsObject {.wasmBindgen.} =
-  discard
-proc jsThrowIfAborted*(self: AbortSignal): void {.wasmBindgen.} =
+proc jsAbort*(self: AbortController; reason: JsObject): void =
   discard
 
-proc jsAbstractRangeStartContainer*(self: AbstractRange): JsObject {.wasmBindgen.} =
+proc jsAbortSignalAborted*(self: AbortSignal): bool =
   discard
-proc jsAbstractRangeStartOffset*(self: AbstractRange): uint32 {.wasmBindgen.} =
+proc jsAbortSignalReason*(self: AbortSignal): JsObject =
   discard
-proc jsAbstractRangeEndContainer*(self: AbstractRange): JsObject {.wasmBindgen.} =
+proc jsAbortSignalOnabort*(self: AbortSignal): JsObject =
   discard
-proc jsAbstractRangeEndOffset*(self: AbstractRange): uint32 {.wasmBindgen.} =
+proc jsAbort*(self: typedesc[AbortSignal]; reason: JsObject): JsObject =
   discard
-proc jsAbstractRangeCollapsed*(self: AbstractRange): bool {.wasmBindgen.} =
+proc jsTimeout*(self: typedesc[AbortSignal]; milliseconds: uint64): JsObject =
   discard
-
-proc jsAnalyserNodeFftSize*(self: AnalyserNode): uint32 {.wasmBindgen.} =
+proc jsAny*(self: typedesc[AbortSignal]; signals: JsObject): JsObject =
   discard
-proc jsAnalyserNodeFrequencyBinCount*(self: AnalyserNode): uint32 {.wasmBindgen.} =
-  discard
-proc jsAnalyserNodeMinDecibels*(self: AnalyserNode): float64 {.wasmBindgen.} =
-  discard
-proc jsAnalyserNodeMaxDecibels*(self: AnalyserNode): float64 {.wasmBindgen.} =
-  discard
-proc jsAnalyserNodeSmoothingTimeConstant*(self: AnalyserNode): float64 {.wasmBindgen.} =
-  discard
-proc jsGetFloatFrequencyData*(self: AnalyserNode; array: seq[float32]): void {.wasmBindgen.} =
-  discard
-proc jsGetByteFrequencyData*(self: AnalyserNode; array: seq[uint8]): void {.wasmBindgen.} =
-  discard
-proc jsGetFloatTimeDomainData*(self: AnalyserNode; array: seq[float32]): void {.wasmBindgen.} =
-  discard
-proc jsGetByteTimeDomainData*(self: AnalyserNode; array: seq[uint8]): void {.wasmBindgen.} =
+proc jsThrowIfAborted*(self: AbortSignal): void =
   discard
 
-proc jsAnimationId*(self: Animation): cstring {.wasmBindgen.} =
+proc jsAbstractRangeStartContainer*(self: AbstractRange): JsObject =
   discard
-proc jsAnimationPlaybackRate*(self: Animation): float64 {.wasmBindgen.} =
+proc jsAbstractRangeStartOffset*(self: AbstractRange): uint32 =
   discard
-proc jsAnimationPlayState*(self: Animation): JsObject {.wasmBindgen.} =
+proc jsAbstractRangeEndContainer*(self: AbstractRange): JsObject =
   discard
-proc jsAnimationPending*(self: Animation): bool {.wasmBindgen.} =
+proc jsAbstractRangeEndOffset*(self: AbstractRange): uint32 =
   discard
-proc jsAnimationReady*(self: Animation): JsObject {.wasmBindgen.} =
-  discard
-proc jsAnimationFinished*(self: Animation): JsObject {.wasmBindgen.} =
-  discard
-proc jsAnimationOnfinish*(self: Animation): JsObject {.wasmBindgen.} =
-  discard
-proc jsAnimationOncancel*(self: Animation): JsObject {.wasmBindgen.} =
-  discard
-proc jsCancel*(self: Animation): void {.wasmBindgen.} =
-  discard
-proc jsFinish*(self: Animation): void {.wasmBindgen.} =
-  discard
-proc jsPlay*(self: Animation): void {.wasmBindgen.} =
-  discard
-proc jsPause*(self: Animation): void {.wasmBindgen.} =
-  discard
-proc jsUpdatePlaybackRate*(self: Animation; playbackRate: float64): void {.wasmBindgen.} =
-  discard
-proc jsReverse*(self: Animation): void {.wasmBindgen.} =
+proc jsAbstractRangeCollapsed*(self: AbstractRange): bool =
   discard
 
-proc jsGetTiming*(self: AnimationEffect): JsObject {.wasmBindgen.} =
+proc jsAnalyserNodeFftSize*(self: AnalyserNode): uint32 =
   discard
-proc jsGetComputedTiming*(self: AnimationEffect): JsObject {.wasmBindgen.} =
+proc jsAnalyserNodeFrequencyBinCount*(self: AnalyserNode): uint32 =
   discard
-proc jsUpdateTiming*(self: AnimationEffect; timing: JsObject): void {.wasmBindgen.} =
+proc jsAnalyserNodeMinDecibels*(self: AnalyserNode): float64 =
   discard
-
-proc jsAnimationEventAnimationName*(self: AnimationEvent): cstring {.wasmBindgen.} =
+proc jsAnalyserNodeMaxDecibels*(self: AnalyserNode): float64 =
   discard
-proc jsAnimationEventElapsedTime*(self: AnimationEvent): float32 {.wasmBindgen.} =
+proc jsAnalyserNodeSmoothingTimeConstant*(self: AnalyserNode): float64 =
   discard
-proc jsAnimationEventPseudoElement*(self: AnimationEvent): cstring {.wasmBindgen.} =
+proc jsGetFloatFrequencyData*(self: AnalyserNode; array: seq[float32]): void =
   discard
-
-
-
-proc jsAttrLocalName*(self: Attr): cstring {.wasmBindgen.} =
+proc jsGetByteFrequencyData*(self: AnalyserNode; array: seq[uint8]): void =
   discard
-proc jsAttrValue*(self: Attr): cstring {.wasmBindgen.} =
+proc jsGetFloatTimeDomainData*(self: AnalyserNode; array: seq[float32]): void =
   discard
-proc jsAttrName*(self: Attr): cstring {.wasmBindgen.} =
-  discard
-proc jsAttrSpecified*(self: Attr): bool {.wasmBindgen.} =
+proc jsGetByteTimeDomainData*(self: AnalyserNode; array: seq[uint8]): void =
   discard
 
-proc jsAudioBufferSampleRate*(self: AudioBuffer): float32 {.wasmBindgen.} =
+proc jsAnimationId*(self: Animation): cstring =
   discard
-proc jsAudioBufferLength*(self: AudioBuffer): uint32 {.wasmBindgen.} =
+proc jsAnimationPlaybackRate*(self: Animation): float64 =
   discard
-proc jsAudioBufferDuration*(self: AudioBuffer): float64 {.wasmBindgen.} =
+proc jsAnimationPlayState*(self: Animation): JsObject =
   discard
-proc jsAudioBufferNumberOfChannels*(self: AudioBuffer): uint32 {.wasmBindgen.} =
+proc jsAnimationPending*(self: Animation): bool =
   discard
-proc jsGetChannelData*(self: AudioBuffer; channel: uint32): seq[float32] {.wasmBindgen.} =
+proc jsAnimationReady*(self: Animation): JsObject =
   discard
-proc jsCopyFromChannel*(self: AudioBuffer; destination: seq[float32]; channelNumber: int32; startInChannel: uint32): void {.wasmBindgen.} =
+proc jsAnimationFinished*(self: Animation): JsObject =
   discard
-proc jsCopyToChannel*(self: AudioBuffer; source: seq[float32]; channelNumber: int32; startInChannel: uint32): void {.wasmBindgen.} =
+proc jsAnimationOnfinish*(self: Animation): JsObject =
   discard
-
-proc jsAudioBufferSourceNodePlaybackRate*(self: AudioBufferSourceNode): JsObject {.wasmBindgen.} =
+proc jsAnimationOncancel*(self: Animation): JsObject =
   discard
-proc jsAudioBufferSourceNodeDetune*(self: AudioBufferSourceNode): JsObject {.wasmBindgen.} =
+proc jsCancel*(self: Animation): void =
   discard
-proc jsAudioBufferSourceNodeLoop*(self: AudioBufferSourceNode): bool {.wasmBindgen.} =
+proc jsFinish*(self: Animation): void =
   discard
-proc jsAudioBufferSourceNodeLoopStart*(self: AudioBufferSourceNode): float64 {.wasmBindgen.} =
+proc jsPlay*(self: Animation): void =
   discard
-proc jsAudioBufferSourceNodeLoopEnd*(self: AudioBufferSourceNode): float64 {.wasmBindgen.} =
+proc jsPause*(self: Animation): void =
   discard
-proc jsAudioBufferSourceNodeOnended*(self: AudioBufferSourceNode): JsObject {.wasmBindgen.} =
+proc jsUpdatePlaybackRate*(self: Animation; playbackRate: float64): void =
   discard
-proc jsStart*(self: AudioBufferSourceNode; whenVal: float64; offset: float64; duration: float64): void {.wasmBindgen.} =
-  discard
-proc jsStop*(self: AudioBufferSourceNode; whenVal: float64): void {.wasmBindgen.} =
+proc jsReverse*(self: Animation): void =
   discard
 
-proc jsSuspend*(self: AudioContext): JsObject {.wasmBindgen.} =
+proc jsGetTiming*(self: AnimationEffect): JsObject =
   discard
-proc jsClose*(self: AudioContext): JsObject {.wasmBindgen.} =
+proc jsGetComputedTiming*(self: AnimationEffect): JsObject =
   discard
-proc jsCreateMediaElementSource*(self: AudioContext; mediaElement: JsObject): JsObject {.wasmBindgen.} =
-  discard
-proc jsCreateMediaStreamSource*(self: AudioContext; mediaStream: JsObject): JsObject {.wasmBindgen.} =
-  discard
-proc jsCreateMediaStreamDestination*(self: AudioContext): JsObject {.wasmBindgen.} =
+proc jsUpdateTiming*(self: AnimationEffect; timing: JsObject): void =
   discard
 
-proc jsAudioDestinationNodeMaxChannelCount*(self: AudioDestinationNode): uint32 {.wasmBindgen.} =
+proc jsAnimationEventAnimationName*(self: AnimationEvent): cstring =
   discard
-
-proc jsAudioListenerDopplerFactor*(self: AudioListener): float64 {.wasmBindgen.} =
+proc jsAnimationEventElapsedTime*(self: AnimationEvent): float32 =
   discard
-proc jsAudioListenerSpeedOfSound*(self: AudioListener): float64 {.wasmBindgen.} =
-  discard
-proc jsSetPosition*(self: AudioListener; x: float64; y: float64; z: float64): void {.wasmBindgen.} =
-  discard
-proc jsSetOrientation*(self: AudioListener; x: float64; y: float64; z: float64; xUp: float64; yUp: float64; zUp: float64): void {.wasmBindgen.} =
-  discard
-proc jsSetVelocity*(self: AudioListener; x: float64; y: float64; z: float64): void {.wasmBindgen.} =
-  discard
-
-proc jsAudioNodeContext*(self: AudioNode): JsObject {.wasmBindgen.} =
-  discard
-proc jsAudioNodeNumberOfInputs*(self: AudioNode): uint32 {.wasmBindgen.} =
-  discard
-proc jsAudioNodeNumberOfOutputs*(self: AudioNode): uint32 {.wasmBindgen.} =
-  discard
-proc jsAudioNodeChannelCount*(self: AudioNode): uint32 {.wasmBindgen.} =
-  discard
-proc jsAudioNodeChannelCountMode*(self: AudioNode): JsObject {.wasmBindgen.} =
-  discard
-proc jsAudioNodeChannelInterpretation*(self: AudioNode): JsObject {.wasmBindgen.} =
-  discard
-proc jsConnect*(self: AudioNode; destination: JsObject; output: uint32; input: uint32): JsObject {.wasmBindgen.} =
-  discard
-proc jsConnect*(self: AudioNode; destination: JsObject; output: uint32): void {.wasmBindgen.} =
-  discard
-proc jsDisconnect*(self: AudioNode): void {.wasmBindgen.} =
-  discard
-proc jsDisconnect*(self: AudioNode; output: uint32): void {.wasmBindgen.} =
-  discard
-proc jsDisconnect*(self: AudioNode; destination: JsObject): void {.wasmBindgen.} =
-  discard
-proc jsDisconnect*(self: AudioNode; destination: JsObject; output: uint32): void {.wasmBindgen.} =
-  discard
-proc jsDisconnect*(self: AudioNode; destination: JsObject; output: uint32; input: uint32): void {.wasmBindgen.} =
-  discard
-
-proc jsAudioParamValue*(self: AudioParam): float32 {.wasmBindgen.} =
-  discard
-proc jsAudioParamDefaultValue*(self: AudioParam): float32 {.wasmBindgen.} =
-  discard
-proc jsAudioParamMinValue*(self: AudioParam): float32 {.wasmBindgen.} =
-  discard
-proc jsAudioParamMaxValue*(self: AudioParam): float32 {.wasmBindgen.} =
-  discard
-proc jsSetValueAtTime*(self: AudioParam; value: float32; startTime: float64): JsObject {.wasmBindgen.} =
-  discard
-proc jsLinearRampToValueAtTime*(self: AudioParam; value: float32; endTime: float64): JsObject {.wasmBindgen.} =
-  discard
-proc jsExponentialRampToValueAtTime*(self: AudioParam; value: float32; endTime: float64): JsObject {.wasmBindgen.} =
-  discard
-proc jsSetTargetAtTime*(self: AudioParam; target: float32; startTime: float64; timeConstant: float64): JsObject {.wasmBindgen.} =
-  discard
-proc jsSetValueCurveAtTime*(self: AudioParam; values: seq[float32]; startTime: float64; duration: float64): JsObject {.wasmBindgen.} =
-  discard
-proc jsCancelScheduledValues*(self: AudioParam; startTime: float64): JsObject {.wasmBindgen.} =
-  discard
-
-
-proc jsAudioProcessingEventPlaybackTime*(self: AudioProcessingEvent): float64 {.wasmBindgen.} =
-  discard
-proc jsAudioProcessingEventInputBuffer*(self: AudioProcessingEvent): JsObject {.wasmBindgen.} =
-  discard
-proc jsAudioProcessingEventOutputBuffer*(self: AudioProcessingEvent): JsObject {.wasmBindgen.} =
+proc jsAnimationEventPseudoElement*(self: AnimationEvent): cstring =
   discard
 
 
 
-proc jsAudioTrackId*(self: AudioTrack): cstring {.wasmBindgen.} =
+proc jsAttrLocalName*(self: Attr): cstring =
   discard
-proc jsAudioTrackKind*(self: AudioTrack): cstring {.wasmBindgen.} =
+proc jsAttrValue*(self: Attr): cstring =
   discard
-proc jsAudioTrackLabel*(self: AudioTrack): cstring {.wasmBindgen.} =
+proc jsAttrName*(self: Attr): cstring =
   discard
-proc jsAudioTrackLanguage*(self: AudioTrack): cstring {.wasmBindgen.} =
-  discard
-proc jsAudioTrackEnabled*(self: AudioTrack): bool {.wasmBindgen.} =
+proc jsAttrSpecified*(self: Attr): bool =
   discard
 
-proc jsAudioTrackListLength*(self: AudioTrackList): uint32 {.wasmBindgen.} =
+proc jsAudioBufferSampleRate*(self: AudioBuffer): float32 =
   discard
-proc jsAudioTrackListOnchange*(self: AudioTrackList): JsObject {.wasmBindgen.} =
+proc jsAudioBufferLength*(self: AudioBuffer): uint32 =
   discard
-proc jsAudioTrackListOnaddtrack*(self: AudioTrackList): JsObject {.wasmBindgen.} =
+proc jsAudioBufferDuration*(self: AudioBuffer): float64 =
   discard
-proc jsAudioTrackListOnremovetrack*(self: AudioTrackList): JsObject {.wasmBindgen.} =
+proc jsAudioBufferNumberOfChannels*(self: AudioBuffer): uint32 =
   discard
-proc jsGetTrackById*(self: AudioTrackList; id: cstring): Option[JsObject] {.wasmBindgen.} =
+proc jsGetChannelData*(self: AudioBuffer; channel: uint32): seq[float32] =
+  discard
+proc jsCopyFromChannel*(self: AudioBuffer; destination: seq[float32]; channelNumber: int32; startInChannel: uint32): void =
+  discard
+proc jsCopyToChannel*(self: AudioBuffer; source: seq[float32]; channelNumber: int32; startInChannel: uint32): void =
+  discard
+
+proc jsAudioBufferSourceNodePlaybackRate*(self: AudioBufferSourceNode): JsObject =
+  discard
+proc jsAudioBufferSourceNodeDetune*(self: AudioBufferSourceNode): JsObject =
+  discard
+proc jsAudioBufferSourceNodeLoop*(self: AudioBufferSourceNode): bool =
+  discard
+proc jsAudioBufferSourceNodeLoopStart*(self: AudioBufferSourceNode): float64 =
+  discard
+proc jsAudioBufferSourceNodeLoopEnd*(self: AudioBufferSourceNode): float64 =
+  discard
+proc jsAudioBufferSourceNodeOnended*(self: AudioBufferSourceNode): JsObject =
+  discard
+proc jsStart*(self: AudioBufferSourceNode; whenVal: float64; offset: float64; duration: float64): void =
+  discard
+proc jsStop*(self: AudioBufferSourceNode; whenVal: float64): void =
+  discard
+
+proc jsSuspend*(self: AudioContext): JsObject =
+  discard
+proc jsClose*(self: AudioContext): JsObject =
+  discard
+proc jsCreateMediaElementSource*(self: AudioContext; mediaElement: JsObject): JsObject =
+  discard
+proc jsCreateMediaStreamSource*(self: AudioContext; mediaStream: JsObject): JsObject =
+  discard
+proc jsCreateMediaStreamDestination*(self: AudioContext): JsObject =
+  discard
+
+proc jsAudioDestinationNodeMaxChannelCount*(self: AudioDestinationNode): uint32 =
+  discard
+
+proc jsAudioListenerDopplerFactor*(self: AudioListener): float64 =
+  discard
+proc jsAudioListenerSpeedOfSound*(self: AudioListener): float64 =
+  discard
+proc jsSetPosition*(self: AudioListener; x: float64; y: float64; z: float64): void =
+  discard
+proc jsSetOrientation*(self: AudioListener; x: float64; y: float64; z: float64; xUp: float64; yUp: float64; zUp: float64): void =
+  discard
+proc jsSetVelocity*(self: AudioListener; x: float64; y: float64; z: float64): void =
+  discard
+
+proc jsAudioNodeContext*(self: AudioNode): JsObject =
+  discard
+proc jsAudioNodeNumberOfInputs*(self: AudioNode): uint32 =
+  discard
+proc jsAudioNodeNumberOfOutputs*(self: AudioNode): uint32 =
+  discard
+proc jsAudioNodeChannelCount*(self: AudioNode): uint32 =
+  discard
+proc jsAudioNodeChannelCountMode*(self: AudioNode): JsObject =
+  discard
+proc jsAudioNodeChannelInterpretation*(self: AudioNode): JsObject =
+  discard
+proc jsConnect*(self: AudioNode; destination: JsObject; output: uint32; input: uint32): JsObject =
+  discard
+proc jsConnect*(self: AudioNode; destination: JsObject; output: uint32): void =
+  discard
+proc jsDisconnect*(self: AudioNode): void =
+  discard
+proc jsDisconnect*(self: AudioNode; output: uint32): void =
+  discard
+proc jsDisconnect*(self: AudioNode; destination: JsObject): void =
+  discard
+proc jsDisconnect*(self: AudioNode; destination: JsObject; output: uint32): void =
+  discard
+proc jsDisconnect*(self: AudioNode; destination: JsObject; output: uint32; input: uint32): void =
+  discard
+
+proc jsAudioParamValue*(self: AudioParam): float32 =
+  discard
+proc jsAudioParamDefaultValue*(self: AudioParam): float32 =
+  discard
+proc jsAudioParamMinValue*(self: AudioParam): float32 =
+  discard
+proc jsAudioParamMaxValue*(self: AudioParam): float32 =
+  discard
+proc jsSetValueAtTime*(self: AudioParam; value: float32; startTime: float64): JsObject =
+  discard
+proc jsLinearRampToValueAtTime*(self: AudioParam; value: float32; endTime: float64): JsObject =
+  discard
+proc jsExponentialRampToValueAtTime*(self: AudioParam; value: float32; endTime: float64): JsObject =
+  discard
+proc jsSetTargetAtTime*(self: AudioParam; target: float32; startTime: float64; timeConstant: float64): JsObject =
+  discard
+proc jsSetValueCurveAtTime*(self: AudioParam; values: seq[float32]; startTime: float64; duration: float64): JsObject =
+  discard
+proc jsCancelScheduledValues*(self: AudioParam; startTime: float64): JsObject =
   discard
 
 
-proc jsAudioWorkletGlobalScopeCurrentFrame*(self: AudioWorkletGlobalScope): uint64 {.wasmBindgen.} =
+proc jsAudioProcessingEventPlaybackTime*(self: AudioProcessingEvent): float64 =
   discard
-proc jsAudioWorkletGlobalScopeCurrentTime*(self: AudioWorkletGlobalScope): float64 {.wasmBindgen.} =
+proc jsAudioProcessingEventInputBuffer*(self: AudioProcessingEvent): JsObject =
   discard
-proc jsAudioWorkletGlobalScopeSampleRate*(self: AudioWorkletGlobalScope): float32 {.wasmBindgen.} =
-  discard
-proc jsRegisterProcessor*(self: AudioWorkletGlobalScope; name: cstring; processorCtor: JsObject): void {.wasmBindgen.} =
-  discard
-
-proc jsAudioWorkletNodeParameters*(self: AudioWorkletNode): JsObject {.wasmBindgen.} =
-  discard
-proc jsAudioWorkletNodePort*(self: AudioWorkletNode): JsObject {.wasmBindgen.} =
-  discard
-proc jsAudioWorkletNodeOnprocessorerror*(self: AudioWorkletNode): JsObject {.wasmBindgen.} =
-  discard
-
-proc jsAudioWorkletProcessorPort*(self: AudioWorkletProcessor): JsObject {.wasmBindgen.} =
-  discard
-
-proc jsBarPropVisible*(self: BarProp): bool {.wasmBindgen.} =
+proc jsAudioProcessingEventOutputBuffer*(self: AudioProcessingEvent): JsObject =
   discard
 
 
-proc jsBatteryManagerCharging*(self: BatteryManager): bool {.wasmBindgen.} =
+
+proc jsAudioTrackId*(self: AudioTrack): cstring =
   discard
-proc jsBatteryManagerChargingTime*(self: BatteryManager): float64 {.wasmBindgen.} =
+proc jsAudioTrackKind*(self: AudioTrack): cstring =
   discard
-proc jsBatteryManagerDischargingTime*(self: BatteryManager): float64 {.wasmBindgen.} =
+proc jsAudioTrackLabel*(self: AudioTrack): cstring =
   discard
-proc jsBatteryManagerLevel*(self: BatteryManager): float64 {.wasmBindgen.} =
+proc jsAudioTrackLanguage*(self: AudioTrack): cstring =
   discard
-proc jsBatteryManagerOnchargingchange*(self: BatteryManager): JsObject {.wasmBindgen.} =
-  discard
-proc jsBatteryManagerOnchargingtimechange*(self: BatteryManager): JsObject {.wasmBindgen.} =
-  discard
-proc jsBatteryManagerOndischargingtimechange*(self: BatteryManager): JsObject {.wasmBindgen.} =
-  discard
-proc jsBatteryManagerOnlevelchange*(self: BatteryManager): JsObject {.wasmBindgen.} =
+proc jsAudioTrackEnabled*(self: AudioTrack): bool =
   discard
 
-proc jsBeforeUnloadEventReturnValue*(self: BeforeUnloadEvent): cstring {.wasmBindgen.} =
+proc jsAudioTrackListLength*(self: AudioTrackList): uint32 =
   discard
-
-proc jsBiquadFilterNodeTypeVal*(self: BiquadFilterNode): JsObject {.wasmBindgen.} =
+proc jsAudioTrackListOnchange*(self: AudioTrackList): JsObject =
   discard
-proc jsBiquadFilterNodeFrequency*(self: BiquadFilterNode): JsObject {.wasmBindgen.} =
+proc jsAudioTrackListOnaddtrack*(self: AudioTrackList): JsObject =
   discard
-proc jsBiquadFilterNodeDetune*(self: BiquadFilterNode): JsObject {.wasmBindgen.} =
+proc jsAudioTrackListOnremovetrack*(self: AudioTrackList): JsObject =
   discard
-proc jsBiquadFilterNodeQ*(self: BiquadFilterNode): JsObject {.wasmBindgen.} =
-  discard
-proc jsBiquadFilterNodeGain*(self: BiquadFilterNode): JsObject {.wasmBindgen.} =
-  discard
-proc jsGetFrequencyResponse*(self: BiquadFilterNode; frequencyHz: seq[float32]; magResponse: seq[float32]; phaseResponse: seq[float32]): void {.wasmBindgen.} =
-  discard
-
-proc jsBlobSize*(self: Blob): uint64 {.wasmBindgen.} =
-  discard
-proc jsBlobTypeVal*(self: Blob): cstring {.wasmBindgen.} =
-  discard
-proc jsSlice*(self: Blob; start: int64; endVal: int64; contentType: cstring): JsObject {.wasmBindgen.} =
-  discard
-proc jsStream*(self: Blob): JsObject {.wasmBindgen.} =
-  discard
-proc jsText*(self: Blob): JsObject {.wasmBindgen.} =
-  discard
-proc jsArrayBuffer*(self: Blob): JsObject {.wasmBindgen.} =
-  discard
-proc jsBytes*(self: Blob): JsObject {.wasmBindgen.} =
+proc jsGetTrackById*(self: AudioTrackList; id: cstring): Option[JsObject] =
   discard
 
 
-proc jsBroadcastChannelName*(self: BroadcastChannel): cstring {.wasmBindgen.} =
+proc jsAudioWorkletGlobalScopeCurrentFrame*(self: AudioWorkletGlobalScope): uint64 =
   discard
-proc jsBroadcastChannelOnmessage*(self: BroadcastChannel): JsObject {.wasmBindgen.} =
+proc jsAudioWorkletGlobalScopeCurrentTime*(self: AudioWorkletGlobalScope): float64 =
   discard
-proc jsBroadcastChannelOnmessageerror*(self: BroadcastChannel): JsObject {.wasmBindgen.} =
+proc jsAudioWorkletGlobalScopeSampleRate*(self: AudioWorkletGlobalScope): float32 =
   discard
-proc jsPostMessage*(self: BroadcastChannel; message: JsObject): void {.wasmBindgen.} =
-  discard
-proc jsClose*(self: BroadcastChannel): void {.wasmBindgen.} =
+proc jsRegisterProcessor*(self: AudioWorkletGlobalScope; name: cstring; processorCtor: JsObject): void =
   discard
 
-proc jsWriteContent*(self: BrowserFeedWriter): void {.wasmBindgen.} =
+proc jsAudioWorkletNodeParameters*(self: AudioWorkletNode): JsObject =
   discard
-proc jsClose*(self: BrowserFeedWriter): void {.wasmBindgen.} =
+proc jsAudioWorkletNodePort*(self: AudioWorkletNode): JsObject =
+  discard
+proc jsAudioWorkletNodeOnprocessorerror*(self: AudioWorkletNode): JsObject =
+  discard
+
+proc jsAudioWorkletProcessorPort*(self: AudioWorkletProcessor): JsObject =
+  discard
+
+proc jsBarPropVisible*(self: BarProp): bool =
   discard
 
 
-proc CSSVal*() {.wasmBindgen.} =
+proc jsBatteryManagerCharging*(self: BatteryManager): bool =
   discard
-proc supports*(property: cstring; value: cstring): bool {.wasmBindgen.} =
+proc jsBatteryManagerChargingTime*(self: BatteryManager): float64 =
   discard
-
-proc escape*(ident: cstring): cstring {.wasmBindgen.} =
+proc jsBatteryManagerDischargingTime*(self: BatteryManager): float64 =
   discard
-
-proc jsCSSAnimationAnimationName*(self: CSSAnimation): cstring {.wasmBindgen.} =
+proc jsBatteryManagerLevel*(self: BatteryManager): float64 =
   discard
-
-proc jsCSSConditionRuleConditionText*(self: CSSConditionRule): cstring {.wasmBindgen.} =
+proc jsBatteryManagerOnchargingchange*(self: BatteryManager): JsObject =
   discard
-
-proc jsCSSCounterStyleRuleName*(self: CSSCounterStyleRule): cstring {.wasmBindgen.} =
+proc jsBatteryManagerOnchargingtimechange*(self: BatteryManager): JsObject =
   discard
-proc jsCSSCounterStyleRuleSystem*(self: CSSCounterStyleRule): cstring {.wasmBindgen.} =
+proc jsBatteryManagerOndischargingtimechange*(self: BatteryManager): JsObject =
   discard
-proc jsCSSCounterStyleRuleSymbols*(self: CSSCounterStyleRule): cstring {.wasmBindgen.} =
-  discard
-proc jsCSSCounterStyleRuleAdditiveSymbols*(self: CSSCounterStyleRule): cstring {.wasmBindgen.} =
-  discard
-proc jsCSSCounterStyleRuleNegative*(self: CSSCounterStyleRule): cstring {.wasmBindgen.} =
-  discard
-proc jsCSSCounterStyleRulePrefix*(self: CSSCounterStyleRule): cstring {.wasmBindgen.} =
-  discard
-proc jsCSSCounterStyleRuleSuffix*(self: CSSCounterStyleRule): cstring {.wasmBindgen.} =
-  discard
-proc jsCSSCounterStyleRuleRange*(self: CSSCounterStyleRule): cstring {.wasmBindgen.} =
-  discard
-proc jsCSSCounterStyleRulePad*(self: CSSCounterStyleRule): cstring {.wasmBindgen.} =
-  discard
-proc jsCSSCounterStyleRuleSpeakAs*(self: CSSCounterStyleRule): cstring {.wasmBindgen.} =
-  discard
-proc jsCSSCounterStyleRuleFallback*(self: CSSCounterStyleRule): cstring {.wasmBindgen.} =
+proc jsBatteryManagerOnlevelchange*(self: BatteryManager): JsObject =
   discard
 
-proc jsCSSFontFaceRuleStyle*(self: CSSFontFaceRule): JsObject {.wasmBindgen.} =
+proc jsBeforeUnloadEventReturnValue*(self: BeforeUnloadEvent): cstring =
   discard
 
-proc jsCSSFontFeatureValuesRuleFontFamily*(self: CSSFontFeatureValuesRule): cstring {.wasmBindgen.} =
+proc jsBiquadFilterNodeTypeVal*(self: BiquadFilterNode): JsObject =
+  discard
+proc jsBiquadFilterNodeFrequency*(self: BiquadFilterNode): JsObject =
+  discard
+proc jsBiquadFilterNodeDetune*(self: BiquadFilterNode): JsObject =
+  discard
+proc jsBiquadFilterNodeQ*(self: BiquadFilterNode): JsObject =
+  discard
+proc jsBiquadFilterNodeGain*(self: BiquadFilterNode): JsObject =
+  discard
+proc jsGetFrequencyResponse*(self: BiquadFilterNode; frequencyHz: seq[float32]; magResponse: seq[float32]; phaseResponse: seq[float32]): void =
   discard
 
-proc jsCSSGroupingRuleCssRules*(self: CSSGroupingRule): JsObject {.wasmBindgen.} =
+proc jsBlobSize*(self: Blob): uint64 =
   discard
-proc jsInsertRule*(self: CSSGroupingRule; rule: cstring; index: uint32): uint32 {.wasmBindgen.} =
+proc jsBlobTypeVal*(self: Blob): cstring =
   discard
-proc jsDeleteRule*(self: CSSGroupingRule; index: uint32): void {.wasmBindgen.} =
+proc jsSlice*(self: Blob; start: int64; endVal: int64; contentType: cstring): JsObject =
   discard
-
-proc jsCSSImportRuleHref*(self: CSSImportRule): cstring {.wasmBindgen.} =
+proc jsStream*(self: Blob): JsObject =
   discard
-
-proc jsCSSKeyframeRuleKeyText*(self: CSSKeyframeRule): cstring {.wasmBindgen.} =
+proc jsText*(self: Blob): JsObject =
   discard
-proc jsCSSKeyframeRuleStyle*(self: CSSKeyframeRule): JsObject {.wasmBindgen.} =
+proc jsArrayBuffer*(self: Blob): JsObject =
   discard
-
-proc jsCSSKeyframesRuleName*(self: CSSKeyframesRule): cstring {.wasmBindgen.} =
-  discard
-proc jsCSSKeyframesRuleCssRules*(self: CSSKeyframesRule): JsObject {.wasmBindgen.} =
-  discard
-proc jsAppendRule*(self: CSSKeyframesRule; rule: cstring): void {.wasmBindgen.} =
-  discard
-proc jsDeleteRule*(self: CSSKeyframesRule; select: cstring): void {.wasmBindgen.} =
-  discard
-proc jsFindRule*(self: CSSKeyframesRule; select: cstring): Option[JsObject] {.wasmBindgen.} =
+proc jsBytes*(self: Blob): JsObject =
   discard
 
-proc jsCSSMediaRuleMedia*(self: CSSMediaRule): JsObject {.wasmBindgen.} =
+
+proc jsBroadcastChannelName*(self: BroadcastChannel): cstring =
+  discard
+proc jsBroadcastChannelOnmessage*(self: BroadcastChannel): JsObject =
+  discard
+proc jsBroadcastChannelOnmessageerror*(self: BroadcastChannel): JsObject =
+  discard
+proc jsPostMessage*(self: BroadcastChannel; message: JsObject): void =
+  discard
+proc jsClose*(self: BroadcastChannel): void =
   discard
 
-proc jsCSSNamespaceRuleNamespaceURI*(self: CSSNamespaceRule): cstring {.wasmBindgen.} =
+proc jsWriteContent*(self: BrowserFeedWriter): void =
   discard
-proc jsCSSNamespaceRulePrefix*(self: CSSNamespaceRule): cstring {.wasmBindgen.} =
-  discard
-
-proc jsCSSPageRuleStyle*(self: CSSPageRule): JsObject {.wasmBindgen.} =
+proc jsClose*(self: BrowserFeedWriter): void =
   discard
 
-proc jsCSSPseudoElementTypeVal*(self: CSSPseudoElement): cstring {.wasmBindgen.} =
+
+proc CSSVal*() =
   discard
-proc jsCSSPseudoElementParentElement*(self: CSSPseudoElement): JsObject {.wasmBindgen.} =
+proc supports*(property: cstring; value: cstring): bool =
+  discard
+
+proc escape*(ident: cstring): cstring =
+  discard
+
+proc jsCSSAnimationAnimationName*(self: CSSAnimation): cstring =
+  discard
+
+proc jsCSSConditionRuleConditionText*(self: CSSConditionRule): cstring =
+  discard
+
+proc jsCSSCounterStyleRuleName*(self: CSSCounterStyleRule): cstring =
+  discard
+proc jsCSSCounterStyleRuleSystem*(self: CSSCounterStyleRule): cstring =
+  discard
+proc jsCSSCounterStyleRuleSymbols*(self: CSSCounterStyleRule): cstring =
+  discard
+proc jsCSSCounterStyleRuleAdditiveSymbols*(self: CSSCounterStyleRule): cstring =
+  discard
+proc jsCSSCounterStyleRuleNegative*(self: CSSCounterStyleRule): cstring =
+  discard
+proc jsCSSCounterStyleRulePrefix*(self: CSSCounterStyleRule): cstring =
+  discard
+proc jsCSSCounterStyleRuleSuffix*(self: CSSCounterStyleRule): cstring =
+  discard
+proc jsCSSCounterStyleRuleRange*(self: CSSCounterStyleRule): cstring =
+  discard
+proc jsCSSCounterStyleRulePad*(self: CSSCounterStyleRule): cstring =
+  discard
+proc jsCSSCounterStyleRuleSpeakAs*(self: CSSCounterStyleRule): cstring =
+  discard
+proc jsCSSCounterStyleRuleFallback*(self: CSSCounterStyleRule): cstring =
+  discard
+
+proc jsCSSFontFaceRuleStyle*(self: CSSFontFaceRule): JsObject =
+  discard
+
+proc jsCSSFontFeatureValuesRuleFontFamily*(self: CSSFontFeatureValuesRule): cstring =
+  discard
+
+proc jsCSSGroupingRuleCssRules*(self: CSSGroupingRule): JsObject =
+  discard
+proc jsInsertRule*(self: CSSGroupingRule; rule: cstring; index: uint32): uint32 =
+  discard
+proc jsDeleteRule*(self: CSSGroupingRule; index: uint32): void =
+  discard
+
+proc jsCSSImportRuleHref*(self: CSSImportRule): cstring =
+  discard
+
+proc jsCSSKeyframeRuleKeyText*(self: CSSKeyframeRule): cstring =
+  discard
+proc jsCSSKeyframeRuleStyle*(self: CSSKeyframeRule): JsObject =
+  discard
+
+proc jsCSSKeyframesRuleName*(self: CSSKeyframesRule): cstring =
+  discard
+proc jsCSSKeyframesRuleCssRules*(self: CSSKeyframesRule): JsObject =
+  discard
+proc jsAppendRule*(self: CSSKeyframesRule; rule: cstring): void =
+  discard
+proc jsDeleteRule*(self: CSSKeyframesRule; select: cstring): void =
+  discard
+proc jsFindRule*(self: CSSKeyframesRule; select: cstring): Option[JsObject] =
+  discard
+
+proc jsCSSMediaRuleMedia*(self: CSSMediaRule): JsObject =
+  discard
+
+proc jsCSSNamespaceRuleNamespaceURI*(self: CSSNamespaceRule): cstring =
+  discard
+proc jsCSSNamespaceRulePrefix*(self: CSSNamespaceRule): cstring =
+  discard
+
+proc jsCSSPageRuleStyle*(self: CSSPageRule): JsObject =
+  discard
+
+proc jsCSSPseudoElementTypeVal*(self: CSSPseudoElement): cstring =
+  discard
+proc jsCSSPseudoElementParentElement*(self: CSSPseudoElement): JsObject =
   discard
 
 const jsCSSRuleSTYLE_RULE* : uint16 = 0
@@ -4064,89 +4063,89 @@ const jsCSSRuleMEDIA_RULE* : uint16 = 0
 const jsCSSRuleFONT_FACE_RULE* : uint16 = 0
 const jsCSSRulePAGE_RULE* : uint16 = 0
 const jsCSSRuleNAMESPACE_RULE* : uint16 = 0
-proc jsCSSRuleTypeVal*(self: CSSRule): uint16 {.wasmBindgen.} =
+proc jsCSSRuleTypeVal*(self: CSSRule): uint16 =
   discard
-proc jsCSSRuleCssText*(self: CSSRule): cstring {.wasmBindgen.} =
-  discard
-
-proc jsCSSRuleListLength*(self: CSSRuleList): uint32 {.wasmBindgen.} =
-  discard
-proc jsItem*(self: CSSRuleList; index: uint32): Option[JsObject] {.wasmBindgen.} =
+proc jsCSSRuleCssText*(self: CSSRule): cstring =
   discard
 
-proc jsCSSStyleDeclarationCssText*(self: CSSStyleDeclaration): cstring {.wasmBindgen.} =
+proc jsCSSRuleListLength*(self: CSSRuleList): uint32 =
   discard
-proc jsCSSStyleDeclarationLength*(self: CSSStyleDeclaration): uint32 {.wasmBindgen.} =
-  discard
-proc jsItem*(self: CSSStyleDeclaration; index: uint32): cstring {.wasmBindgen.} =
-  discard
-proc jsGetCSSImageURLs*(self: CSSStyleDeclaration; property: cstring): JsObject {.wasmBindgen.} =
-  discard
-proc jsGetPropertyValue*(self: CSSStyleDeclaration; property: cstring): cstring {.wasmBindgen.} =
-  discard
-proc jsGetPropertyPriority*(self: CSSStyleDeclaration; property: cstring): cstring {.wasmBindgen.} =
-  discard
-proc jsSetProperty*(self: CSSStyleDeclaration; property: cstring; value: cstring; priority: cstring): void {.wasmBindgen.} =
-  discard
-proc jsRemoveProperty*(self: CSSStyleDeclaration; property: cstring): cstring {.wasmBindgen.} =
+proc jsItem*(self: CSSRuleList; index: uint32): Option[JsObject] =
   discard
 
-proc jsCSSStyleRuleSelectorText*(self: CSSStyleRule): cstring {.wasmBindgen.} =
+proc jsCSSStyleDeclarationCssText*(self: CSSStyleDeclaration): cstring =
   discard
-proc jsCSSStyleRuleStyle*(self: CSSStyleRule): JsObject {.wasmBindgen.} =
+proc jsCSSStyleDeclarationLength*(self: CSSStyleDeclaration): uint32 =
   discard
-
-proc jsCSSStyleSheetCssRules*(self: CSSStyleSheet): JsObject {.wasmBindgen.} =
+proc jsItem*(self: CSSStyleDeclaration; index: uint32): cstring =
   discard
-proc jsCSSStyleSheetParsingMode*(self: CSSStyleSheet): JsObject {.wasmBindgen.} =
+proc jsGetCSSImageURLs*(self: CSSStyleDeclaration; property: cstring): JsObject =
   discard
-proc jsInsertRule*(self: CSSStyleSheet; rule: cstring; index: uint32): uint32 {.wasmBindgen.} =
+proc jsGetPropertyValue*(self: CSSStyleDeclaration; property: cstring): cstring =
   discard
-proc jsDeleteRule*(self: CSSStyleSheet; index: uint32): void {.wasmBindgen.} =
+proc jsGetPropertyPriority*(self: CSSStyleDeclaration; property: cstring): cstring =
   discard
-proc jsReplace*(self: CSSStyleSheet; text: cstring): JsObject {.wasmBindgen.} =
+proc jsSetProperty*(self: CSSStyleDeclaration; property: cstring; value: cstring; priority: cstring): void =
   discard
-proc jsReplaceSync*(self: CSSStyleSheet; text: cstring): void {.wasmBindgen.} =
-  discard
-
-
-proc jsCSSTransitionTransitionProperty*(self: CSSTransition): cstring {.wasmBindgen.} =
+proc jsRemoveProperty*(self: CSSStyleDeclaration; property: cstring): cstring =
   discard
 
-proc jsMatch*(self: Cache; request: JsObject; options: JsObject): JsObject {.wasmBindgen.} =
+proc jsCSSStyleRuleSelectorText*(self: CSSStyleRule): cstring =
   discard
-proc jsMatchAll*(self: Cache; request: JsObject; options: JsObject): JsObject {.wasmBindgen.} =
-  discard
-proc jsAdd*(self: Cache; request: JsObject): JsObject {.wasmBindgen.} =
-  discard
-proc jsAddAll*(self: Cache; requests: JsObject): JsObject {.wasmBindgen.} =
-  discard
-proc jsPut*(self: Cache; request: JsObject; response: JsObject): JsObject {.wasmBindgen.} =
-  discard
-proc jsDelete*(self: Cache; request: JsObject; options: JsObject): JsObject {.wasmBindgen.} =
-  discard
-proc jsKeys*(self: Cache; request: JsObject; options: JsObject): JsObject {.wasmBindgen.} =
+proc jsCSSStyleRuleStyle*(self: CSSStyleRule): JsObject =
   discard
 
-proc jsMatch*(self: CacheStorage; request: JsObject; options: JsObject): JsObject {.wasmBindgen.} =
+proc jsCSSStyleSheetCssRules*(self: CSSStyleSheet): JsObject =
   discard
-proc jsHas*(self: CacheStorage; cacheName: cstring): JsObject {.wasmBindgen.} =
+proc jsCSSStyleSheetParsingMode*(self: CSSStyleSheet): JsObject =
   discard
-proc jsOpen*(self: CacheStorage; cacheName: cstring): JsObject {.wasmBindgen.} =
+proc jsInsertRule*(self: CSSStyleSheet; rule: cstring; index: uint32): uint32 =
   discard
-proc jsDelete*(self: CacheStorage; cacheName: cstring): JsObject {.wasmBindgen.} =
+proc jsDeleteRule*(self: CSSStyleSheet; index: uint32): void =
   discard
-proc jsKeys*(self: CacheStorage): JsObject {.wasmBindgen.} =
+proc jsReplace*(self: CSSStyleSheet; text: cstring): JsObject =
   discard
-
-proc jsCanvasCaptureMediaStreamCanvas*(self: CanvasCaptureMediaStream): JsObject {.wasmBindgen.} =
-  discard
-proc jsRequestFrame*(self: CanvasCaptureMediaStream): void {.wasmBindgen.} =
+proc jsReplaceSync*(self: CSSStyleSheet; text: cstring): void =
   discard
 
-proc jsCanvasCaptureMediaStreamTrackCanvas*(self: CanvasCaptureMediaStreamTrack): JsObject {.wasmBindgen.} =
+
+proc jsCSSTransitionTransitionProperty*(self: CSSTransition): cstring =
   discard
-proc jsRequestFrame*(self: CanvasCaptureMediaStreamTrack): void {.wasmBindgen.} =
+
+proc jsMatch*(self: Cache; request: JsObject; options: JsObject): JsObject =
+  discard
+proc jsMatchAll*(self: Cache; request: JsObject; options: JsObject): JsObject =
+  discard
+proc jsAdd*(self: Cache; request: JsObject): JsObject =
+  discard
+proc jsAddAll*(self: Cache; requests: JsObject): JsObject =
+  discard
+proc jsPut*(self: Cache; request: JsObject; response: JsObject): JsObject =
+  discard
+proc jsDelete*(self: Cache; request: JsObject; options: JsObject): JsObject =
+  discard
+proc jsKeys*(self: Cache; request: JsObject; options: JsObject): JsObject =
+  discard
+
+proc jsMatch*(self: CacheStorage; request: JsObject; options: JsObject): JsObject =
+  discard
+proc jsHas*(self: CacheStorage; cacheName: cstring): JsObject =
+  discard
+proc jsOpen*(self: CacheStorage; cacheName: cstring): JsObject =
+  discard
+proc jsDelete*(self: CacheStorage; cacheName: cstring): JsObject =
+  discard
+proc jsKeys*(self: CacheStorage): JsObject =
+  discard
+
+proc jsCanvasCaptureMediaStreamCanvas*(self: CanvasCaptureMediaStream): JsObject =
+  discard
+proc jsRequestFrame*(self: CanvasCaptureMediaStream): void =
+  discard
+
+proc jsCanvasCaptureMediaStreamTrackCanvas*(self: CanvasCaptureMediaStreamTrack): JsObject =
+  discard
+proc jsRequestFrame*(self: CanvasCaptureMediaStreamTrack): void =
   discard
 
 const jsCanvasRenderingContext2DDRAWWINDOW_DRAW_CARET* : uint32 = 0
@@ -4154,351 +4153,351 @@ const jsCanvasRenderingContext2DDRAWWINDOW_DO_NOT_FLUSH* : uint32 = 0
 const jsCanvasRenderingContext2DDRAWWINDOW_DRAW_VIEW* : uint32 = 0
 const jsCanvasRenderingContext2DDRAWWINDOW_USE_WIDGET_LAYERS* : uint32 = 0
 const jsCanvasRenderingContext2DDRAWWINDOW_ASYNC_DECODE_IMAGES* : uint32 = 0
-proc jsDrawWindow*(self: CanvasRenderingContext2D; window: JsObject; x: float64; y: float64; w: float64; h: float64; bgColor: cstring; flags: uint32): void {.wasmBindgen.} =
+proc jsDrawWindow*(self: CanvasRenderingContext2D; window: JsObject; x: float64; y: float64; w: float64; h: float64; bgColor: cstring; flags: uint32): void =
   discard
-proc jsDemote*(self: CanvasRenderingContext2D): void {.wasmBindgen.} =
-  discard
-
-proc jsAddColorStop*(self: CanvasGradient; offset: float32; color: cstring): void {.wasmBindgen.} =
+proc jsDemote*(self: CanvasRenderingContext2D): void =
   discard
 
-proc jsSetTransform*(self: CanvasPattern; matrix: JsObject): void {.wasmBindgen.} =
+proc jsAddColorStop*(self: CanvasGradient; offset: float32; color: cstring): void =
   discard
 
-proc jsTextMetricsWidth*(self: TextMetrics): float64 {.wasmBindgen.} =
-  discard
-proc jsTextMetricsActualBoundingBoxLeft*(self: TextMetrics): float64 {.wasmBindgen.} =
-  discard
-proc jsTextMetricsActualBoundingBoxRight*(self: TextMetrics): float64 {.wasmBindgen.} =
-  discard
-proc jsTextMetricsFontBoundingBoxAscent*(self: TextMetrics): float64 {.wasmBindgen.} =
-  discard
-proc jsTextMetricsFontBoundingBoxDescent*(self: TextMetrics): float64 {.wasmBindgen.} =
-  discard
-proc jsTextMetricsActualBoundingBoxAscent*(self: TextMetrics): float64 {.wasmBindgen.} =
-  discard
-proc jsTextMetricsActualBoundingBoxDescent*(self: TextMetrics): float64 {.wasmBindgen.} =
+proc jsSetTransform*(self: CanvasPattern; matrix: JsObject): void =
   discard
 
-proc jsAddPath*(self: Path2D; path: JsObject; transformation: JsObject): void {.wasmBindgen.} =
+proc jsTextMetricsWidth*(self: TextMetrics): float64 =
+  discard
+proc jsTextMetricsActualBoundingBoxLeft*(self: TextMetrics): float64 =
+  discard
+proc jsTextMetricsActualBoundingBoxRight*(self: TextMetrics): float64 =
+  discard
+proc jsTextMetricsFontBoundingBoxAscent*(self: TextMetrics): float64 =
+  discard
+proc jsTextMetricsFontBoundingBoxDescent*(self: TextMetrics): float64 =
+  discard
+proc jsTextMetricsActualBoundingBoxAscent*(self: TextMetrics): float64 =
+  discard
+proc jsTextMetricsActualBoundingBoxDescent*(self: TextMetrics): float64 =
   discard
 
-proc jsCaretPositionOffset*(self: CaretPosition): uint32 {.wasmBindgen.} =
+proc jsAddPath*(self: Path2D; path: JsObject; transformation: JsObject): void =
   discard
 
-proc jsCaretStateChangedEventCollapsed*(self: CaretStateChangedEvent): bool {.wasmBindgen.} =
-  discard
-proc jsCaretStateChangedEventReason*(self: CaretStateChangedEvent): JsObject {.wasmBindgen.} =
-  discard
-proc jsCaretStateChangedEventCaretVisible*(self: CaretStateChangedEvent): bool {.wasmBindgen.} =
-  discard
-proc jsCaretStateChangedEventCaretVisuallyVisible*(self: CaretStateChangedEvent): bool {.wasmBindgen.} =
-  discard
-proc jsCaretStateChangedEventSelectionVisible*(self: CaretStateChangedEvent): bool {.wasmBindgen.} =
-  discard
-proc jsCaretStateChangedEventSelectionEditable*(self: CaretStateChangedEvent): bool {.wasmBindgen.} =
-  discard
-proc jsCaretStateChangedEventSelectedTextContent*(self: CaretStateChangedEvent): cstring {.wasmBindgen.} =
+proc jsCaretPositionOffset*(self: CaretPosition): uint32 =
   discard
 
-
-
-proc jsCharacterDataData*(self: CharacterData): cstring {.wasmBindgen.} =
+proc jsCaretStateChangedEventCollapsed*(self: CaretStateChangedEvent): bool =
   discard
-proc jsCharacterDataLength*(self: CharacterData): uint32 {.wasmBindgen.} =
+proc jsCaretStateChangedEventReason*(self: CaretStateChangedEvent): JsObject =
   discard
-proc jsSubstringData*(self: CharacterData; offset: uint32; count: uint32): cstring {.wasmBindgen.} =
+proc jsCaretStateChangedEventCaretVisible*(self: CaretStateChangedEvent): bool =
   discard
-proc jsAppendData*(self: CharacterData; data: cstring): void {.wasmBindgen.} =
+proc jsCaretStateChangedEventCaretVisuallyVisible*(self: CaretStateChangedEvent): bool =
   discard
-proc jsInsertData*(self: CharacterData; offset: uint32; data: cstring): void {.wasmBindgen.} =
+proc jsCaretStateChangedEventSelectionVisible*(self: CaretStateChangedEvent): bool =
   discard
-proc jsDeleteData*(self: CharacterData; offset: uint32; count: uint32): void {.wasmBindgen.} =
+proc jsCaretStateChangedEventSelectionEditable*(self: CaretStateChangedEvent): bool =
   discard
-proc jsReplaceData*(self: CharacterData; offset: uint32; count: uint32; data: cstring): void {.wasmBindgen.} =
-  discard
-
-proc jsGetReports*(self: CheckerboardReportService): JsObject {.wasmBindgen.} =
-  discard
-proc jsIsRecordingEnabled*(self: CheckerboardReportService): bool {.wasmBindgen.} =
-  discard
-proc jsSetRecordingEnabled*(self: CheckerboardReportService; aEnabled: bool): void {.wasmBindgen.} =
-  discard
-proc jsFlushActiveReports*(self: CheckerboardReportService): void {.wasmBindgen.} =
-  discard
-
-proc jsClientUrl*(self: Client): cstring {.wasmBindgen.} =
-  discard
-proc jsClientFrameType*(self: Client): JsObject {.wasmBindgen.} =
-  discard
-proc jsClientTypeVal*(self: Client): JsObject {.wasmBindgen.} =
-  discard
-proc jsClientId*(self: Client): cstring {.wasmBindgen.} =
-  discard
-proc jsPostMessage*(self: Client; message: JsObject; transfer: JsObject): void {.wasmBindgen.} =
-  discard
-
-proc jsWindowClientVisibilityState*(self: WindowClient): JsObject {.wasmBindgen.} =
-  discard
-proc jsWindowClientFocused*(self: WindowClient): bool {.wasmBindgen.} =
-  discard
-proc jsFocus*(self: WindowClient): JsObject {.wasmBindgen.} =
-  discard
-proc jsNavigate*(self: WindowClient; url: cstring): JsObject {.wasmBindgen.} =
-  discard
-
-proc jsGet*(self: Clients; id: cstring): JsObject {.wasmBindgen.} =
-  discard
-proc jsMatchAll*(self: Clients; options: JsObject): JsObject {.wasmBindgen.} =
-  discard
-proc jsOpenWindow*(self: Clients; url: cstring): JsObject {.wasmBindgen.} =
-  discard
-proc jsClaim*(self: Clients): JsObject {.wasmBindgen.} =
+proc jsCaretStateChangedEventSelectedTextContent*(self: CaretStateChangedEvent): cstring =
   discard
 
 
-proc jsClipboardItemPresentationStyle*(self: ClipboardItem): JsObject {.wasmBindgen.} =
+
+proc jsCharacterDataData*(self: CharacterData): cstring =
   discard
-proc jsClipboardItemTypes*(self: ClipboardItem): JsObject {.wasmBindgen.} =
+proc jsCharacterDataLength*(self: CharacterData): uint32 =
   discard
-proc jsGetType*(self: ClipboardItem; typeVal: cstring): JsObject {.wasmBindgen.} =
+proc jsSubstringData*(self: CharacterData; offset: uint32; count: uint32): cstring =
   discard
-proc jsSupports*(self: typedesc[ClipboardItem]; typeVal: cstring): bool {.wasmBindgen.} =
+proc jsAppendData*(self: CharacterData; data: cstring): void =
+  discard
+proc jsInsertData*(self: CharacterData; offset: uint32; data: cstring): void =
+  discard
+proc jsDeleteData*(self: CharacterData; offset: uint32; count: uint32): void =
+  discard
+proc jsReplaceData*(self: CharacterData; offset: uint32; count: uint32; data: cstring): void =
   discard
 
-proc jsRead*(self: Clipboard; formats: JsObject): JsObject {.wasmBindgen.} =
+proc jsGetReports*(self: CheckerboardReportService): JsObject =
   discard
-proc jsReadText*(self: Clipboard): JsObject {.wasmBindgen.} =
+proc jsIsRecordingEnabled*(self: CheckerboardReportService): bool =
   discard
-proc jsWrite*(self: Clipboard; data: JsObject): JsObject {.wasmBindgen.} =
+proc jsSetRecordingEnabled*(self: CheckerboardReportService; aEnabled: bool): void =
   discard
-proc jsWriteText*(self: Clipboard; data: cstring): JsObject {.wasmBindgen.} =
-  discard
-
-proc jsCloseEventWasClean*(self: CloseEvent): bool {.wasmBindgen.} =
-  discard
-proc jsCloseEventCode*(self: CloseEvent): uint16 {.wasmBindgen.} =
-  discard
-proc jsCloseEventReason*(self: CloseEvent): cstring {.wasmBindgen.} =
+proc jsFlushActiveReports*(self: CheckerboardReportService): void =
   discard
 
-proc jsCommandEventCommand*(self: CommandEvent): cstring {.wasmBindgen.} =
+proc jsClientUrl*(self: Client): cstring =
+  discard
+proc jsClientFrameType*(self: Client): JsObject =
+  discard
+proc jsClientTypeVal*(self: Client): JsObject =
+  discard
+proc jsClientId*(self: Client): cstring =
+  discard
+proc jsPostMessage*(self: Client; message: JsObject; transfer: JsObject): void =
+  discard
+
+proc jsWindowClientVisibilityState*(self: WindowClient): JsObject =
+  discard
+proc jsWindowClientFocused*(self: WindowClient): bool =
+  discard
+proc jsFocus*(self: WindowClient): JsObject =
+  discard
+proc jsNavigate*(self: WindowClient; url: cstring): JsObject =
+  discard
+
+proc jsGet*(self: Clients; id: cstring): JsObject =
+  discard
+proc jsMatchAll*(self: Clients; options: JsObject): JsObject =
+  discard
+proc jsOpenWindow*(self: Clients; url: cstring): JsObject =
+  discard
+proc jsClaim*(self: Clients): JsObject =
   discard
 
 
-proc jsCompositionEventLocale*(self: CompositionEvent): cstring {.wasmBindgen.} =
+proc jsClipboardItemPresentationStyle*(self: ClipboardItem): JsObject =
   discard
-proc jsCompositionEventRanges*(self: CompositionEvent): JsObject {.wasmBindgen.} =
+proc jsClipboardItemTypes*(self: ClipboardItem): JsObject =
   discard
-
-proc consoleVal*() {.wasmBindgen.} =
+proc jsGetType*(self: ClipboardItem; typeVal: cstring): JsObject =
   discard
-proc assert*(condition: bool; data: JsObject): void {.wasmBindgen.} =
-  discard
-proc clear*(): void {.wasmBindgen.} =
-  discard
-proc count*(label: cstring): void {.wasmBindgen.} =
-  discard
-proc countReset*(label: cstring): void {.wasmBindgen.} =
-  discard
-proc debug*(data: JsObject): void {.wasmBindgen.} =
-  discard
-proc error*(data: JsObject): void {.wasmBindgen.} =
-  discard
-proc info*(data: JsObject): void {.wasmBindgen.} =
-  discard
-proc log*(data: JsObject): void {.wasmBindgen.} =
-  discard
-proc table*(data: JsObject): void {.wasmBindgen.} =
-  discard
-proc trace*(data: JsObject): void {.wasmBindgen.} =
-  discard
-proc warn*(data: JsObject): void {.wasmBindgen.} =
-  discard
-proc dir*(data: JsObject): void {.wasmBindgen.} =
-  discard
-proc dirxml*(data: JsObject): void {.wasmBindgen.} =
-  discard
-proc group*(data: JsObject): void {.wasmBindgen.} =
-  discard
-proc groupCollapsed*(data: JsObject): void {.wasmBindgen.} =
-  discard
-proc groupEnd*(): void {.wasmBindgen.} =
-  discard
-proc time*(label: cstring): void {.wasmBindgen.} =
-  discard
-proc timeLog*(label: cstring; data: JsObject): void {.wasmBindgen.} =
-  discard
-proc timeEnd*(label: cstring): void {.wasmBindgen.} =
-  discard
-proc exception*(data: JsObject): void {.wasmBindgen.} =
-  discard
-proc timeStamp*(data: JsObject): void {.wasmBindgen.} =
-  discard
-proc profile*(data: JsObject): void {.wasmBindgen.} =
-  discard
-proc profileEnd*(data: JsObject): void {.wasmBindgen.} =
-  discard
-proc createInstance*(options: JsObject): JsObject {.wasmBindgen.} =
+proc jsSupports*(self: typedesc[ClipboardItem]; typeVal: cstring): bool =
   discard
 
-proc jsAssert*(self: ConsoleInstance; condition: bool; data: JsObject): void {.wasmBindgen.} =
+proc jsRead*(self: Clipboard; formats: JsObject): JsObject =
   discard
-proc jsClear*(self: ConsoleInstance): void {.wasmBindgen.} =
+proc jsReadText*(self: Clipboard): JsObject =
   discard
-proc jsCount*(self: ConsoleInstance; label: cstring): void {.wasmBindgen.} =
+proc jsWrite*(self: Clipboard; data: JsObject): JsObject =
   discard
-proc jsCountReset*(self: ConsoleInstance; label: cstring): void {.wasmBindgen.} =
-  discard
-proc jsDebug*(self: ConsoleInstance; data: JsObject): void {.wasmBindgen.} =
-  discard
-proc jsError*(self: ConsoleInstance; data: JsObject): void {.wasmBindgen.} =
-  discard
-proc jsInfo*(self: ConsoleInstance; data: JsObject): void {.wasmBindgen.} =
-  discard
-proc jsLog*(self: ConsoleInstance; data: JsObject): void {.wasmBindgen.} =
-  discard
-proc jsTable*(self: ConsoleInstance; data: JsObject): void {.wasmBindgen.} =
-  discard
-proc jsTrace*(self: ConsoleInstance; data: JsObject): void {.wasmBindgen.} =
-  discard
-proc jsWarn*(self: ConsoleInstance; data: JsObject): void {.wasmBindgen.} =
-  discard
-proc jsDir*(self: ConsoleInstance; data: JsObject): void {.wasmBindgen.} =
-  discard
-proc jsDirxml*(self: ConsoleInstance; data: JsObject): void {.wasmBindgen.} =
-  discard
-proc jsGroup*(self: ConsoleInstance; data: JsObject): void {.wasmBindgen.} =
-  discard
-proc jsGroupCollapsed*(self: ConsoleInstance; data: JsObject): void {.wasmBindgen.} =
-  discard
-proc jsGroupEnd*(self: ConsoleInstance): void {.wasmBindgen.} =
-  discard
-proc jsTime*(self: ConsoleInstance; label: cstring): void {.wasmBindgen.} =
-  discard
-proc jsTimeLog*(self: ConsoleInstance; label: cstring; data: JsObject): void {.wasmBindgen.} =
-  discard
-proc jsTimeEnd*(self: ConsoleInstance; label: cstring): void {.wasmBindgen.} =
-  discard
-proc jsException*(self: ConsoleInstance; data: JsObject): void {.wasmBindgen.} =
-  discard
-proc jsTimeStamp*(self: ConsoleInstance; data: JsObject): void {.wasmBindgen.} =
-  discard
-proc jsProfile*(self: ConsoleInstance; data: JsObject): void {.wasmBindgen.} =
-  discard
-proc jsProfileEnd*(self: ConsoleInstance; data: JsObject): void {.wasmBindgen.} =
+proc jsWriteText*(self: Clipboard; data: cstring): JsObject =
   discard
 
-proc jsConstantSourceNodeOffset*(self: ConstantSourceNode): JsObject {.wasmBindgen.} =
+proc jsCloseEventWasClean*(self: CloseEvent): bool =
+  discard
+proc jsCloseEventCode*(self: CloseEvent): uint16 =
+  discard
+proc jsCloseEventReason*(self: CloseEvent): cstring =
   discard
 
-proc jsConvolverNodeNormalize*(self: ConvolverNode): bool {.wasmBindgen.} =
+proc jsCommandEventCommand*(self: CommandEvent): cstring =
   discard
 
-proc jsCookieStoreOnchange*(self: CookieStore): JsObject {.wasmBindgen.} =
+
+proc jsCompositionEventLocale*(self: CompositionEvent): cstring =
   discard
-proc jsGet*(self: CookieStore; name: cstring): JsObject {.wasmBindgen.} =
-  discard
-proc jsGet*(self: CookieStore; options: JsObject): JsObject {.wasmBindgen.} =
-  discard
-proc jsGetAll*(self: CookieStore; name: cstring): JsObject {.wasmBindgen.} =
-  discard
-proc jsGetAll*(self: CookieStore; options: JsObject): JsObject {.wasmBindgen.} =
-  discard
-proc jsSet*(self: CookieStore; name: cstring; value: cstring): JsObject {.wasmBindgen.} =
-  discard
-proc jsSet*(self: CookieStore; options: JsObject): JsObject {.wasmBindgen.} =
-  discard
-proc jsDelete*(self: CookieStore; name: cstring): JsObject {.wasmBindgen.} =
-  discard
-proc jsDelete*(self: CookieStore; options: JsObject): JsObject {.wasmBindgen.} =
+proc jsCompositionEventRanges*(self: CompositionEvent): JsObject =
   discard
 
-proc jsSubscribe*(self: CookieStoreManager; subscriptions: JsObject): JsObject {.wasmBindgen.} =
+proc consoleVal*() =
   discard
-proc jsGetSubscriptions*(self: CookieStoreManager): JsObject {.wasmBindgen.} =
+proc assert*(condition: bool; data: JsObject): void =
   discard
-proc jsUnsubscribe*(self: CookieStoreManager; subscriptions: JsObject): JsObject {.wasmBindgen.} =
+proc clear*(): void =
   discard
-
-proc jsCookieChangeEventChanged*(self: CookieChangeEvent): JsObject {.wasmBindgen.} =
+proc count*(label: cstring): void =
   discard
-proc jsCookieChangeEventDeleted*(self: CookieChangeEvent): JsObject {.wasmBindgen.} =
+proc countReset*(label: cstring): void =
   discard
-
-proc jsExtendableCookieChangeEventChanged*(self: ExtendableCookieChangeEvent): JsObject {.wasmBindgen.} =
+proc debug*(data: JsObject): void =
   discard
-proc jsExtendableCookieChangeEventDeleted*(self: ExtendableCookieChangeEvent): JsObject {.wasmBindgen.} =
+proc error*(data: JsObject): void =
   discard
-
-proc jsCoordinatesLatitude*(self: Coordinates): float64 {.wasmBindgen.} =
+proc info*(data: JsObject): void =
   discard
-proc jsCoordinatesLongitude*(self: Coordinates): float64 {.wasmBindgen.} =
+proc log*(data: JsObject): void =
   discard
-proc jsCoordinatesAccuracy*(self: Coordinates): float64 {.wasmBindgen.} =
+proc table*(data: JsObject): void =
   discard
-
-proc jsCreateOfferRequestWindowID*(self: CreateOfferRequest): uint64 {.wasmBindgen.} =
+proc trace*(data: JsObject): void =
   discard
-proc jsCreateOfferRequestInnerWindowID*(self: CreateOfferRequest): uint64 {.wasmBindgen.} =
+proc warn*(data: JsObject): void =
   discard
-proc jsCreateOfferRequestCallID*(self: CreateOfferRequest): cstring {.wasmBindgen.} =
+proc dir*(data: JsObject): void =
   discard
-proc jsCreateOfferRequestIsSecure*(self: CreateOfferRequest): bool {.wasmBindgen.} =
+proc dirxml*(data: JsObject): void =
   discard
-
-proc jsCredentialId*(self: Credential): cstring {.wasmBindgen.} =
+proc group*(data: JsObject): void =
   discard
-proc jsCredentialTypeVal*(self: Credential): cstring {.wasmBindgen.} =
+proc groupCollapsed*(data: JsObject): void =
   discard
-
-proc jsGet*(self: CredentialsContainer; options: JsObject): JsObject {.wasmBindgen.} =
+proc groupEnd*(): void =
   discard
-proc jsCreate*(self: CredentialsContainer; options: JsObject): JsObject {.wasmBindgen.} =
+proc time*(label: cstring): void =
   discard
-proc jsStore*(self: CredentialsContainer; credential: JsObject): JsObject {.wasmBindgen.} =
+proc timeLog*(label: cstring; data: JsObject): void =
   discard
-proc jsPreventSilentAccess*(self: CredentialsContainer): JsObject {.wasmBindgen.} =
+proc timeEnd*(label: cstring): void =
   discard
-
-proc jsCryptoSubtle*(self: Crypto): JsObject {.wasmBindgen.} =
+proc exception*(data: JsObject): void =
   discard
-proc jsGetRandomValues*(self: Crypto; array: JsObject): JsObject {.wasmBindgen.} =
+proc timeStamp*(data: JsObject): void =
   discard
-proc jsRandomUUID*(self: Crypto): cstring {.wasmBindgen.} =
+proc profile*(data: JsObject): void =
+  discard
+proc profileEnd*(data: JsObject): void =
+  discard
+proc createInstance*(options: JsObject): JsObject =
   discard
 
-proc jsDefine*(self: CustomElementRegistry; name: cstring; functionConstructor: JsObject; options: JsObject): void {.wasmBindgen.} =
+proc jsAssert*(self: ConsoleInstance; condition: bool; data: JsObject): void =
   discard
-proc jsSetElementCreationCallback*(self: CustomElementRegistry; name: cstring; callback: JsObject): void {.wasmBindgen.} =
+proc jsClear*(self: ConsoleInstance): void =
   discard
-proc jsGet*(self: CustomElementRegistry; name: cstring): JsObject {.wasmBindgen.} =
+proc jsCount*(self: ConsoleInstance; label: cstring): void =
   discard
-proc jsWhenDefined*(self: CustomElementRegistry; name: cstring): JsObject {.wasmBindgen.} =
+proc jsCountReset*(self: ConsoleInstance; label: cstring): void =
   discard
-proc jsUpgrade*(self: CustomElementRegistry; root: JsObject): void {.wasmBindgen.} =
+proc jsDebug*(self: ConsoleInstance; data: JsObject): void =
+  discard
+proc jsError*(self: ConsoleInstance; data: JsObject): void =
+  discard
+proc jsInfo*(self: ConsoleInstance; data: JsObject): void =
+  discard
+proc jsLog*(self: ConsoleInstance; data: JsObject): void =
+  discard
+proc jsTable*(self: ConsoleInstance; data: JsObject): void =
+  discard
+proc jsTrace*(self: ConsoleInstance; data: JsObject): void =
+  discard
+proc jsWarn*(self: ConsoleInstance; data: JsObject): void =
+  discard
+proc jsDir*(self: ConsoleInstance; data: JsObject): void =
+  discard
+proc jsDirxml*(self: ConsoleInstance; data: JsObject): void =
+  discard
+proc jsGroup*(self: ConsoleInstance; data: JsObject): void =
+  discard
+proc jsGroupCollapsed*(self: ConsoleInstance; data: JsObject): void =
+  discard
+proc jsGroupEnd*(self: ConsoleInstance): void =
+  discard
+proc jsTime*(self: ConsoleInstance; label: cstring): void =
+  discard
+proc jsTimeLog*(self: ConsoleInstance; label: cstring; data: JsObject): void =
+  discard
+proc jsTimeEnd*(self: ConsoleInstance; label: cstring): void =
+  discard
+proc jsException*(self: ConsoleInstance; data: JsObject): void =
+  discard
+proc jsTimeStamp*(self: ConsoleInstance; data: JsObject): void =
+  discard
+proc jsProfile*(self: ConsoleInstance; data: JsObject): void =
+  discard
+proc jsProfileEnd*(self: ConsoleInstance; data: JsObject): void =
   discard
 
-proc jsCustomEventDetail*(self: CustomEvent): JsObject {.wasmBindgen.} =
-  discard
-proc jsInitCustomEvent*(self: CustomEvent; typeVal: cstring; canBubble: bool; cancelable: bool; detail: JsObject): void {.wasmBindgen.} =
+proc jsConstantSourceNodeOffset*(self: ConstantSourceNode): JsObject =
   discard
 
-proc jsDOMErrorName*(self: DOMError): cstring {.wasmBindgen.} =
-  discard
-proc jsDOMErrorMessage*(self: DOMError): cstring {.wasmBindgen.} =
+proc jsConvolverNodeNormalize*(self: ConvolverNode): bool =
   discard
 
-proc jsExceptionName*(self: Exception): cstring {.wasmBindgen.} =
+proc jsCookieStoreOnchange*(self: CookieStore): JsObject =
   discard
-proc jsExceptionMessage*(self: Exception): cstring {.wasmBindgen.} =
+proc jsGet*(self: CookieStore; name: cstring): JsObject =
+  discard
+proc jsGet*(self: CookieStore; options: JsObject): JsObject =
+  discard
+proc jsGetAll*(self: CookieStore; name: cstring): JsObject =
+  discard
+proc jsGetAll*(self: CookieStore; options: JsObject): JsObject =
+  discard
+proc jsSet*(self: CookieStore; name: cstring; value: cstring): JsObject =
+  discard
+proc jsSet*(self: CookieStore; options: JsObject): JsObject =
+  discard
+proc jsDelete*(self: CookieStore; name: cstring): JsObject =
+  discard
+proc jsDelete*(self: CookieStore; options: JsObject): JsObject =
   discard
 
-proc jsDOMExceptionName*(self: DOMException): cstring {.wasmBindgen.} =
+proc jsSubscribe*(self: CookieStoreManager; subscriptions: JsObject): JsObject =
   discard
-proc jsDOMExceptionMessage*(self: DOMException): cstring {.wasmBindgen.} =
+proc jsGetSubscriptions*(self: CookieStoreManager): JsObject =
   discard
-proc jsDOMExceptionCode*(self: DOMException): uint16 {.wasmBindgen.} =
+proc jsUnsubscribe*(self: CookieStoreManager; subscriptions: JsObject): JsObject =
+  discard
+
+proc jsCookieChangeEventChanged*(self: CookieChangeEvent): JsObject =
+  discard
+proc jsCookieChangeEventDeleted*(self: CookieChangeEvent): JsObject =
+  discard
+
+proc jsExtendableCookieChangeEventChanged*(self: ExtendableCookieChangeEvent): JsObject =
+  discard
+proc jsExtendableCookieChangeEventDeleted*(self: ExtendableCookieChangeEvent): JsObject =
+  discard
+
+proc jsCoordinatesLatitude*(self: Coordinates): float64 =
+  discard
+proc jsCoordinatesLongitude*(self: Coordinates): float64 =
+  discard
+proc jsCoordinatesAccuracy*(self: Coordinates): float64 =
+  discard
+
+proc jsCreateOfferRequestWindowID*(self: CreateOfferRequest): uint64 =
+  discard
+proc jsCreateOfferRequestInnerWindowID*(self: CreateOfferRequest): uint64 =
+  discard
+proc jsCreateOfferRequestCallID*(self: CreateOfferRequest): cstring =
+  discard
+proc jsCreateOfferRequestIsSecure*(self: CreateOfferRequest): bool =
+  discard
+
+proc jsCredentialId*(self: Credential): cstring =
+  discard
+proc jsCredentialTypeVal*(self: Credential): cstring =
+  discard
+
+proc jsGet*(self: CredentialsContainer; options: JsObject): JsObject =
+  discard
+proc jsCreate*(self: CredentialsContainer; options: JsObject): JsObject =
+  discard
+proc jsStore*(self: CredentialsContainer; credential: JsObject): JsObject =
+  discard
+proc jsPreventSilentAccess*(self: CredentialsContainer): JsObject =
+  discard
+
+proc jsCryptoSubtle*(self: Crypto): JsObject =
+  discard
+proc jsGetRandomValues*(self: Crypto; array: JsObject): JsObject =
+  discard
+proc jsRandomUUID*(self: Crypto): cstring =
+  discard
+
+proc jsDefine*(self: CustomElementRegistry; name: cstring; functionConstructor: JsObject; options: JsObject): void =
+  discard
+proc jsSetElementCreationCallback*(self: CustomElementRegistry; name: cstring; callback: JsObject): void =
+  discard
+proc jsGet*(self: CustomElementRegistry; name: cstring): JsObject =
+  discard
+proc jsWhenDefined*(self: CustomElementRegistry; name: cstring): JsObject =
+  discard
+proc jsUpgrade*(self: CustomElementRegistry; root: JsObject): void =
+  discard
+
+proc jsCustomEventDetail*(self: CustomEvent): JsObject =
+  discard
+proc jsInitCustomEvent*(self: CustomEvent; typeVal: cstring; canBubble: bool; cancelable: bool; detail: JsObject): void =
+  discard
+
+proc jsDOMErrorName*(self: DOMError): cstring =
+  discard
+proc jsDOMErrorMessage*(self: DOMError): cstring =
+  discard
+
+proc jsExceptionName*(self: Exception): cstring =
+  discard
+proc jsExceptionMessage*(self: Exception): cstring =
+  discard
+
+proc jsDOMExceptionName*(self: DOMException): cstring =
+  discard
+proc jsDOMExceptionMessage*(self: DOMException): cstring =
+  discard
+proc jsDOMExceptionCode*(self: DOMException): uint16 =
   discard
 const jsDOMExceptionINDEX_SIZE_ERR* : uint16 = 0
 const jsDOMExceptionDOMSTRING_SIZE_ERR* : uint16 = 0
@@ -4526,2122 +4525,2122 @@ const jsDOMExceptionTIMEOUT_ERR* : uint16 = 0
 const jsDOMExceptionINVALID_NODE_TYPE_ERR* : uint16 = 0
 const jsDOMExceptionDATA_CLONE_ERR* : uint16 = 0
 
-proc jsHasFeature*(self: DOMImplementation): bool {.wasmBindgen.} =
+proc jsHasFeature*(self: DOMImplementation): bool =
   discard
-proc jsCreateDocumentType*(self: DOMImplementation; qualifiedName: cstring; publicId: cstring; systemId: cstring): JsObject {.wasmBindgen.} =
+proc jsCreateDocumentType*(self: DOMImplementation; qualifiedName: cstring; publicId: cstring; systemId: cstring): JsObject =
   discard
-proc jsCreateDocument*(self: DOMImplementation; namespace: Option[cstring]; qualifiedName: cstring; doctype: Option[JsObject]): JsObject {.wasmBindgen.} =
+proc jsCreateDocument*(self: DOMImplementation; namespace: Option[cstring]; qualifiedName: cstring; doctype: Option[JsObject]): JsObject =
   discard
-proc jsCreateHTMLDocument*(self: DOMImplementation; title: cstring): JsObject {.wasmBindgen.} =
-  discard
-
-proc jsDOMMatrixReadOnlyA*(self: DOMMatrixReadOnly): float64 {.wasmBindgen.} =
-  discard
-proc jsDOMMatrixReadOnlyB*(self: DOMMatrixReadOnly): float64 {.wasmBindgen.} =
-  discard
-proc jsDOMMatrixReadOnlyC*(self: DOMMatrixReadOnly): float64 {.wasmBindgen.} =
-  discard
-proc jsDOMMatrixReadOnlyD*(self: DOMMatrixReadOnly): float64 {.wasmBindgen.} =
-  discard
-proc jsDOMMatrixReadOnlyE*(self: DOMMatrixReadOnly): float64 {.wasmBindgen.} =
-  discard
-proc jsDOMMatrixReadOnlyF*(self: DOMMatrixReadOnly): float64 {.wasmBindgen.} =
-  discard
-proc jsDOMMatrixReadOnlyM11*(self: DOMMatrixReadOnly): float64 {.wasmBindgen.} =
-  discard
-proc jsDOMMatrixReadOnlyM12*(self: DOMMatrixReadOnly): float64 {.wasmBindgen.} =
-  discard
-proc jsDOMMatrixReadOnlyM13*(self: DOMMatrixReadOnly): float64 {.wasmBindgen.} =
-  discard
-proc jsDOMMatrixReadOnlyM14*(self: DOMMatrixReadOnly): float64 {.wasmBindgen.} =
-  discard
-proc jsDOMMatrixReadOnlyM21*(self: DOMMatrixReadOnly): float64 {.wasmBindgen.} =
-  discard
-proc jsDOMMatrixReadOnlyM22*(self: DOMMatrixReadOnly): float64 {.wasmBindgen.} =
-  discard
-proc jsDOMMatrixReadOnlyM23*(self: DOMMatrixReadOnly): float64 {.wasmBindgen.} =
-  discard
-proc jsDOMMatrixReadOnlyM24*(self: DOMMatrixReadOnly): float64 {.wasmBindgen.} =
-  discard
-proc jsDOMMatrixReadOnlyM31*(self: DOMMatrixReadOnly): float64 {.wasmBindgen.} =
-  discard
-proc jsDOMMatrixReadOnlyM32*(self: DOMMatrixReadOnly): float64 {.wasmBindgen.} =
-  discard
-proc jsDOMMatrixReadOnlyM33*(self: DOMMatrixReadOnly): float64 {.wasmBindgen.} =
-  discard
-proc jsDOMMatrixReadOnlyM34*(self: DOMMatrixReadOnly): float64 {.wasmBindgen.} =
-  discard
-proc jsDOMMatrixReadOnlyM41*(self: DOMMatrixReadOnly): float64 {.wasmBindgen.} =
-  discard
-proc jsDOMMatrixReadOnlyM42*(self: DOMMatrixReadOnly): float64 {.wasmBindgen.} =
-  discard
-proc jsDOMMatrixReadOnlyM43*(self: DOMMatrixReadOnly): float64 {.wasmBindgen.} =
-  discard
-proc jsDOMMatrixReadOnlyM44*(self: DOMMatrixReadOnly): float64 {.wasmBindgen.} =
-  discard
-proc jsDOMMatrixReadOnlyIs2D*(self: DOMMatrixReadOnly): bool {.wasmBindgen.} =
-  discard
-proc jsDOMMatrixReadOnlyIsIdentity*(self: DOMMatrixReadOnly): bool {.wasmBindgen.} =
-  discard
-proc jsTranslate*(self: DOMMatrixReadOnly; tx: float64; ty: float64; tz: float64): JsObject {.wasmBindgen.} =
-  discard
-proc jsScale*(self: DOMMatrixReadOnly; scale: float64; originX: float64; originY: float64): JsObject {.wasmBindgen.} =
-  discard
-proc jsScale3d*(self: DOMMatrixReadOnly; scale: float64; originX: float64; originY: float64; originZ: float64): JsObject {.wasmBindgen.} =
-  discard
-proc jsScaleNonUniform*(self: DOMMatrixReadOnly; scaleX: float64; scaleY: float64; scaleZ: float64; originX: float64; originY: float64; originZ: float64): JsObject {.wasmBindgen.} =
-  discard
-proc jsRotate*(self: DOMMatrixReadOnly; angle: float64; originX: float64; originY: float64): JsObject {.wasmBindgen.} =
-  discard
-proc jsRotateFromVector*(self: DOMMatrixReadOnly; x: float64; y: float64): JsObject {.wasmBindgen.} =
-  discard
-proc jsRotateAxisAngle*(self: DOMMatrixReadOnly; x: float64; y: float64; z: float64; angle: float64): JsObject {.wasmBindgen.} =
-  discard
-proc jsSkewX*(self: DOMMatrixReadOnly; sx: float64): JsObject {.wasmBindgen.} =
-  discard
-proc jsSkewY*(self: DOMMatrixReadOnly; sy: float64): JsObject {.wasmBindgen.} =
-  discard
-proc jsMultiply*(self: DOMMatrixReadOnly; other: JsObject): JsObject {.wasmBindgen.} =
-  discard
-proc jsFlipX*(self: DOMMatrixReadOnly): JsObject {.wasmBindgen.} =
-  discard
-proc jsFlipY*(self: DOMMatrixReadOnly): JsObject {.wasmBindgen.} =
-  discard
-proc jsInverse*(self: DOMMatrixReadOnly): JsObject {.wasmBindgen.} =
-  discard
-proc jsTransformPoint*(self: DOMMatrixReadOnly; point: JsObject): JsObject {.wasmBindgen.} =
-  discard
-proc jsToFloat32Array*(self: DOMMatrixReadOnly): seq[float32] {.wasmBindgen.} =
-  discard
-proc jsToFloat64Array*(self: DOMMatrixReadOnly): seq[float64] {.wasmBindgen.} =
-  discard
-proc jsToJSON*(self: DOMMatrixReadOnly): JsObject {.wasmBindgen.} =
+proc jsCreateHTMLDocument*(self: DOMImplementation; title: cstring): JsObject =
   discard
 
-proc jsDOMMatrixUnrestricted*(self: DOMMatrix): JsObject {.wasmBindgen.} =
+proc jsDOMMatrixReadOnlyA*(self: DOMMatrixReadOnly): float64 =
   discard
-proc jsDOMMatrixA*(self: DOMMatrix): float64 {.wasmBindgen.} =
+proc jsDOMMatrixReadOnlyB*(self: DOMMatrixReadOnly): float64 =
   discard
-proc jsDOMMatrixB*(self: DOMMatrix): float64 {.wasmBindgen.} =
+proc jsDOMMatrixReadOnlyC*(self: DOMMatrixReadOnly): float64 =
   discard
-proc jsDOMMatrixC*(self: DOMMatrix): float64 {.wasmBindgen.} =
+proc jsDOMMatrixReadOnlyD*(self: DOMMatrixReadOnly): float64 =
   discard
-proc jsDOMMatrixD*(self: DOMMatrix): float64 {.wasmBindgen.} =
+proc jsDOMMatrixReadOnlyE*(self: DOMMatrixReadOnly): float64 =
   discard
-proc jsDOMMatrixE*(self: DOMMatrix): float64 {.wasmBindgen.} =
+proc jsDOMMatrixReadOnlyF*(self: DOMMatrixReadOnly): float64 =
   discard
-proc jsDOMMatrixF*(self: DOMMatrix): float64 {.wasmBindgen.} =
+proc jsDOMMatrixReadOnlyM11*(self: DOMMatrixReadOnly): float64 =
   discard
-proc jsDOMMatrixM11*(self: DOMMatrix): float64 {.wasmBindgen.} =
+proc jsDOMMatrixReadOnlyM12*(self: DOMMatrixReadOnly): float64 =
   discard
-proc jsDOMMatrixM12*(self: DOMMatrix): float64 {.wasmBindgen.} =
+proc jsDOMMatrixReadOnlyM13*(self: DOMMatrixReadOnly): float64 =
   discard
-proc jsDOMMatrixM13*(self: DOMMatrix): float64 {.wasmBindgen.} =
+proc jsDOMMatrixReadOnlyM14*(self: DOMMatrixReadOnly): float64 =
   discard
-proc jsDOMMatrixM14*(self: DOMMatrix): float64 {.wasmBindgen.} =
+proc jsDOMMatrixReadOnlyM21*(self: DOMMatrixReadOnly): float64 =
   discard
-proc jsDOMMatrixM21*(self: DOMMatrix): float64 {.wasmBindgen.} =
+proc jsDOMMatrixReadOnlyM22*(self: DOMMatrixReadOnly): float64 =
   discard
-proc jsDOMMatrixM22*(self: DOMMatrix): float64 {.wasmBindgen.} =
+proc jsDOMMatrixReadOnlyM23*(self: DOMMatrixReadOnly): float64 =
   discard
-proc jsDOMMatrixM23*(self: DOMMatrix): float64 {.wasmBindgen.} =
+proc jsDOMMatrixReadOnlyM24*(self: DOMMatrixReadOnly): float64 =
   discard
-proc jsDOMMatrixM24*(self: DOMMatrix): float64 {.wasmBindgen.} =
+proc jsDOMMatrixReadOnlyM31*(self: DOMMatrixReadOnly): float64 =
   discard
-proc jsDOMMatrixM31*(self: DOMMatrix): float64 {.wasmBindgen.} =
+proc jsDOMMatrixReadOnlyM32*(self: DOMMatrixReadOnly): float64 =
   discard
-proc jsDOMMatrixM32*(self: DOMMatrix): float64 {.wasmBindgen.} =
+proc jsDOMMatrixReadOnlyM33*(self: DOMMatrixReadOnly): float64 =
   discard
-proc jsDOMMatrixM33*(self: DOMMatrix): float64 {.wasmBindgen.} =
+proc jsDOMMatrixReadOnlyM34*(self: DOMMatrixReadOnly): float64 =
   discard
-proc jsDOMMatrixM34*(self: DOMMatrix): float64 {.wasmBindgen.} =
+proc jsDOMMatrixReadOnlyM41*(self: DOMMatrixReadOnly): float64 =
   discard
-proc jsDOMMatrixM41*(self: DOMMatrix): float64 {.wasmBindgen.} =
+proc jsDOMMatrixReadOnlyM42*(self: DOMMatrixReadOnly): float64 =
   discard
-proc jsDOMMatrixM42*(self: DOMMatrix): float64 {.wasmBindgen.} =
+proc jsDOMMatrixReadOnlyM43*(self: DOMMatrixReadOnly): float64 =
   discard
-proc jsDOMMatrixM43*(self: DOMMatrix): float64 {.wasmBindgen.} =
+proc jsDOMMatrixReadOnlyM44*(self: DOMMatrixReadOnly): float64 =
   discard
-proc jsDOMMatrixM44*(self: DOMMatrix): float64 {.wasmBindgen.} =
+proc jsDOMMatrixReadOnlyIs2D*(self: DOMMatrixReadOnly): bool =
   discard
-proc jsMultiplySelf*(self: DOMMatrix; other: JsObject): JsObject {.wasmBindgen.} =
+proc jsDOMMatrixReadOnlyIsIdentity*(self: DOMMatrixReadOnly): bool =
   discard
-proc jsPreMultiplySelf*(self: DOMMatrix; other: JsObject): JsObject {.wasmBindgen.} =
+proc jsTranslate*(self: DOMMatrixReadOnly; tx: float64; ty: float64; tz: float64): JsObject =
   discard
-proc jsTranslateSelf*(self: DOMMatrix; tx: float64; ty: float64; tz: float64): JsObject {.wasmBindgen.} =
+proc jsScale*(self: DOMMatrixReadOnly; scale: float64; originX: float64; originY: float64): JsObject =
   discard
-proc jsScaleSelf*(self: DOMMatrix; scale: float64; originX: float64; originY: float64): JsObject {.wasmBindgen.} =
+proc jsScale3d*(self: DOMMatrixReadOnly; scale: float64; originX: float64; originY: float64; originZ: float64): JsObject =
   discard
-proc jsScale3dSelf*(self: DOMMatrix; scale: float64; originX: float64; originY: float64; originZ: float64): JsObject {.wasmBindgen.} =
+proc jsScaleNonUniform*(self: DOMMatrixReadOnly; scaleX: float64; scaleY: float64; scaleZ: float64; originX: float64; originY: float64; originZ: float64): JsObject =
   discard
-proc jsScaleNonUniformSelf*(self: DOMMatrix; scaleX: float64; scaleY: float64; scaleZ: float64; originX: float64; originY: float64; originZ: float64): JsObject {.wasmBindgen.} =
+proc jsRotate*(self: DOMMatrixReadOnly; angle: float64; originX: float64; originY: float64): JsObject =
   discard
-proc jsRotateSelf*(self: DOMMatrix; angle: float64; originX: float64; originY: float64): JsObject {.wasmBindgen.} =
+proc jsRotateFromVector*(self: DOMMatrixReadOnly; x: float64; y: float64): JsObject =
   discard
-proc jsRotateFromVectorSelf*(self: DOMMatrix; x: float64; y: float64): JsObject {.wasmBindgen.} =
+proc jsRotateAxisAngle*(self: DOMMatrixReadOnly; x: float64; y: float64; z: float64; angle: float64): JsObject =
   discard
-proc jsRotateAxisAngleSelf*(self: DOMMatrix; x: float64; y: float64; z: float64; angle: float64): JsObject {.wasmBindgen.} =
+proc jsSkewX*(self: DOMMatrixReadOnly; sx: float64): JsObject =
   discard
-proc jsSkewXSelf*(self: DOMMatrix; sx: float64): JsObject {.wasmBindgen.} =
+proc jsSkewY*(self: DOMMatrixReadOnly; sy: float64): JsObject =
   discard
-proc jsSkewYSelf*(self: DOMMatrix; sy: float64): JsObject {.wasmBindgen.} =
+proc jsMultiply*(self: DOMMatrixReadOnly; other: JsObject): JsObject =
   discard
-proc jsInvertSelf*(self: DOMMatrix): JsObject {.wasmBindgen.} =
+proc jsFlipX*(self: DOMMatrixReadOnly): JsObject =
   discard
-proc jsSetMatrixValue*(self: DOMMatrix; transformList: cstring): JsObject {.wasmBindgen.} =
+proc jsFlipY*(self: DOMMatrixReadOnly): JsObject =
   discard
-
-proc jsParseFromString*(self: DOMParser; str: cstring; typeVal: JsObject): JsObject {.wasmBindgen.} =
+proc jsInverse*(self: DOMMatrixReadOnly): JsObject =
   discard
-proc jsForceEnableXULXBL*(self: DOMParser): void {.wasmBindgen.} =
+proc jsTransformPoint*(self: DOMMatrixReadOnly; point: JsObject): JsObject =
   discard
-
-proc jsDOMPointReadOnlyX*(self: DOMPointReadOnly): float64 {.wasmBindgen.} =
+proc jsToFloat32Array*(self: DOMMatrixReadOnly): seq[float32] =
   discard
-proc jsDOMPointReadOnlyY*(self: DOMPointReadOnly): float64 {.wasmBindgen.} =
+proc jsToFloat64Array*(self: DOMMatrixReadOnly): seq[float64] =
   discard
-proc jsDOMPointReadOnlyZ*(self: DOMPointReadOnly): float64 {.wasmBindgen.} =
-  discard
-proc jsDOMPointReadOnlyW*(self: DOMPointReadOnly): float64 {.wasmBindgen.} =
-  discard
-proc jsFromPoint*(self: typedesc[DOMPointReadOnly]; other: JsObject): JsObject {.wasmBindgen.} =
-  discard
-proc jsMatrixTransform*(self: DOMPointReadOnly; matrix: JsObject): JsObject {.wasmBindgen.} =
-  discard
-proc jsToJSON*(self: DOMPointReadOnly): JsObject {.wasmBindgen.} =
+proc jsToJSON*(self: DOMMatrixReadOnly): JsObject =
   discard
 
-proc jsDOMPointUnrestricted*(self: DOMPoint): JsObject {.wasmBindgen.} =
+proc jsDOMMatrixUnrestricted*(self: DOMMatrix): JsObject =
   discard
-proc jsDOMPointX*(self: DOMPoint): float64 {.wasmBindgen.} =
+proc jsDOMMatrixA*(self: DOMMatrix): float64 =
   discard
-proc jsDOMPointY*(self: DOMPoint): float64 {.wasmBindgen.} =
+proc jsDOMMatrixB*(self: DOMMatrix): float64 =
   discard
-proc jsDOMPointZ*(self: DOMPoint): float64 {.wasmBindgen.} =
+proc jsDOMMatrixC*(self: DOMMatrix): float64 =
   discard
-proc jsDOMPointW*(self: DOMPoint): float64 {.wasmBindgen.} =
+proc jsDOMMatrixD*(self: DOMMatrix): float64 =
   discard
-proc jsFromPoint*(self: typedesc[DOMPoint]; other: JsObject): JsObject {.wasmBindgen.} =
+proc jsDOMMatrixE*(self: DOMMatrix): float64 =
   discard
-
-proc jsDOMQuadP1*(self: DOMQuad): JsObject {.wasmBindgen.} =
+proc jsDOMMatrixF*(self: DOMMatrix): float64 =
   discard
-proc jsDOMQuadP2*(self: DOMQuad): JsObject {.wasmBindgen.} =
+proc jsDOMMatrixM11*(self: DOMMatrix): float64 =
   discard
-proc jsDOMQuadP3*(self: DOMQuad): JsObject {.wasmBindgen.} =
+proc jsDOMMatrixM12*(self: DOMMatrix): float64 =
   discard
-proc jsDOMQuadP4*(self: DOMQuad): JsObject {.wasmBindgen.} =
+proc jsDOMMatrixM13*(self: DOMMatrix): float64 =
   discard
-proc jsDOMQuadBounds*(self: DOMQuad): JsObject {.wasmBindgen.} =
+proc jsDOMMatrixM14*(self: DOMMatrix): float64 =
   discard
-proc jsGetBounds*(self: DOMQuad): JsObject {.wasmBindgen.} =
+proc jsDOMMatrixM21*(self: DOMMatrix): float64 =
   discard
-proc jsToJSON*(self: DOMQuad): JsObject {.wasmBindgen.} =
+proc jsDOMMatrixM22*(self: DOMMatrix): float64 =
   discard
-
-proc jsDOMRectUnrestricted*(self: DOMRect): JsObject {.wasmBindgen.} =
+proc jsDOMMatrixM23*(self: DOMMatrix): float64 =
   discard
-proc jsDOMRectX*(self: DOMRect): float64 {.wasmBindgen.} =
+proc jsDOMMatrixM24*(self: DOMMatrix): float64 =
   discard
-proc jsDOMRectY*(self: DOMRect): float64 {.wasmBindgen.} =
+proc jsDOMMatrixM31*(self: DOMMatrix): float64 =
   discard
-proc jsDOMRectWidth*(self: DOMRect): float64 {.wasmBindgen.} =
+proc jsDOMMatrixM32*(self: DOMMatrix): float64 =
   discard
-proc jsDOMRectHeight*(self: DOMRect): float64 {.wasmBindgen.} =
+proc jsDOMMatrixM33*(self: DOMMatrix): float64 =
   discard
-
-proc jsDOMRectReadOnlyX*(self: DOMRectReadOnly): float64 {.wasmBindgen.} =
+proc jsDOMMatrixM34*(self: DOMMatrix): float64 =
   discard
-proc jsDOMRectReadOnlyY*(self: DOMRectReadOnly): float64 {.wasmBindgen.} =
+proc jsDOMMatrixM41*(self: DOMMatrix): float64 =
   discard
-proc jsDOMRectReadOnlyWidth*(self: DOMRectReadOnly): float64 {.wasmBindgen.} =
+proc jsDOMMatrixM42*(self: DOMMatrix): float64 =
   discard
-proc jsDOMRectReadOnlyHeight*(self: DOMRectReadOnly): float64 {.wasmBindgen.} =
+proc jsDOMMatrixM43*(self: DOMMatrix): float64 =
   discard
-proc jsDOMRectReadOnlyTop*(self: DOMRectReadOnly): float64 {.wasmBindgen.} =
+proc jsDOMMatrixM44*(self: DOMMatrix): float64 =
   discard
-proc jsDOMRectReadOnlyRight*(self: DOMRectReadOnly): float64 {.wasmBindgen.} =
+proc jsMultiplySelf*(self: DOMMatrix; other: JsObject): JsObject =
   discard
-proc jsDOMRectReadOnlyBottom*(self: DOMRectReadOnly): float64 {.wasmBindgen.} =
+proc jsPreMultiplySelf*(self: DOMMatrix; other: JsObject): JsObject =
   discard
-proc jsDOMRectReadOnlyLeft*(self: DOMRectReadOnly): float64 {.wasmBindgen.} =
+proc jsTranslateSelf*(self: DOMMatrix; tx: float64; ty: float64; tz: float64): JsObject =
   discard
-proc jsToJSON*(self: DOMRectReadOnly): JsObject {.wasmBindgen.} =
+proc jsScaleSelf*(self: DOMMatrix; scale: float64; originX: float64; originY: float64): JsObject =
   discard
-
-proc jsDOMRectListLength*(self: DOMRectList): uint32 {.wasmBindgen.} =
+proc jsScale3dSelf*(self: DOMMatrix; scale: float64; originX: float64; originY: float64; originZ: float64): JsObject =
   discard
-proc jsItem*(self: DOMRectList; index: uint32): Option[JsObject] {.wasmBindgen.} =
+proc jsScaleNonUniformSelf*(self: DOMMatrix; scaleX: float64; scaleY: float64; scaleZ: float64; originX: float64; originY: float64; originZ: float64): JsObject =
   discard
-
-proc jsThen*(self: DOMRequest; fulfillCallback: Option[JsObject]; rejectCallback: Option[JsObject]): JsObject {.wasmBindgen.} =
+proc jsRotateSelf*(self: DOMMatrix; angle: float64; originX: float64; originY: float64): JsObject =
   discard
-proc jsFireDetailedError*(self: DOMRequest; aError: JsObject): void {.wasmBindgen.} =
+proc jsRotateFromVectorSelf*(self: DOMMatrix; x: float64; y: float64): JsObject =
   discard
-
-proc jsDOMStringListLength*(self: DOMStringList): uint32 {.wasmBindgen.} =
+proc jsRotateAxisAngleSelf*(self: DOMMatrix; x: float64; y: float64; z: float64; angle: float64): JsObject =
   discard
-proc jsItem*(self: DOMStringList; index: uint32): Option[cstring] {.wasmBindgen.} =
+proc jsSkewXSelf*(self: DOMMatrix; sx: float64): JsObject =
   discard
-proc jsContains*(self: DOMStringList; string: cstring): bool {.wasmBindgen.} =
+proc jsSkewYSelf*(self: DOMMatrix; sy: float64): JsObject =
+  discard
+proc jsInvertSelf*(self: DOMMatrix): JsObject =
+  discard
+proc jsSetMatrixValue*(self: DOMMatrix; transformList: cstring): JsObject =
   discard
 
-
-proc jsDOMTokenListLength*(self: DOMTokenList): uint32 {.wasmBindgen.} =
+proc jsParseFromString*(self: DOMParser; str: cstring; typeVal: JsObject): JsObject =
   discard
-proc jsDOMTokenListValue*(self: DOMTokenList): cstring {.wasmBindgen.} =
-  discard
-proc jsItem*(self: DOMTokenList; index: uint32): Option[cstring] {.wasmBindgen.} =
-  discard
-proc jsContains*(self: DOMTokenList; token: cstring): bool {.wasmBindgen.} =
-  discard
-proc jsAdd*(self: DOMTokenList; tokens: cstring): void {.wasmBindgen.} =
-  discard
-proc jsRemove*(self: DOMTokenList; tokens: cstring): void {.wasmBindgen.} =
-  discard
-proc jsReplace*(self: DOMTokenList; token: cstring; newToken: cstring): bool {.wasmBindgen.} =
-  discard
-proc jsToggle*(self: DOMTokenList; token: cstring; force: bool): bool {.wasmBindgen.} =
-  discard
-proc jsSupports*(self: DOMTokenList; token: cstring): bool {.wasmBindgen.} =
+proc jsForceEnableXULXBL*(self: DOMParser): void =
   discard
 
-proc jsDataTransferDropEffect*(self: DataTransfer): cstring {.wasmBindgen.} =
+proc jsDOMPointReadOnlyX*(self: DOMPointReadOnly): float64 =
   discard
-proc jsDataTransferEffectAllowed*(self: DataTransfer): cstring {.wasmBindgen.} =
+proc jsDOMPointReadOnlyY*(self: DOMPointReadOnly): float64 =
   discard
-proc jsDataTransferItems*(self: DataTransfer): JsObject {.wasmBindgen.} =
+proc jsDOMPointReadOnlyZ*(self: DOMPointReadOnly): float64 =
   discard
-proc jsDataTransferTypes*(self: DataTransfer): JsObject {.wasmBindgen.} =
+proc jsDOMPointReadOnlyW*(self: DOMPointReadOnly): float64 =
   discard
-proc jsSetDragImage*(self: DataTransfer; image: JsObject; x: int32; y: int32): void {.wasmBindgen.} =
+proc jsFromPoint*(self: typedesc[DOMPointReadOnly]; other: JsObject): JsObject =
   discard
-proc jsGetData*(self: DataTransfer; format: cstring): cstring {.wasmBindgen.} =
+proc jsMatrixTransform*(self: DOMPointReadOnly; matrix: JsObject): JsObject =
   discard
-proc jsSetData*(self: DataTransfer; format: cstring; data: cstring): void {.wasmBindgen.} =
-  discard
-proc jsClearData*(self: DataTransfer; format: cstring): void {.wasmBindgen.} =
+proc jsToJSON*(self: DOMPointReadOnly): JsObject =
   discard
 
-proc jsDataTransferItemKind*(self: DataTransferItem): cstring {.wasmBindgen.} =
+proc jsDOMPointUnrestricted*(self: DOMPoint): JsObject =
   discard
-proc jsDataTransferItemTypeVal*(self: DataTransferItem): cstring {.wasmBindgen.} =
+proc jsDOMPointX*(self: DOMPoint): float64 =
   discard
-proc jsGetAsString*(self: DataTransferItem; callback: Option[JsObject]): void {.wasmBindgen.} =
+proc jsDOMPointY*(self: DOMPoint): float64 =
   discard
-proc jsGetAsFile*(self: DataTransferItem): Option[JsObject] {.wasmBindgen.} =
+proc jsDOMPointZ*(self: DOMPoint): float64 =
   discard
-
-proc jsDataTransferItemListLength*(self: DataTransferItemList): uint32 {.wasmBindgen.} =
+proc jsDOMPointW*(self: DOMPoint): float64 =
   discard
-proc jsAdd*(self: DataTransferItemList; data: cstring; typeVal: cstring): Option[JsObject] {.wasmBindgen.} =
-  discard
-proc jsAdd*(self: DataTransferItemList; data: JsObject): Option[JsObject] {.wasmBindgen.} =
-  discard
-proc jsRemove*(self: DataTransferItemList; index: uint32): void {.wasmBindgen.} =
-  discard
-proc jsClear*(self: DataTransferItemList): void {.wasmBindgen.} =
+proc jsFromPoint*(self: typedesc[DOMPoint]; other: JsObject): JsObject =
   discard
 
-proc jsDedicatedWorkerGlobalScopeName*(self: DedicatedWorkerGlobalScope): cstring {.wasmBindgen.} =
+proc jsDOMQuadP1*(self: DOMQuad): JsObject =
   discard
-proc jsDedicatedWorkerGlobalScopeOnmessage*(self: DedicatedWorkerGlobalScope): JsObject {.wasmBindgen.} =
+proc jsDOMQuadP2*(self: DOMQuad): JsObject =
   discard
-proc jsDedicatedWorkerGlobalScopeOnmessageerror*(self: DedicatedWorkerGlobalScope): JsObject {.wasmBindgen.} =
+proc jsDOMQuadP3*(self: DOMQuad): JsObject =
   discard
-proc jsPostMessage*(self: DedicatedWorkerGlobalScope; message: JsObject; transfer: JsObject): void {.wasmBindgen.} =
+proc jsDOMQuadP4*(self: DOMQuad): JsObject =
   discard
-proc jsClose*(self: DedicatedWorkerGlobalScope): void {.wasmBindgen.} =
+proc jsDOMQuadBounds*(self: DOMQuad): JsObject =
+  discard
+proc jsGetBounds*(self: DOMQuad): JsObject =
+  discard
+proc jsToJSON*(self: DOMQuad): JsObject =
   discard
 
-proc jsDelayNodeDelayTime*(self: DelayNode): JsObject {.wasmBindgen.} =
+proc jsDOMRectUnrestricted*(self: DOMRect): JsObject =
+  discard
+proc jsDOMRectX*(self: DOMRect): float64 =
+  discard
+proc jsDOMRectY*(self: DOMRect): float64 =
+  discard
+proc jsDOMRectWidth*(self: DOMRect): float64 =
+  discard
+proc jsDOMRectHeight*(self: DOMRect): float64 =
   discard
 
-proc jsDeviceLightEventValue*(self: DeviceLightEvent): float64 {.wasmBindgen.} =
+proc jsDOMRectReadOnlyX*(self: DOMRectReadOnly): float64 =
+  discard
+proc jsDOMRectReadOnlyY*(self: DOMRectReadOnly): float64 =
+  discard
+proc jsDOMRectReadOnlyWidth*(self: DOMRectReadOnly): float64 =
+  discard
+proc jsDOMRectReadOnlyHeight*(self: DOMRectReadOnly): float64 =
+  discard
+proc jsDOMRectReadOnlyTop*(self: DOMRectReadOnly): float64 =
+  discard
+proc jsDOMRectReadOnlyRight*(self: DOMRectReadOnly): float64 =
+  discard
+proc jsDOMRectReadOnlyBottom*(self: DOMRectReadOnly): float64 =
+  discard
+proc jsDOMRectReadOnlyLeft*(self: DOMRectReadOnly): float64 =
+  discard
+proc jsToJSON*(self: DOMRectReadOnly): JsObject =
+  discard
+
+proc jsDOMRectListLength*(self: DOMRectList): uint32 =
+  discard
+proc jsItem*(self: DOMRectList; index: uint32): Option[JsObject] =
+  discard
+
+proc jsThen*(self: DOMRequest; fulfillCallback: Option[JsObject]; rejectCallback: Option[JsObject]): JsObject =
+  discard
+proc jsFireDetailedError*(self: DOMRequest; aError: JsObject): void =
+  discard
+
+proc jsDOMStringListLength*(self: DOMStringList): uint32 =
+  discard
+proc jsItem*(self: DOMStringList; index: uint32): Option[cstring] =
+  discard
+proc jsContains*(self: DOMStringList; string: cstring): bool =
   discard
 
 
-
-
-proc jsDeviceOrientationEventAbsolute*(self: DeviceOrientationEvent): bool {.wasmBindgen.} =
+proc jsDOMTokenListLength*(self: DOMTokenList): uint32 =
   discard
-proc jsInitDeviceOrientationEvent*(self: DeviceOrientationEvent; typeVal: cstring; canBubble: bool; cancelable: bool; alpha: Option[float64]; beta: Option[float64]; gamma: Option[float64]; absolute: bool): void {.wasmBindgen.} =
+proc jsDOMTokenListValue*(self: DOMTokenList): cstring =
   discard
-
-proc jsDeviceProximityEventValue*(self: DeviceProximityEvent): float64 {.wasmBindgen.} =
+proc jsItem*(self: DOMTokenList; index: uint32): Option[cstring] =
   discard
-proc jsDeviceProximityEventMin*(self: DeviceProximityEvent): float64 {.wasmBindgen.} =
+proc jsContains*(self: DOMTokenList; token: cstring): bool =
   discard
-proc jsDeviceProximityEventMax*(self: DeviceProximityEvent): float64 {.wasmBindgen.} =
+proc jsAdd*(self: DOMTokenList; tokens: cstring): void =
   discard
-
-proc jsDirectoryName*(self: Directory): cstring {.wasmBindgen.} =
+proc jsRemove*(self: DOMTokenList; tokens: cstring): void =
   discard
-
-proc jsDocumentImplementation*(self: Document): JsObject {.wasmBindgen.} =
+proc jsReplace*(self: DOMTokenList; token: cstring; newToken: cstring): bool =
   discard
-proc jsDocumentURL*(self: Document): cstring {.wasmBindgen.} =
+proc jsToggle*(self: DOMTokenList; token: cstring; force: bool): bool =
   discard
-proc jsDocumentDocumentURI*(self: Document): cstring {.wasmBindgen.} =
-  discard
-proc jsDocumentCompatMode*(self: Document): cstring {.wasmBindgen.} =
-  discard
-proc jsDocumentCharacterSet*(self: Document): cstring {.wasmBindgen.} =
-  discard
-proc jsDocumentCharset*(self: Document): cstring {.wasmBindgen.} =
-  discard
-proc jsDocumentInputEncoding*(self: Document): cstring {.wasmBindgen.} =
-  discard
-proc jsDocumentContentType*(self: Document): cstring {.wasmBindgen.} =
-  discard
-proc jsGetElementsByTagName*(self: Document; localName: cstring): JsObject {.wasmBindgen.} =
-  discard
-proc jsGetElementsByTagNameNS*(self: Document; namespace: Option[cstring]; localName: cstring): JsObject {.wasmBindgen.} =
-  discard
-proc jsGetElementsByClassName*(self: Document; classNames: cstring): JsObject {.wasmBindgen.} =
-  discard
-proc jsGetElementById*(self: Document; elementId: cstring): Option[JsObject] {.wasmBindgen.} =
-  discard
-proc jsCreateElement*(self: Document; localName: cstring; options: JsObject): JsObject {.wasmBindgen.} =
-  discard
-proc jsCreateElementNS*(self: Document; namespace: Option[cstring]; qualifiedName: cstring; options: JsObject): JsObject {.wasmBindgen.} =
-  discard
-proc jsCreateDocumentFragment*(self: Document): JsObject {.wasmBindgen.} =
-  discard
-proc jsCreateTextNode*(self: Document; data: cstring): JsObject {.wasmBindgen.} =
-  discard
-proc jsCreateComment*(self: Document; data: cstring): JsObject {.wasmBindgen.} =
-  discard
-proc jsCreateProcessingInstruction*(self: Document; target: cstring; data: cstring): JsObject {.wasmBindgen.} =
-  discard
-proc jsImportNode*(self: Document; node: JsObject; deep: bool): JsObject {.wasmBindgen.} =
-  discard
-proc jsAdoptNode*(self: Document; node: JsObject): JsObject {.wasmBindgen.} =
-  discard
-proc jsCreateEvent*(self: Document; interfaceVal: cstring): JsObject {.wasmBindgen.} =
-  discard
-proc jsCreateRange*(self: Document): JsObject {.wasmBindgen.} =
-  discard
-proc jsCreateNodeIterator*(self: Document; root: JsObject; whatToShow: uint32; filter: Option[JsObject]): JsObject {.wasmBindgen.} =
-  discard
-proc jsCreateTreeWalker*(self: Document; root: JsObject; whatToShow: uint32; filter: Option[JsObject]): JsObject {.wasmBindgen.} =
-  discard
-proc jsCreateCDATASection*(self: Document; data: cstring): JsObject {.wasmBindgen.} =
-  discard
-proc jsCreateAttribute*(self: Document; name: cstring): JsObject {.wasmBindgen.} =
-  discard
-proc jsCreateAttributeNS*(self: Document; namespace: Option[cstring]; name: cstring): JsObject {.wasmBindgen.} =
+proc jsSupports*(self: DOMTokenList; token: cstring): bool =
   discard
 
-proc jsGetElementById*(self: DocumentFragment; elementId: cstring): Option[JsObject] {.wasmBindgen.} =
+proc jsDataTransferDropEffect*(self: DataTransfer): cstring =
+  discard
+proc jsDataTransferEffectAllowed*(self: DataTransfer): cstring =
+  discard
+proc jsDataTransferItems*(self: DataTransfer): JsObject =
+  discard
+proc jsDataTransferTypes*(self: DataTransfer): JsObject =
+  discard
+proc jsSetDragImage*(self: DataTransfer; image: JsObject; x: int32; y: int32): void =
+  discard
+proc jsGetData*(self: DataTransfer; format: cstring): cstring =
+  discard
+proc jsSetData*(self: DataTransfer; format: cstring; data: cstring): void =
+  discard
+proc jsClearData*(self: DataTransfer; format: cstring): void =
+  discard
+
+proc jsDataTransferItemKind*(self: DataTransferItem): cstring =
+  discard
+proc jsDataTransferItemTypeVal*(self: DataTransferItem): cstring =
+  discard
+proc jsGetAsString*(self: DataTransferItem; callback: Option[JsObject]): void =
+  discard
+proc jsGetAsFile*(self: DataTransferItem): Option[JsObject] =
+  discard
+
+proc jsDataTransferItemListLength*(self: DataTransferItemList): uint32 =
+  discard
+proc jsAdd*(self: DataTransferItemList; data: cstring; typeVal: cstring): Option[JsObject] =
+  discard
+proc jsAdd*(self: DataTransferItemList; data: JsObject): Option[JsObject] =
+  discard
+proc jsRemove*(self: DataTransferItemList; index: uint32): void =
+  discard
+proc jsClear*(self: DataTransferItemList): void =
+  discard
+
+proc jsDedicatedWorkerGlobalScopeName*(self: DedicatedWorkerGlobalScope): cstring =
+  discard
+proc jsDedicatedWorkerGlobalScopeOnmessage*(self: DedicatedWorkerGlobalScope): JsObject =
+  discard
+proc jsDedicatedWorkerGlobalScopeOnmessageerror*(self: DedicatedWorkerGlobalScope): JsObject =
+  discard
+proc jsPostMessage*(self: DedicatedWorkerGlobalScope; message: JsObject; transfer: JsObject): void =
+  discard
+proc jsClose*(self: DedicatedWorkerGlobalScope): void =
+  discard
+
+proc jsDelayNodeDelayTime*(self: DelayNode): JsObject =
+  discard
+
+proc jsDeviceLightEventValue*(self: DeviceLightEvent): float64 =
   discard
 
 
-proc jsDocumentTypeName*(self: DocumentType): cstring {.wasmBindgen.} =
+
+
+proc jsDeviceOrientationEventAbsolute*(self: DeviceOrientationEvent): bool =
   discard
-proc jsDocumentTypePublicId*(self: DocumentType): cstring {.wasmBindgen.} =
-  discard
-proc jsDocumentTypeSystemId*(self: DocumentType): cstring {.wasmBindgen.} =
+proc jsInitDeviceOrientationEvent*(self: DeviceOrientationEvent; typeVal: cstring; canBubble: bool; cancelable: bool; alpha: Option[float64]; beta: Option[float64]; gamma: Option[float64]; absolute: bool): void =
   discard
 
-proc jsInitDragEvent*(self: DragEvent; typeVal: cstring; canBubble: bool; cancelable: bool; aView: Option[JsObject]; aDetail: int32; aScreenX: int32; aScreenY: int32; aClientX: int32; aClientY: int32; aCtrlKey: bool; aAltKey: bool; aShiftKey: bool; aMetaKey: bool; aButton: uint16; aRelatedTarget: Option[JsObject]; aDataTransfer: Option[JsObject]): void {.wasmBindgen.} =
+proc jsDeviceProximityEventValue*(self: DeviceProximityEvent): float64 =
+  discard
+proc jsDeviceProximityEventMin*(self: DeviceProximityEvent): float64 =
+  discard
+proc jsDeviceProximityEventMax*(self: DeviceProximityEvent): float64 =
   discard
 
-proc jsDynamicsCompressorNodeThreshold*(self: DynamicsCompressorNode): JsObject {.wasmBindgen.} =
-  discard
-proc jsDynamicsCompressorNodeKnee*(self: DynamicsCompressorNode): JsObject {.wasmBindgen.} =
-  discard
-proc jsDynamicsCompressorNodeRatio*(self: DynamicsCompressorNode): JsObject {.wasmBindgen.} =
-  discard
-proc jsDynamicsCompressorNodeReduction*(self: DynamicsCompressorNode): float32 {.wasmBindgen.} =
-  discard
-proc jsDynamicsCompressorNodeAttack*(self: DynamicsCompressorNode): JsObject {.wasmBindgen.} =
-  discard
-proc jsDynamicsCompressorNodeRelease*(self: DynamicsCompressorNode): JsObject {.wasmBindgen.} =
+proc jsDirectoryName*(self: Directory): cstring =
   discard
 
-proc jsElementLocalName*(self: Element): cstring {.wasmBindgen.} =
+proc jsDocumentImplementation*(self: Document): JsObject =
   discard
-proc jsElementTagName*(self: Element): cstring {.wasmBindgen.} =
+proc jsDocumentURL*(self: Document): cstring =
   discard
-proc jsElementId*(self: Element): cstring {.wasmBindgen.} =
+proc jsDocumentDocumentURI*(self: Document): cstring =
   discard
-proc jsElementClassName*(self: Element): cstring {.wasmBindgen.} =
+proc jsDocumentCompatMode*(self: Document): cstring =
   discard
-proc jsElementClassList*(self: Element): JsObject {.wasmBindgen.} =
+proc jsDocumentCharacterSet*(self: Document): cstring =
   discard
-proc jsElementAttributes*(self: Element): JsObject {.wasmBindgen.} =
+proc jsDocumentCharset*(self: Document): cstring =
   discard
-proc jsElementFontSizeInflation*(self: Element): float32 {.wasmBindgen.} =
+proc jsDocumentInputEncoding*(self: Document): cstring =
   discard
-proc jsGetAttributeNames*(self: Element): JsObject {.wasmBindgen.} =
+proc jsDocumentContentType*(self: Document): cstring =
   discard
-proc jsGetAttribute*(self: Element; name: cstring): Option[cstring] {.wasmBindgen.} =
+proc jsGetElementsByTagName*(self: Document; localName: cstring): JsObject =
   discard
-proc jsGetAttributeNS*(self: Element; namespace: Option[cstring]; localName: cstring): Option[cstring] {.wasmBindgen.} =
+proc jsGetElementsByTagNameNS*(self: Document; namespace: Option[cstring]; localName: cstring): JsObject =
   discard
-proc jsToggleAttribute*(self: Element; name: cstring; force: bool): bool {.wasmBindgen.} =
+proc jsGetElementsByClassName*(self: Document; classNames: cstring): JsObject =
   discard
-proc jsSetAttribute*(self: Element; name: cstring; value: cstring): void {.wasmBindgen.} =
+proc jsGetElementById*(self: Document; elementId: cstring): Option[JsObject] =
   discard
-proc jsSetAttributeNS*(self: Element; namespace: Option[cstring]; name: cstring; value: cstring): void {.wasmBindgen.} =
+proc jsCreateElement*(self: Document; localName: cstring; options: JsObject): JsObject =
   discard
-proc jsRemoveAttribute*(self: Element; name: cstring): void {.wasmBindgen.} =
+proc jsCreateElementNS*(self: Document; namespace: Option[cstring]; qualifiedName: cstring; options: JsObject): JsObject =
   discard
-proc jsRemoveAttributeNS*(self: Element; namespace: Option[cstring]; localName: cstring): void {.wasmBindgen.} =
+proc jsCreateDocumentFragment*(self: Document): JsObject =
   discard
-proc jsHasAttribute*(self: Element; name: cstring): bool {.wasmBindgen.} =
+proc jsCreateTextNode*(self: Document; data: cstring): JsObject =
   discard
-proc jsHasAttributeNS*(self: Element; namespace: Option[cstring]; localName: cstring): bool {.wasmBindgen.} =
+proc jsCreateComment*(self: Document; data: cstring): JsObject =
   discard
-proc jsHasAttributes*(self: Element): bool {.wasmBindgen.} =
+proc jsCreateProcessingInstruction*(self: Document; target: cstring; data: cstring): JsObject =
   discard
-proc jsClosest*(self: Element; selector: cstring): Option[JsObject] {.wasmBindgen.} =
+proc jsImportNode*(self: Document; node: JsObject; deep: bool): JsObject =
   discard
-proc jsMatches*(self: Element; selector: cstring): bool {.wasmBindgen.} =
+proc jsAdoptNode*(self: Document; node: JsObject): JsObject =
   discard
-proc jsWebkitMatchesSelector*(self: Element; selector: cstring): bool {.wasmBindgen.} =
+proc jsCreateEvent*(self: Document; interfaceVal: cstring): JsObject =
   discard
-proc jsGetElementsByTagName*(self: Element; localName: cstring): JsObject {.wasmBindgen.} =
+proc jsCreateRange*(self: Document): JsObject =
   discard
-proc jsGetElementsByTagNameNS*(self: Element; namespace: Option[cstring]; localName: cstring): JsObject {.wasmBindgen.} =
+proc jsCreateNodeIterator*(self: Document; root: JsObject; whatToShow: uint32; filter: Option[JsObject]): JsObject =
   discard
-proc jsGetElementsByClassName*(self: Element; classNames: cstring): JsObject {.wasmBindgen.} =
+proc jsCreateTreeWalker*(self: Document; root: JsObject; whatToShow: uint32; filter: Option[JsObject]): JsObject =
   discard
-proc jsGetElementsWithGrid*(self: Element): JsObject {.wasmBindgen.} =
+proc jsCreateCDATASection*(self: Document; data: cstring): JsObject =
   discard
-proc jsInsertAdjacentElement*(self: Element; where: cstring; element: JsObject): Option[JsObject] {.wasmBindgen.} =
+proc jsCreateAttribute*(self: Document; name: cstring): JsObject =
   discard
-proc jsInsertAdjacentText*(self: Element; where: cstring; data: cstring): void {.wasmBindgen.} =
-  discard
-proc jsSetPointerCapture*(self: Element; pointerId: int32): void {.wasmBindgen.} =
-  discard
-proc jsReleasePointerCapture*(self: Element; pointerId: int32): void {.wasmBindgen.} =
-  discard
-proc jsHasPointerCapture*(self: Element; pointerId: int32): bool {.wasmBindgen.} =
-  discard
-proc jsSetCapture*(self: Element; retargetToElement: bool): void {.wasmBindgen.} =
-  discard
-proc jsReleaseCapture*(self: Element): void {.wasmBindgen.} =
-  discard
-proc jsSetCaptureAlways*(self: Element; retargetToElement: bool): void {.wasmBindgen.} =
-  discard
-proc jsGetAttributeNode*(self: Element; name: cstring): Option[JsObject] {.wasmBindgen.} =
-  discard
-proc jsSetAttributeNode*(self: Element; newAttr: JsObject): Option[JsObject] {.wasmBindgen.} =
-  discard
-proc jsRemoveAttributeNode*(self: Element; oldAttr: JsObject): Option[JsObject] {.wasmBindgen.} =
-  discard
-proc jsGetAttributeNodeNS*(self: Element; namespaceURI: Option[cstring]; localName: cstring): Option[JsObject] {.wasmBindgen.} =
-  discard
-proc jsSetAttributeNodeNS*(self: Element; newAttr: JsObject): Option[JsObject] {.wasmBindgen.} =
-  discard
-proc jsScrollByNoFlush*(self: Element; dx: int32; dy: int32): bool {.wasmBindgen.} =
-  discard
-proc jsGetAsFlexContainer*(self: Element): Option[JsObject] {.wasmBindgen.} =
-  discard
-proc jsGetGridFragments*(self: Element): JsObject {.wasmBindgen.} =
-  discard
-proc jsGetTransformToAncestor*(self: Element; ancestor: JsObject): JsObject {.wasmBindgen.} =
-  discard
-proc jsGetTransformToParent*(self: Element): JsObject {.wasmBindgen.} =
-  discard
-proc jsGetTransformToViewport*(self: Element): JsObject {.wasmBindgen.} =
+proc jsCreateAttributeNS*(self: Document; namespace: Option[cstring]; name: cstring): JsObject =
   discard
 
-proc jsErrorEventMessage*(self: ErrorEvent): cstring {.wasmBindgen.} =
-  discard
-proc jsErrorEventFilename*(self: ErrorEvent): cstring {.wasmBindgen.} =
-  discard
-proc jsErrorEventLineno*(self: ErrorEvent): uint32 {.wasmBindgen.} =
-  discard
-proc jsErrorEventColno*(self: ErrorEvent): uint32 {.wasmBindgen.} =
-  discard
-proc jsErrorEventError*(self: ErrorEvent): JsObject {.wasmBindgen.} =
+proc jsGetElementById*(self: DocumentFragment; elementId: cstring): Option[JsObject] =
   discard
 
-proc jsEventTypeVal*(self: Event): cstring {.wasmBindgen.} =
+
+proc jsDocumentTypeName*(self: DocumentType): cstring =
+  discard
+proc jsDocumentTypePublicId*(self: DocumentType): cstring =
+  discard
+proc jsDocumentTypeSystemId*(self: DocumentType): cstring =
+  discard
+
+proc jsInitDragEvent*(self: DragEvent; typeVal: cstring; canBubble: bool; cancelable: bool; aView: Option[JsObject]; aDetail: int32; aScreenX: int32; aScreenY: int32; aClientX: int32; aClientY: int32; aCtrlKey: bool; aAltKey: bool; aShiftKey: bool; aMetaKey: bool; aButton: uint16; aRelatedTarget: Option[JsObject]; aDataTransfer: Option[JsObject]): void =
+  discard
+
+proc jsDynamicsCompressorNodeThreshold*(self: DynamicsCompressorNode): JsObject =
+  discard
+proc jsDynamicsCompressorNodeKnee*(self: DynamicsCompressorNode): JsObject =
+  discard
+proc jsDynamicsCompressorNodeRatio*(self: DynamicsCompressorNode): JsObject =
+  discard
+proc jsDynamicsCompressorNodeReduction*(self: DynamicsCompressorNode): float32 =
+  discard
+proc jsDynamicsCompressorNodeAttack*(self: DynamicsCompressorNode): JsObject =
+  discard
+proc jsDynamicsCompressorNodeRelease*(self: DynamicsCompressorNode): JsObject =
+  discard
+
+proc jsElementLocalName*(self: Element): cstring =
+  discard
+proc jsElementTagName*(self: Element): cstring =
+  discard
+proc jsElementId*(self: Element): cstring =
+  discard
+proc jsElementClassName*(self: Element): cstring =
+  discard
+proc jsElementClassList*(self: Element): JsObject =
+  discard
+proc jsElementAttributes*(self: Element): JsObject =
+  discard
+proc jsElementFontSizeInflation*(self: Element): float32 =
+  discard
+proc jsGetAttributeNames*(self: Element): JsObject =
+  discard
+proc jsGetAttribute*(self: Element; name: cstring): Option[cstring] =
+  discard
+proc jsGetAttributeNS*(self: Element; namespace: Option[cstring]; localName: cstring): Option[cstring] =
+  discard
+proc jsToggleAttribute*(self: Element; name: cstring; force: bool): bool =
+  discard
+proc jsSetAttribute*(self: Element; name: cstring; value: cstring): void =
+  discard
+proc jsSetAttributeNS*(self: Element; namespace: Option[cstring]; name: cstring; value: cstring): void =
+  discard
+proc jsRemoveAttribute*(self: Element; name: cstring): void =
+  discard
+proc jsRemoveAttributeNS*(self: Element; namespace: Option[cstring]; localName: cstring): void =
+  discard
+proc jsHasAttribute*(self: Element; name: cstring): bool =
+  discard
+proc jsHasAttributeNS*(self: Element; namespace: Option[cstring]; localName: cstring): bool =
+  discard
+proc jsHasAttributes*(self: Element): bool =
+  discard
+proc jsClosest*(self: Element; selector: cstring): Option[JsObject] =
+  discard
+proc jsMatches*(self: Element; selector: cstring): bool =
+  discard
+proc jsWebkitMatchesSelector*(self: Element; selector: cstring): bool =
+  discard
+proc jsGetElementsByTagName*(self: Element; localName: cstring): JsObject =
+  discard
+proc jsGetElementsByTagNameNS*(self: Element; namespace: Option[cstring]; localName: cstring): JsObject =
+  discard
+proc jsGetElementsByClassName*(self: Element; classNames: cstring): JsObject =
+  discard
+proc jsGetElementsWithGrid*(self: Element): JsObject =
+  discard
+proc jsInsertAdjacentElement*(self: Element; where: cstring; element: JsObject): Option[JsObject] =
+  discard
+proc jsInsertAdjacentText*(self: Element; where: cstring; data: cstring): void =
+  discard
+proc jsSetPointerCapture*(self: Element; pointerId: int32): void =
+  discard
+proc jsReleasePointerCapture*(self: Element; pointerId: int32): void =
+  discard
+proc jsHasPointerCapture*(self: Element; pointerId: int32): bool =
+  discard
+proc jsSetCapture*(self: Element; retargetToElement: bool): void =
+  discard
+proc jsReleaseCapture*(self: Element): void =
+  discard
+proc jsSetCaptureAlways*(self: Element; retargetToElement: bool): void =
+  discard
+proc jsGetAttributeNode*(self: Element; name: cstring): Option[JsObject] =
+  discard
+proc jsSetAttributeNode*(self: Element; newAttr: JsObject): Option[JsObject] =
+  discard
+proc jsRemoveAttributeNode*(self: Element; oldAttr: JsObject): Option[JsObject] =
+  discard
+proc jsGetAttributeNodeNS*(self: Element; namespaceURI: Option[cstring]; localName: cstring): Option[JsObject] =
+  discard
+proc jsSetAttributeNodeNS*(self: Element; newAttr: JsObject): Option[JsObject] =
+  discard
+proc jsScrollByNoFlush*(self: Element; dx: int32; dy: int32): bool =
+  discard
+proc jsGetAsFlexContainer*(self: Element): Option[JsObject] =
+  discard
+proc jsGetGridFragments*(self: Element): JsObject =
+  discard
+proc jsGetTransformToAncestor*(self: Element; ancestor: JsObject): JsObject =
+  discard
+proc jsGetTransformToParent*(self: Element): JsObject =
+  discard
+proc jsGetTransformToViewport*(self: Element): JsObject =
+  discard
+
+proc jsErrorEventMessage*(self: ErrorEvent): cstring =
+  discard
+proc jsErrorEventFilename*(self: ErrorEvent): cstring =
+  discard
+proc jsErrorEventLineno*(self: ErrorEvent): uint32 =
+  discard
+proc jsErrorEventColno*(self: ErrorEvent): uint32 =
+  discard
+proc jsErrorEventError*(self: ErrorEvent): JsObject =
+  discard
+
+proc jsEventTypeVal*(self: Event): cstring =
   discard
 const jsEventNONE* : uint16 = 0
 const jsEventCAPTURING_PHASE* : uint16 = 0
 const jsEventAT_TARGET* : uint16 = 0
 const jsEventBUBBLING_PHASE* : uint16 = 0
-proc jsEventEventPhase*(self: Event): uint16 {.wasmBindgen.} =
+proc jsEventEventPhase*(self: Event): uint16 =
   discard
-proc jsEventBubbles*(self: Event): bool {.wasmBindgen.} =
+proc jsEventBubbles*(self: Event): bool =
   discard
-proc jsEventCancelable*(self: Event): bool {.wasmBindgen.} =
+proc jsEventCancelable*(self: Event): bool =
   discard
-proc jsEventDefaultPrevented*(self: Event): bool {.wasmBindgen.} =
+proc jsEventDefaultPrevented*(self: Event): bool =
   discard
-proc jsEventDefaultPreventedByChrome*(self: Event): bool {.wasmBindgen.} =
+proc jsEventDefaultPreventedByChrome*(self: Event): bool =
   discard
-proc jsEventDefaultPreventedByContent*(self: Event): bool {.wasmBindgen.} =
+proc jsEventDefaultPreventedByContent*(self: Event): bool =
   discard
-proc jsEventComposed*(self: Event): bool {.wasmBindgen.} =
+proc jsEventComposed*(self: Event): bool =
   discard
-proc jsEventIsTrusted*(self: Event): bool {.wasmBindgen.} =
+proc jsEventIsTrusted*(self: Event): bool =
   discard
-proc jsEventTimeStamp*(self: Event): JsObject {.wasmBindgen.} =
+proc jsEventTimeStamp*(self: Event): JsObject =
   discard
-proc jsEventCancelBubble*(self: Event): bool {.wasmBindgen.} =
+proc jsEventCancelBubble*(self: Event): bool =
   discard
-proc jsComposedPath*(self: Event): JsObject {.wasmBindgen.} =
+proc jsComposedPath*(self: Event): JsObject =
   discard
-proc jsStopPropagation*(self: Event): void {.wasmBindgen.} =
+proc jsStopPropagation*(self: Event): void =
   discard
-proc jsStopImmediatePropagation*(self: Event): void {.wasmBindgen.} =
+proc jsStopImmediatePropagation*(self: Event): void =
   discard
-proc jsPreventDefault*(self: Event): void {.wasmBindgen.} =
+proc jsPreventDefault*(self: Event): void =
   discard
-proc jsInitEvent*(self: Event; typeVal: cstring; bubbles: bool; cancelable: bool): void {.wasmBindgen.} =
+proc jsInitEvent*(self: Event; typeVal: cstring; bubbles: bool; cancelable: bool): void =
   discard
 
-proc jsEventSourceUrl*(self: EventSource): cstring {.wasmBindgen.} =
+proc jsEventSourceUrl*(self: EventSource): cstring =
   discard
-proc jsEventSourceWithCredentials*(self: EventSource): bool {.wasmBindgen.} =
+proc jsEventSourceWithCredentials*(self: EventSource): bool =
   discard
 const jsEventSourceCONNECTING* : uint16 = 0
 const jsEventSourceOPEN* : uint16 = 0
 const jsEventSourceCLOSED* : uint16 = 0
-proc jsEventSourceReadyState*(self: EventSource): uint16 {.wasmBindgen.} =
+proc jsEventSourceReadyState*(self: EventSource): uint16 =
   discard
-proc jsEventSourceOnopen*(self: EventSource): JsObject {.wasmBindgen.} =
+proc jsEventSourceOnopen*(self: EventSource): JsObject =
   discard
-proc jsEventSourceOnmessage*(self: EventSource): JsObject {.wasmBindgen.} =
+proc jsEventSourceOnmessage*(self: EventSource): JsObject =
   discard
-proc jsEventSourceOnerror*(self: EventSource): JsObject {.wasmBindgen.} =
+proc jsEventSourceOnerror*(self: EventSource): JsObject =
   discard
-proc jsClose*(self: EventSource): void {.wasmBindgen.} =
-  discard
-
-proc jsAddEventListener*(self: EventTarget; typeVal: cstring; listener: JsObject; options: JsObject; wantsUntrusted: Option[bool]): void {.wasmBindgen.} =
-  discard
-proc jsRemoveEventListener*(self: EventTarget; typeVal: cstring; listener: JsObject; options: JsObject): void {.wasmBindgen.} =
-  discard
-proc jsDispatchEvent*(self: EventTarget; event: JsObject): bool {.wasmBindgen.} =
+proc jsClose*(self: EventSource): void =
   discard
 
-proc jsWaitUntil*(self: ExtendableEvent; p: JsObject): void {.wasmBindgen.} =
+proc jsAddEventListener*(self: EventTarget; typeVal: cstring; listener: JsObject; options: JsObject; wantsUntrusted: Option[bool]): void =
+  discard
+proc jsRemoveEventListener*(self: EventTarget; typeVal: cstring; listener: JsObject; options: JsObject): void =
+  discard
+proc jsDispatchEvent*(self: EventTarget; event: JsObject): bool =
   discard
 
-proc jsExtendableMessageEventData*(self: ExtendableMessageEvent): JsObject {.wasmBindgen.} =
-  discard
-proc jsExtendableMessageEventOrigin*(self: ExtendableMessageEvent): cstring {.wasmBindgen.} =
-  discard
-proc jsExtendableMessageEventLastEventId*(self: ExtendableMessageEvent): cstring {.wasmBindgen.} =
-  discard
-proc jsExtendableMessageEventPorts*(self: ExtendableMessageEvent): JsObject {.wasmBindgen.} =
+proc jsWaitUntil*(self: ExtendableEvent; p: JsObject): void =
   discard
 
-proc jsAddSearchProvider*(self: External; aDescriptionURL: cstring): void {.wasmBindgen.} =
+proc jsExtendableMessageEventData*(self: ExtendableMessageEvent): JsObject =
   discard
-proc jsIsSearchProviderInstalled*(self: External; aSearchURL: cstring): uint32 {.wasmBindgen.} =
+proc jsExtendableMessageEventOrigin*(self: ExtendableMessageEvent): cstring =
   discard
-
-proc jsFetchEventRequest*(self: FetchEvent): JsObject {.wasmBindgen.} =
+proc jsExtendableMessageEventLastEventId*(self: ExtendableMessageEvent): cstring =
   discard
-proc jsFetchEventIsReload*(self: FetchEvent): bool {.wasmBindgen.} =
-  discard
-proc jsRespondWith*(self: FetchEvent; r: JsObject): void {.wasmBindgen.} =
+proc jsExtendableMessageEventPorts*(self: ExtendableMessageEvent): JsObject =
   discard
 
-proc jsFetchObserverState*(self: FetchObserver): JsObject {.wasmBindgen.} =
+proc jsAddSearchProvider*(self: External; aDescriptionURL: cstring): void =
   discard
-proc jsFetchObserverOnstatechange*(self: FetchObserver): JsObject {.wasmBindgen.} =
-  discard
-proc jsFetchObserverOnrequestprogress*(self: FetchObserver): JsObject {.wasmBindgen.} =
-  discard
-proc jsFetchObserverOnresponseprogress*(self: FetchObserver): JsObject {.wasmBindgen.} =
+proc jsIsSearchProviderInstalled*(self: External; aSearchURL: cstring): uint32 =
   discard
 
-proc jsFileName*(self: File): cstring {.wasmBindgen.} =
+proc jsFetchEventRequest*(self: FetchEvent): JsObject =
   discard
-proc jsFileLastModified*(self: File): int64 {.wasmBindgen.} =
+proc jsFetchEventIsReload*(self: FetchEvent): bool =
+  discard
+proc jsRespondWith*(self: FetchEvent; r: JsObject): void =
   discard
 
-proc jsFileListLength*(self: FileList): uint32 {.wasmBindgen.} =
+proc jsFetchObserverState*(self: FetchObserver): JsObject =
   discard
-proc jsItem*(self: FileList; index: uint32): Option[JsObject] {.wasmBindgen.} =
+proc jsFetchObserverOnstatechange*(self: FetchObserver): JsObject =
+  discard
+proc jsFetchObserverOnrequestprogress*(self: FetchObserver): JsObject =
+  discard
+proc jsFetchObserverOnresponseprogress*(self: FetchObserver): JsObject =
+  discard
+
+proc jsFileName*(self: File): cstring =
+  discard
+proc jsFileLastModified*(self: File): int64 =
+  discard
+
+proc jsFileListLength*(self: FileList): uint32 =
+  discard
+proc jsItem*(self: FileList; index: uint32): Option[JsObject] =
   discard
 
 const jsFileReaderEMPTY* : uint16 = 0
 const jsFileReaderLOADING* : uint16 = 0
 const jsFileReaderDONE* : uint16 = 0
-proc jsFileReaderReadyState*(self: FileReader): uint16 {.wasmBindgen.} =
+proc jsFileReaderReadyState*(self: FileReader): uint16 =
   discard
-proc jsFileReaderResultVal*(self: FileReader): JsObject {.wasmBindgen.} =
+proc jsFileReaderResultVal*(self: FileReader): JsObject =
   discard
-proc jsFileReaderOnloadstart*(self: FileReader): JsObject {.wasmBindgen.} =
+proc jsFileReaderOnloadstart*(self: FileReader): JsObject =
   discard
-proc jsFileReaderOnprogress*(self: FileReader): JsObject {.wasmBindgen.} =
+proc jsFileReaderOnprogress*(self: FileReader): JsObject =
   discard
-proc jsFileReaderOnload*(self: FileReader): JsObject {.wasmBindgen.} =
+proc jsFileReaderOnload*(self: FileReader): JsObject =
   discard
-proc jsFileReaderOnabort*(self: FileReader): JsObject {.wasmBindgen.} =
+proc jsFileReaderOnabort*(self: FileReader): JsObject =
   discard
-proc jsFileReaderOnerror*(self: FileReader): JsObject {.wasmBindgen.} =
+proc jsFileReaderOnerror*(self: FileReader): JsObject =
   discard
-proc jsFileReaderOnloadend*(self: FileReader): JsObject {.wasmBindgen.} =
+proc jsFileReaderOnloadend*(self: FileReader): JsObject =
   discard
-proc jsReadAsArrayBuffer*(self: FileReader; blob: JsObject): void {.wasmBindgen.} =
+proc jsReadAsArrayBuffer*(self: FileReader; blob: JsObject): void =
   discard
-proc jsReadAsBinaryString*(self: FileReader; filedata: JsObject): void {.wasmBindgen.} =
+proc jsReadAsBinaryString*(self: FileReader; filedata: JsObject): void =
   discard
-proc jsReadAsText*(self: FileReader; blob: JsObject; label: cstring): void {.wasmBindgen.} =
+proc jsReadAsText*(self: FileReader; blob: JsObject; label: cstring): void =
   discard
-proc jsReadAsDataURL*(self: FileReader; blob: JsObject): void {.wasmBindgen.} =
+proc jsReadAsDataURL*(self: FileReader; blob: JsObject): void =
   discard
-proc jsAbort*(self: FileReader): void {.wasmBindgen.} =
+proc jsAbort*(self: FileReader): void =
   discard
 
-proc jsReadAsArrayBuffer*(self: FileReaderSync; blob: JsObject): JsObject {.wasmBindgen.} =
+proc jsReadAsArrayBuffer*(self: FileReaderSync; blob: JsObject): JsObject =
   discard
-proc jsReadAsBinaryString*(self: FileReaderSync; blob: JsObject): cstring {.wasmBindgen.} =
+proc jsReadAsBinaryString*(self: FileReaderSync; blob: JsObject): cstring =
   discard
-proc jsReadAsText*(self: FileReaderSync; blob: JsObject; encoding: cstring): cstring {.wasmBindgen.} =
+proc jsReadAsText*(self: FileReaderSync; blob: JsObject; encoding: cstring): cstring =
   discard
-proc jsReadAsDataURL*(self: FileReaderSync; blob: JsObject): cstring {.wasmBindgen.} =
+proc jsReadAsDataURL*(self: FileReaderSync; blob: JsObject): cstring =
   discard
 
-proc jsFileSystemName*(self: FileSystem): cstring {.wasmBindgen.} =
+proc jsFileSystemName*(self: FileSystem): cstring =
   discard
-proc jsFileSystemRoot*(self: FileSystem): JsObject {.wasmBindgen.} =
+proc jsFileSystemRoot*(self: FileSystem): JsObject =
   discard
 
-proc jsCreateReader*(self: FileSystemDirectoryEntry): JsObject {.wasmBindgen.} =
+proc jsCreateReader*(self: FileSystemDirectoryEntry): JsObject =
   discard
-proc jsGetFile*(self: FileSystemDirectoryEntry; path: Option[cstring]; options: JsObject; successCallback: JsObject; errorCallback: JsObject): void {.wasmBindgen.} =
+proc jsGetFile*(self: FileSystemDirectoryEntry; path: Option[cstring]; options: JsObject; successCallback: JsObject; errorCallback: JsObject): void =
   discard
-proc jsGetDirectory*(self: FileSystemDirectoryEntry; path: Option[cstring]; options: JsObject; successCallback: JsObject; errorCallback: JsObject): void {.wasmBindgen.} =
+proc jsGetDirectory*(self: FileSystemDirectoryEntry; path: Option[cstring]; options: JsObject; successCallback: JsObject; errorCallback: JsObject): void =
   discard
 
-proc jsReadEntries*(self: FileSystemDirectoryReader; successCallback: JsObject; errorCallback: JsObject): void {.wasmBindgen.} =
+proc jsReadEntries*(self: FileSystemDirectoryReader; successCallback: JsObject; errorCallback: JsObject): void =
   discard
 
-proc jsFileSystemEntryIsFile*(self: FileSystemEntry): bool {.wasmBindgen.} =
+proc jsFileSystemEntryIsFile*(self: FileSystemEntry): bool =
   discard
-proc jsFileSystemEntryIsDirectory*(self: FileSystemEntry): bool {.wasmBindgen.} =
+proc jsFileSystemEntryIsDirectory*(self: FileSystemEntry): bool =
   discard
-proc jsFileSystemEntryName*(self: FileSystemEntry): cstring {.wasmBindgen.} =
+proc jsFileSystemEntryName*(self: FileSystemEntry): cstring =
   discard
-proc jsFileSystemEntryFullPath*(self: FileSystemEntry): cstring {.wasmBindgen.} =
+proc jsFileSystemEntryFullPath*(self: FileSystemEntry): cstring =
   discard
-proc jsFileSystemEntryFilesystem*(self: FileSystemEntry): JsObject {.wasmBindgen.} =
+proc jsFileSystemEntryFilesystem*(self: FileSystemEntry): JsObject =
   discard
-proc jsGetParent*(self: FileSystemEntry; successCallback: JsObject; errorCallback: JsObject): void {.wasmBindgen.} =
+proc jsGetParent*(self: FileSystemEntry; successCallback: JsObject; errorCallback: JsObject): void =
   discard
 
-proc jsFile*(self: FileSystemFileEntry; successCallback: JsObject; errorCallback: JsObject): void {.wasmBindgen.} =
+proc jsFile*(self: FileSystemFileEntry; successCallback: JsObject; errorCallback: JsObject): void =
   discard
 
-proc jsFileSystemHandleKind*(self: FileSystemHandle): JsObject {.wasmBindgen.} =
+proc jsFileSystemHandleKind*(self: FileSystemHandle): JsObject =
   discard
-proc jsFileSystemHandleName*(self: FileSystemHandle): cstring {.wasmBindgen.} =
+proc jsFileSystemHandleName*(self: FileSystemHandle): cstring =
   discard
-proc jsIsSameEntry*(self: FileSystemHandle; other: JsObject): JsObject {.wasmBindgen.} =
+proc jsIsSameEntry*(self: FileSystemHandle; other: JsObject): JsObject =
   discard
 
-proc jsGetFile*(self: FileSystemFileHandle): JsObject {.wasmBindgen.} =
+proc jsGetFile*(self: FileSystemFileHandle): JsObject =
   discard
-proc jsCreateWritable*(self: FileSystemFileHandle; options: JsObject): JsObject {.wasmBindgen.} =
+proc jsCreateWritable*(self: FileSystemFileHandle; options: JsObject): JsObject =
   discard
-proc jsCreateSyncAccessHandle*(self: FileSystemFileHandle): JsObject {.wasmBindgen.} =
+proc jsCreateSyncAccessHandle*(self: FileSystemFileHandle): JsObject =
   discard
 
-proc jsFileSystemDirectoryHandleIterable*(self: FileSystemDirectoryHandle): JsObject {.wasmBindgen.} =
+proc jsFileSystemDirectoryHandleIterable*(self: FileSystemDirectoryHandle): JsObject =
   discard
-proc jsFileSystemDirectoryHandleUSVString*(self: FileSystemDirectoryHandle): JsObject {.wasmBindgen.} =
+proc jsFileSystemDirectoryHandleUSVString*(self: FileSystemDirectoryHandle): JsObject =
   discard
-proc jsFileSystemDirectoryHandleFileSystemHandle*(self: FileSystemDirectoryHandle): JsObject {.wasmBindgen.} =
+proc jsFileSystemDirectoryHandleFileSystemHandle*(self: FileSystemDirectoryHandle): JsObject =
   discard
-proc jsGetFileHandle*(self: FileSystemDirectoryHandle; name: cstring; options: JsObject): JsObject {.wasmBindgen.} =
+proc jsGetFileHandle*(self: FileSystemDirectoryHandle; name: cstring; options: JsObject): JsObject =
   discard
-proc jsGetDirectoryHandle*(self: FileSystemDirectoryHandle; name: cstring; options: JsObject): JsObject {.wasmBindgen.} =
+proc jsGetDirectoryHandle*(self: FileSystemDirectoryHandle; name: cstring; options: JsObject): JsObject =
   discard
-proc jsRemoveEntry*(self: FileSystemDirectoryHandle; name: cstring; options: JsObject): JsObject {.wasmBindgen.} =
+proc jsRemoveEntry*(self: FileSystemDirectoryHandle; name: cstring; options: JsObject): JsObject =
   discard
-proc jsResolve*(self: FileSystemDirectoryHandle; possibleDescendant: JsObject): JsObject {.wasmBindgen.} =
+proc jsResolve*(self: FileSystemDirectoryHandle; possibleDescendant: JsObject): JsObject =
   discard
 
-proc jsWrite*(self: FileSystemWritableFileStream; data: JsObject): JsObject {.wasmBindgen.} =
+proc jsWrite*(self: FileSystemWritableFileStream; data: JsObject): JsObject =
   discard
-proc jsSeek*(self: FileSystemWritableFileStream; position: uint64): JsObject {.wasmBindgen.} =
+proc jsSeek*(self: FileSystemWritableFileStream; position: uint64): JsObject =
   discard
-proc jsTruncate*(self: FileSystemWritableFileStream; size: uint64): JsObject {.wasmBindgen.} =
+proc jsTruncate*(self: FileSystemWritableFileStream; size: uint64): JsObject =
   discard
 
-proc jsRead*(self: FileSystemSyncAccessHandle; buffer: JsObject; options: JsObject): uint64 {.wasmBindgen.} =
+proc jsRead*(self: FileSystemSyncAccessHandle; buffer: JsObject; options: JsObject): uint64 =
   discard
-proc jsWrite*(self: FileSystemSyncAccessHandle; buffer: JsObject; options: JsObject): uint64 {.wasmBindgen.} =
+proc jsWrite*(self: FileSystemSyncAccessHandle; buffer: JsObject; options: JsObject): uint64 =
   discard
-proc jsTruncate*(self: FileSystemSyncAccessHandle; newSize: uint64): void {.wasmBindgen.} =
+proc jsTruncate*(self: FileSystemSyncAccessHandle; newSize: uint64): void =
   discard
-proc jsGetSize*(self: FileSystemSyncAccessHandle): uint64 {.wasmBindgen.} =
+proc jsGetSize*(self: FileSystemSyncAccessHandle): uint64 =
   discard
-proc jsFlush*(self: FileSystemSyncAccessHandle): void {.wasmBindgen.} =
+proc jsFlush*(self: FileSystemSyncAccessHandle): void =
   discard
-proc jsClose*(self: FileSystemSyncAccessHandle): void {.wasmBindgen.} =
+proc jsClose*(self: FileSystemSyncAccessHandle): void =
   discard
 
 
-proc jsFontFaceFamily*(self: FontFace): cstring {.wasmBindgen.} =
+proc jsFontFaceFamily*(self: FontFace): cstring =
   discard
-proc jsFontFaceStyle*(self: FontFace): cstring {.wasmBindgen.} =
+proc jsFontFaceStyle*(self: FontFace): cstring =
   discard
-proc jsFontFaceWeight*(self: FontFace): cstring {.wasmBindgen.} =
+proc jsFontFaceWeight*(self: FontFace): cstring =
   discard
-proc jsFontFaceStretch*(self: FontFace): cstring {.wasmBindgen.} =
+proc jsFontFaceStretch*(self: FontFace): cstring =
   discard
-proc jsFontFaceUnicodeRange*(self: FontFace): cstring {.wasmBindgen.} =
+proc jsFontFaceUnicodeRange*(self: FontFace): cstring =
   discard
-proc jsFontFaceVariant*(self: FontFace): cstring {.wasmBindgen.} =
+proc jsFontFaceVariant*(self: FontFace): cstring =
   discard
-proc jsFontFaceFeatureSettings*(self: FontFace): cstring {.wasmBindgen.} =
+proc jsFontFaceFeatureSettings*(self: FontFace): cstring =
   discard
-proc jsFontFaceVariationSettings*(self: FontFace): cstring {.wasmBindgen.} =
+proc jsFontFaceVariationSettings*(self: FontFace): cstring =
   discard
-proc jsFontFaceDisplay*(self: FontFace): cstring {.wasmBindgen.} =
+proc jsFontFaceDisplay*(self: FontFace): cstring =
   discard
-proc jsFontFaceStatus*(self: FontFace): JsObject {.wasmBindgen.} =
+proc jsFontFaceStatus*(self: FontFace): JsObject =
   discard
-proc jsFontFaceLoaded*(self: FontFace): JsObject {.wasmBindgen.} =
+proc jsFontFaceLoaded*(self: FontFace): JsObject =
   discard
-proc jsLoad*(self: FontFace): JsObject {.wasmBindgen.} =
+proc jsLoad*(self: FontFace): JsObject =
   discard
 
-proc jsNext*(self: FontFaceSetIterator): JsObject {.wasmBindgen.} =
+proc jsNext*(self: FontFaceSetIterator): JsObject =
   discard
 
-proc jsFontFaceSetSize*(self: FontFaceSet): uint32 {.wasmBindgen.} =
+proc jsFontFaceSetSize*(self: FontFaceSet): uint32 =
   discard
-proc jsFontFaceSetOnloading*(self: FontFaceSet): JsObject {.wasmBindgen.} =
+proc jsFontFaceSetOnloading*(self: FontFaceSet): JsObject =
   discard
-proc jsFontFaceSetOnloadingdone*(self: FontFaceSet): JsObject {.wasmBindgen.} =
+proc jsFontFaceSetOnloadingdone*(self: FontFaceSet): JsObject =
   discard
-proc jsFontFaceSetOnloadingerror*(self: FontFaceSet): JsObject {.wasmBindgen.} =
+proc jsFontFaceSetOnloadingerror*(self: FontFaceSet): JsObject =
   discard
-proc jsFontFaceSetReady*(self: FontFaceSet): JsObject {.wasmBindgen.} =
+proc jsFontFaceSetReady*(self: FontFaceSet): JsObject =
   discard
-proc jsFontFaceSetStatus*(self: FontFaceSet): JsObject {.wasmBindgen.} =
+proc jsFontFaceSetStatus*(self: FontFaceSet): JsObject =
   discard
-proc jsAdd*(self: FontFaceSet; font: JsObject): void {.wasmBindgen.} =
+proc jsAdd*(self: FontFaceSet; font: JsObject): void =
   discard
-proc jsHas*(self: FontFaceSet; font: JsObject): bool {.wasmBindgen.} =
+proc jsHas*(self: FontFaceSet; font: JsObject): bool =
   discard
-proc jsDelete*(self: FontFaceSet; font: JsObject): bool {.wasmBindgen.} =
+proc jsDelete*(self: FontFaceSet; font: JsObject): bool =
   discard
-proc jsClear*(self: FontFaceSet): void {.wasmBindgen.} =
+proc jsClear*(self: FontFaceSet): void =
   discard
-proc jsEntries*(self: FontFaceSet): JsObject {.wasmBindgen.} =
+proc jsEntries*(self: FontFaceSet): JsObject =
   discard
-proc jsValues*(self: FontFaceSet): JsObject {.wasmBindgen.} =
+proc jsValues*(self: FontFaceSet): JsObject =
   discard
-proc jsForEach*(self: FontFaceSet; cb: JsObject; thisArg: JsObject): void {.wasmBindgen.} =
+proc jsForEach*(self: FontFaceSet; cb: JsObject; thisArg: JsObject): void =
   discard
-proc jsLoad*(self: FontFaceSet; font: cstring; text: cstring): JsObject {.wasmBindgen.} =
+proc jsLoad*(self: FontFaceSet; font: cstring; text: cstring): JsObject =
   discard
-proc jsCheck*(self: FontFaceSet; font: cstring; text: cstring): bool {.wasmBindgen.} =
+proc jsCheck*(self: FontFaceSet; font: cstring; text: cstring): bool =
   discard
 
-proc jsFontFaceSetLoadEventFontfaces*(self: FontFaceSetLoadEvent): JsObject {.wasmBindgen.} =
+proc jsFontFaceSetLoadEventFontfaces*(self: FontFaceSetLoadEvent): JsObject =
   discard
 
-proc jsAppend*(self: FormData; name: cstring; value: JsObject; filename: cstring): void {.wasmBindgen.} =
+proc jsAppend*(self: FormData; name: cstring; value: JsObject; filename: cstring): void =
   discard
-proc jsAppend*(self: FormData; name: cstring; value: cstring): void {.wasmBindgen.} =
+proc jsAppend*(self: FormData; name: cstring; value: cstring): void =
   discard
-proc jsDelete*(self: FormData; name: cstring): void {.wasmBindgen.} =
+proc jsDelete*(self: FormData; name: cstring): void =
   discard
-proc jsGet*(self: FormData; name: cstring): Option[JsObject] {.wasmBindgen.} =
+proc jsGet*(self: FormData; name: cstring): Option[JsObject] =
   discard
-proc jsGetAll*(self: FormData; name: cstring): JsObject {.wasmBindgen.} =
+proc jsGetAll*(self: FormData; name: cstring): JsObject =
   discard
-proc jsHas*(self: FormData; name: cstring): bool {.wasmBindgen.} =
+proc jsHas*(self: FormData; name: cstring): bool =
   discard
-proc jsSet*(self: FormData; name: cstring; value: JsObject; filename: cstring): void {.wasmBindgen.} =
+proc jsSet*(self: FormData; name: cstring; value: JsObject; filename: cstring): void =
   discard
-proc jsSet*(self: FormData; name: cstring; value: cstring): void {.wasmBindgen.} =
+proc jsSet*(self: FormData; name: cstring; value: cstring): void =
   discard
 
-proc jsGarbageCollect*(self: typedesc[FuzzingFunctions]): void {.wasmBindgen.} =
+proc jsGarbageCollect*(self: typedesc[FuzzingFunctions]): void =
   discard
-proc jsCycleCollect*(self: typedesc[FuzzingFunctions]): void {.wasmBindgen.} =
+proc jsCycleCollect*(self: typedesc[FuzzingFunctions]): void =
   discard
-proc jsEnableAccessibility*(self: typedesc[FuzzingFunctions]): void {.wasmBindgen.} =
+proc jsEnableAccessibility*(self: typedesc[FuzzingFunctions]): void =
   discard
 
-proc jsGainNodeGain*(self: GainNode): JsObject {.wasmBindgen.} =
+proc jsGainNodeGain*(self: GainNode): JsObject =
   discard
 
-proc jsGamepadId*(self: Gamepad): cstring {.wasmBindgen.} =
+proc jsGamepadId*(self: Gamepad): cstring =
   discard
-proc jsGamepadIndex*(self: Gamepad): uint32 {.wasmBindgen.} =
+proc jsGamepadIndex*(self: Gamepad): uint32 =
   discard
-proc jsGamepadConnected*(self: Gamepad): bool {.wasmBindgen.} =
+proc jsGamepadConnected*(self: Gamepad): bool =
   discard
-proc jsGamepadTimestamp*(self: Gamepad): JsObject {.wasmBindgen.} =
+proc jsGamepadTimestamp*(self: Gamepad): JsObject =
   discard
-proc jsGamepadMapping*(self: Gamepad): JsObject {.wasmBindgen.} =
+proc jsGamepadMapping*(self: Gamepad): JsObject =
   discard
-proc jsGamepadAxes*(self: Gamepad): JsObject {.wasmBindgen.} =
+proc jsGamepadAxes*(self: Gamepad): JsObject =
   discard
-proc jsGamepadButtons*(self: Gamepad): JsObject {.wasmBindgen.} =
+proc jsGamepadButtons*(self: Gamepad): JsObject =
   discard
-proc jsGamepadDisplayId*(self: Gamepad): uint32 {.wasmBindgen.} =
+proc jsGamepadDisplayId*(self: Gamepad): uint32 =
   discard
 
-proc jsGamepadButtonPressed*(self: GamepadButton): bool {.wasmBindgen.} =
+proc jsGamepadButtonPressed*(self: GamepadButton): bool =
   discard
-proc jsGamepadButtonTouched*(self: GamepadButton): bool {.wasmBindgen.} =
+proc jsGamepadButtonTouched*(self: GamepadButton): bool =
   discard
-proc jsGamepadButtonValue*(self: GamepadButton): float64 {.wasmBindgen.} =
+proc jsGamepadButtonValue*(self: GamepadButton): float64 =
   discard
 
-proc jsGamepadHapticActuatorTypeVal*(self: GamepadHapticActuator): JsObject {.wasmBindgen.} =
+proc jsGamepadHapticActuatorTypeVal*(self: GamepadHapticActuator): JsObject =
   discard
 
 
-proc jsGamepadPoseHasOrientation*(self: GamepadPose): bool {.wasmBindgen.} =
+proc jsGamepadPoseHasOrientation*(self: GamepadPose): bool =
   discard
-proc jsGamepadPoseHasPosition*(self: GamepadPose): bool {.wasmBindgen.} =
+proc jsGamepadPoseHasPosition*(self: GamepadPose): bool =
   discard
 
-proc jsGetCurrentPosition*(self: Geolocation; successCallback: JsObject; errorCallback: Option[JsObject]; options: JsObject): void {.wasmBindgen.} =
+proc jsGetCurrentPosition*(self: Geolocation; successCallback: JsObject; errorCallback: Option[JsObject]; options: JsObject): void =
   discard
-proc jsWatchPosition*(self: Geolocation; successCallback: JsObject; errorCallback: Option[JsObject]; options: JsObject): int32 {.wasmBindgen.} =
+proc jsWatchPosition*(self: Geolocation; successCallback: JsObject; errorCallback: Option[JsObject]; options: JsObject): int32 =
   discard
-proc jsClearWatch*(self: Geolocation; watchId: int32): void {.wasmBindgen.} =
+proc jsClearWatch*(self: Geolocation; watchId: int32): void =
   discard
 
-proc jsGetUserMediaRequestWindowID*(self: GetUserMediaRequest): uint64 {.wasmBindgen.} =
+proc jsGetUserMediaRequestWindowID*(self: GetUserMediaRequest): uint64 =
   discard
-proc jsGetUserMediaRequestInnerWindowID*(self: GetUserMediaRequest): uint64 {.wasmBindgen.} =
+proc jsGetUserMediaRequestInnerWindowID*(self: GetUserMediaRequest): uint64 =
   discard
-proc jsGetUserMediaRequestCallID*(self: GetUserMediaRequest): cstring {.wasmBindgen.} =
+proc jsGetUserMediaRequestCallID*(self: GetUserMediaRequest): cstring =
   discard
-proc jsGetUserMediaRequestRawID*(self: GetUserMediaRequest): cstring {.wasmBindgen.} =
+proc jsGetUserMediaRequestRawID*(self: GetUserMediaRequest): cstring =
   discard
-proc jsGetUserMediaRequestMediaSource*(self: GetUserMediaRequest): cstring {.wasmBindgen.} =
+proc jsGetUserMediaRequestMediaSource*(self: GetUserMediaRequest): cstring =
   discard
-proc jsGetUserMediaRequestIsSecure*(self: GetUserMediaRequest): bool {.wasmBindgen.} =
+proc jsGetUserMediaRequestIsSecure*(self: GetUserMediaRequest): bool =
   discard
-proc jsGetUserMediaRequestIsHandlingUserInput*(self: GetUserMediaRequest): bool {.wasmBindgen.} =
+proc jsGetUserMediaRequestIsHandlingUserInput*(self: GetUserMediaRequest): bool =
   discard
-proc jsGetConstraints*(self: GetUserMediaRequest): JsObject {.wasmBindgen.} =
+proc jsGetConstraints*(self: GetUserMediaRequest): JsObject =
   discard
 
 
-proc jsHTMLAllCollectionLength*(self: HTMLAllCollection): uint32 {.wasmBindgen.} =
+proc jsHTMLAllCollectionLength*(self: HTMLAllCollection): uint32 =
   discard
-proc jsHTMLAllCollectionName*(self: HTMLAllCollection): JsObject {.wasmBindgen.} =
+proc jsHTMLAllCollectionName*(self: HTMLAllCollection): JsObject =
   discard
-proc jsItem*(self: HTMLAllCollection; index: uint32): Option[JsObject] {.wasmBindgen.} =
+proc jsItem*(self: HTMLAllCollection; index: uint32): Option[JsObject] =
   discard
-proc jsItem*(self: HTMLAllCollection; name: cstring): Option[JsObject] {.wasmBindgen.} =
+proc jsItem*(self: HTMLAllCollection; name: cstring): Option[JsObject] =
   discard
-proc jsNamedItem*(self: HTMLAllCollection; name: cstring): Option[JsObject] {.wasmBindgen.} =
+proc jsNamedItem*(self: HTMLAllCollection; name: cstring): Option[JsObject] =
   discard
 
-proc jsHTMLAnchorElementTarget*(self: HTMLAnchorElement): cstring {.wasmBindgen.} =
+proc jsHTMLAnchorElementTarget*(self: HTMLAnchorElement): cstring =
   discard
-proc jsHTMLAnchorElementDownload*(self: HTMLAnchorElement): cstring {.wasmBindgen.} =
+proc jsHTMLAnchorElementDownload*(self: HTMLAnchorElement): cstring =
   discard
-proc jsHTMLAnchorElementPing*(self: HTMLAnchorElement): cstring {.wasmBindgen.} =
+proc jsHTMLAnchorElementPing*(self: HTMLAnchorElement): cstring =
   discard
-proc jsHTMLAnchorElementRel*(self: HTMLAnchorElement): cstring {.wasmBindgen.} =
+proc jsHTMLAnchorElementRel*(self: HTMLAnchorElement): cstring =
   discard
-proc jsHTMLAnchorElementReferrerPolicy*(self: HTMLAnchorElement): cstring {.wasmBindgen.} =
+proc jsHTMLAnchorElementReferrerPolicy*(self: HTMLAnchorElement): cstring =
   discard
-proc jsHTMLAnchorElementRelList*(self: HTMLAnchorElement): JsObject {.wasmBindgen.} =
+proc jsHTMLAnchorElementRelList*(self: HTMLAnchorElement): JsObject =
   discard
-proc jsHTMLAnchorElementHreflang*(self: HTMLAnchorElement): cstring {.wasmBindgen.} =
+proc jsHTMLAnchorElementHreflang*(self: HTMLAnchorElement): cstring =
   discard
-proc jsHTMLAnchorElementTypeVal*(self: HTMLAnchorElement): cstring {.wasmBindgen.} =
+proc jsHTMLAnchorElementTypeVal*(self: HTMLAnchorElement): cstring =
   discard
-proc jsHTMLAnchorElementText*(self: HTMLAnchorElement): cstring {.wasmBindgen.} =
+proc jsHTMLAnchorElementText*(self: HTMLAnchorElement): cstring =
   discard
 
-proc jsHTMLAreaElementAlt*(self: HTMLAreaElement): cstring {.wasmBindgen.} =
+proc jsHTMLAreaElementAlt*(self: HTMLAreaElement): cstring =
   discard
-proc jsHTMLAreaElementCoords*(self: HTMLAreaElement): cstring {.wasmBindgen.} =
+proc jsHTMLAreaElementCoords*(self: HTMLAreaElement): cstring =
   discard
-proc jsHTMLAreaElementShape*(self: HTMLAreaElement): cstring {.wasmBindgen.} =
+proc jsHTMLAreaElementShape*(self: HTMLAreaElement): cstring =
   discard
-proc jsHTMLAreaElementTarget*(self: HTMLAreaElement): cstring {.wasmBindgen.} =
+proc jsHTMLAreaElementTarget*(self: HTMLAreaElement): cstring =
   discard
-proc jsHTMLAreaElementDownload*(self: HTMLAreaElement): cstring {.wasmBindgen.} =
+proc jsHTMLAreaElementDownload*(self: HTMLAreaElement): cstring =
   discard
-proc jsHTMLAreaElementPing*(self: HTMLAreaElement): cstring {.wasmBindgen.} =
+proc jsHTMLAreaElementPing*(self: HTMLAreaElement): cstring =
   discard
-proc jsHTMLAreaElementRel*(self: HTMLAreaElement): cstring {.wasmBindgen.} =
+proc jsHTMLAreaElementRel*(self: HTMLAreaElement): cstring =
   discard
-proc jsHTMLAreaElementReferrerPolicy*(self: HTMLAreaElement): cstring {.wasmBindgen.} =
+proc jsHTMLAreaElementReferrerPolicy*(self: HTMLAreaElement): cstring =
   discard
-proc jsHTMLAreaElementRelList*(self: HTMLAreaElement): JsObject {.wasmBindgen.} =
+proc jsHTMLAreaElementRelList*(self: HTMLAreaElement): JsObject =
   discard
 
 
 
-proc jsHTMLBaseElementHref*(self: HTMLBaseElement): cstring {.wasmBindgen.} =
+proc jsHTMLBaseElementHref*(self: HTMLBaseElement): cstring =
   discard
-proc jsHTMLBaseElementTarget*(self: HTMLBaseElement): cstring {.wasmBindgen.} =
+proc jsHTMLBaseElementTarget*(self: HTMLBaseElement): cstring =
   discard
 
 
-proc jsHTMLButtonElementAutofocus*(self: HTMLButtonElement): bool {.wasmBindgen.} =
+proc jsHTMLButtonElementAutofocus*(self: HTMLButtonElement): bool =
   discard
-proc jsHTMLButtonElementDisabled*(self: HTMLButtonElement): bool {.wasmBindgen.} =
+proc jsHTMLButtonElementDisabled*(self: HTMLButtonElement): bool =
   discard
-proc jsHTMLButtonElementFormAction*(self: HTMLButtonElement): cstring {.wasmBindgen.} =
+proc jsHTMLButtonElementFormAction*(self: HTMLButtonElement): cstring =
   discard
-proc jsHTMLButtonElementFormEnctype*(self: HTMLButtonElement): cstring {.wasmBindgen.} =
+proc jsHTMLButtonElementFormEnctype*(self: HTMLButtonElement): cstring =
   discard
-proc jsHTMLButtonElementFormMethod*(self: HTMLButtonElement): cstring {.wasmBindgen.} =
+proc jsHTMLButtonElementFormMethod*(self: HTMLButtonElement): cstring =
   discard
-proc jsHTMLButtonElementFormNoValidate*(self: HTMLButtonElement): bool {.wasmBindgen.} =
+proc jsHTMLButtonElementFormNoValidate*(self: HTMLButtonElement): bool =
   discard
-proc jsHTMLButtonElementFormTarget*(self: HTMLButtonElement): cstring {.wasmBindgen.} =
+proc jsHTMLButtonElementFormTarget*(self: HTMLButtonElement): cstring =
   discard
-proc jsHTMLButtonElementName*(self: HTMLButtonElement): cstring {.wasmBindgen.} =
+proc jsHTMLButtonElementName*(self: HTMLButtonElement): cstring =
   discard
-proc jsHTMLButtonElementTypeVal*(self: HTMLButtonElement): cstring {.wasmBindgen.} =
+proc jsHTMLButtonElementTypeVal*(self: HTMLButtonElement): cstring =
   discard
-proc jsHTMLButtonElementValue*(self: HTMLButtonElement): cstring {.wasmBindgen.} =
+proc jsHTMLButtonElementValue*(self: HTMLButtonElement): cstring =
   discard
-proc jsHTMLButtonElementWillValidate*(self: HTMLButtonElement): bool {.wasmBindgen.} =
+proc jsHTMLButtonElementWillValidate*(self: HTMLButtonElement): bool =
   discard
-proc jsHTMLButtonElementValidity*(self: HTMLButtonElement): JsObject {.wasmBindgen.} =
+proc jsHTMLButtonElementValidity*(self: HTMLButtonElement): JsObject =
   discard
-proc jsHTMLButtonElementValidationMessage*(self: HTMLButtonElement): cstring {.wasmBindgen.} =
+proc jsHTMLButtonElementValidationMessage*(self: HTMLButtonElement): cstring =
   discard
-proc jsHTMLButtonElementLabels*(self: HTMLButtonElement): JsObject {.wasmBindgen.} =
+proc jsHTMLButtonElementLabels*(self: HTMLButtonElement): JsObject =
   discard
-proc jsCheckValidity*(self: HTMLButtonElement): bool {.wasmBindgen.} =
+proc jsCheckValidity*(self: HTMLButtonElement): bool =
   discard
-proc jsReportValidity*(self: HTMLButtonElement): bool {.wasmBindgen.} =
+proc jsReportValidity*(self: HTMLButtonElement): bool =
   discard
-proc jsSetCustomValidity*(self: HTMLButtonElement; error: cstring): void {.wasmBindgen.} =
+proc jsSetCustomValidity*(self: HTMLButtonElement; error: cstring): void =
   discard
 
-proc jsHTMLCanvasElementWidth*(self: HTMLCanvasElement): uint32 {.wasmBindgen.} =
+proc jsHTMLCanvasElementWidth*(self: HTMLCanvasElement): uint32 =
   discard
-proc jsHTMLCanvasElementHeight*(self: HTMLCanvasElement): uint32 {.wasmBindgen.} =
+proc jsHTMLCanvasElementHeight*(self: HTMLCanvasElement): uint32 =
   discard
-proc jsGetContext*(self: HTMLCanvasElement; contextId: cstring; contextOptions: JsObject): Option[JsObject] {.wasmBindgen.} =
+proc jsGetContext*(self: HTMLCanvasElement; contextId: cstring; contextOptions: JsObject): Option[JsObject] =
   discard
-proc jsToDataURL*(self: HTMLCanvasElement; typeVal: cstring; encoderOptions: JsObject): cstring {.wasmBindgen.} =
+proc jsToDataURL*(self: HTMLCanvasElement; typeVal: cstring; encoderOptions: JsObject): cstring =
   discard
-proc jsToBlob*(self: HTMLCanvasElement; callback: JsObject; typeVal: cstring; encoderOptions: JsObject): void {.wasmBindgen.} =
+proc jsToBlob*(self: HTMLCanvasElement; callback: JsObject; typeVal: cstring; encoderOptions: JsObject): void =
   discard
 
-proc jsHTMLCollectionLength*(self: HTMLCollection): uint32 {.wasmBindgen.} =
+proc jsHTMLCollectionLength*(self: HTMLCollection): uint32 =
   discard
-proc jsItem*(self: HTMLCollection; index: uint32): Option[JsObject] {.wasmBindgen.} =
+proc jsItem*(self: HTMLCollection; index: uint32): Option[JsObject] =
   discard
-proc jsNamedItem*(self: HTMLCollection; name: cstring): Option[JsObject] {.wasmBindgen.} =
+proc jsNamedItem*(self: HTMLCollection; name: cstring): Option[JsObject] =
   discard
 
 
-proc jsHTMLDataElementValue*(self: HTMLDataElement): cstring {.wasmBindgen.} =
+proc jsHTMLDataElementValue*(self: HTMLDataElement): cstring =
   discard
 
-proc jsHTMLDataListElementOptions*(self: HTMLDataListElement): JsObject {.wasmBindgen.} =
+proc jsHTMLDataListElementOptions*(self: HTMLDataListElement): JsObject =
   discard
 
-proc jsHTMLDetailsElementOpen*(self: HTMLDetailsElement): bool {.wasmBindgen.} =
+proc jsHTMLDetailsElementOpen*(self: HTMLDetailsElement): bool =
   discard
 
-proc jsHTMLDialogElementOpen*(self: HTMLDialogElement): bool {.wasmBindgen.} =
+proc jsHTMLDialogElementOpen*(self: HTMLDialogElement): bool =
   discard
-proc jsHTMLDialogElementReturnValue*(self: HTMLDialogElement): cstring {.wasmBindgen.} =
+proc jsHTMLDialogElementReturnValue*(self: HTMLDialogElement): cstring =
   discard
-proc jsShow*(self: HTMLDialogElement): void {.wasmBindgen.} =
+proc jsShow*(self: HTMLDialogElement): void =
   discard
-proc jsShowModal*(self: HTMLDialogElement): void {.wasmBindgen.} =
+proc jsShowModal*(self: HTMLDialogElement): void =
   discard
-proc jsClose*(self: HTMLDialogElement; returnValue: cstring): void {.wasmBindgen.} =
+proc jsClose*(self: HTMLDialogElement; returnValue: cstring): void =
   discard
 
-proc jsHTMLDirectoryElementCompact*(self: HTMLDirectoryElement): bool {.wasmBindgen.} =
+proc jsHTMLDirectoryElementCompact*(self: HTMLDirectoryElement): bool =
   discard
 
 
-proc jsHTMLDocumentDomain*(self: HTMLDocument): cstring {.wasmBindgen.} =
+proc jsHTMLDocumentDomain*(self: HTMLDocument): cstring =
   discard
-proc jsHTMLDocumentCookie*(self: HTMLDocument): cstring {.wasmBindgen.} =
+proc jsHTMLDocumentCookie*(self: HTMLDocument): cstring =
   discard
-proc jsHTMLDocumentDesignMode*(self: HTMLDocument): cstring {.wasmBindgen.} =
+proc jsHTMLDocumentDesignMode*(self: HTMLDocument): cstring =
   discard
-proc jsHTMLDocumentFgColor*(self: HTMLDocument): cstring {.wasmBindgen.} =
+proc jsHTMLDocumentFgColor*(self: HTMLDocument): cstring =
   discard
-proc jsHTMLDocumentLinkColor*(self: HTMLDocument): cstring {.wasmBindgen.} =
+proc jsHTMLDocumentLinkColor*(self: HTMLDocument): cstring =
   discard
-proc jsHTMLDocumentVlinkColor*(self: HTMLDocument): cstring {.wasmBindgen.} =
+proc jsHTMLDocumentVlinkColor*(self: HTMLDocument): cstring =
   discard
-proc jsHTMLDocumentAlinkColor*(self: HTMLDocument): cstring {.wasmBindgen.} =
+proc jsHTMLDocumentAlinkColor*(self: HTMLDocument): cstring =
   discard
-proc jsHTMLDocumentBgColor*(self: HTMLDocument): cstring {.wasmBindgen.} =
+proc jsHTMLDocumentBgColor*(self: HTMLDocument): cstring =
   discard
-proc jsHTMLDocumentAll*(self: HTMLDocument): JsObject {.wasmBindgen.} =
+proc jsHTMLDocumentAll*(self: HTMLDocument): JsObject =
   discard
-proc jsOpen*(self: HTMLDocument; typeVal: cstring; replace: cstring): JsObject {.wasmBindgen.} =
+proc jsOpen*(self: HTMLDocument; typeVal: cstring; replace: cstring): JsObject =
   discard
-proc jsOpen*(self: HTMLDocument; url: cstring; name: cstring; features: cstring; replace: bool): Option[JsObject] {.wasmBindgen.} =
+proc jsOpen*(self: HTMLDocument; url: cstring; name: cstring; features: cstring; replace: bool): Option[JsObject] =
   discard
-proc jsClose*(self: HTMLDocument): void {.wasmBindgen.} =
+proc jsClose*(self: HTMLDocument): void =
   discard
-proc jsWrite*(self: HTMLDocument; text: cstring): void {.wasmBindgen.} =
+proc jsWrite*(self: HTMLDocument; text: cstring): void =
   discard
-proc jsWriteln*(self: HTMLDocument; text: cstring): void {.wasmBindgen.} =
+proc jsWriteln*(self: HTMLDocument; text: cstring): void =
   discard
-proc jsExecCommand*(self: HTMLDocument; commandId: cstring; showUI: bool; value: cstring): bool {.wasmBindgen.} =
+proc jsExecCommand*(self: HTMLDocument; commandId: cstring; showUI: bool; value: cstring): bool =
   discard
-proc jsQueryCommandEnabled*(self: HTMLDocument; commandId: cstring): bool {.wasmBindgen.} =
+proc jsQueryCommandEnabled*(self: HTMLDocument; commandId: cstring): bool =
   discard
-proc jsQueryCommandIndeterm*(self: HTMLDocument; commandId: cstring): bool {.wasmBindgen.} =
+proc jsQueryCommandIndeterm*(self: HTMLDocument; commandId: cstring): bool =
   discard
-proc jsQueryCommandState*(self: HTMLDocument; commandId: cstring): bool {.wasmBindgen.} =
+proc jsQueryCommandState*(self: HTMLDocument; commandId: cstring): bool =
   discard
-proc jsQueryCommandSupported*(self: HTMLDocument; commandId: cstring): bool {.wasmBindgen.} =
+proc jsQueryCommandSupported*(self: HTMLDocument; commandId: cstring): bool =
   discard
-proc jsQueryCommandValue*(self: HTMLDocument; commandId: cstring): cstring {.wasmBindgen.} =
+proc jsQueryCommandValue*(self: HTMLDocument; commandId: cstring): cstring =
   discard
-proc jsClear*(self: HTMLDocument): void {.wasmBindgen.} =
+proc jsClear*(self: HTMLDocument): void =
   discard
-proc jsCaptureEvents*(self: HTMLDocument): void {.wasmBindgen.} =
+proc jsCaptureEvents*(self: HTMLDocument): void =
   discard
-proc jsReleaseEvents*(self: HTMLDocument): void {.wasmBindgen.} =
+proc jsReleaseEvents*(self: HTMLDocument): void =
   discard
 
-proc jsHTMLElementTitle*(self: HTMLElement): cstring {.wasmBindgen.} =
+proc jsHTMLElementTitle*(self: HTMLElement): cstring =
   discard
-proc jsHTMLElementScrollHeight*(self: HTMLElement): int32 {.wasmBindgen.} =
+proc jsHTMLElementScrollHeight*(self: HTMLElement): int32 =
   discard
-proc jsHTMLElementScrollTop*(self: HTMLElement): int32 {.wasmBindgen.} =
+proc jsHTMLElementScrollTop*(self: HTMLElement): int32 =
   discard
-proc jsHTMLElementLang*(self: HTMLElement): cstring {.wasmBindgen.} =
+proc jsHTMLElementLang*(self: HTMLElement): cstring =
   discard
-proc jsHTMLElementDir*(self: HTMLElement): cstring {.wasmBindgen.} =
+proc jsHTMLElementDir*(self: HTMLElement): cstring =
   discard
-proc jsHTMLElementInnerText*(self: HTMLElement): cstring {.wasmBindgen.} =
+proc jsHTMLElementInnerText*(self: HTMLElement): cstring =
   discard
-proc jsHTMLElementHidden*(self: HTMLElement): bool {.wasmBindgen.} =
+proc jsHTMLElementHidden*(self: HTMLElement): bool =
   discard
-proc jsHTMLElementInert*(self: HTMLElement): bool {.wasmBindgen.} =
+proc jsHTMLElementInert*(self: HTMLElement): bool =
   discard
-proc jsHTMLElementAccessKey*(self: HTMLElement): cstring {.wasmBindgen.} =
+proc jsHTMLElementAccessKey*(self: HTMLElement): cstring =
   discard
-proc jsHTMLElementAccessKeyLabel*(self: HTMLElement): cstring {.wasmBindgen.} =
+proc jsHTMLElementAccessKeyLabel*(self: HTMLElement): cstring =
   discard
-proc jsHTMLElementDraggable*(self: HTMLElement): bool {.wasmBindgen.} =
+proc jsHTMLElementDraggable*(self: HTMLElement): bool =
   discard
-proc jsHTMLElementContentEditable*(self: HTMLElement): cstring {.wasmBindgen.} =
+proc jsHTMLElementContentEditable*(self: HTMLElement): cstring =
   discard
-proc jsHTMLElementIsContentEditable*(self: HTMLElement): bool {.wasmBindgen.} =
+proc jsHTMLElementIsContentEditable*(self: HTMLElement): bool =
   discard
-proc jsHTMLElementSpellcheck*(self: HTMLElement): bool {.wasmBindgen.} =
+proc jsHTMLElementSpellcheck*(self: HTMLElement): bool =
   discard
-proc jsClick*(self: HTMLElement): void {.wasmBindgen.} =
+proc jsClick*(self: HTMLElement): void =
   discard
-proc jsFocus*(self: HTMLElement; options: JsObject): void {.wasmBindgen.} =
+proc jsFocus*(self: HTMLElement; options: JsObject): void =
   discard
-proc jsBlur*(self: HTMLElement): void {.wasmBindgen.} =
+proc jsBlur*(self: HTMLElement): void =
   discard
-proc jsShowPopover*(self: HTMLElement; options: JsObject): void {.wasmBindgen.} =
+proc jsShowPopover*(self: HTMLElement; options: JsObject): void =
   discard
-proc jsHidePopover*(self: HTMLElement): void {.wasmBindgen.} =
+proc jsHidePopover*(self: HTMLElement): void =
   discard
-proc jsTogglePopover*(self: HTMLElement; force: bool): bool {.wasmBindgen.} =
+proc jsTogglePopover*(self: HTMLElement; force: bool): bool =
   discard
 
 
-proc jsHTMLEmbedElementSrc*(self: HTMLEmbedElement): cstring {.wasmBindgen.} =
+proc jsHTMLEmbedElementSrc*(self: HTMLEmbedElement): cstring =
   discard
-proc jsHTMLEmbedElementTypeVal*(self: HTMLEmbedElement): cstring {.wasmBindgen.} =
+proc jsHTMLEmbedElementTypeVal*(self: HTMLEmbedElement): cstring =
   discard
-proc jsHTMLEmbedElementWidth*(self: HTMLEmbedElement): cstring {.wasmBindgen.} =
+proc jsHTMLEmbedElementWidth*(self: HTMLEmbedElement): cstring =
   discard
-proc jsHTMLEmbedElementHeight*(self: HTMLEmbedElement): cstring {.wasmBindgen.} =
+proc jsHTMLEmbedElementHeight*(self: HTMLEmbedElement): cstring =
   discard
 
-proc jsHTMLFieldSetElementDisabled*(self: HTMLFieldSetElement): bool {.wasmBindgen.} =
+proc jsHTMLFieldSetElementDisabled*(self: HTMLFieldSetElement): bool =
   discard
-proc jsHTMLFieldSetElementName*(self: HTMLFieldSetElement): cstring {.wasmBindgen.} =
+proc jsHTMLFieldSetElementName*(self: HTMLFieldSetElement): cstring =
   discard
-proc jsHTMLFieldSetElementTypeVal*(self: HTMLFieldSetElement): cstring {.wasmBindgen.} =
+proc jsHTMLFieldSetElementTypeVal*(self: HTMLFieldSetElement): cstring =
   discard
-proc jsHTMLFieldSetElementElements*(self: HTMLFieldSetElement): JsObject {.wasmBindgen.} =
+proc jsHTMLFieldSetElementElements*(self: HTMLFieldSetElement): JsObject =
   discard
-proc jsHTMLFieldSetElementWillValidate*(self: HTMLFieldSetElement): bool {.wasmBindgen.} =
+proc jsHTMLFieldSetElementWillValidate*(self: HTMLFieldSetElement): bool =
   discard
-proc jsHTMLFieldSetElementValidity*(self: HTMLFieldSetElement): JsObject {.wasmBindgen.} =
+proc jsHTMLFieldSetElementValidity*(self: HTMLFieldSetElement): JsObject =
   discard
-proc jsHTMLFieldSetElementValidationMessage*(self: HTMLFieldSetElement): cstring {.wasmBindgen.} =
+proc jsHTMLFieldSetElementValidationMessage*(self: HTMLFieldSetElement): cstring =
   discard
-proc jsCheckValidity*(self: HTMLFieldSetElement): bool {.wasmBindgen.} =
+proc jsCheckValidity*(self: HTMLFieldSetElement): bool =
   discard
-proc jsReportValidity*(self: HTMLFieldSetElement): bool {.wasmBindgen.} =
+proc jsReportValidity*(self: HTMLFieldSetElement): bool =
   discard
-proc jsSetCustomValidity*(self: HTMLFieldSetElement; error: cstring): void {.wasmBindgen.} =
+proc jsSetCustomValidity*(self: HTMLFieldSetElement; error: cstring): void =
   discard
 
-proc jsHTMLFontElementColor*(self: HTMLFontElement): cstring {.wasmBindgen.} =
+proc jsHTMLFontElementColor*(self: HTMLFontElement): cstring =
   discard
-proc jsHTMLFontElementFace*(self: HTMLFontElement): cstring {.wasmBindgen.} =
+proc jsHTMLFontElementFace*(self: HTMLFontElement): cstring =
   discard
-proc jsHTMLFontElementSize*(self: HTMLFontElement): cstring {.wasmBindgen.} =
+proc jsHTMLFontElementSize*(self: HTMLFontElement): cstring =
   discard
 
-proc jsNamedItem*(self: HTMLFormControlsCollection; name: cstring): Option[JsObject] {.wasmBindgen.} =
+proc jsNamedItem*(self: HTMLFormControlsCollection; name: cstring): Option[JsObject] =
   discard
 
-proc jsHTMLFormElementAcceptCharset*(self: HTMLFormElement): cstring {.wasmBindgen.} =
+proc jsHTMLFormElementAcceptCharset*(self: HTMLFormElement): cstring =
   discard
-proc jsHTMLFormElementAction*(self: HTMLFormElement): cstring {.wasmBindgen.} =
+proc jsHTMLFormElementAction*(self: HTMLFormElement): cstring =
   discard
-proc jsHTMLFormElementAutocomplete*(self: HTMLFormElement): cstring {.wasmBindgen.} =
+proc jsHTMLFormElementAutocomplete*(self: HTMLFormElement): cstring =
   discard
-proc jsHTMLFormElementEnctype*(self: HTMLFormElement): cstring {.wasmBindgen.} =
+proc jsHTMLFormElementEnctype*(self: HTMLFormElement): cstring =
   discard
-proc jsHTMLFormElementEncoding*(self: HTMLFormElement): cstring {.wasmBindgen.} =
+proc jsHTMLFormElementEncoding*(self: HTMLFormElement): cstring =
   discard
-proc jsHTMLFormElementMethodVal*(self: HTMLFormElement): cstring {.wasmBindgen.} =
+proc jsHTMLFormElementMethodVal*(self: HTMLFormElement): cstring =
   discard
-proc jsHTMLFormElementName*(self: HTMLFormElement): cstring {.wasmBindgen.} =
+proc jsHTMLFormElementName*(self: HTMLFormElement): cstring =
   discard
-proc jsHTMLFormElementNoValidate*(self: HTMLFormElement): bool {.wasmBindgen.} =
+proc jsHTMLFormElementNoValidate*(self: HTMLFormElement): bool =
   discard
-proc jsHTMLFormElementTarget*(self: HTMLFormElement): cstring {.wasmBindgen.} =
+proc jsHTMLFormElementTarget*(self: HTMLFormElement): cstring =
   discard
-proc jsHTMLFormElementElements*(self: HTMLFormElement): JsObject {.wasmBindgen.} =
+proc jsHTMLFormElementElements*(self: HTMLFormElement): JsObject =
   discard
-proc jsHTMLFormElementLength*(self: HTMLFormElement): int32 {.wasmBindgen.} =
+proc jsHTMLFormElementLength*(self: HTMLFormElement): int32 =
   discard
-proc jsSubmit*(self: HTMLFormElement): void {.wasmBindgen.} =
+proc jsSubmit*(self: HTMLFormElement): void =
   discard
-proc jsRequestSubmit*(self: HTMLFormElement; submitter: Option[JsObject]): void {.wasmBindgen.} =
+proc jsRequestSubmit*(self: HTMLFormElement; submitter: Option[JsObject]): void =
   discard
-proc jsReset*(self: HTMLFormElement): void {.wasmBindgen.} =
+proc jsReset*(self: HTMLFormElement): void =
   discard
-proc jsCheckValidity*(self: HTMLFormElement): bool {.wasmBindgen.} =
+proc jsCheckValidity*(self: HTMLFormElement): bool =
   discard
-proc jsReportValidity*(self: HTMLFormElement): bool {.wasmBindgen.} =
+proc jsReportValidity*(self: HTMLFormElement): bool =
   discard
 
-proc jsHTMLFrameElementName*(self: HTMLFrameElement): cstring {.wasmBindgen.} =
+proc jsHTMLFrameElementName*(self: HTMLFrameElement): cstring =
   discard
-proc jsHTMLFrameElementScrolling*(self: HTMLFrameElement): cstring {.wasmBindgen.} =
+proc jsHTMLFrameElementScrolling*(self: HTMLFrameElement): cstring =
   discard
-proc jsHTMLFrameElementSrc*(self: HTMLFrameElement): cstring {.wasmBindgen.} =
+proc jsHTMLFrameElementSrc*(self: HTMLFrameElement): cstring =
   discard
-proc jsHTMLFrameElementFrameBorder*(self: HTMLFrameElement): cstring {.wasmBindgen.} =
+proc jsHTMLFrameElementFrameBorder*(self: HTMLFrameElement): cstring =
   discard
-proc jsHTMLFrameElementLongDesc*(self: HTMLFrameElement): cstring {.wasmBindgen.} =
+proc jsHTMLFrameElementLongDesc*(self: HTMLFrameElement): cstring =
   discard
-proc jsHTMLFrameElementNoResize*(self: HTMLFrameElement): bool {.wasmBindgen.} =
+proc jsHTMLFrameElementNoResize*(self: HTMLFrameElement): bool =
   discard
-proc jsHTMLFrameElementMarginHeight*(self: HTMLFrameElement): cstring {.wasmBindgen.} =
+proc jsHTMLFrameElementMarginHeight*(self: HTMLFrameElement): cstring =
   discard
-proc jsHTMLFrameElementMarginWidth*(self: HTMLFrameElement): cstring {.wasmBindgen.} =
+proc jsHTMLFrameElementMarginWidth*(self: HTMLFrameElement): cstring =
   discard
 
-proc jsHTMLFrameSetElementCols*(self: HTMLFrameSetElement): cstring {.wasmBindgen.} =
+proc jsHTMLFrameSetElementCols*(self: HTMLFrameSetElement): cstring =
   discard
-proc jsHTMLFrameSetElementRows*(self: HTMLFrameSetElement): cstring {.wasmBindgen.} =
+proc jsHTMLFrameSetElementRows*(self: HTMLFrameSetElement): cstring =
   discard
 
 
 
 
 
-proc jsHTMLIFrameElementSrc*(self: HTMLIFrameElement): cstring {.wasmBindgen.} =
+proc jsHTMLIFrameElementSrc*(self: HTMLIFrameElement): cstring =
   discard
-proc jsHTMLIFrameElementSrcdoc*(self: HTMLIFrameElement): cstring {.wasmBindgen.} =
+proc jsHTMLIFrameElementSrcdoc*(self: HTMLIFrameElement): cstring =
   discard
-proc jsHTMLIFrameElementName*(self: HTMLIFrameElement): cstring {.wasmBindgen.} =
+proc jsHTMLIFrameElementName*(self: HTMLIFrameElement): cstring =
   discard
-proc jsHTMLIFrameElementSandbox*(self: HTMLIFrameElement): JsObject {.wasmBindgen.} =
+proc jsHTMLIFrameElementSandbox*(self: HTMLIFrameElement): JsObject =
   discard
-proc jsHTMLIFrameElementAllowFullscreen*(self: HTMLIFrameElement): bool {.wasmBindgen.} =
+proc jsHTMLIFrameElementAllowFullscreen*(self: HTMLIFrameElement): bool =
   discard
-proc jsHTMLIFrameElementAllowPaymentRequest*(self: HTMLIFrameElement): bool {.wasmBindgen.} =
+proc jsHTMLIFrameElementAllowPaymentRequest*(self: HTMLIFrameElement): bool =
   discard
-proc jsHTMLIFrameElementWidth*(self: HTMLIFrameElement): cstring {.wasmBindgen.} =
+proc jsHTMLIFrameElementWidth*(self: HTMLIFrameElement): cstring =
   discard
-proc jsHTMLIFrameElementHeight*(self: HTMLIFrameElement): cstring {.wasmBindgen.} =
+proc jsHTMLIFrameElementHeight*(self: HTMLIFrameElement): cstring =
   discard
-proc jsHTMLIFrameElementReferrerPolicy*(self: HTMLIFrameElement): cstring {.wasmBindgen.} =
+proc jsHTMLIFrameElementReferrerPolicy*(self: HTMLIFrameElement): cstring =
   discard
 
-proc jsHTMLImageElementAlt*(self: HTMLImageElement): cstring {.wasmBindgen.} =
+proc jsHTMLImageElementAlt*(self: HTMLImageElement): cstring =
   discard
-proc jsHTMLImageElementSrc*(self: HTMLImageElement): cstring {.wasmBindgen.} =
+proc jsHTMLImageElementSrc*(self: HTMLImageElement): cstring =
   discard
-proc jsHTMLImageElementSrcset*(self: HTMLImageElement): cstring {.wasmBindgen.} =
+proc jsHTMLImageElementSrcset*(self: HTMLImageElement): cstring =
   discard
-proc jsHTMLImageElementUseMap*(self: HTMLImageElement): cstring {.wasmBindgen.} =
+proc jsHTMLImageElementUseMap*(self: HTMLImageElement): cstring =
   discard
-proc jsHTMLImageElementReferrerPolicy*(self: HTMLImageElement): cstring {.wasmBindgen.} =
+proc jsHTMLImageElementReferrerPolicy*(self: HTMLImageElement): cstring =
   discard
-proc jsHTMLImageElementIsMap*(self: HTMLImageElement): bool {.wasmBindgen.} =
+proc jsHTMLImageElementIsMap*(self: HTMLImageElement): bool =
   discard
-proc jsHTMLImageElementWidth*(self: HTMLImageElement): uint32 {.wasmBindgen.} =
+proc jsHTMLImageElementWidth*(self: HTMLImageElement): uint32 =
   discard
-proc jsHTMLImageElementHeight*(self: HTMLImageElement): uint32 {.wasmBindgen.} =
+proc jsHTMLImageElementHeight*(self: HTMLImageElement): uint32 =
   discard
-proc jsHTMLImageElementDecoding*(self: HTMLImageElement): cstring {.wasmBindgen.} =
+proc jsHTMLImageElementDecoding*(self: HTMLImageElement): cstring =
   discard
-proc jsHTMLImageElementNaturalWidth*(self: HTMLImageElement): uint32 {.wasmBindgen.} =
+proc jsHTMLImageElementNaturalWidth*(self: HTMLImageElement): uint32 =
   discard
-proc jsHTMLImageElementNaturalHeight*(self: HTMLImageElement): uint32 {.wasmBindgen.} =
+proc jsHTMLImageElementNaturalHeight*(self: HTMLImageElement): uint32 =
   discard
-proc jsHTMLImageElementComplete*(self: HTMLImageElement): bool {.wasmBindgen.} =
+proc jsHTMLImageElementComplete*(self: HTMLImageElement): bool =
   discard
-proc jsDecode*(self: HTMLImageElement): JsObject {.wasmBindgen.} =
+proc jsDecode*(self: HTMLImageElement): JsObject =
   discard
 
-proc jsHTMLInputElementAccept*(self: HTMLInputElement): cstring {.wasmBindgen.} =
+proc jsHTMLInputElementAccept*(self: HTMLInputElement): cstring =
   discard
-proc jsHTMLInputElementAlt*(self: HTMLInputElement): cstring {.wasmBindgen.} =
+proc jsHTMLInputElementAlt*(self: HTMLInputElement): cstring =
   discard
-proc jsHTMLInputElementAutocomplete*(self: HTMLInputElement): cstring {.wasmBindgen.} =
+proc jsHTMLInputElementAutocomplete*(self: HTMLInputElement): cstring =
   discard
-proc jsHTMLInputElementAutofocus*(self: HTMLInputElement): bool {.wasmBindgen.} =
+proc jsHTMLInputElementAutofocus*(self: HTMLInputElement): bool =
   discard
-proc jsHTMLInputElementDefaultChecked*(self: HTMLInputElement): bool {.wasmBindgen.} =
+proc jsHTMLInputElementDefaultChecked*(self: HTMLInputElement): bool =
   discard
-proc jsHTMLInputElementChecked*(self: HTMLInputElement): bool {.wasmBindgen.} =
+proc jsHTMLInputElementChecked*(self: HTMLInputElement): bool =
   discard
-proc jsHTMLInputElementDisabled*(self: HTMLInputElement): bool {.wasmBindgen.} =
+proc jsHTMLInputElementDisabled*(self: HTMLInputElement): bool =
   discard
-proc jsHTMLInputElementFormAction*(self: HTMLInputElement): cstring {.wasmBindgen.} =
+proc jsHTMLInputElementFormAction*(self: HTMLInputElement): cstring =
   discard
-proc jsHTMLInputElementFormEnctype*(self: HTMLInputElement): cstring {.wasmBindgen.} =
+proc jsHTMLInputElementFormEnctype*(self: HTMLInputElement): cstring =
   discard
-proc jsHTMLInputElementFormMethod*(self: HTMLInputElement): cstring {.wasmBindgen.} =
+proc jsHTMLInputElementFormMethod*(self: HTMLInputElement): cstring =
   discard
-proc jsHTMLInputElementFormNoValidate*(self: HTMLInputElement): bool {.wasmBindgen.} =
+proc jsHTMLInputElementFormNoValidate*(self: HTMLInputElement): bool =
   discard
-proc jsHTMLInputElementFormTarget*(self: HTMLInputElement): cstring {.wasmBindgen.} =
+proc jsHTMLInputElementFormTarget*(self: HTMLInputElement): cstring =
   discard
-proc jsHTMLInputElementHeight*(self: HTMLInputElement): uint32 {.wasmBindgen.} =
+proc jsHTMLInputElementHeight*(self: HTMLInputElement): uint32 =
   discard
-proc jsHTMLInputElementIndeterminate*(self: HTMLInputElement): bool {.wasmBindgen.} =
+proc jsHTMLInputElementIndeterminate*(self: HTMLInputElement): bool =
   discard
-proc jsHTMLInputElementInputMode*(self: HTMLInputElement): cstring {.wasmBindgen.} =
+proc jsHTMLInputElementInputMode*(self: HTMLInputElement): cstring =
   discard
-proc jsHTMLInputElementMax*(self: HTMLInputElement): cstring {.wasmBindgen.} =
+proc jsHTMLInputElementMax*(self: HTMLInputElement): cstring =
   discard
-proc jsHTMLInputElementMaxLength*(self: HTMLInputElement): int32 {.wasmBindgen.} =
+proc jsHTMLInputElementMaxLength*(self: HTMLInputElement): int32 =
   discard
-proc jsHTMLInputElementMin*(self: HTMLInputElement): cstring {.wasmBindgen.} =
+proc jsHTMLInputElementMin*(self: HTMLInputElement): cstring =
   discard
-proc jsHTMLInputElementMinLength*(self: HTMLInputElement): int32 {.wasmBindgen.} =
+proc jsHTMLInputElementMinLength*(self: HTMLInputElement): int32 =
   discard
-proc jsHTMLInputElementMultiple*(self: HTMLInputElement): bool {.wasmBindgen.} =
+proc jsHTMLInputElementMultiple*(self: HTMLInputElement): bool =
   discard
-proc jsHTMLInputElementName*(self: HTMLInputElement): cstring {.wasmBindgen.} =
+proc jsHTMLInputElementName*(self: HTMLInputElement): cstring =
   discard
-proc jsHTMLInputElementPattern*(self: HTMLInputElement): cstring {.wasmBindgen.} =
+proc jsHTMLInputElementPattern*(self: HTMLInputElement): cstring =
   discard
-proc jsHTMLInputElementPlaceholder*(self: HTMLInputElement): cstring {.wasmBindgen.} =
+proc jsHTMLInputElementPlaceholder*(self: HTMLInputElement): cstring =
   discard
-proc jsHTMLInputElementReadOnly*(self: HTMLInputElement): bool {.wasmBindgen.} =
+proc jsHTMLInputElementReadOnly*(self: HTMLInputElement): bool =
   discard
-proc jsHTMLInputElementRequired*(self: HTMLInputElement): bool {.wasmBindgen.} =
+proc jsHTMLInputElementRequired*(self: HTMLInputElement): bool =
   discard
-proc jsHTMLInputElementSize*(self: HTMLInputElement): uint32 {.wasmBindgen.} =
+proc jsHTMLInputElementSize*(self: HTMLInputElement): uint32 =
   discard
-proc jsHTMLInputElementSrc*(self: HTMLInputElement): cstring {.wasmBindgen.} =
+proc jsHTMLInputElementSrc*(self: HTMLInputElement): cstring =
   discard
-proc jsHTMLInputElementStep*(self: HTMLInputElement): cstring {.wasmBindgen.} =
+proc jsHTMLInputElementStep*(self: HTMLInputElement): cstring =
   discard
-proc jsHTMLInputElementTypeVal*(self: HTMLInputElement): cstring {.wasmBindgen.} =
+proc jsHTMLInputElementTypeVal*(self: HTMLInputElement): cstring =
   discard
-proc jsHTMLInputElementDefaultValue*(self: HTMLInputElement): cstring {.wasmBindgen.} =
+proc jsHTMLInputElementDefaultValue*(self: HTMLInputElement): cstring =
   discard
-proc jsHTMLInputElementValue*(self: HTMLInputElement): cstring {.wasmBindgen.} =
+proc jsHTMLInputElementValue*(self: HTMLInputElement): cstring =
   discard
-proc jsHTMLInputElementValueAsNumber*(self: HTMLInputElement): float64 {.wasmBindgen.} =
+proc jsHTMLInputElementValueAsNumber*(self: HTMLInputElement): float64 =
   discard
-proc jsHTMLInputElementWidth*(self: HTMLInputElement): uint32 {.wasmBindgen.} =
+proc jsHTMLInputElementWidth*(self: HTMLInputElement): uint32 =
   discard
-proc jsHTMLInputElementWillValidate*(self: HTMLInputElement): bool {.wasmBindgen.} =
+proc jsHTMLInputElementWillValidate*(self: HTMLInputElement): bool =
   discard
-proc jsHTMLInputElementValidity*(self: HTMLInputElement): JsObject {.wasmBindgen.} =
+proc jsHTMLInputElementValidity*(self: HTMLInputElement): JsObject =
   discard
-proc jsHTMLInputElementValidationMessage*(self: HTMLInputElement): cstring {.wasmBindgen.} =
+proc jsHTMLInputElementValidationMessage*(self: HTMLInputElement): cstring =
   discard
-proc jsCheckValidity*(self: HTMLInputElement): bool {.wasmBindgen.} =
+proc jsCheckValidity*(self: HTMLInputElement): bool =
   discard
-proc jsReportValidity*(self: HTMLInputElement): bool {.wasmBindgen.} =
+proc jsReportValidity*(self: HTMLInputElement): bool =
   discard
-proc jsSetCustomValidity*(self: HTMLInputElement; error: cstring): void {.wasmBindgen.} =
+proc jsSetCustomValidity*(self: HTMLInputElement; error: cstring): void =
   discard
-proc jsSelect*(self: HTMLInputElement): void {.wasmBindgen.} =
+proc jsSelect*(self: HTMLInputElement): void =
   discard
-proc jsSetRangeText*(self: HTMLInputElement; replacement: cstring): void {.wasmBindgen.} =
+proc jsSetRangeText*(self: HTMLInputElement; replacement: cstring): void =
   discard
-proc jsSetRangeText*(self: HTMLInputElement; replacement: cstring; start: uint32; endVal: uint32; selectionMode: JsObject): void {.wasmBindgen.} =
+proc jsSetRangeText*(self: HTMLInputElement; replacement: cstring; start: uint32; endVal: uint32; selectionMode: JsObject): void =
   discard
-proc jsSetSelectionRange*(self: HTMLInputElement; start: uint32; endVal: uint32; direction: cstring): void {.wasmBindgen.} =
+proc jsSetSelectionRange*(self: HTMLInputElement; start: uint32; endVal: uint32; direction: cstring): void =
   discard
-proc jsShowPicker*(self: HTMLInputElement): void {.wasmBindgen.} =
+proc jsShowPicker*(self: HTMLInputElement): void =
   discard
 
-proc jsHTMLLIElementValue*(self: HTMLLIElement): int32 {.wasmBindgen.} =
+proc jsHTMLLIElementValue*(self: HTMLLIElement): int32 =
   discard
 
-proc jsHTMLLabelElementHtmlFor*(self: HTMLLabelElement): cstring {.wasmBindgen.} =
+proc jsHTMLLabelElementHtmlFor*(self: HTMLLabelElement): cstring =
   discard
 
 
-proc jsHTMLLinkElementDisabled*(self: HTMLLinkElement): bool {.wasmBindgen.} =
+proc jsHTMLLinkElementDisabled*(self: HTMLLinkElement): bool =
   discard
-proc jsHTMLLinkElementHref*(self: HTMLLinkElement): cstring {.wasmBindgen.} =
+proc jsHTMLLinkElementHref*(self: HTMLLinkElement): cstring =
   discard
-proc jsHTMLLinkElementRel*(self: HTMLLinkElement): cstring {.wasmBindgen.} =
+proc jsHTMLLinkElementRel*(self: HTMLLinkElement): cstring =
   discard
-proc jsHTMLLinkElementRelList*(self: HTMLLinkElement): JsObject {.wasmBindgen.} =
+proc jsHTMLLinkElementRelList*(self: HTMLLinkElement): JsObject =
   discard
-proc jsHTMLLinkElementMedia*(self: HTMLLinkElement): cstring {.wasmBindgen.} =
+proc jsHTMLLinkElementMedia*(self: HTMLLinkElement): cstring =
   discard
-proc jsHTMLLinkElementHreflang*(self: HTMLLinkElement): cstring {.wasmBindgen.} =
+proc jsHTMLLinkElementHreflang*(self: HTMLLinkElement): cstring =
   discard
-proc jsHTMLLinkElementTypeVal*(self: HTMLLinkElement): cstring {.wasmBindgen.} =
+proc jsHTMLLinkElementTypeVal*(self: HTMLLinkElement): cstring =
   discard
-proc jsHTMLLinkElementReferrerPolicy*(self: HTMLLinkElement): cstring {.wasmBindgen.} =
+proc jsHTMLLinkElementReferrerPolicy*(self: HTMLLinkElement): cstring =
   discard
-proc jsHTMLLinkElementSizes*(self: HTMLLinkElement): JsObject {.wasmBindgen.} =
+proc jsHTMLLinkElementSizes*(self: HTMLLinkElement): JsObject =
   discard
 
-proc jsHTMLMapElementName*(self: HTMLMapElement): cstring {.wasmBindgen.} =
+proc jsHTMLMapElementName*(self: HTMLMapElement): cstring =
   discard
-proc jsHTMLMapElementAreas*(self: HTMLMapElement): JsObject {.wasmBindgen.} =
+proc jsHTMLMapElementAreas*(self: HTMLMapElement): JsObject =
   discard
 
-proc jsHTMLMediaElementSrc*(self: HTMLMediaElement): cstring {.wasmBindgen.} =
+proc jsHTMLMediaElementSrc*(self: HTMLMediaElement): cstring =
   discard
-proc jsHTMLMediaElementCurrentSrc*(self: HTMLMediaElement): cstring {.wasmBindgen.} =
+proc jsHTMLMediaElementCurrentSrc*(self: HTMLMediaElement): cstring =
   discard
 const jsHTMLMediaElementNETWORK_EMPTY* : uint16 = 0
 const jsHTMLMediaElementNETWORK_IDLE* : uint16 = 0
 const jsHTMLMediaElementNETWORK_LOADING* : uint16 = 0
 const jsHTMLMediaElementNETWORK_NO_SOURCE* : uint16 = 0
-proc jsHTMLMediaElementNetworkState*(self: HTMLMediaElement): uint16 {.wasmBindgen.} =
+proc jsHTMLMediaElementNetworkState*(self: HTMLMediaElement): uint16 =
   discard
-proc jsHTMLMediaElementPreload*(self: HTMLMediaElement): cstring {.wasmBindgen.} =
+proc jsHTMLMediaElementPreload*(self: HTMLMediaElement): cstring =
   discard
-proc jsHTMLMediaElementBuffered*(self: HTMLMediaElement): JsObject {.wasmBindgen.} =
+proc jsHTMLMediaElementBuffered*(self: HTMLMediaElement): JsObject =
   discard
 const jsHTMLMediaElementHAVE_NOTHING* : uint16 = 0
 const jsHTMLMediaElementHAVE_METADATA* : uint16 = 0
 const jsHTMLMediaElementHAVE_CURRENT_DATA* : uint16 = 0
 const jsHTMLMediaElementHAVE_FUTURE_DATA* : uint16 = 0
 const jsHTMLMediaElementHAVE_ENOUGH_DATA* : uint16 = 0
-proc jsHTMLMediaElementReadyState*(self: HTMLMediaElement): uint16 {.wasmBindgen.} =
+proc jsHTMLMediaElementReadyState*(self: HTMLMediaElement): uint16 =
   discard
-proc jsHTMLMediaElementSeeking*(self: HTMLMediaElement): bool {.wasmBindgen.} =
+proc jsHTMLMediaElementSeeking*(self: HTMLMediaElement): bool =
   discard
-proc jsHTMLMediaElementCurrentTime*(self: HTMLMediaElement): float64 {.wasmBindgen.} =
+proc jsHTMLMediaElementCurrentTime*(self: HTMLMediaElement): float64 =
   discard
-proc jsHTMLMediaElementDuration*(self: HTMLMediaElement): float64 {.wasmBindgen.} =
+proc jsHTMLMediaElementDuration*(self: HTMLMediaElement): float64 =
   discard
-proc jsHTMLMediaElementIsEncrypted*(self: HTMLMediaElement): bool {.wasmBindgen.} =
+proc jsHTMLMediaElementIsEncrypted*(self: HTMLMediaElement): bool =
   discard
-proc jsHTMLMediaElementPaused*(self: HTMLMediaElement): bool {.wasmBindgen.} =
+proc jsHTMLMediaElementPaused*(self: HTMLMediaElement): bool =
   discard
-proc jsHTMLMediaElementDefaultPlaybackRate*(self: HTMLMediaElement): float64 {.wasmBindgen.} =
+proc jsHTMLMediaElementDefaultPlaybackRate*(self: HTMLMediaElement): float64 =
   discard
-proc jsHTMLMediaElementPlaybackRate*(self: HTMLMediaElement): float64 {.wasmBindgen.} =
+proc jsHTMLMediaElementPlaybackRate*(self: HTMLMediaElement): float64 =
   discard
-proc jsHTMLMediaElementPlayed*(self: HTMLMediaElement): JsObject {.wasmBindgen.} =
+proc jsHTMLMediaElementPlayed*(self: HTMLMediaElement): JsObject =
   discard
-proc jsHTMLMediaElementSeekable*(self: HTMLMediaElement): JsObject {.wasmBindgen.} =
+proc jsHTMLMediaElementSeekable*(self: HTMLMediaElement): JsObject =
   discard
-proc jsHTMLMediaElementEnded*(self: HTMLMediaElement): bool {.wasmBindgen.} =
+proc jsHTMLMediaElementEnded*(self: HTMLMediaElement): bool =
   discard
-proc jsHTMLMediaElementAutoplay*(self: HTMLMediaElement): bool {.wasmBindgen.} =
+proc jsHTMLMediaElementAutoplay*(self: HTMLMediaElement): bool =
   discard
-proc jsHTMLMediaElementLoop*(self: HTMLMediaElement): bool {.wasmBindgen.} =
+proc jsHTMLMediaElementLoop*(self: HTMLMediaElement): bool =
   discard
-proc jsHTMLMediaElementControls*(self: HTMLMediaElement): bool {.wasmBindgen.} =
+proc jsHTMLMediaElementControls*(self: HTMLMediaElement): bool =
   discard
-proc jsHTMLMediaElementVolume*(self: HTMLMediaElement): float64 {.wasmBindgen.} =
+proc jsHTMLMediaElementVolume*(self: HTMLMediaElement): float64 =
   discard
-proc jsHTMLMediaElementMuted*(self: HTMLMediaElement): bool {.wasmBindgen.} =
+proc jsHTMLMediaElementMuted*(self: HTMLMediaElement): bool =
   discard
-proc jsHTMLMediaElementDefaultMuted*(self: HTMLMediaElement): bool {.wasmBindgen.} =
+proc jsHTMLMediaElementDefaultMuted*(self: HTMLMediaElement): bool =
   discard
-proc jsHTMLMediaElementAudioTracks*(self: HTMLMediaElement): JsObject {.wasmBindgen.} =
+proc jsHTMLMediaElementAudioTracks*(self: HTMLMediaElement): JsObject =
   discard
-proc jsHTMLMediaElementVideoTracks*(self: HTMLMediaElement): JsObject {.wasmBindgen.} =
+proc jsHTMLMediaElementVideoTracks*(self: HTMLMediaElement): JsObject =
   discard
-proc jsLoad*(self: HTMLMediaElement): void {.wasmBindgen.} =
+proc jsLoad*(self: HTMLMediaElement): void =
   discard
-proc jsCanPlayType*(self: HTMLMediaElement; typeVal: cstring): cstring {.wasmBindgen.} =
+proc jsCanPlayType*(self: HTMLMediaElement; typeVal: cstring): cstring =
   discard
-proc jsFastSeek*(self: HTMLMediaElement; time: float64): void {.wasmBindgen.} =
+proc jsFastSeek*(self: HTMLMediaElement; time: float64): void =
   discard
-proc jsPlay*(self: HTMLMediaElement): JsObject {.wasmBindgen.} =
+proc jsPlay*(self: HTMLMediaElement): JsObject =
   discard
-proc jsPause*(self: HTMLMediaElement): void {.wasmBindgen.} =
+proc jsPause*(self: HTMLMediaElement): void =
   discard
-proc jsAddTextTrack*(self: HTMLMediaElement; kind: JsObject; label: cstring; language: cstring): JsObject {.wasmBindgen.} =
-  discard
-
-
-proc jsHTMLMenuItemElementTypeVal*(self: HTMLMenuItemElement): cstring {.wasmBindgen.} =
-  discard
-proc jsHTMLMenuItemElementLabel*(self: HTMLMenuItemElement): cstring {.wasmBindgen.} =
-  discard
-proc jsHTMLMenuItemElementIcon*(self: HTMLMenuItemElement): cstring {.wasmBindgen.} =
-  discard
-proc jsHTMLMenuItemElementDisabled*(self: HTMLMenuItemElement): bool {.wasmBindgen.} =
-  discard
-proc jsHTMLMenuItemElementChecked*(self: HTMLMenuItemElement): bool {.wasmBindgen.} =
-  discard
-proc jsHTMLMenuItemElementRadiogroup*(self: HTMLMenuItemElement): cstring {.wasmBindgen.} =
-  discard
-proc jsHTMLMenuItemElementDefaultChecked*(self: HTMLMenuItemElement): bool {.wasmBindgen.} =
-  discard
-
-proc jsHTMLMetaElementName*(self: HTMLMetaElement): cstring {.wasmBindgen.} =
-  discard
-proc jsHTMLMetaElementHttpEquiv*(self: HTMLMetaElement): cstring {.wasmBindgen.} =
-  discard
-proc jsHTMLMetaElementContent*(self: HTMLMetaElement): cstring {.wasmBindgen.} =
-  discard
-
-proc jsHTMLMeterElementValue*(self: HTMLMeterElement): float64 {.wasmBindgen.} =
-  discard
-proc jsHTMLMeterElementMin*(self: HTMLMeterElement): float64 {.wasmBindgen.} =
-  discard
-proc jsHTMLMeterElementMax*(self: HTMLMeterElement): float64 {.wasmBindgen.} =
-  discard
-proc jsHTMLMeterElementLow*(self: HTMLMeterElement): float64 {.wasmBindgen.} =
-  discard
-proc jsHTMLMeterElementHigh*(self: HTMLMeterElement): float64 {.wasmBindgen.} =
-  discard
-proc jsHTMLMeterElementOptimum*(self: HTMLMeterElement): float64 {.wasmBindgen.} =
-  discard
-proc jsHTMLMeterElementLabels*(self: HTMLMeterElement): JsObject {.wasmBindgen.} =
-  discard
-
-proc jsHTMLModElementCite*(self: HTMLModElement): cstring {.wasmBindgen.} =
-  discard
-proc jsHTMLModElementDateTime*(self: HTMLModElement): cstring {.wasmBindgen.} =
-  discard
-
-proc jsHTMLOListElementReversed*(self: HTMLOListElement): bool {.wasmBindgen.} =
-  discard
-proc jsHTMLOListElementStart*(self: HTMLOListElement): int32 {.wasmBindgen.} =
-  discard
-proc jsHTMLOListElementTypeVal*(self: HTMLOListElement): cstring {.wasmBindgen.} =
-  discard
-
-proc jsHTMLObjectElementData*(self: HTMLObjectElement): cstring {.wasmBindgen.} =
-  discard
-proc jsHTMLObjectElementTypeVal*(self: HTMLObjectElement): cstring {.wasmBindgen.} =
-  discard
-proc jsHTMLObjectElementTypeMustMatch*(self: HTMLObjectElement): bool {.wasmBindgen.} =
-  discard
-proc jsHTMLObjectElementName*(self: HTMLObjectElement): cstring {.wasmBindgen.} =
-  discard
-proc jsHTMLObjectElementUseMap*(self: HTMLObjectElement): cstring {.wasmBindgen.} =
-  discard
-proc jsHTMLObjectElementWidth*(self: HTMLObjectElement): cstring {.wasmBindgen.} =
-  discard
-proc jsHTMLObjectElementHeight*(self: HTMLObjectElement): cstring {.wasmBindgen.} =
-  discard
-proc jsHTMLObjectElementWillValidate*(self: HTMLObjectElement): bool {.wasmBindgen.} =
-  discard
-proc jsHTMLObjectElementValidity*(self: HTMLObjectElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsHTMLObjectElementValidationMessage*(self: HTMLObjectElement): cstring {.wasmBindgen.} =
-  discard
-proc jsCheckValidity*(self: HTMLObjectElement): bool {.wasmBindgen.} =
-  discard
-proc jsReportValidity*(self: HTMLObjectElement): bool {.wasmBindgen.} =
-  discard
-proc jsSetCustomValidity*(self: HTMLObjectElement; error: cstring): void {.wasmBindgen.} =
-  discard
-
-proc jsHTMLOptGroupElementDisabled*(self: HTMLOptGroupElement): bool {.wasmBindgen.} =
-  discard
-proc jsHTMLOptGroupElementLabel*(self: HTMLOptGroupElement): cstring {.wasmBindgen.} =
-  discard
-
-proc jsHTMLOptionElementDisabled*(self: HTMLOptionElement): bool {.wasmBindgen.} =
-  discard
-proc jsHTMLOptionElementLabel*(self: HTMLOptionElement): cstring {.wasmBindgen.} =
-  discard
-proc jsHTMLOptionElementDefaultSelected*(self: HTMLOptionElement): bool {.wasmBindgen.} =
-  discard
-proc jsHTMLOptionElementSelected*(self: HTMLOptionElement): bool {.wasmBindgen.} =
-  discard
-proc jsHTMLOptionElementValue*(self: HTMLOptionElement): cstring {.wasmBindgen.} =
-  discard
-proc jsHTMLOptionElementText*(self: HTMLOptionElement): cstring {.wasmBindgen.} =
-  discard
-proc jsHTMLOptionElementIndex*(self: HTMLOptionElement): int32 {.wasmBindgen.} =
-  discard
-
-proc jsHTMLOptionsCollectionLength*(self: HTMLOptionsCollection): uint32 {.wasmBindgen.} =
-  discard
-proc jsHTMLOptionsCollectionSelectedIndex*(self: HTMLOptionsCollection): int32 {.wasmBindgen.} =
-  discard
-proc jsAdd*(self: HTMLOptionsCollection; element: JsObject; before: Option[JsObject]): void {.wasmBindgen.} =
-  discard
-proc jsRemove*(self: HTMLOptionsCollection; index: int32): void {.wasmBindgen.} =
-  discard
-
-proc jsHTMLOutputElementHtmlFor*(self: HTMLOutputElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsHTMLOutputElementName*(self: HTMLOutputElement): cstring {.wasmBindgen.} =
-  discard
-proc jsHTMLOutputElementTypeVal*(self: HTMLOutputElement): cstring {.wasmBindgen.} =
-  discard
-proc jsHTMLOutputElementDefaultValue*(self: HTMLOutputElement): cstring {.wasmBindgen.} =
-  discard
-proc jsHTMLOutputElementValue*(self: HTMLOutputElement): cstring {.wasmBindgen.} =
-  discard
-proc jsHTMLOutputElementWillValidate*(self: HTMLOutputElement): bool {.wasmBindgen.} =
-  discard
-proc jsHTMLOutputElementValidity*(self: HTMLOutputElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsHTMLOutputElementValidationMessage*(self: HTMLOutputElement): cstring {.wasmBindgen.} =
-  discard
-proc jsHTMLOutputElementLabels*(self: HTMLOutputElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsCheckValidity*(self: HTMLOutputElement): bool {.wasmBindgen.} =
-  discard
-proc jsReportValidity*(self: HTMLOutputElement): bool {.wasmBindgen.} =
-  discard
-proc jsSetCustomValidity*(self: HTMLOutputElement; error: cstring): void {.wasmBindgen.} =
+proc jsAddTextTrack*(self: HTMLMediaElement; kind: JsObject; label: cstring; language: cstring): JsObject =
   discard
 
 
-proc jsHTMLParamElementName*(self: HTMLParamElement): cstring {.wasmBindgen.} =
+proc jsHTMLMenuItemElementTypeVal*(self: HTMLMenuItemElement): cstring =
   discard
-proc jsHTMLParamElementValue*(self: HTMLParamElement): cstring {.wasmBindgen.} =
+proc jsHTMLMenuItemElementLabel*(self: HTMLMenuItemElement): cstring =
+  discard
+proc jsHTMLMenuItemElementIcon*(self: HTMLMenuItemElement): cstring =
+  discard
+proc jsHTMLMenuItemElementDisabled*(self: HTMLMenuItemElement): bool =
+  discard
+proc jsHTMLMenuItemElementChecked*(self: HTMLMenuItemElement): bool =
+  discard
+proc jsHTMLMenuItemElementRadiogroup*(self: HTMLMenuItemElement): cstring =
+  discard
+proc jsHTMLMenuItemElementDefaultChecked*(self: HTMLMenuItemElement): bool =
+  discard
+
+proc jsHTMLMetaElementName*(self: HTMLMetaElement): cstring =
+  discard
+proc jsHTMLMetaElementHttpEquiv*(self: HTMLMetaElement): cstring =
+  discard
+proc jsHTMLMetaElementContent*(self: HTMLMetaElement): cstring =
+  discard
+
+proc jsHTMLMeterElementValue*(self: HTMLMeterElement): float64 =
+  discard
+proc jsHTMLMeterElementMin*(self: HTMLMeterElement): float64 =
+  discard
+proc jsHTMLMeterElementMax*(self: HTMLMeterElement): float64 =
+  discard
+proc jsHTMLMeterElementLow*(self: HTMLMeterElement): float64 =
+  discard
+proc jsHTMLMeterElementHigh*(self: HTMLMeterElement): float64 =
+  discard
+proc jsHTMLMeterElementOptimum*(self: HTMLMeterElement): float64 =
+  discard
+proc jsHTMLMeterElementLabels*(self: HTMLMeterElement): JsObject =
+  discard
+
+proc jsHTMLModElementCite*(self: HTMLModElement): cstring =
+  discard
+proc jsHTMLModElementDateTime*(self: HTMLModElement): cstring =
+  discard
+
+proc jsHTMLOListElementReversed*(self: HTMLOListElement): bool =
+  discard
+proc jsHTMLOListElementStart*(self: HTMLOListElement): int32 =
+  discard
+proc jsHTMLOListElementTypeVal*(self: HTMLOListElement): cstring =
+  discard
+
+proc jsHTMLObjectElementData*(self: HTMLObjectElement): cstring =
+  discard
+proc jsHTMLObjectElementTypeVal*(self: HTMLObjectElement): cstring =
+  discard
+proc jsHTMLObjectElementTypeMustMatch*(self: HTMLObjectElement): bool =
+  discard
+proc jsHTMLObjectElementName*(self: HTMLObjectElement): cstring =
+  discard
+proc jsHTMLObjectElementUseMap*(self: HTMLObjectElement): cstring =
+  discard
+proc jsHTMLObjectElementWidth*(self: HTMLObjectElement): cstring =
+  discard
+proc jsHTMLObjectElementHeight*(self: HTMLObjectElement): cstring =
+  discard
+proc jsHTMLObjectElementWillValidate*(self: HTMLObjectElement): bool =
+  discard
+proc jsHTMLObjectElementValidity*(self: HTMLObjectElement): JsObject =
+  discard
+proc jsHTMLObjectElementValidationMessage*(self: HTMLObjectElement): cstring =
+  discard
+proc jsCheckValidity*(self: HTMLObjectElement): bool =
+  discard
+proc jsReportValidity*(self: HTMLObjectElement): bool =
+  discard
+proc jsSetCustomValidity*(self: HTMLObjectElement; error: cstring): void =
+  discard
+
+proc jsHTMLOptGroupElementDisabled*(self: HTMLOptGroupElement): bool =
+  discard
+proc jsHTMLOptGroupElementLabel*(self: HTMLOptGroupElement): cstring =
+  discard
+
+proc jsHTMLOptionElementDisabled*(self: HTMLOptionElement): bool =
+  discard
+proc jsHTMLOptionElementLabel*(self: HTMLOptionElement): cstring =
+  discard
+proc jsHTMLOptionElementDefaultSelected*(self: HTMLOptionElement): bool =
+  discard
+proc jsHTMLOptionElementSelected*(self: HTMLOptionElement): bool =
+  discard
+proc jsHTMLOptionElementValue*(self: HTMLOptionElement): cstring =
+  discard
+proc jsHTMLOptionElementText*(self: HTMLOptionElement): cstring =
+  discard
+proc jsHTMLOptionElementIndex*(self: HTMLOptionElement): int32 =
+  discard
+
+proc jsHTMLOptionsCollectionLength*(self: HTMLOptionsCollection): uint32 =
+  discard
+proc jsHTMLOptionsCollectionSelectedIndex*(self: HTMLOptionsCollection): int32 =
+  discard
+proc jsAdd*(self: HTMLOptionsCollection; element: JsObject; before: Option[JsObject]): void =
+  discard
+proc jsRemove*(self: HTMLOptionsCollection; index: int32): void =
+  discard
+
+proc jsHTMLOutputElementHtmlFor*(self: HTMLOutputElement): JsObject =
+  discard
+proc jsHTMLOutputElementName*(self: HTMLOutputElement): cstring =
+  discard
+proc jsHTMLOutputElementTypeVal*(self: HTMLOutputElement): cstring =
+  discard
+proc jsHTMLOutputElementDefaultValue*(self: HTMLOutputElement): cstring =
+  discard
+proc jsHTMLOutputElementValue*(self: HTMLOutputElement): cstring =
+  discard
+proc jsHTMLOutputElementWillValidate*(self: HTMLOutputElement): bool =
+  discard
+proc jsHTMLOutputElementValidity*(self: HTMLOutputElement): JsObject =
+  discard
+proc jsHTMLOutputElementValidationMessage*(self: HTMLOutputElement): cstring =
+  discard
+proc jsHTMLOutputElementLabels*(self: HTMLOutputElement): JsObject =
+  discard
+proc jsCheckValidity*(self: HTMLOutputElement): bool =
+  discard
+proc jsReportValidity*(self: HTMLOutputElement): bool =
+  discard
+proc jsSetCustomValidity*(self: HTMLOutputElement; error: cstring): void =
+  discard
+
+
+proc jsHTMLParamElementName*(self: HTMLParamElement): cstring =
+  discard
+proc jsHTMLParamElementValue*(self: HTMLParamElement): cstring =
   discard
 
 
 
-proc jsHTMLProgressElementValue*(self: HTMLProgressElement): float64 {.wasmBindgen.} =
+proc jsHTMLProgressElementValue*(self: HTMLProgressElement): float64 =
   discard
-proc jsHTMLProgressElementMax*(self: HTMLProgressElement): float64 {.wasmBindgen.} =
+proc jsHTMLProgressElementMax*(self: HTMLProgressElement): float64 =
   discard
-proc jsHTMLProgressElementPosition*(self: HTMLProgressElement): float64 {.wasmBindgen.} =
+proc jsHTMLProgressElementPosition*(self: HTMLProgressElement): float64 =
   discard
-proc jsHTMLProgressElementLabels*(self: HTMLProgressElement): JsObject {.wasmBindgen.} =
-  discard
-
-proc jsHTMLQuoteElementCite*(self: HTMLQuoteElement): cstring {.wasmBindgen.} =
+proc jsHTMLProgressElementLabels*(self: HTMLProgressElement): JsObject =
   discard
 
-proc jsHTMLScriptElementSrc*(self: HTMLScriptElement): cstring {.wasmBindgen.} =
-  discard
-proc jsHTMLScriptElementTypeVal*(self: HTMLScriptElement): cstring {.wasmBindgen.} =
-  discard
-proc jsHTMLScriptElementNoModule*(self: HTMLScriptElement): bool {.wasmBindgen.} =
-  discard
-proc jsHTMLScriptElementCharset*(self: HTMLScriptElement): cstring {.wasmBindgen.} =
-  discard
-proc jsHTMLScriptElementAsync*(self: HTMLScriptElement): bool {.wasmBindgen.} =
-  discard
-proc jsHTMLScriptElementDeferVal*(self: HTMLScriptElement): bool {.wasmBindgen.} =
-  discard
-proc jsHTMLScriptElementText*(self: HTMLScriptElement): cstring {.wasmBindgen.} =
+proc jsHTMLQuoteElementCite*(self: HTMLQuoteElement): cstring =
   discard
 
-proc jsHTMLSelectElementAutofocus*(self: HTMLSelectElement): bool {.wasmBindgen.} =
+proc jsHTMLScriptElementSrc*(self: HTMLScriptElement): cstring =
   discard
-proc jsHTMLSelectElementAutocomplete*(self: HTMLSelectElement): cstring {.wasmBindgen.} =
+proc jsHTMLScriptElementTypeVal*(self: HTMLScriptElement): cstring =
   discard
-proc jsHTMLSelectElementDisabled*(self: HTMLSelectElement): bool {.wasmBindgen.} =
+proc jsHTMLScriptElementNoModule*(self: HTMLScriptElement): bool =
   discard
-proc jsHTMLSelectElementMultiple*(self: HTMLSelectElement): bool {.wasmBindgen.} =
+proc jsHTMLScriptElementCharset*(self: HTMLScriptElement): cstring =
   discard
-proc jsHTMLSelectElementName*(self: HTMLSelectElement): cstring {.wasmBindgen.} =
+proc jsHTMLScriptElementAsync*(self: HTMLScriptElement): bool =
   discard
-proc jsHTMLSelectElementRequired*(self: HTMLSelectElement): bool {.wasmBindgen.} =
+proc jsHTMLScriptElementDeferVal*(self: HTMLScriptElement): bool =
   discard
-proc jsHTMLSelectElementSize*(self: HTMLSelectElement): uint32 {.wasmBindgen.} =
-  discard
-proc jsHTMLSelectElementTypeVal*(self: HTMLSelectElement): cstring {.wasmBindgen.} =
-  discard
-proc jsHTMLSelectElementOptions*(self: HTMLSelectElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsHTMLSelectElementLength*(self: HTMLSelectElement): uint32 {.wasmBindgen.} =
-  discard
-proc jsHTMLSelectElementSelectedOptions*(self: HTMLSelectElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsHTMLSelectElementSelectedIndex*(self: HTMLSelectElement): int32 {.wasmBindgen.} =
-  discard
-proc jsHTMLSelectElementValue*(self: HTMLSelectElement): cstring {.wasmBindgen.} =
-  discard
-proc jsHTMLSelectElementWillValidate*(self: HTMLSelectElement): bool {.wasmBindgen.} =
-  discard
-proc jsHTMLSelectElementValidity*(self: HTMLSelectElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsHTMLSelectElementValidationMessage*(self: HTMLSelectElement): cstring {.wasmBindgen.} =
-  discard
-proc jsHTMLSelectElementLabels*(self: HTMLSelectElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsItem*(self: HTMLSelectElement; index: uint32): Option[JsObject] {.wasmBindgen.} =
-  discard
-proc jsNamedItem*(self: HTMLSelectElement; name: cstring): Option[JsObject] {.wasmBindgen.} =
-  discard
-proc jsAdd*(self: HTMLSelectElement; element: JsObject; before: Option[JsObject]): void {.wasmBindgen.} =
-  discard
-proc jsRemove*(self: HTMLSelectElement; index: int32): void {.wasmBindgen.} =
-  discard
-proc jsCheckValidity*(self: HTMLSelectElement): bool {.wasmBindgen.} =
-  discard
-proc jsReportValidity*(self: HTMLSelectElement): bool {.wasmBindgen.} =
-  discard
-proc jsSetCustomValidity*(self: HTMLSelectElement; error: cstring): void {.wasmBindgen.} =
-  discard
-proc jsRemove*(self: HTMLSelectElement): void {.wasmBindgen.} =
+proc jsHTMLScriptElementText*(self: HTMLScriptElement): cstring =
   discard
 
-proc jsHTMLSlotElementName*(self: HTMLSlotElement): cstring {.wasmBindgen.} =
+proc jsHTMLSelectElementAutofocus*(self: HTMLSelectElement): bool =
   discard
-proc jsAssignedNodes*(self: HTMLSlotElement; options: JsObject): JsObject {.wasmBindgen.} =
+proc jsHTMLSelectElementAutocomplete*(self: HTMLSelectElement): cstring =
+  discard
+proc jsHTMLSelectElementDisabled*(self: HTMLSelectElement): bool =
+  discard
+proc jsHTMLSelectElementMultiple*(self: HTMLSelectElement): bool =
+  discard
+proc jsHTMLSelectElementName*(self: HTMLSelectElement): cstring =
+  discard
+proc jsHTMLSelectElementRequired*(self: HTMLSelectElement): bool =
+  discard
+proc jsHTMLSelectElementSize*(self: HTMLSelectElement): uint32 =
+  discard
+proc jsHTMLSelectElementTypeVal*(self: HTMLSelectElement): cstring =
+  discard
+proc jsHTMLSelectElementOptions*(self: HTMLSelectElement): JsObject =
+  discard
+proc jsHTMLSelectElementLength*(self: HTMLSelectElement): uint32 =
+  discard
+proc jsHTMLSelectElementSelectedOptions*(self: HTMLSelectElement): JsObject =
+  discard
+proc jsHTMLSelectElementSelectedIndex*(self: HTMLSelectElement): int32 =
+  discard
+proc jsHTMLSelectElementValue*(self: HTMLSelectElement): cstring =
+  discard
+proc jsHTMLSelectElementWillValidate*(self: HTMLSelectElement): bool =
+  discard
+proc jsHTMLSelectElementValidity*(self: HTMLSelectElement): JsObject =
+  discard
+proc jsHTMLSelectElementValidationMessage*(self: HTMLSelectElement): cstring =
+  discard
+proc jsHTMLSelectElementLabels*(self: HTMLSelectElement): JsObject =
+  discard
+proc jsItem*(self: HTMLSelectElement; index: uint32): Option[JsObject] =
+  discard
+proc jsNamedItem*(self: HTMLSelectElement; name: cstring): Option[JsObject] =
+  discard
+proc jsAdd*(self: HTMLSelectElement; element: JsObject; before: Option[JsObject]): void =
+  discard
+proc jsRemove*(self: HTMLSelectElement; index: int32): void =
+  discard
+proc jsCheckValidity*(self: HTMLSelectElement): bool =
+  discard
+proc jsReportValidity*(self: HTMLSelectElement): bool =
+  discard
+proc jsSetCustomValidity*(self: HTMLSelectElement; error: cstring): void =
+  discard
+proc jsRemove*(self: HTMLSelectElement): void =
   discard
 
-proc jsHTMLSourceElementSrc*(self: HTMLSourceElement): cstring {.wasmBindgen.} =
+proc jsHTMLSlotElementName*(self: HTMLSlotElement): cstring =
   discard
-proc jsHTMLSourceElementTypeVal*(self: HTMLSourceElement): cstring {.wasmBindgen.} =
+proc jsAssignedNodes*(self: HTMLSlotElement; options: JsObject): JsObject =
   discard
 
-
-proc jsHTMLStyleElementDisabled*(self: HTMLStyleElement): bool {.wasmBindgen.} =
+proc jsHTMLSourceElementSrc*(self: HTMLSourceElement): cstring =
   discard
-proc jsHTMLStyleElementMedia*(self: HTMLStyleElement): cstring {.wasmBindgen.} =
-  discard
-proc jsHTMLStyleElementTypeVal*(self: HTMLStyleElement): cstring {.wasmBindgen.} =
+proc jsHTMLSourceElementTypeVal*(self: HTMLSourceElement): cstring =
   discard
 
 
-proc jsHTMLTableCellElementColSpan*(self: HTMLTableCellElement): uint32 {.wasmBindgen.} =
+proc jsHTMLStyleElementDisabled*(self: HTMLStyleElement): bool =
   discard
-proc jsHTMLTableCellElementRowSpan*(self: HTMLTableCellElement): uint32 {.wasmBindgen.} =
+proc jsHTMLStyleElementMedia*(self: HTMLStyleElement): cstring =
   discard
-proc jsHTMLTableCellElementHeaders*(self: HTMLTableCellElement): cstring {.wasmBindgen.} =
-  discard
-proc jsHTMLTableCellElementCellIndex*(self: HTMLTableCellElement): int32 {.wasmBindgen.} =
-  discard
-proc jsHTMLTableCellElementAbbr*(self: HTMLTableCellElement): cstring {.wasmBindgen.} =
-  discard
-proc jsHTMLTableCellElementScope*(self: HTMLTableCellElement): cstring {.wasmBindgen.} =
+proc jsHTMLStyleElementTypeVal*(self: HTMLStyleElement): cstring =
   discard
 
-proc jsHTMLTableColElementSpan*(self: HTMLTableColElement): uint32 {.wasmBindgen.} =
+
+proc jsHTMLTableCellElementColSpan*(self: HTMLTableCellElement): uint32 =
+  discard
+proc jsHTMLTableCellElementRowSpan*(self: HTMLTableCellElement): uint32 =
+  discard
+proc jsHTMLTableCellElementHeaders*(self: HTMLTableCellElement): cstring =
+  discard
+proc jsHTMLTableCellElementCellIndex*(self: HTMLTableCellElement): int32 =
+  discard
+proc jsHTMLTableCellElementAbbr*(self: HTMLTableCellElement): cstring =
+  discard
+proc jsHTMLTableCellElementScope*(self: HTMLTableCellElement): cstring =
   discard
 
-proc jsHTMLTableElementTBodies*(self: HTMLTableElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsHTMLTableElementRows*(self: HTMLTableElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsCreateCaption*(self: HTMLTableElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsDeleteCaption*(self: HTMLTableElement): void {.wasmBindgen.} =
-  discard
-proc jsCreateTHead*(self: HTMLTableElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsDeleteTHead*(self: HTMLTableElement): void {.wasmBindgen.} =
-  discard
-proc jsCreateTFoot*(self: HTMLTableElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsDeleteTFoot*(self: HTMLTableElement): void {.wasmBindgen.} =
-  discard
-proc jsCreateTBody*(self: HTMLTableElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsInsertRow*(self: HTMLTableElement; index: int32): JsObject {.wasmBindgen.} =
-  discard
-proc jsDeleteRow*(self: HTMLTableElement; index: int32): void {.wasmBindgen.} =
+proc jsHTMLTableColElementSpan*(self: HTMLTableColElement): uint32 =
   discard
 
-proc jsHTMLTableRowElementRowIndex*(self: HTMLTableRowElement): int32 {.wasmBindgen.} =
+proc jsHTMLTableElementTBodies*(self: HTMLTableElement): JsObject =
   discard
-proc jsHTMLTableRowElementSectionRowIndex*(self: HTMLTableRowElement): int32 {.wasmBindgen.} =
+proc jsHTMLTableElementRows*(self: HTMLTableElement): JsObject =
   discard
-proc jsHTMLTableRowElementCells*(self: HTMLTableRowElement): JsObject {.wasmBindgen.} =
+proc jsCreateCaption*(self: HTMLTableElement): JsObject =
   discard
-proc jsInsertCell*(self: HTMLTableRowElement; index: int32): JsObject {.wasmBindgen.} =
+proc jsDeleteCaption*(self: HTMLTableElement): void =
   discard
-proc jsDeleteCell*(self: HTMLTableRowElement; index: int32): void {.wasmBindgen.} =
+proc jsCreateTHead*(self: HTMLTableElement): JsObject =
   discard
-
-proc jsHTMLTableSectionElementRows*(self: HTMLTableSectionElement): JsObject {.wasmBindgen.} =
+proc jsDeleteTHead*(self: HTMLTableElement): void =
   discard
-proc jsInsertRow*(self: HTMLTableSectionElement; index: int32): JsObject {.wasmBindgen.} =
+proc jsCreateTFoot*(self: HTMLTableElement): JsObject =
   discard
-proc jsDeleteRow*(self: HTMLTableSectionElement; index: int32): void {.wasmBindgen.} =
+proc jsDeleteTFoot*(self: HTMLTableElement): void =
   discard
-
-proc jsHTMLTemplateElementContent*(self: HTMLTemplateElement): JsObject {.wasmBindgen.} =
+proc jsCreateTBody*(self: HTMLTableElement): JsObject =
   discard
-
-proc jsHTMLTextAreaElementAutocomplete*(self: HTMLTextAreaElement): cstring {.wasmBindgen.} =
+proc jsInsertRow*(self: HTMLTableElement; index: int32): JsObject =
   discard
-proc jsHTMLTextAreaElementAutofocus*(self: HTMLTextAreaElement): bool {.wasmBindgen.} =
-  discard
-proc jsHTMLTextAreaElementCols*(self: HTMLTextAreaElement): uint32 {.wasmBindgen.} =
-  discard
-proc jsHTMLTextAreaElementDisabled*(self: HTMLTextAreaElement): bool {.wasmBindgen.} =
-  discard
-proc jsHTMLTextAreaElementMaxLength*(self: HTMLTextAreaElement): int32 {.wasmBindgen.} =
-  discard
-proc jsHTMLTextAreaElementMinLength*(self: HTMLTextAreaElement): int32 {.wasmBindgen.} =
-  discard
-proc jsHTMLTextAreaElementName*(self: HTMLTextAreaElement): cstring {.wasmBindgen.} =
-  discard
-proc jsHTMLTextAreaElementPlaceholder*(self: HTMLTextAreaElement): cstring {.wasmBindgen.} =
-  discard
-proc jsHTMLTextAreaElementReadOnly*(self: HTMLTextAreaElement): bool {.wasmBindgen.} =
-  discard
-proc jsHTMLTextAreaElementRequired*(self: HTMLTextAreaElement): bool {.wasmBindgen.} =
-  discard
-proc jsHTMLTextAreaElementRows*(self: HTMLTextAreaElement): uint32 {.wasmBindgen.} =
-  discard
-proc jsHTMLTextAreaElementWrap*(self: HTMLTextAreaElement): cstring {.wasmBindgen.} =
-  discard
-proc jsHTMLTextAreaElementTypeVal*(self: HTMLTextAreaElement): cstring {.wasmBindgen.} =
-  discard
-proc jsHTMLTextAreaElementDefaultValue*(self: HTMLTextAreaElement): cstring {.wasmBindgen.} =
-  discard
-proc jsHTMLTextAreaElementValue*(self: HTMLTextAreaElement): cstring {.wasmBindgen.} =
-  discard
-proc jsHTMLTextAreaElementTextLength*(self: HTMLTextAreaElement): uint32 {.wasmBindgen.} =
-  discard
-proc jsHTMLTextAreaElementWillValidate*(self: HTMLTextAreaElement): bool {.wasmBindgen.} =
-  discard
-proc jsHTMLTextAreaElementValidity*(self: HTMLTextAreaElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsHTMLTextAreaElementValidationMessage*(self: HTMLTextAreaElement): cstring {.wasmBindgen.} =
-  discard
-proc jsHTMLTextAreaElementLabels*(self: HTMLTextAreaElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsCheckValidity*(self: HTMLTextAreaElement): bool {.wasmBindgen.} =
-  discard
-proc jsReportValidity*(self: HTMLTextAreaElement): bool {.wasmBindgen.} =
-  discard
-proc jsSetCustomValidity*(self: HTMLTextAreaElement; error: cstring): void {.wasmBindgen.} =
-  discard
-proc jsSelect*(self: HTMLTextAreaElement): void {.wasmBindgen.} =
-  discard
-proc jsSetRangeText*(self: HTMLTextAreaElement; replacement: cstring): void {.wasmBindgen.} =
-  discard
-proc jsSetRangeText*(self: HTMLTextAreaElement; replacement: cstring; start: uint32; endVal: uint32; mode: cstring): void {.wasmBindgen.} =
-  discard
-proc jsSetSelectionRange*(self: HTMLTextAreaElement; start: uint32; endVal: uint32; direction: cstring): void {.wasmBindgen.} =
+proc jsDeleteRow*(self: HTMLTableElement; index: int32): void =
   discard
 
-proc jsHTMLTimeElementDateTime*(self: HTMLTimeElement): cstring {.wasmBindgen.} =
+proc jsHTMLTableRowElementRowIndex*(self: HTMLTableRowElement): int32 =
+  discard
+proc jsHTMLTableRowElementSectionRowIndex*(self: HTMLTableRowElement): int32 =
+  discard
+proc jsHTMLTableRowElementCells*(self: HTMLTableRowElement): JsObject =
+  discard
+proc jsInsertCell*(self: HTMLTableRowElement; index: int32): JsObject =
+  discard
+proc jsDeleteCell*(self: HTMLTableRowElement; index: int32): void =
   discard
 
-proc jsHTMLTitleElementText*(self: HTMLTitleElement): cstring {.wasmBindgen.} =
+proc jsHTMLTableSectionElementRows*(self: HTMLTableSectionElement): JsObject =
+  discard
+proc jsInsertRow*(self: HTMLTableSectionElement; index: int32): JsObject =
+  discard
+proc jsDeleteRow*(self: HTMLTableSectionElement; index: int32): void =
   discard
 
-proc jsHTMLTrackElementKind*(self: HTMLTrackElement): cstring {.wasmBindgen.} =
+proc jsHTMLTemplateElementContent*(self: HTMLTemplateElement): JsObject =
   discard
-proc jsHTMLTrackElementSrc*(self: HTMLTrackElement): cstring {.wasmBindgen.} =
+
+proc jsHTMLTextAreaElementAutocomplete*(self: HTMLTextAreaElement): cstring =
   discard
-proc jsHTMLTrackElementSrclang*(self: HTMLTrackElement): cstring {.wasmBindgen.} =
+proc jsHTMLTextAreaElementAutofocus*(self: HTMLTextAreaElement): bool =
   discard
-proc jsHTMLTrackElementLabel*(self: HTMLTrackElement): cstring {.wasmBindgen.} =
+proc jsHTMLTextAreaElementCols*(self: HTMLTextAreaElement): uint32 =
   discard
-proc jsHTMLTrackElementDefault*(self: HTMLTrackElement): bool {.wasmBindgen.} =
+proc jsHTMLTextAreaElementDisabled*(self: HTMLTextAreaElement): bool =
+  discard
+proc jsHTMLTextAreaElementMaxLength*(self: HTMLTextAreaElement): int32 =
+  discard
+proc jsHTMLTextAreaElementMinLength*(self: HTMLTextAreaElement): int32 =
+  discard
+proc jsHTMLTextAreaElementName*(self: HTMLTextAreaElement): cstring =
+  discard
+proc jsHTMLTextAreaElementPlaceholder*(self: HTMLTextAreaElement): cstring =
+  discard
+proc jsHTMLTextAreaElementReadOnly*(self: HTMLTextAreaElement): bool =
+  discard
+proc jsHTMLTextAreaElementRequired*(self: HTMLTextAreaElement): bool =
+  discard
+proc jsHTMLTextAreaElementRows*(self: HTMLTextAreaElement): uint32 =
+  discard
+proc jsHTMLTextAreaElementWrap*(self: HTMLTextAreaElement): cstring =
+  discard
+proc jsHTMLTextAreaElementTypeVal*(self: HTMLTextAreaElement): cstring =
+  discard
+proc jsHTMLTextAreaElementDefaultValue*(self: HTMLTextAreaElement): cstring =
+  discard
+proc jsHTMLTextAreaElementValue*(self: HTMLTextAreaElement): cstring =
+  discard
+proc jsHTMLTextAreaElementTextLength*(self: HTMLTextAreaElement): uint32 =
+  discard
+proc jsHTMLTextAreaElementWillValidate*(self: HTMLTextAreaElement): bool =
+  discard
+proc jsHTMLTextAreaElementValidity*(self: HTMLTextAreaElement): JsObject =
+  discard
+proc jsHTMLTextAreaElementValidationMessage*(self: HTMLTextAreaElement): cstring =
+  discard
+proc jsHTMLTextAreaElementLabels*(self: HTMLTextAreaElement): JsObject =
+  discard
+proc jsCheckValidity*(self: HTMLTextAreaElement): bool =
+  discard
+proc jsReportValidity*(self: HTMLTextAreaElement): bool =
+  discard
+proc jsSetCustomValidity*(self: HTMLTextAreaElement; error: cstring): void =
+  discard
+proc jsSelect*(self: HTMLTextAreaElement): void =
+  discard
+proc jsSetRangeText*(self: HTMLTextAreaElement; replacement: cstring): void =
+  discard
+proc jsSetRangeText*(self: HTMLTextAreaElement; replacement: cstring; start: uint32; endVal: uint32; mode: cstring): void =
+  discard
+proc jsSetSelectionRange*(self: HTMLTextAreaElement; start: uint32; endVal: uint32; direction: cstring): void =
+  discard
+
+proc jsHTMLTimeElementDateTime*(self: HTMLTimeElement): cstring =
+  discard
+
+proc jsHTMLTitleElementText*(self: HTMLTitleElement): cstring =
+  discard
+
+proc jsHTMLTrackElementKind*(self: HTMLTrackElement): cstring =
+  discard
+proc jsHTMLTrackElementSrc*(self: HTMLTrackElement): cstring =
+  discard
+proc jsHTMLTrackElementSrclang*(self: HTMLTrackElement): cstring =
+  discard
+proc jsHTMLTrackElementLabel*(self: HTMLTrackElement): cstring =
+  discard
+proc jsHTMLTrackElementDefault*(self: HTMLTrackElement): bool =
   discard
 const jsHTMLTrackElementNONE* : uint16 = 0
 const jsHTMLTrackElementLOADING* : uint16 = 0
 const jsHTMLTrackElementLOADED* : uint16 = 0
 const jsHTMLTrackElementERROR* : uint16 = 0
-proc jsHTMLTrackElementReadyState*(self: HTMLTrackElement): uint16 {.wasmBindgen.} =
+proc jsHTMLTrackElementReadyState*(self: HTMLTrackElement): uint16 =
   discard
 
 
-proc jsHTMLVideoElementWidth*(self: HTMLVideoElement): uint32 {.wasmBindgen.} =
+proc jsHTMLVideoElementWidth*(self: HTMLVideoElement): uint32 =
   discard
-proc jsHTMLVideoElementHeight*(self: HTMLVideoElement): uint32 {.wasmBindgen.} =
+proc jsHTMLVideoElementHeight*(self: HTMLVideoElement): uint32 =
   discard
-proc jsHTMLVideoElementVideoWidth*(self: HTMLVideoElement): uint32 {.wasmBindgen.} =
+proc jsHTMLVideoElementVideoWidth*(self: HTMLVideoElement): uint32 =
   discard
-proc jsHTMLVideoElementVideoHeight*(self: HTMLVideoElement): uint32 {.wasmBindgen.} =
+proc jsHTMLVideoElementVideoHeight*(self: HTMLVideoElement): uint32 =
   discard
-proc jsHTMLVideoElementPoster*(self: HTMLVideoElement): cstring {.wasmBindgen.} =
-  discard
-
-proc jsHashChangeEventOldURL*(self: HashChangeEvent): cstring {.wasmBindgen.} =
-  discard
-proc jsHashChangeEventNewURL*(self: HashChangeEvent): cstring {.wasmBindgen.} =
-  discard
-proc jsInitHashChangeEvent*(self: HashChangeEvent; typeArg: cstring; canBubbleArg: bool; cancelableArg: bool; oldURLArg: cstring; newURLArg: cstring): void {.wasmBindgen.} =
+proc jsHTMLVideoElementPoster*(self: HTMLVideoElement): cstring =
   discard
 
-proc jsHeadersGuard*(self: Headers): JsObject {.wasmBindgen.} =
+proc jsHashChangeEventOldURL*(self: HashChangeEvent): cstring =
   discard
-proc jsAppend*(self: Headers; name: cstring; value: cstring): void {.wasmBindgen.} =
+proc jsHashChangeEventNewURL*(self: HashChangeEvent): cstring =
   discard
-proc jsDelete*(self: Headers; name: cstring): void {.wasmBindgen.} =
+proc jsInitHashChangeEvent*(self: HashChangeEvent; typeArg: cstring; canBubbleArg: bool; cancelableArg: bool; oldURLArg: cstring; newURLArg: cstring): void =
   discard
-proc jsGet*(self: Headers; name: cstring): Option[cstring] {.wasmBindgen.} =
+
+proc jsHeadersGuard*(self: Headers): JsObject =
   discard
-proc jsHas*(self: Headers; name: cstring): bool {.wasmBindgen.} =
+proc jsAppend*(self: Headers; name: cstring; value: cstring): void =
   discard
-proc jsSet*(self: Headers; name: cstring; value: cstring): void {.wasmBindgen.} =
+proc jsDelete*(self: Headers; name: cstring): void =
+  discard
+proc jsGet*(self: Headers; name: cstring): Option[cstring] =
+  discard
+proc jsHas*(self: Headers; name: cstring): bool =
+  discard
+proc jsSet*(self: Headers; name: cstring; value: cstring): void =
   discard
 
 
-proc jsHistoryLength*(self: History): uint32 {.wasmBindgen.} =
+proc jsHistoryLength*(self: History): uint32 =
   discard
-proc jsHistoryScrollRestoration*(self: History): JsObject {.wasmBindgen.} =
+proc jsHistoryScrollRestoration*(self: History): JsObject =
   discard
-proc jsHistoryState*(self: History): JsObject {.wasmBindgen.} =
+proc jsHistoryState*(self: History): JsObject =
   discard
-proc jsGo*(self: History; delta: int32): void {.wasmBindgen.} =
+proc jsGo*(self: History; delta: int32): void =
   discard
-proc jsBack*(self: History): void {.wasmBindgen.} =
+proc jsBack*(self: History): void =
   discard
-proc jsForward*(self: History): void {.wasmBindgen.} =
+proc jsForward*(self: History): void =
   discard
-proc jsPushState*(self: History; data: JsObject; title: cstring; url: Option[cstring]): void {.wasmBindgen.} =
+proc jsPushState*(self: History; data: JsObject; title: cstring; url: Option[cstring]): void =
   discard
-proc jsReplaceState*(self: History; data: JsObject; title: cstring; url: Option[cstring]): void {.wasmBindgen.} =
-  discard
-
-proc jsIDBRequestResultVal*(self: IDBRequest): JsObject {.wasmBindgen.} =
-  discard
-proc jsIDBRequestReadyState*(self: IDBRequest): JsObject {.wasmBindgen.} =
-  discard
-proc jsIDBRequestOnsuccess*(self: IDBRequest): JsObject {.wasmBindgen.} =
-  discard
-proc jsIDBRequestOnerror*(self: IDBRequest): JsObject {.wasmBindgen.} =
+proc jsReplaceState*(self: History; data: JsObject; title: cstring; url: Option[cstring]): void =
   discard
 
-proc jsIDBOpenDBRequestOnblocked*(self: IDBOpenDBRequest): JsObject {.wasmBindgen.} =
+proc jsIDBRequestResultVal*(self: IDBRequest): JsObject =
   discard
-proc jsIDBOpenDBRequestOnupgradeneeded*(self: IDBOpenDBRequest): JsObject {.wasmBindgen.} =
+proc jsIDBRequestReadyState*(self: IDBRequest): JsObject =
   discard
-
-proc jsIDBVersionChangeEventOldVersion*(self: IDBVersionChangeEvent): uint64 {.wasmBindgen.} =
+proc jsIDBRequestOnsuccess*(self: IDBRequest): JsObject =
   discard
-
-proc jsOpen*(self: IDBFactory; name: cstring; version: uint64): JsObject {.wasmBindgen.} =
-  discard
-proc jsDeleteDatabase*(self: IDBFactory; name: cstring): JsObject {.wasmBindgen.} =
-  discard
-proc jsCmp*(self: IDBFactory; first: JsObject; second: JsObject): int16 {.wasmBindgen.} =
+proc jsIDBRequestOnerror*(self: IDBRequest): JsObject =
   discard
 
-proc jsIDBDatabaseName*(self: IDBDatabase): cstring {.wasmBindgen.} =
+proc jsIDBOpenDBRequestOnblocked*(self: IDBOpenDBRequest): JsObject =
   discard
-proc jsIDBDatabaseVersion*(self: IDBDatabase): uint64 {.wasmBindgen.} =
-  discard
-proc jsIDBDatabaseOnabort*(self: IDBDatabase): JsObject {.wasmBindgen.} =
-  discard
-proc jsIDBDatabaseOnclose*(self: IDBDatabase): JsObject {.wasmBindgen.} =
-  discard
-proc jsIDBDatabaseOnerror*(self: IDBDatabase): JsObject {.wasmBindgen.} =
-  discard
-proc jsIDBDatabaseOnversionchange*(self: IDBDatabase): JsObject {.wasmBindgen.} =
-  discard
-proc jsTransaction*(self: IDBDatabase; storeNames: JsObject; mode: JsObject): JsObject {.wasmBindgen.} =
-  discard
-proc jsClose*(self: IDBDatabase): void {.wasmBindgen.} =
-  discard
-proc jsCreateObjectStore*(self: IDBDatabase; name: cstring; options: JsObject): JsObject {.wasmBindgen.} =
-  discard
-proc jsDeleteObjectStore*(self: IDBDatabase; name: cstring): void {.wasmBindgen.} =
+proc jsIDBOpenDBRequestOnupgradeneeded*(self: IDBOpenDBRequest): JsObject =
   discard
 
-proc jsIDBObjectStoreName*(self: IDBObjectStore): cstring {.wasmBindgen.} =
-  discard
-proc jsIDBObjectStoreKeyPath*(self: IDBObjectStore): JsObject {.wasmBindgen.} =
-  discard
-proc jsIDBObjectStoreTransaction*(self: IDBObjectStore): JsObject {.wasmBindgen.} =
-  discard
-proc jsIDBObjectStoreAutoIncrement*(self: IDBObjectStore): bool {.wasmBindgen.} =
-  discard
-proc jsPut*(self: IDBObjectStore; value: JsObject; key: JsObject): JsObject {.wasmBindgen.} =
-  discard
-proc jsAdd*(self: IDBObjectStore; value: JsObject; key: JsObject): JsObject {.wasmBindgen.} =
-  discard
-proc jsDelete*(self: IDBObjectStore; query: JsObject): JsObject {.wasmBindgen.} =
-  discard
-proc jsClear*(self: IDBObjectStore): JsObject {.wasmBindgen.} =
-  discard
-proc jsGet*(self: IDBObjectStore; query: JsObject): JsObject {.wasmBindgen.} =
-  discard
-proc jsGetKey*(self: IDBObjectStore; query: JsObject): JsObject {.wasmBindgen.} =
-  discard
-proc jsGetAll*(self: IDBObjectStore; query: JsObject; count: uint32): JsObject {.wasmBindgen.} =
-  discard
-proc jsGetAllKeys*(self: IDBObjectStore; query: JsObject; count: uint32): JsObject {.wasmBindgen.} =
-  discard
-proc jsCount*(self: IDBObjectStore; query: JsObject): JsObject {.wasmBindgen.} =
-  discard
-proc jsOpenCursor*(self: IDBObjectStore; query: JsObject; direction: JsObject): JsObject {.wasmBindgen.} =
-  discard
-proc jsOpenKeyCursor*(self: IDBObjectStore; query: JsObject; direction: JsObject): JsObject {.wasmBindgen.} =
-  discard
-proc jsIndex*(self: IDBObjectStore; name: cstring): JsObject {.wasmBindgen.} =
-  discard
-proc jsCreateIndex*(self: IDBObjectStore; name: cstring; keyPath: JsObject; options: JsObject): JsObject {.wasmBindgen.} =
-  discard
-proc jsDeleteIndex*(self: IDBObjectStore; name: cstring): void {.wasmBindgen.} =
+proc jsIDBVersionChangeEventOldVersion*(self: IDBVersionChangeEvent): uint64 =
   discard
 
-proc jsIDBIndexName*(self: IDBIndex): cstring {.wasmBindgen.} =
+proc jsOpen*(self: IDBFactory; name: cstring; version: uint64): JsObject =
   discard
-proc jsIDBIndexObjectStore*(self: IDBIndex): JsObject {.wasmBindgen.} =
+proc jsDeleteDatabase*(self: IDBFactory; name: cstring): JsObject =
   discard
-proc jsIDBIndexKeyPath*(self: IDBIndex): JsObject {.wasmBindgen.} =
-  discard
-proc jsIDBIndexMultiEntry*(self: IDBIndex): bool {.wasmBindgen.} =
-  discard
-proc jsIDBIndexUnique*(self: IDBIndex): bool {.wasmBindgen.} =
-  discard
-proc jsGet*(self: IDBIndex; query: JsObject): JsObject {.wasmBindgen.} =
-  discard
-proc jsGetKey*(self: IDBIndex; query: JsObject): JsObject {.wasmBindgen.} =
-  discard
-proc jsGetAll*(self: IDBIndex; query: JsObject; count: uint32): JsObject {.wasmBindgen.} =
-  discard
-proc jsGetAllKeys*(self: IDBIndex; query: JsObject; count: uint32): JsObject {.wasmBindgen.} =
-  discard
-proc jsCount*(self: IDBIndex; query: JsObject): JsObject {.wasmBindgen.} =
-  discard
-proc jsOpenCursor*(self: IDBIndex; query: JsObject; direction: JsObject): JsObject {.wasmBindgen.} =
-  discard
-proc jsOpenKeyCursor*(self: IDBIndex; query: JsObject; direction: JsObject): JsObject {.wasmBindgen.} =
+proc jsCmp*(self: IDBFactory; first: JsObject; second: JsObject): int16 =
   discard
 
-proc jsIDBKeyRangeLower*(self: IDBKeyRange): JsObject {.wasmBindgen.} =
+proc jsIDBDatabaseName*(self: IDBDatabase): cstring =
   discard
-proc jsIDBKeyRangeUpper*(self: IDBKeyRange): JsObject {.wasmBindgen.} =
+proc jsIDBDatabaseVersion*(self: IDBDatabase): uint64 =
   discard
-proc jsIDBKeyRangeLowerOpen*(self: IDBKeyRange): bool {.wasmBindgen.} =
+proc jsIDBDatabaseOnabort*(self: IDBDatabase): JsObject =
   discard
-proc jsIDBKeyRangeUpperOpen*(self: IDBKeyRange): bool {.wasmBindgen.} =
+proc jsIDBDatabaseOnclose*(self: IDBDatabase): JsObject =
   discard
-proc jsOnly*(self: typedesc[IDBKeyRange]; value: JsObject): JsObject {.wasmBindgen.} =
+proc jsIDBDatabaseOnerror*(self: IDBDatabase): JsObject =
   discard
-proc jsLowerBound*(self: typedesc[IDBKeyRange]; lower: JsObject; open: bool): JsObject {.wasmBindgen.} =
+proc jsIDBDatabaseOnversionchange*(self: IDBDatabase): JsObject =
   discard
-proc jsUpperBound*(self: typedesc[IDBKeyRange]; upper: JsObject; open: bool): JsObject {.wasmBindgen.} =
+proc jsTransaction*(self: IDBDatabase; storeNames: JsObject; mode: JsObject): JsObject =
   discard
-proc jsBound*(self: typedesc[IDBKeyRange]; lower: JsObject; upper: JsObject; lowerOpen: bool; upperOpen: bool): JsObject {.wasmBindgen.} =
+proc jsClose*(self: IDBDatabase): void =
   discard
-proc jsIncludes*(self: IDBKeyRange; key: JsObject): bool {.wasmBindgen.} =
+proc jsCreateObjectStore*(self: IDBDatabase; name: cstring; options: JsObject): JsObject =
   discard
-
-proc jsIDBCursorSource*(self: IDBCursor): JsObject {.wasmBindgen.} =
-  discard
-proc jsIDBCursorDirection*(self: IDBCursor): JsObject {.wasmBindgen.} =
-  discard
-proc jsIDBCursorKey*(self: IDBCursor): JsObject {.wasmBindgen.} =
-  discard
-proc jsIDBCursorPrimaryKey*(self: IDBCursor): JsObject {.wasmBindgen.} =
-  discard
-proc jsAdvance*(self: IDBCursor; count: uint32): void {.wasmBindgen.} =
-  discard
-proc jsContinueVal*(self: IDBCursor; key: JsObject): void {.wasmBindgen.} =
-  discard
-proc jsContinuePrimaryKey*(self: IDBCursor; key: JsObject; primaryKey: JsObject): void {.wasmBindgen.} =
-  discard
-proc jsUpdate*(self: IDBCursor; value: JsObject): JsObject {.wasmBindgen.} =
-  discard
-proc jsDelete*(self: IDBCursor): JsObject {.wasmBindgen.} =
+proc jsDeleteObjectStore*(self: IDBDatabase; name: cstring): void =
   discard
 
-proc jsIDBCursorWithValueValue*(self: IDBCursorWithValue): JsObject {.wasmBindgen.} =
+proc jsIDBObjectStoreName*(self: IDBObjectStore): cstring =
+  discard
+proc jsIDBObjectStoreKeyPath*(self: IDBObjectStore): JsObject =
+  discard
+proc jsIDBObjectStoreTransaction*(self: IDBObjectStore): JsObject =
+  discard
+proc jsIDBObjectStoreAutoIncrement*(self: IDBObjectStore): bool =
+  discard
+proc jsPut*(self: IDBObjectStore; value: JsObject; key: JsObject): JsObject =
+  discard
+proc jsAdd*(self: IDBObjectStore; value: JsObject; key: JsObject): JsObject =
+  discard
+proc jsDelete*(self: IDBObjectStore; query: JsObject): JsObject =
+  discard
+proc jsClear*(self: IDBObjectStore): JsObject =
+  discard
+proc jsGet*(self: IDBObjectStore; query: JsObject): JsObject =
+  discard
+proc jsGetKey*(self: IDBObjectStore; query: JsObject): JsObject =
+  discard
+proc jsGetAll*(self: IDBObjectStore; query: JsObject; count: uint32): JsObject =
+  discard
+proc jsGetAllKeys*(self: IDBObjectStore; query: JsObject; count: uint32): JsObject =
+  discard
+proc jsCount*(self: IDBObjectStore; query: JsObject): JsObject =
+  discard
+proc jsOpenCursor*(self: IDBObjectStore; query: JsObject; direction: JsObject): JsObject =
+  discard
+proc jsOpenKeyCursor*(self: IDBObjectStore; query: JsObject; direction: JsObject): JsObject =
+  discard
+proc jsIndex*(self: IDBObjectStore; name: cstring): JsObject =
+  discard
+proc jsCreateIndex*(self: IDBObjectStore; name: cstring; keyPath: JsObject; options: JsObject): JsObject =
+  discard
+proc jsDeleteIndex*(self: IDBObjectStore; name: cstring): void =
   discard
 
-proc jsIDBTransactionMode*(self: IDBTransaction): JsObject {.wasmBindgen.} =
+proc jsIDBIndexName*(self: IDBIndex): cstring =
   discard
-proc jsIDBTransactionDb*(self: IDBTransaction): JsObject {.wasmBindgen.} =
+proc jsIDBIndexObjectStore*(self: IDBIndex): JsObject =
   discard
-proc jsIDBTransactionOnabort*(self: IDBTransaction): JsObject {.wasmBindgen.} =
+proc jsIDBIndexKeyPath*(self: IDBIndex): JsObject =
   discard
-proc jsIDBTransactionOncomplete*(self: IDBTransaction): JsObject {.wasmBindgen.} =
+proc jsIDBIndexMultiEntry*(self: IDBIndex): bool =
   discard
-proc jsIDBTransactionOnerror*(self: IDBTransaction): JsObject {.wasmBindgen.} =
+proc jsIDBIndexUnique*(self: IDBIndex): bool =
   discard
-proc jsObjectStore*(self: IDBTransaction; name: cstring): JsObject {.wasmBindgen.} =
+proc jsGet*(self: IDBIndex; query: JsObject): JsObject =
   discard
-proc jsAbort*(self: IDBTransaction): void {.wasmBindgen.} =
+proc jsGetKey*(self: IDBIndex; query: JsObject): JsObject =
   discard
-
-proc jsIDBFileHandleMode*(self: IDBFileHandle): JsObject {.wasmBindgen.} =
+proc jsGetAll*(self: IDBIndex; query: JsObject; count: uint32): JsObject =
   discard
-proc jsIDBFileHandleActive*(self: IDBFileHandle): bool {.wasmBindgen.} =
+proc jsGetAllKeys*(self: IDBIndex; query: JsObject; count: uint32): JsObject =
   discard
-proc jsIDBFileHandleOncomplete*(self: IDBFileHandle): JsObject {.wasmBindgen.} =
+proc jsCount*(self: IDBIndex; query: JsObject): JsObject =
   discard
-proc jsIDBFileHandleOnabort*(self: IDBFileHandle): JsObject {.wasmBindgen.} =
+proc jsOpenCursor*(self: IDBIndex; query: JsObject; direction: JsObject): JsObject =
   discard
-proc jsIDBFileHandleOnerror*(self: IDBFileHandle): JsObject {.wasmBindgen.} =
-  discard
-proc jsGetMetadata*(self: IDBFileHandle; parameters: JsObject): Option[JsObject] {.wasmBindgen.} =
-  discard
-proc jsReadAsArrayBuffer*(self: IDBFileHandle; size: uint64): Option[JsObject] {.wasmBindgen.} =
-  discard
-proc jsReadAsText*(self: IDBFileHandle; size: uint64; encoding: Option[cstring]): Option[JsObject] {.wasmBindgen.} =
-  discard
-proc jsWrite*(self: IDBFileHandle; value: JsObject): Option[JsObject] {.wasmBindgen.} =
-  discard
-proc jsAppend*(self: IDBFileHandle; value: JsObject): Option[JsObject] {.wasmBindgen.} =
-  discard
-proc jsTruncate*(self: IDBFileHandle; size: uint64): Option[JsObject] {.wasmBindgen.} =
-  discard
-proc jsFlush*(self: IDBFileHandle): Option[JsObject] {.wasmBindgen.} =
-  discard
-proc jsAbort*(self: IDBFileHandle): void {.wasmBindgen.} =
+proc jsOpenKeyCursor*(self: IDBIndex; query: JsObject; direction: JsObject): JsObject =
   discard
 
-proc jsIDBFileRequestOnprogress*(self: IDBFileRequest): JsObject {.wasmBindgen.} =
+proc jsIDBKeyRangeLower*(self: IDBKeyRange): JsObject =
+  discard
+proc jsIDBKeyRangeUpper*(self: IDBKeyRange): JsObject =
+  discard
+proc jsIDBKeyRangeLowerOpen*(self: IDBKeyRange): bool =
+  discard
+proc jsIDBKeyRangeUpperOpen*(self: IDBKeyRange): bool =
+  discard
+proc jsOnly*(self: typedesc[IDBKeyRange]; value: JsObject): JsObject =
+  discard
+proc jsLowerBound*(self: typedesc[IDBKeyRange]; lower: JsObject; open: bool): JsObject =
+  discard
+proc jsUpperBound*(self: typedesc[IDBKeyRange]; upper: JsObject; open: bool): JsObject =
+  discard
+proc jsBound*(self: typedesc[IDBKeyRange]; lower: JsObject; upper: JsObject; lowerOpen: bool; upperOpen: bool): JsObject =
+  discard
+proc jsIncludes*(self: IDBKeyRange; key: JsObject): bool =
   discard
 
-proc jsBound*(self: typedesc[IDBLocaleAwareKeyRange]; lower: JsObject; upper: JsObject; lowerOpen: bool; upperOpen: bool): JsObject {.wasmBindgen.} =
+proc jsIDBCursorSource*(self: IDBCursor): JsObject =
+  discard
+proc jsIDBCursorDirection*(self: IDBCursor): JsObject =
+  discard
+proc jsIDBCursorKey*(self: IDBCursor): JsObject =
+  discard
+proc jsIDBCursorPrimaryKey*(self: IDBCursor): JsObject =
+  discard
+proc jsAdvance*(self: IDBCursor; count: uint32): void =
+  discard
+proc jsContinueVal*(self: IDBCursor; key: JsObject): void =
+  discard
+proc jsContinuePrimaryKey*(self: IDBCursor; key: JsObject; primaryKey: JsObject): void =
+  discard
+proc jsUpdate*(self: IDBCursor; value: JsObject): JsObject =
+  discard
+proc jsDelete*(self: IDBCursor): JsObject =
   discard
 
-proc jsIDBMutableFileName*(self: IDBMutableFile): cstring {.wasmBindgen.} =
-  discard
-proc jsIDBMutableFileTypeVal*(self: IDBMutableFile): cstring {.wasmBindgen.} =
-  discard
-proc jsIDBMutableFileDatabase*(self: IDBMutableFile): JsObject {.wasmBindgen.} =
-  discard
-proc jsIDBMutableFileOnabort*(self: IDBMutableFile): JsObject {.wasmBindgen.} =
-  discard
-proc jsIDBMutableFileOnerror*(self: IDBMutableFile): JsObject {.wasmBindgen.} =
-  discard
-proc jsOpen*(self: IDBMutableFile; mode: JsObject): JsObject {.wasmBindgen.} =
-  discard
-proc jsGetFile*(self: IDBMutableFile): JsObject {.wasmBindgen.} =
+proc jsIDBCursorWithValueValue*(self: IDBCursorWithValue): JsObject =
   discard
 
-proc jsGetFrequencyResponse*(self: IIRFilterNode; frequencyHz: seq[float32]; magResponse: seq[float32]; phaseResponse: seq[float32]): void {.wasmBindgen.} =
+proc jsIDBTransactionMode*(self: IDBTransaction): JsObject =
+  discard
+proc jsIDBTransactionDb*(self: IDBTransaction): JsObject =
+  discard
+proc jsIDBTransactionOnabort*(self: IDBTransaction): JsObject =
+  discard
+proc jsIDBTransactionOncomplete*(self: IDBTransaction): JsObject =
+  discard
+proc jsIDBTransactionOnerror*(self: IDBTransaction): JsObject =
+  discard
+proc jsObjectStore*(self: IDBTransaction; name: cstring): JsObject =
+  discard
+proc jsAbort*(self: IDBTransaction): void =
   discard
 
-proc jsIdleDeadlineDidTimeout*(self: IdleDeadline): bool {.wasmBindgen.} =
+proc jsIDBFileHandleMode*(self: IDBFileHandle): JsObject =
   discard
-proc jsTimeRemaining*(self: IdleDeadline): JsObject {.wasmBindgen.} =
+proc jsIDBFileHandleActive*(self: IDBFileHandle): bool =
+  discard
+proc jsIDBFileHandleOncomplete*(self: IDBFileHandle): JsObject =
+  discard
+proc jsIDBFileHandleOnabort*(self: IDBFileHandle): JsObject =
+  discard
+proc jsIDBFileHandleOnerror*(self: IDBFileHandle): JsObject =
+  discard
+proc jsGetMetadata*(self: IDBFileHandle; parameters: JsObject): Option[JsObject] =
+  discard
+proc jsReadAsArrayBuffer*(self: IDBFileHandle; size: uint64): Option[JsObject] =
+  discard
+proc jsReadAsText*(self: IDBFileHandle; size: uint64; encoding: Option[cstring]): Option[JsObject] =
+  discard
+proc jsWrite*(self: IDBFileHandle; value: JsObject): Option[JsObject] =
+  discard
+proc jsAppend*(self: IDBFileHandle; value: JsObject): Option[JsObject] =
+  discard
+proc jsTruncate*(self: IDBFileHandle; size: uint64): Option[JsObject] =
+  discard
+proc jsFlush*(self: IDBFileHandle): Option[JsObject] =
+  discard
+proc jsAbort*(self: IDBFileHandle): void =
   discard
 
-proc jsImageBitmapWidth*(self: ImageBitmap): uint32 {.wasmBindgen.} =
-  discard
-proc jsImageBitmapHeight*(self: ImageBitmap): uint32 {.wasmBindgen.} =
+proc jsIDBFileRequestOnprogress*(self: IDBFileRequest): JsObject =
   discard
 
-proc jsTransferFromImageBitmap*(self: ImageBitmapRenderingContext; bitmap: JsObject): void {.wasmBindgen.} =
+proc jsBound*(self: typedesc[IDBLocaleAwareKeyRange]; lower: JsObject; upper: JsObject; lowerOpen: bool; upperOpen: bool): JsObject =
   discard
-proc jsTransferImageBitmap*(self: ImageBitmapRenderingContext; bitmap: JsObject): void {.wasmBindgen.} =
+
+proc jsIDBMutableFileName*(self: IDBMutableFile): cstring =
+  discard
+proc jsIDBMutableFileTypeVal*(self: IDBMutableFile): cstring =
+  discard
+proc jsIDBMutableFileDatabase*(self: IDBMutableFile): JsObject =
+  discard
+proc jsIDBMutableFileOnabort*(self: IDBMutableFile): JsObject =
+  discard
+proc jsIDBMutableFileOnerror*(self: IDBMutableFile): JsObject =
+  discard
+proc jsOpen*(self: IDBMutableFile; mode: JsObject): JsObject =
+  discard
+proc jsGetFile*(self: IDBMutableFile): JsObject =
+  discard
+
+proc jsGetFrequencyResponse*(self: IIRFilterNode; frequencyHz: seq[float32]; magResponse: seq[float32]; phaseResponse: seq[float32]): void =
+  discard
+
+proc jsIdleDeadlineDidTimeout*(self: IdleDeadline): bool =
+  discard
+proc jsTimeRemaining*(self: IdleDeadline): JsObject =
+  discard
+
+proc jsImageBitmapWidth*(self: ImageBitmap): uint32 =
+  discard
+proc jsImageBitmapHeight*(self: ImageBitmap): uint32 =
+  discard
+
+proc jsTransferFromImageBitmap*(self: ImageBitmapRenderingContext; bitmap: JsObject): void =
+  discard
+proc jsTransferImageBitmap*(self: ImageBitmapRenderingContext; bitmap: JsObject): void =
   discard
 
 
@@ -6649,67 +6648,67 @@ const jsImageCaptureErrorFRAME_GRAB_ERROR* : uint16 = 0
 const jsImageCaptureErrorSETTINGS_ERROR* : uint16 = 0
 const jsImageCaptureErrorPHOTO_ERROR* : uint16 = 0
 const jsImageCaptureErrorERROR_UNKNOWN* : uint16 = 0
-proc jsImageCaptureErrorCode*(self: ImageCaptureError): uint16 {.wasmBindgen.} =
+proc jsImageCaptureErrorCode*(self: ImageCaptureError): uint16 =
   discard
-proc jsImageCaptureErrorMessage*(self: ImageCaptureError): cstring {.wasmBindgen.} =
-  discard
-
-proc jsImageDataWidth*(self: ImageData): uint32 {.wasmBindgen.} =
-  discard
-proc jsImageDataHeight*(self: ImageData): uint32 {.wasmBindgen.} =
-  discard
-proc jsImageDataData*(self: ImageData): JsObject {.wasmBindgen.} =
+proc jsImageCaptureErrorMessage*(self: ImageCaptureError): cstring =
   discard
 
-proc jsImageDocumentImageIsOverflowing*(self: ImageDocument): bool {.wasmBindgen.} =
+proc jsImageDataWidth*(self: ImageData): uint32 =
   discard
-proc jsImageDocumentImageIsResized*(self: ImageDocument): bool {.wasmBindgen.} =
+proc jsImageDataHeight*(self: ImageData): uint32 =
   discard
-proc jsShrinkToFit*(self: ImageDocument): void {.wasmBindgen.} =
-  discard
-proc jsRestoreImage*(self: ImageDocument): void {.wasmBindgen.} =
-  discard
-proc jsRestoreImageTo*(self: ImageDocument; x: int32; y: int32): void {.wasmBindgen.} =
-  discard
-proc jsToggleImageSize*(self: ImageDocument): void {.wasmBindgen.} =
+proc jsImageDataData*(self: ImageData): JsObject =
   discard
 
-proc jsInputEventIsComposing*(self: InputEvent): bool {.wasmBindgen.} =
+proc jsImageDocumentImageIsOverflowing*(self: ImageDocument): bool =
   discard
-proc jsInputEventInputType*(self: InputEvent): cstring {.wasmBindgen.} =
+proc jsImageDocumentImageIsResized*(self: ImageDocument): bool =
   discard
-
-proc jsIntersectionObserverEntryTime*(self: IntersectionObserverEntry): JsObject {.wasmBindgen.} =
+proc jsShrinkToFit*(self: ImageDocument): void =
   discard
-proc jsIntersectionObserverEntryBoundingClientRect*(self: IntersectionObserverEntry): JsObject {.wasmBindgen.} =
+proc jsRestoreImage*(self: ImageDocument): void =
   discard
-proc jsIntersectionObserverEntryIntersectionRect*(self: IntersectionObserverEntry): JsObject {.wasmBindgen.} =
+proc jsRestoreImageTo*(self: ImageDocument; x: int32; y: int32): void =
   discard
-proc jsIntersectionObserverEntryIsIntersecting*(self: IntersectionObserverEntry): bool {.wasmBindgen.} =
-  discard
-proc jsIntersectionObserverEntryIntersectionRatio*(self: IntersectionObserverEntry): float64 {.wasmBindgen.} =
-  discard
-proc jsIntersectionObserverEntryTarget*(self: IntersectionObserverEntry): JsObject {.wasmBindgen.} =
+proc jsToggleImageSize*(self: ImageDocument): void =
   discard
 
-proc jsIntersectionObserverRootMargin*(self: IntersectionObserver): cstring {.wasmBindgen.} =
+proc jsInputEventIsComposing*(self: InputEvent): bool =
   discard
-proc jsIntersectionObserverThresholds*(self: IntersectionObserver): JsObject {.wasmBindgen.} =
-  discard
-proc jsIntersectionObserverIntersectionCallback*(self: IntersectionObserver): JsObject {.wasmBindgen.} =
-  discard
-proc jsObserve*(self: IntersectionObserver; target: JsObject): void {.wasmBindgen.} =
-  discard
-proc jsUnobserve*(self: IntersectionObserver; target: JsObject): void {.wasmBindgen.} =
-  discard
-proc jsDisconnect*(self: IntersectionObserver): void {.wasmBindgen.} =
-  discard
-proc jsTakeRecords*(self: IntersectionObserver): JsObject {.wasmBindgen.} =
+proc jsInputEventInputType*(self: InputEvent): cstring =
   discard
 
-proc jsGetDisplayNames*(self: IntlUtils; locales: JsObject; options: JsObject): JsObject {.wasmBindgen.} =
+proc jsIntersectionObserverEntryTime*(self: IntersectionObserverEntry): JsObject =
   discard
-proc jsGetLocaleInfo*(self: IntlUtils; locales: JsObject): JsObject {.wasmBindgen.} =
+proc jsIntersectionObserverEntryBoundingClientRect*(self: IntersectionObserverEntry): JsObject =
+  discard
+proc jsIntersectionObserverEntryIntersectionRect*(self: IntersectionObserverEntry): JsObject =
+  discard
+proc jsIntersectionObserverEntryIsIntersecting*(self: IntersectionObserverEntry): bool =
+  discard
+proc jsIntersectionObserverEntryIntersectionRatio*(self: IntersectionObserverEntry): float64 =
+  discard
+proc jsIntersectionObserverEntryTarget*(self: IntersectionObserverEntry): JsObject =
+  discard
+
+proc jsIntersectionObserverRootMargin*(self: IntersectionObserver): cstring =
+  discard
+proc jsIntersectionObserverThresholds*(self: IntersectionObserver): JsObject =
+  discard
+proc jsIntersectionObserverIntersectionCallback*(self: IntersectionObserver): JsObject =
+  discard
+proc jsObserve*(self: IntersectionObserver; target: JsObject): void =
+  discard
+proc jsUnobserve*(self: IntersectionObserver; target: JsObject): void =
+  discard
+proc jsDisconnect*(self: IntersectionObserver): void =
+  discard
+proc jsTakeRecords*(self: IntersectionObserver): JsObject =
+  discard
+
+proc jsGetDisplayNames*(self: IntlUtils; locales: JsObject; options: JsObject): JsObject =
+  discard
+proc jsGetLocaleInfo*(self: IntlUtils; locales: JsObject): JsObject =
   discard
 
 const jsKeyEventDOM_VK_CANCEL* : uint32 = 0
@@ -6898,555 +6897,555 @@ const jsKeyEventDOM_VK_PLAY* : uint32 = 0
 const jsKeyEventDOM_VK_ZOOM* : uint32 = 0
 const jsKeyEventDOM_VK_PA1* : uint32 = 0
 const jsKeyEventDOM_VK_WIN_OEM_CLEAR* : uint32 = 0
-proc jsInitKeyEvent*(self: KeyEvent; typeVal: cstring; canBubble: bool; cancelable: bool; view: Option[JsObject]; ctrlKey: bool; altKey: bool; shiftKey: bool; metaKey: bool; keyCode: uint32; charCode: uint32): void {.wasmBindgen.} =
+proc jsInitKeyEvent*(self: KeyEvent; typeVal: cstring; canBubble: bool; cancelable: bool; view: Option[JsObject]; ctrlKey: bool; altKey: bool; shiftKey: bool; metaKey: bool; keyCode: uint32; charCode: uint32): void =
   discard
 
-proc jsKeyboardEventCharCode*(self: KeyboardEvent): uint32 {.wasmBindgen.} =
+proc jsKeyboardEventCharCode*(self: KeyboardEvent): uint32 =
   discard
-proc jsKeyboardEventKeyCode*(self: KeyboardEvent): uint32 {.wasmBindgen.} =
+proc jsKeyboardEventKeyCode*(self: KeyboardEvent): uint32 =
   discard
-proc jsKeyboardEventAltKey*(self: KeyboardEvent): bool {.wasmBindgen.} =
+proc jsKeyboardEventAltKey*(self: KeyboardEvent): bool =
   discard
-proc jsKeyboardEventCtrlKey*(self: KeyboardEvent): bool {.wasmBindgen.} =
+proc jsKeyboardEventCtrlKey*(self: KeyboardEvent): bool =
   discard
-proc jsKeyboardEventShiftKey*(self: KeyboardEvent): bool {.wasmBindgen.} =
+proc jsKeyboardEventShiftKey*(self: KeyboardEvent): bool =
   discard
-proc jsKeyboardEventMetaKey*(self: KeyboardEvent): bool {.wasmBindgen.} =
+proc jsKeyboardEventMetaKey*(self: KeyboardEvent): bool =
   discard
 const jsKeyboardEventDOM_KEY_LOCATION_STANDARD* : uint32 = 0
 const jsKeyboardEventDOM_KEY_LOCATION_LEFT* : uint32 = 0
 const jsKeyboardEventDOM_KEY_LOCATION_RIGHT* : uint32 = 0
 const jsKeyboardEventDOM_KEY_LOCATION_NUMPAD* : uint32 = 0
-proc jsKeyboardEventLocation*(self: KeyboardEvent): uint32 {.wasmBindgen.} =
+proc jsKeyboardEventLocation*(self: KeyboardEvent): uint32 =
   discard
-proc jsKeyboardEventRepeat*(self: KeyboardEvent): bool {.wasmBindgen.} =
+proc jsKeyboardEventRepeat*(self: KeyboardEvent): bool =
   discard
-proc jsKeyboardEventIsComposing*(self: KeyboardEvent): bool {.wasmBindgen.} =
+proc jsKeyboardEventIsComposing*(self: KeyboardEvent): bool =
   discard
-proc jsKeyboardEventKey*(self: KeyboardEvent): cstring {.wasmBindgen.} =
+proc jsKeyboardEventKey*(self: KeyboardEvent): cstring =
   discard
-proc jsKeyboardEventCode*(self: KeyboardEvent): cstring {.wasmBindgen.} =
+proc jsKeyboardEventCode*(self: KeyboardEvent): cstring =
   discard
-proc jsKeyboardEventInitDict*(self: KeyboardEvent): JsObject {.wasmBindgen.} =
+proc jsKeyboardEventInitDict*(self: KeyboardEvent): JsObject =
   discard
-proc jsGetModifierState*(self: KeyboardEvent; key: cstring): bool {.wasmBindgen.} =
+proc jsGetModifierState*(self: KeyboardEvent; key: cstring): bool =
   discard
-proc jsInitKeyboardEvent*(self: KeyboardEvent; typeArg: cstring; bubblesArg: bool; cancelableArg: bool; viewArg: Option[JsObject]; keyArg: cstring; locationArg: uint32; ctrlKey: bool; altKey: bool; shiftKey: bool; metaKey: bool): void {.wasmBindgen.} =
-  discard
-
-proc jsKeyframeEffectIterationComposite*(self: KeyframeEffect): JsObject {.wasmBindgen.} =
-  discard
-proc jsKeyframeEffectComposite*(self: KeyframeEffect): JsObject {.wasmBindgen.} =
-  discard
-proc jsGetKeyframes*(self: KeyframeEffect): JsObject {.wasmBindgen.} =
-  discard
-proc jsSetKeyframes*(self: KeyframeEffect; keyframes: Option[JsObject]): void {.wasmBindgen.} =
+proc jsInitKeyboardEvent*(self: KeyboardEvent; typeArg: cstring; bubblesArg: bool; cancelableArg: bool; viewArg: Option[JsObject]; keyArg: cstring; locationArg: uint32; ctrlKey: bool; altKey: bool; shiftKey: bool; metaKey: bool): void =
   discard
 
-proc jsGetRowCount*(self: ListBoxObject): int32 {.wasmBindgen.} =
+proc jsKeyframeEffectIterationComposite*(self: KeyframeEffect): JsObject =
   discard
-proc jsGetRowHeight*(self: ListBoxObject): int32 {.wasmBindgen.} =
+proc jsKeyframeEffectComposite*(self: KeyframeEffect): JsObject =
   discard
-proc jsGetNumberOfVisibleRows*(self: ListBoxObject): int32 {.wasmBindgen.} =
+proc jsGetKeyframes*(self: KeyframeEffect): JsObject =
   discard
-proc jsGetIndexOfFirstVisibleRow*(self: ListBoxObject): int32 {.wasmBindgen.} =
-  discard
-proc jsEnsureIndexIsVisible*(self: ListBoxObject; rowIndex: int32): void {.wasmBindgen.} =
-  discard
-proc jsScrollToIndex*(self: ListBoxObject; rowIndex: int32): void {.wasmBindgen.} =
-  discard
-proc jsScrollByLines*(self: ListBoxObject; numLines: int32): void {.wasmBindgen.} =
-  discard
-proc jsGetItemAtIndex*(self: ListBoxObject; index: int32): Option[JsObject] {.wasmBindgen.} =
-  discard
-proc jsGetIndexOfItem*(self: ListBoxObject; item: JsObject): int32 {.wasmBindgen.} =
+proc jsSetKeyframes*(self: KeyframeEffect; keyframes: Option[JsObject]): void =
   discard
 
-proc jsStop*(self: LocalMediaStream): void {.wasmBindgen.} =
+proc jsGetRowCount*(self: ListBoxObject): int32 =
+  discard
+proc jsGetRowHeight*(self: ListBoxObject): int32 =
+  discard
+proc jsGetNumberOfVisibleRows*(self: ListBoxObject): int32 =
+  discard
+proc jsGetIndexOfFirstVisibleRow*(self: ListBoxObject): int32 =
+  discard
+proc jsEnsureIndexIsVisible*(self: ListBoxObject; rowIndex: int32): void =
+  discard
+proc jsScrollToIndex*(self: ListBoxObject; rowIndex: int32): void =
+  discard
+proc jsScrollByLines*(self: ListBoxObject; numLines: int32): void =
+  discard
+proc jsGetItemAtIndex*(self: ListBoxObject; index: int32): Option[JsObject] =
+  discard
+proc jsGetIndexOfItem*(self: ListBoxObject; item: JsObject): int32 =
   discard
 
-proc jsLocationHref*(self: Location): cstring {.wasmBindgen.} =
-  discard
-proc jsLocationOrigin*(self: Location): cstring {.wasmBindgen.} =
-  discard
-proc jsLocationProtocol*(self: Location): cstring {.wasmBindgen.} =
-  discard
-proc jsLocationHost*(self: Location): cstring {.wasmBindgen.} =
-  discard
-proc jsLocationHostname*(self: Location): cstring {.wasmBindgen.} =
-  discard
-proc jsLocationPort*(self: Location): cstring {.wasmBindgen.} =
-  discard
-proc jsLocationPathname*(self: Location): cstring {.wasmBindgen.} =
-  discard
-proc jsLocationSearch*(self: Location): cstring {.wasmBindgen.} =
-  discard
-proc jsLocationHash*(self: Location): cstring {.wasmBindgen.} =
-  discard
-proc jsAssign*(self: Location; url: cstring): void {.wasmBindgen.} =
-  discard
-proc jsReplace*(self: Location; url: cstring): void {.wasmBindgen.} =
-  discard
-proc jsReload*(self: Location; forceget: bool): void {.wasmBindgen.} =
+proc jsStop*(self: LocalMediaStream): void =
   discard
 
-proc jsMIDIAccessInputs*(self: MIDIAccess): JsObject {.wasmBindgen.} =
+proc jsLocationHref*(self: Location): cstring =
   discard
-proc jsMIDIAccessOutputs*(self: MIDIAccess): JsObject {.wasmBindgen.} =
+proc jsLocationOrigin*(self: Location): cstring =
   discard
-proc jsMIDIAccessOnstatechange*(self: MIDIAccess): JsObject {.wasmBindgen.} =
+proc jsLocationProtocol*(self: Location): cstring =
   discard
-proc jsMIDIAccessSysexEnabled*(self: MIDIAccess): bool {.wasmBindgen.} =
+proc jsLocationHost*(self: Location): cstring =
+  discard
+proc jsLocationHostname*(self: Location): cstring =
+  discard
+proc jsLocationPort*(self: Location): cstring =
+  discard
+proc jsLocationPathname*(self: Location): cstring =
+  discard
+proc jsLocationSearch*(self: Location): cstring =
+  discard
+proc jsLocationHash*(self: Location): cstring =
+  discard
+proc jsAssign*(self: Location; url: cstring): void =
+  discard
+proc jsReplace*(self: Location; url: cstring): void =
+  discard
+proc jsReload*(self: Location; forceget: bool): void =
   discard
 
-
-proc jsMIDIInputOnmidimessage*(self: MIDIInput): JsObject {.wasmBindgen.} =
+proc jsMIDIAccessInputs*(self: MIDIAccess): JsObject =
+  discard
+proc jsMIDIAccessOutputs*(self: MIDIAccess): JsObject =
+  discard
+proc jsMIDIAccessOnstatechange*(self: MIDIAccess): JsObject =
+  discard
+proc jsMIDIAccessSysexEnabled*(self: MIDIAccess): bool =
   discard
 
 
-
-proc jsSend*(self: MIDIOutput; data: JsObject; timestamp: JsObject): void {.wasmBindgen.} =
-  discard
-proc jsClear*(self: MIDIOutput): void {.wasmBindgen.} =
+proc jsMIDIInputOnmidimessage*(self: MIDIInput): JsObject =
   discard
 
 
-proc jsMIDIPortId*(self: MIDIPort): cstring {.wasmBindgen.} =
+
+proc jsSend*(self: MIDIOutput; data: JsObject; timestamp: JsObject): void =
   discard
-proc jsMIDIPortTypeVal*(self: MIDIPort): JsObject {.wasmBindgen.} =
-  discard
-proc jsMIDIPortState*(self: MIDIPort): JsObject {.wasmBindgen.} =
-  discard
-proc jsMIDIPortConnection*(self: MIDIPort): JsObject {.wasmBindgen.} =
-  discard
-proc jsMIDIPortOnstatechange*(self: MIDIPort): JsObject {.wasmBindgen.} =
-  discard
-proc jsOpen*(self: MIDIPort): JsObject {.wasmBindgen.} =
-  discard
-proc jsClose*(self: MIDIPort): JsObject {.wasmBindgen.} =
+proc jsClear*(self: MIDIOutput): void =
   discard
 
 
-proc jsMediaCapabilitiesInfoSupported*(self: MediaCapabilitiesInfo): bool {.wasmBindgen.} =
+proc jsMIDIPortId*(self: MIDIPort): cstring =
   discard
-proc jsMediaCapabilitiesInfoSmooth*(self: MediaCapabilitiesInfo): bool {.wasmBindgen.} =
+proc jsMIDIPortTypeVal*(self: MIDIPort): JsObject =
   discard
-proc jsMediaCapabilitiesInfoPowerEfficient*(self: MediaCapabilitiesInfo): bool {.wasmBindgen.} =
+proc jsMIDIPortState*(self: MIDIPort): JsObject =
   discard
-
-proc jsDecodingInfo*(self: MediaCapabilities; configuration: JsObject): JsObject {.wasmBindgen.} =
+proc jsMIDIPortConnection*(self: MIDIPort): JsObject =
   discard
-proc jsEncodingInfo*(self: MediaCapabilities; configuration: JsObject): JsObject {.wasmBindgen.} =
+proc jsMIDIPortOnstatechange*(self: MIDIPort): JsObject =
   discard
-
-proc jsMediaDeviceInfoDeviceId*(self: MediaDeviceInfo): cstring {.wasmBindgen.} =
+proc jsOpen*(self: MIDIPort): JsObject =
   discard
-proc jsMediaDeviceInfoKind*(self: MediaDeviceInfo): JsObject {.wasmBindgen.} =
-  discard
-proc jsMediaDeviceInfoLabel*(self: MediaDeviceInfo): cstring {.wasmBindgen.} =
-  discard
-proc jsMediaDeviceInfoGroupId*(self: MediaDeviceInfo): cstring {.wasmBindgen.} =
-  discard
-proc jsToJSON*(self: MediaDeviceInfo): JsObject {.wasmBindgen.} =
-  discard
-
-proc jsMediaDevicesOndevicechange*(self: MediaDevices): JsObject {.wasmBindgen.} =
-  discard
-proc jsGetSupportedConstraints*(self: MediaDevices): JsObject {.wasmBindgen.} =
-  discard
-proc jsEnumerateDevices*(self: MediaDevices): JsObject {.wasmBindgen.} =
-  discard
-proc jsGetUserMedia*(self: MediaDevices; constraints: JsObject): JsObject {.wasmBindgen.} =
-  discard
-proc jsGetDisplayMedia*(self: MediaDevices; constraints: JsObject): JsObject {.wasmBindgen.} =
+proc jsClose*(self: MIDIPort): JsObject =
   discard
 
 
-proc jsMediaEncryptedEventInitDataType*(self: MediaEncryptedEvent): cstring {.wasmBindgen.} =
+proc jsMediaCapabilitiesInfoSupported*(self: MediaCapabilitiesInfo): bool =
+  discard
+proc jsMediaCapabilitiesInfoSmooth*(self: MediaCapabilitiesInfo): bool =
+  discard
+proc jsMediaCapabilitiesInfoPowerEfficient*(self: MediaCapabilitiesInfo): bool =
+  discard
+
+proc jsDecodingInfo*(self: MediaCapabilities; configuration: JsObject): JsObject =
+  discard
+proc jsEncodingInfo*(self: MediaCapabilities; configuration: JsObject): JsObject =
+  discard
+
+proc jsMediaDeviceInfoDeviceId*(self: MediaDeviceInfo): cstring =
+  discard
+proc jsMediaDeviceInfoKind*(self: MediaDeviceInfo): JsObject =
+  discard
+proc jsMediaDeviceInfoLabel*(self: MediaDeviceInfo): cstring =
+  discard
+proc jsMediaDeviceInfoGroupId*(self: MediaDeviceInfo): cstring =
+  discard
+proc jsToJSON*(self: MediaDeviceInfo): JsObject =
+  discard
+
+proc jsMediaDevicesOndevicechange*(self: MediaDevices): JsObject =
+  discard
+proc jsGetSupportedConstraints*(self: MediaDevices): JsObject =
+  discard
+proc jsEnumerateDevices*(self: MediaDevices): JsObject =
+  discard
+proc jsGetUserMedia*(self: MediaDevices; constraints: JsObject): JsObject =
+  discard
+proc jsGetDisplayMedia*(self: MediaDevices; constraints: JsObject): JsObject =
+  discard
+
+
+proc jsMediaEncryptedEventInitDataType*(self: MediaEncryptedEvent): cstring =
   discard
 
 const jsMediaErrorMEDIA_ERR_ABORTED* : uint16 = 0
 const jsMediaErrorMEDIA_ERR_NETWORK* : uint16 = 0
 const jsMediaErrorMEDIA_ERR_DECODE* : uint16 = 0
 const jsMediaErrorMEDIA_ERR_SRC_NOT_SUPPORTED* : uint16 = 0
-proc jsMediaErrorCode*(self: MediaError): uint16 {.wasmBindgen.} =
+proc jsMediaErrorCode*(self: MediaError): uint16 =
   discard
-proc jsMediaErrorMessage*(self: MediaError): cstring {.wasmBindgen.} =
-  discard
-
-proc jsMediaKeyErrorSystemCode*(self: MediaKeyError): uint32 {.wasmBindgen.} =
+proc jsMediaErrorMessage*(self: MediaError): cstring =
   discard
 
-proc jsMediaKeyMessageEventMessageType*(self: MediaKeyMessageEvent): JsObject {.wasmBindgen.} =
-  discard
-proc jsMediaKeyMessageEventMessage*(self: MediaKeyMessageEvent): JsObject {.wasmBindgen.} =
+proc jsMediaKeyErrorSystemCode*(self: MediaKeyError): uint32 =
   discard
 
-proc jsMediaKeySessionSessionId*(self: MediaKeySession): cstring {.wasmBindgen.} =
+proc jsMediaKeyMessageEventMessageType*(self: MediaKeyMessageEvent): JsObject =
   discard
-proc jsMediaKeySessionExpiration*(self: MediaKeySession): float64 {.wasmBindgen.} =
-  discard
-proc jsMediaKeySessionClosed*(self: MediaKeySession): JsObject {.wasmBindgen.} =
-  discard
-proc jsMediaKeySessionKeyStatuses*(self: MediaKeySession): JsObject {.wasmBindgen.} =
-  discard
-proc jsMediaKeySessionOnkeystatuseschange*(self: MediaKeySession): JsObject {.wasmBindgen.} =
-  discard
-proc jsMediaKeySessionOnmessage*(self: MediaKeySession): JsObject {.wasmBindgen.} =
-  discard
-proc jsGenerateRequest*(self: MediaKeySession; initDataType: cstring; initData: JsObject): JsObject {.wasmBindgen.} =
-  discard
-proc jsLoad*(self: MediaKeySession; sessionId: cstring): JsObject {.wasmBindgen.} =
-  discard
-proc jsUpdate*(self: MediaKeySession; response: JsObject): JsObject {.wasmBindgen.} =
-  discard
-proc jsClose*(self: MediaKeySession): JsObject {.wasmBindgen.} =
-  discard
-proc jsRemove*(self: MediaKeySession): JsObject {.wasmBindgen.} =
+proc jsMediaKeyMessageEventMessage*(self: MediaKeyMessageEvent): JsObject =
   discard
 
-proc jsMediaKeyStatusMapSize*(self: MediaKeyStatusMap): uint32 {.wasmBindgen.} =
+proc jsMediaKeySessionSessionId*(self: MediaKeySession): cstring =
   discard
-proc jsHas*(self: MediaKeyStatusMap; keyId: JsObject): bool {.wasmBindgen.} =
+proc jsMediaKeySessionExpiration*(self: MediaKeySession): float64 =
   discard
-proc jsGet*(self: MediaKeyStatusMap; keyId: JsObject): JsObject {.wasmBindgen.} =
+proc jsMediaKeySessionClosed*(self: MediaKeySession): JsObject =
   discard
-
-proc jsMediaKeySystemAccessKeySystem*(self: MediaKeySystemAccess): cstring {.wasmBindgen.} =
+proc jsMediaKeySessionKeyStatuses*(self: MediaKeySession): JsObject =
   discard
-proc jsGetConfiguration*(self: MediaKeySystemAccess): JsObject {.wasmBindgen.} =
+proc jsMediaKeySessionOnkeystatuseschange*(self: MediaKeySession): JsObject =
   discard
-proc jsCreateMediaKeys*(self: MediaKeySystemAccess): JsObject {.wasmBindgen.} =
+proc jsMediaKeySessionOnmessage*(self: MediaKeySession): JsObject =
   discard
-
-proc jsMediaKeysKeySystem*(self: MediaKeys): cstring {.wasmBindgen.} =
+proc jsGenerateRequest*(self: MediaKeySession; initDataType: cstring; initData: JsObject): JsObject =
   discard
-proc jsCreateSession*(self: MediaKeys; sessionType: JsObject): JsObject {.wasmBindgen.} =
+proc jsLoad*(self: MediaKeySession; sessionId: cstring): JsObject =
   discard
-proc jsSetServerCertificate*(self: MediaKeys; serverCertificate: JsObject): JsObject {.wasmBindgen.} =
+proc jsUpdate*(self: MediaKeySession; response: JsObject): JsObject =
   discard
-proc jsGetStatusForPolicy*(self: MediaKeys; policy: JsObject): JsObject {.wasmBindgen.} =
+proc jsClose*(self: MediaKeySession): JsObject =
   discard
-
-proc jsMediaListMediaText*(self: MediaList): cstring {.wasmBindgen.} =
-  discard
-proc jsMediaListLength*(self: MediaList): uint32 {.wasmBindgen.} =
-  discard
-proc jsItem*(self: MediaList; index: uint32): Option[cstring] {.wasmBindgen.} =
-  discard
-proc jsDeleteMedium*(self: MediaList; oldMedium: cstring): void {.wasmBindgen.} =
-  discard
-proc jsAppendMedium*(self: MediaList; newMedium: cstring): void {.wasmBindgen.} =
+proc jsRemove*(self: MediaKeySession): JsObject =
   discard
 
-proc jsMediaQueryListMedia*(self: MediaQueryList): cstring {.wasmBindgen.} =
+proc jsMediaKeyStatusMapSize*(self: MediaKeyStatusMap): uint32 =
   discard
-proc jsMediaQueryListMatches*(self: MediaQueryList): bool {.wasmBindgen.} =
+proc jsHas*(self: MediaKeyStatusMap; keyId: JsObject): bool =
   discard
-proc jsMediaQueryListOnchange*(self: MediaQueryList): JsObject {.wasmBindgen.} =
-  discard
-proc jsAddListener*(self: MediaQueryList; listener: Option[JsObject]): void {.wasmBindgen.} =
-  discard
-proc jsRemoveListener*(self: MediaQueryList; listener: Option[JsObject]): void {.wasmBindgen.} =
+proc jsGet*(self: MediaKeyStatusMap; keyId: JsObject): JsObject =
   discard
 
-proc jsMediaQueryListEventMedia*(self: MediaQueryListEvent): cstring {.wasmBindgen.} =
+proc jsMediaKeySystemAccessKeySystem*(self: MediaKeySystemAccess): cstring =
   discard
-proc jsMediaQueryListEventMatches*(self: MediaQueryListEvent): bool {.wasmBindgen.} =
+proc jsGetConfiguration*(self: MediaKeySystemAccess): JsObject =
   discard
-
-proc jsMediaRecorderStream*(self: MediaRecorder): JsObject {.wasmBindgen.} =
-  discard
-proc jsMediaRecorderState*(self: MediaRecorder): JsObject {.wasmBindgen.} =
-  discard
-proc jsMediaRecorderMimeType*(self: MediaRecorder): cstring {.wasmBindgen.} =
-  discard
-proc jsMediaRecorderOndataavailable*(self: MediaRecorder): JsObject {.wasmBindgen.} =
-  discard
-proc jsMediaRecorderOnerror*(self: MediaRecorder): JsObject {.wasmBindgen.} =
-  discard
-proc jsMediaRecorderOnpause*(self: MediaRecorder): JsObject {.wasmBindgen.} =
-  discard
-proc jsMediaRecorderOnresume*(self: MediaRecorder): JsObject {.wasmBindgen.} =
-  discard
-proc jsMediaRecorderOnstart*(self: MediaRecorder): JsObject {.wasmBindgen.} =
-  discard
-proc jsMediaRecorderOnstop*(self: MediaRecorder): JsObject {.wasmBindgen.} =
-  discard
-proc jsMediaRecorderVideoBitsPerSecond*(self: MediaRecorder): uint32 {.wasmBindgen.} =
-  discard
-proc jsMediaRecorderAudioBitsPerSecond*(self: MediaRecorder): uint32 {.wasmBindgen.} =
-  discard
-proc jsMediaRecorderAudioBitrateMode*(self: MediaRecorder): JsObject {.wasmBindgen.} =
-  discard
-proc jsStart*(self: MediaRecorder; timeSlice: int32): void {.wasmBindgen.} =
-  discard
-proc jsStop*(self: MediaRecorder): void {.wasmBindgen.} =
-  discard
-proc jsPause*(self: MediaRecorder): void {.wasmBindgen.} =
-  discard
-proc jsResume*(self: MediaRecorder): void {.wasmBindgen.} =
-  discard
-proc jsRequestData*(self: MediaRecorder): void {.wasmBindgen.} =
-  discard
-proc jsIsTypeSupported*(self: typedesc[MediaRecorder]; typeVal: cstring): bool {.wasmBindgen.} =
+proc jsCreateMediaKeys*(self: MediaKeySystemAccess): JsObject =
   discard
 
-proc jsMediaRecorderErrorEventError*(self: MediaRecorderErrorEvent): JsObject {.wasmBindgen.} =
+proc jsMediaKeysKeySystem*(self: MediaKeys): cstring =
+  discard
+proc jsCreateSession*(self: MediaKeys; sessionType: JsObject): JsObject =
+  discard
+proc jsSetServerCertificate*(self: MediaKeys; serverCertificate: JsObject): JsObject =
+  discard
+proc jsGetStatusForPolicy*(self: MediaKeys; policy: JsObject): JsObject =
   discard
 
-proc jsMediaSourceSourceBuffers*(self: MediaSource): JsObject {.wasmBindgen.} =
+proc jsMediaListMediaText*(self: MediaList): cstring =
   discard
-proc jsMediaSourceActiveSourceBuffers*(self: MediaSource): JsObject {.wasmBindgen.} =
+proc jsMediaListLength*(self: MediaList): uint32 =
   discard
-proc jsMediaSourceReadyState*(self: MediaSource): JsObject {.wasmBindgen.} =
+proc jsItem*(self: MediaList; index: uint32): Option[cstring] =
   discard
-proc jsMediaSourceDuration*(self: MediaSource): float64 {.wasmBindgen.} =
+proc jsDeleteMedium*(self: MediaList; oldMedium: cstring): void =
   discard
-proc jsMediaSourceOnsourceopen*(self: MediaSource): JsObject {.wasmBindgen.} =
-  discard
-proc jsMediaSourceOnsourceended*(self: MediaSource): JsObject {.wasmBindgen.} =
-  discard
-proc jsMediaSourceOnsourceclose*(self: MediaSource): JsObject {.wasmBindgen.} =
-  discard
-proc jsAddSourceBuffer*(self: MediaSource; typeVal: cstring): JsObject {.wasmBindgen.} =
-  discard
-proc jsRemoveSourceBuffer*(self: MediaSource; sourceBuffer: JsObject): void {.wasmBindgen.} =
-  discard
-proc jsEndOfStream*(self: MediaSource; error: JsObject): void {.wasmBindgen.} =
-  discard
-proc jsSetLiveSeekableRange*(self: MediaSource; start: float64; endVal: float64): void {.wasmBindgen.} =
-  discard
-proc jsClearLiveSeekableRange*(self: MediaSource): void {.wasmBindgen.} =
-  discard
-proc jsIsTypeSupported*(self: typedesc[MediaSource]; typeVal: cstring): bool {.wasmBindgen.} =
+proc jsAppendMedium*(self: MediaList; newMedium: cstring): void =
   discard
 
-proc jsMediaStreamId*(self: MediaStream): cstring {.wasmBindgen.} =
+proc jsMediaQueryListMedia*(self: MediaQueryList): cstring =
   discard
-proc jsMediaStreamActive*(self: MediaStream): bool {.wasmBindgen.} =
+proc jsMediaQueryListMatches*(self: MediaQueryList): bool =
   discard
-proc jsMediaStreamOnaddtrack*(self: MediaStream): JsObject {.wasmBindgen.} =
+proc jsMediaQueryListOnchange*(self: MediaQueryList): JsObject =
   discard
-proc jsMediaStreamOnremovetrack*(self: MediaStream): JsObject {.wasmBindgen.} =
+proc jsAddListener*(self: MediaQueryList; listener: Option[JsObject]): void =
   discard
-proc jsMediaStreamCurrentTime*(self: MediaStream): float64 {.wasmBindgen.} =
-  discard
-proc jsGetAudioTracks*(self: MediaStream): JsObject {.wasmBindgen.} =
-  discard
-proc jsGetVideoTracks*(self: MediaStream): JsObject {.wasmBindgen.} =
-  discard
-proc jsGetTracks*(self: MediaStream): JsObject {.wasmBindgen.} =
-  discard
-proc jsGetTrackById*(self: MediaStream; trackId: cstring): Option[JsObject] {.wasmBindgen.} =
-  discard
-proc jsAddTrack*(self: MediaStream; track: JsObject): void {.wasmBindgen.} =
-  discard
-proc jsRemoveTrack*(self: MediaStream; track: JsObject): void {.wasmBindgen.} =
-  discard
-proc jsClone*(self: MediaStream): JsObject {.wasmBindgen.} =
-  discard
-proc jsCountUnderlyingStreams*(self: typedesc[MediaStream]): JsObject {.wasmBindgen.} =
-  discard
-proc jsAssignId*(self: MediaStream; id: cstring): void {.wasmBindgen.} =
+proc jsRemoveListener*(self: MediaQueryList; listener: Option[JsObject]): void =
   discard
 
-proc jsMediaStreamAudioDestinationNodeStream*(self: MediaStreamAudioDestinationNode): JsObject {.wasmBindgen.} =
+proc jsMediaQueryListEventMedia*(self: MediaQueryListEvent): cstring =
+  discard
+proc jsMediaQueryListEventMatches*(self: MediaQueryListEvent): bool =
   discard
 
+proc jsMediaRecorderStream*(self: MediaRecorder): JsObject =
+  discard
+proc jsMediaRecorderState*(self: MediaRecorder): JsObject =
+  discard
+proc jsMediaRecorderMimeType*(self: MediaRecorder): cstring =
+  discard
+proc jsMediaRecorderOndataavailable*(self: MediaRecorder): JsObject =
+  discard
+proc jsMediaRecorderOnerror*(self: MediaRecorder): JsObject =
+  discard
+proc jsMediaRecorderOnpause*(self: MediaRecorder): JsObject =
+  discard
+proc jsMediaRecorderOnresume*(self: MediaRecorder): JsObject =
+  discard
+proc jsMediaRecorderOnstart*(self: MediaRecorder): JsObject =
+  discard
+proc jsMediaRecorderOnstop*(self: MediaRecorder): JsObject =
+  discard
+proc jsMediaRecorderVideoBitsPerSecond*(self: MediaRecorder): uint32 =
+  discard
+proc jsMediaRecorderAudioBitsPerSecond*(self: MediaRecorder): uint32 =
+  discard
+proc jsMediaRecorderAudioBitrateMode*(self: MediaRecorder): JsObject =
+  discard
+proc jsStart*(self: MediaRecorder; timeSlice: int32): void =
+  discard
+proc jsStop*(self: MediaRecorder): void =
+  discard
+proc jsPause*(self: MediaRecorder): void =
+  discard
+proc jsResume*(self: MediaRecorder): void =
+  discard
+proc jsRequestData*(self: MediaRecorder): void =
+  discard
+proc jsIsTypeSupported*(self: typedesc[MediaRecorder]; typeVal: cstring): bool =
+  discard
 
-proc jsMediaStreamErrorName*(self: MediaStreamError): cstring {.wasmBindgen.} =
+proc jsMediaRecorderErrorEventError*(self: MediaRecorderErrorEvent): JsObject =
+  discard
+
+proc jsMediaSourceSourceBuffers*(self: MediaSource): JsObject =
+  discard
+proc jsMediaSourceActiveSourceBuffers*(self: MediaSource): JsObject =
+  discard
+proc jsMediaSourceReadyState*(self: MediaSource): JsObject =
+  discard
+proc jsMediaSourceDuration*(self: MediaSource): float64 =
+  discard
+proc jsMediaSourceOnsourceopen*(self: MediaSource): JsObject =
+  discard
+proc jsMediaSourceOnsourceended*(self: MediaSource): JsObject =
+  discard
+proc jsMediaSourceOnsourceclose*(self: MediaSource): JsObject =
+  discard
+proc jsAddSourceBuffer*(self: MediaSource; typeVal: cstring): JsObject =
+  discard
+proc jsRemoveSourceBuffer*(self: MediaSource; sourceBuffer: JsObject): void =
+  discard
+proc jsEndOfStream*(self: MediaSource; error: JsObject): void =
+  discard
+proc jsSetLiveSeekableRange*(self: MediaSource; start: float64; endVal: float64): void =
+  discard
+proc jsClearLiveSeekableRange*(self: MediaSource): void =
+  discard
+proc jsIsTypeSupported*(self: typedesc[MediaSource]; typeVal: cstring): bool =
+  discard
+
+proc jsMediaStreamId*(self: MediaStream): cstring =
+  discard
+proc jsMediaStreamActive*(self: MediaStream): bool =
+  discard
+proc jsMediaStreamOnaddtrack*(self: MediaStream): JsObject =
+  discard
+proc jsMediaStreamOnremovetrack*(self: MediaStream): JsObject =
+  discard
+proc jsMediaStreamCurrentTime*(self: MediaStream): float64 =
+  discard
+proc jsGetAudioTracks*(self: MediaStream): JsObject =
+  discard
+proc jsGetVideoTracks*(self: MediaStream): JsObject =
+  discard
+proc jsGetTracks*(self: MediaStream): JsObject =
+  discard
+proc jsGetTrackById*(self: MediaStream; trackId: cstring): Option[JsObject] =
+  discard
+proc jsAddTrack*(self: MediaStream; track: JsObject): void =
+  discard
+proc jsRemoveTrack*(self: MediaStream; track: JsObject): void =
+  discard
+proc jsClone*(self: MediaStream): JsObject =
+  discard
+proc jsCountUnderlyingStreams*(self: typedesc[MediaStream]): JsObject =
+  discard
+proc jsAssignId*(self: MediaStream; id: cstring): void =
+  discard
+
+proc jsMediaStreamAudioDestinationNodeStream*(self: MediaStreamAudioDestinationNode): JsObject =
   discard
 
 
-proc jsMediaStreamTrackKind*(self: MediaStreamTrack): cstring {.wasmBindgen.} =
-  discard
-proc jsMediaStreamTrackId*(self: MediaStreamTrack): cstring {.wasmBindgen.} =
-  discard
-proc jsMediaStreamTrackLabel*(self: MediaStreamTrack): cstring {.wasmBindgen.} =
-  discard
-proc jsMediaStreamTrackEnabled*(self: MediaStreamTrack): bool {.wasmBindgen.} =
-  discard
-proc jsMediaStreamTrackMuted*(self: MediaStreamTrack): bool {.wasmBindgen.} =
-  discard
-proc jsMediaStreamTrackOnmute*(self: MediaStreamTrack): JsObject {.wasmBindgen.} =
-  discard
-proc jsMediaStreamTrackOnunmute*(self: MediaStreamTrack): JsObject {.wasmBindgen.} =
-  discard
-proc jsMediaStreamTrackReadyState*(self: MediaStreamTrack): JsObject {.wasmBindgen.} =
-  discard
-proc jsMediaStreamTrackOnended*(self: MediaStreamTrack): JsObject {.wasmBindgen.} =
-  discard
-proc jsClone*(self: MediaStreamTrack): JsObject {.wasmBindgen.} =
-  discard
-proc jsStop*(self: MediaStreamTrack): void {.wasmBindgen.} =
-  discard
-proc jsGetConstraints*(self: MediaStreamTrack): JsObject {.wasmBindgen.} =
-  discard
-proc jsGetSettings*(self: MediaStreamTrack): JsObject {.wasmBindgen.} =
-  discard
-proc jsApplyConstraints*(self: MediaStreamTrack; constraints: JsObject): JsObject {.wasmBindgen.} =
-  discard
-proc jsMutedChanged*(self: MediaStreamTrack; muted: bool): void {.wasmBindgen.} =
+proc jsMediaStreamErrorName*(self: MediaStreamError): cstring =
   discard
 
-proc jsMediaStreamTrackEventTrack*(self: MediaStreamTrackEvent): JsObject {.wasmBindgen.} =
+
+proc jsMediaStreamTrackKind*(self: MediaStreamTrack): cstring =
+  discard
+proc jsMediaStreamTrackId*(self: MediaStreamTrack): cstring =
+  discard
+proc jsMediaStreamTrackLabel*(self: MediaStreamTrack): cstring =
+  discard
+proc jsMediaStreamTrackEnabled*(self: MediaStreamTrack): bool =
+  discard
+proc jsMediaStreamTrackMuted*(self: MediaStreamTrack): bool =
+  discard
+proc jsMediaStreamTrackOnmute*(self: MediaStreamTrack): JsObject =
+  discard
+proc jsMediaStreamTrackOnunmute*(self: MediaStreamTrack): JsObject =
+  discard
+proc jsMediaStreamTrackReadyState*(self: MediaStreamTrack): JsObject =
+  discard
+proc jsMediaStreamTrackOnended*(self: MediaStreamTrack): JsObject =
+  discard
+proc jsClone*(self: MediaStreamTrack): JsObject =
+  discard
+proc jsStop*(self: MediaStreamTrack): void =
+  discard
+proc jsGetConstraints*(self: MediaStreamTrack): JsObject =
+  discard
+proc jsGetSettings*(self: MediaStreamTrack): JsObject =
+  discard
+proc jsApplyConstraints*(self: MediaStreamTrack; constraints: JsObject): JsObject =
+  discard
+proc jsMutedChanged*(self: MediaStreamTrack; muted: bool): void =
   discard
 
-proc jsMessageChannelPort1*(self: MessageChannel): JsObject {.wasmBindgen.} =
-  discard
-proc jsMessageChannelPort2*(self: MessageChannel): JsObject {.wasmBindgen.} =
+proc jsMediaStreamTrackEventTrack*(self: MediaStreamTrackEvent): JsObject =
   discard
 
-proc jsMessageEventData*(self: MessageEvent): JsObject {.wasmBindgen.} =
+proc jsMessageChannelPort1*(self: MessageChannel): JsObject =
   discard
-proc jsMessageEventOrigin*(self: MessageEvent): cstring {.wasmBindgen.} =
-  discard
-proc jsMessageEventLastEventId*(self: MessageEvent): cstring {.wasmBindgen.} =
-  discard
-proc jsMessageEventPorts*(self: MessageEvent): JsObject {.wasmBindgen.} =
-  discard
-proc jsInitMessageEvent*(self: MessageEvent; typeVal: cstring; bubbles: bool; cancelable: bool; data: JsObject; origin: cstring; lastEventId: cstring; source: Option[JsObject]; ports: JsObject): void {.wasmBindgen.} =
+proc jsMessageChannelPort2*(self: MessageChannel): JsObject =
   discard
 
-proc jsMessagePortOnmessage*(self: MessagePort): JsObject {.wasmBindgen.} =
+proc jsMessageEventData*(self: MessageEvent): JsObject =
   discard
-proc jsMessagePortOnmessageerror*(self: MessagePort): JsObject {.wasmBindgen.} =
+proc jsMessageEventOrigin*(self: MessageEvent): cstring =
   discard
-proc jsPostMessage*(self: MessagePort; message: JsObject; transferable: JsObject): void {.wasmBindgen.} =
+proc jsMessageEventLastEventId*(self: MessageEvent): cstring =
   discard
-proc jsStart*(self: MessagePort): void {.wasmBindgen.} =
+proc jsMessageEventPorts*(self: MessageEvent): JsObject =
   discard
-proc jsClose*(self: MessagePort): void {.wasmBindgen.} =
-  discard
-
-proc jsMimeTypeDescription*(self: MimeType): cstring {.wasmBindgen.} =
-  discard
-proc jsMimeTypeSuffixes*(self: MimeType): cstring {.wasmBindgen.} =
-  discard
-proc jsMimeTypeTypeVal*(self: MimeType): cstring {.wasmBindgen.} =
+proc jsInitMessageEvent*(self: MessageEvent; typeVal: cstring; bubbles: bool; cancelable: bool; data: JsObject; origin: cstring; lastEventId: cstring; source: Option[JsObject]; ports: JsObject): void =
   discard
 
-proc jsMimeTypeArrayLength*(self: MimeTypeArray): uint32 {.wasmBindgen.} =
+proc jsMessagePortOnmessage*(self: MessagePort): JsObject =
   discard
-proc jsItem*(self: MimeTypeArray; index: uint32): Option[JsObject] {.wasmBindgen.} =
+proc jsMessagePortOnmessageerror*(self: MessagePort): JsObject =
   discard
-proc jsNamedItem*(self: MimeTypeArray; name: cstring): Option[JsObject] {.wasmBindgen.} =
+proc jsPostMessage*(self: MessagePort; message: JsObject; transferable: JsObject): void =
+  discard
+proc jsStart*(self: MessagePort): void =
+  discard
+proc jsClose*(self: MessagePort): void =
   discard
 
-proc jsMouseEventScreenX*(self: MouseEvent): int32 {.wasmBindgen.} =
+proc jsMimeTypeDescription*(self: MimeType): cstring =
   discard
-proc jsMouseEventScreenY*(self: MouseEvent): int32 {.wasmBindgen.} =
+proc jsMimeTypeSuffixes*(self: MimeType): cstring =
   discard
-proc jsMouseEventClientX*(self: MouseEvent): int32 {.wasmBindgen.} =
+proc jsMimeTypeTypeVal*(self: MimeType): cstring =
   discard
-proc jsMouseEventClientY*(self: MouseEvent): int32 {.wasmBindgen.} =
+
+proc jsMimeTypeArrayLength*(self: MimeTypeArray): uint32 =
   discard
-proc jsMouseEventX*(self: MouseEvent): int32 {.wasmBindgen.} =
+proc jsItem*(self: MimeTypeArray; index: uint32): Option[JsObject] =
   discard
-proc jsMouseEventY*(self: MouseEvent): int32 {.wasmBindgen.} =
+proc jsNamedItem*(self: MimeTypeArray; name: cstring): Option[JsObject] =
   discard
-proc jsMouseEventOffsetX*(self: MouseEvent): int32 {.wasmBindgen.} =
+
+proc jsMouseEventScreenX*(self: MouseEvent): int32 =
   discard
-proc jsMouseEventOffsetY*(self: MouseEvent): int32 {.wasmBindgen.} =
+proc jsMouseEventScreenY*(self: MouseEvent): int32 =
   discard
-proc jsMouseEventPageX*(self: MouseEvent): int32 {.wasmBindgen.} =
+proc jsMouseEventClientX*(self: MouseEvent): int32 =
   discard
-proc jsMouseEventPageY*(self: MouseEvent): int32 {.wasmBindgen.} =
+proc jsMouseEventClientY*(self: MouseEvent): int32 =
   discard
-proc jsMouseEventCtrlKey*(self: MouseEvent): bool {.wasmBindgen.} =
+proc jsMouseEventX*(self: MouseEvent): int32 =
   discard
-proc jsMouseEventShiftKey*(self: MouseEvent): bool {.wasmBindgen.} =
+proc jsMouseEventY*(self: MouseEvent): int32 =
   discard
-proc jsMouseEventAltKey*(self: MouseEvent): bool {.wasmBindgen.} =
+proc jsMouseEventOffsetX*(self: MouseEvent): int32 =
   discard
-proc jsMouseEventMetaKey*(self: MouseEvent): bool {.wasmBindgen.} =
+proc jsMouseEventOffsetY*(self: MouseEvent): int32 =
   discard
-proc jsMouseEventButton*(self: MouseEvent): int16 {.wasmBindgen.} =
+proc jsMouseEventPageX*(self: MouseEvent): int32 =
   discard
-proc jsMouseEventButtons*(self: MouseEvent): uint16 {.wasmBindgen.} =
+proc jsMouseEventPageY*(self: MouseEvent): int32 =
   discard
-proc jsMouseEventMovementX*(self: MouseEvent): int32 {.wasmBindgen.} =
+proc jsMouseEventCtrlKey*(self: MouseEvent): bool =
   discard
-proc jsMouseEventMovementY*(self: MouseEvent): int32 {.wasmBindgen.} =
+proc jsMouseEventShiftKey*(self: MouseEvent): bool =
   discard
-proc jsInitMouseEvent*(self: MouseEvent; typeArg: cstring; canBubbleArg: bool; cancelableArg: bool; viewArg: Option[JsObject]; detailArg: int32; screenXArg: int32; screenYArg: int32; clientXArg: int32; clientYArg: int32; ctrlKeyArg: bool; altKeyArg: bool; shiftKeyArg: bool; metaKeyArg: bool; buttonArg: int16; relatedTargetArg: Option[JsObject]): void {.wasmBindgen.} =
+proc jsMouseEventAltKey*(self: MouseEvent): bool =
   discard
-proc jsGetModifierState*(self: MouseEvent; keyArg: cstring): bool {.wasmBindgen.} =
+proc jsMouseEventMetaKey*(self: MouseEvent): bool =
+  discard
+proc jsMouseEventButton*(self: MouseEvent): int16 =
+  discard
+proc jsMouseEventButtons*(self: MouseEvent): uint16 =
+  discard
+proc jsMouseEventMovementX*(self: MouseEvent): int32 =
+  discard
+proc jsMouseEventMovementY*(self: MouseEvent): int32 =
+  discard
+proc jsInitMouseEvent*(self: MouseEvent; typeArg: cstring; canBubbleArg: bool; cancelableArg: bool; viewArg: Option[JsObject]; detailArg: int32; screenXArg: int32; screenYArg: int32; clientXArg: int32; clientYArg: int32; ctrlKeyArg: bool; altKeyArg: bool; shiftKeyArg: bool; metaKeyArg: bool; buttonArg: int16; relatedTargetArg: Option[JsObject]): void =
+  discard
+proc jsGetModifierState*(self: MouseEvent; keyArg: cstring): bool =
   discard
 
 const jsMouseScrollEventHORIZONTAL_AXIS* : int32 = 0
 const jsMouseScrollEventVERTICAL_AXIS* : int32 = 0
-proc jsMouseScrollEventAxis*(self: MouseScrollEvent): int32 {.wasmBindgen.} =
+proc jsMouseScrollEventAxis*(self: MouseScrollEvent): int32 =
   discard
-proc jsInitMouseScrollEvent*(self: MouseScrollEvent; typeVal: cstring; canBubble: bool; cancelable: bool; view: Option[JsObject]; detail: int32; screenX: int32; screenY: int32; clientX: int32; clientY: int32; ctrlKey: bool; altKey: bool; shiftKey: bool; metaKey: bool; button: int16; relatedTarget: Option[JsObject]; axis: int32): void {.wasmBindgen.} =
+proc jsInitMouseScrollEvent*(self: MouseScrollEvent; typeVal: cstring; canBubble: bool; cancelable: bool; view: Option[JsObject]; detail: int32; screenX: int32; screenY: int32; clientX: int32; clientY: int32; ctrlKey: bool; altKey: bool; shiftKey: bool; metaKey: bool; button: int16; relatedTarget: Option[JsObject]; axis: int32): void =
   discard
 
 const jsMutationEventMODIFICATION* : uint16 = 0
 const jsMutationEventADDITION* : uint16 = 0
 const jsMutationEventREMOVAL* : uint16 = 0
 const jsMutationEventSMIL* : uint16 = 0
-proc jsMutationEventPrevValue*(self: MutationEvent): cstring {.wasmBindgen.} =
+proc jsMutationEventPrevValue*(self: MutationEvent): cstring =
   discard
-proc jsMutationEventNewValue*(self: MutationEvent): cstring {.wasmBindgen.} =
+proc jsMutationEventNewValue*(self: MutationEvent): cstring =
   discard
-proc jsMutationEventAttrName*(self: MutationEvent): cstring {.wasmBindgen.} =
+proc jsMutationEventAttrName*(self: MutationEvent): cstring =
   discard
-proc jsMutationEventAttrChange*(self: MutationEvent): uint16 {.wasmBindgen.} =
+proc jsMutationEventAttrChange*(self: MutationEvent): uint16 =
   discard
-proc jsInitMutationEvent*(self: MutationEvent; typeVal: cstring; canBubble: bool; cancelable: bool; relatedNode: Option[JsObject]; prevValue: cstring; newValue: cstring; attrName: cstring; attrChange: uint16): void {.wasmBindgen.} =
-  discard
-
-proc jsMutationRecordTypeVal*(self: MutationRecord): cstring {.wasmBindgen.} =
-  discard
-proc jsMutationRecordAddedNodes*(self: MutationRecord): JsObject {.wasmBindgen.} =
-  discard
-proc jsMutationRecordRemovedNodes*(self: MutationRecord): JsObject {.wasmBindgen.} =
-  discard
-proc jsMutationRecordAddedAnimations*(self: MutationRecord): JsObject {.wasmBindgen.} =
-  discard
-proc jsMutationRecordChangedAnimations*(self: MutationRecord): JsObject {.wasmBindgen.} =
-  discard
-proc jsMutationRecordRemovedAnimations*(self: MutationRecord): JsObject {.wasmBindgen.} =
+proc jsInitMutationEvent*(self: MutationEvent; typeVal: cstring; canBubble: bool; cancelable: bool; relatedNode: Option[JsObject]; prevValue: cstring; newValue: cstring; attrName: cstring; attrChange: uint16): void =
   discard
 
-proc jsMutationObserverMutationCallback*(self: MutationObserver): JsObject {.wasmBindgen.} =
+proc jsMutationRecordTypeVal*(self: MutationRecord): cstring =
   discard
-proc jsMutationObserverMergeAttributeRecords*(self: MutationObserver): bool {.wasmBindgen.} =
+proc jsMutationRecordAddedNodes*(self: MutationRecord): JsObject =
   discard
-proc jsObserve*(self: MutationObserver; target: JsObject; options: JsObject): void {.wasmBindgen.} =
+proc jsMutationRecordRemovedNodes*(self: MutationRecord): JsObject =
   discard
-proc jsDisconnect*(self: MutationObserver): void {.wasmBindgen.} =
+proc jsMutationRecordAddedAnimations*(self: MutationRecord): JsObject =
   discard
-proc jsTakeRecords*(self: MutationObserver): JsObject {.wasmBindgen.} =
+proc jsMutationRecordChangedAnimations*(self: MutationRecord): JsObject =
   discard
-proc jsGetObservingInfo*(self: MutationObserver): JsObject {.wasmBindgen.} =
-  discard
-
-proc jsNamedNodeMapLength*(self: NamedNodeMap): uint32 {.wasmBindgen.} =
-  discard
-proc jsGetNamedItem*(self: NamedNodeMap; name: cstring): Option[JsObject] {.wasmBindgen.} =
-  discard
-proc jsSetNamedItem*(self: NamedNodeMap; arg: JsObject): Option[JsObject] {.wasmBindgen.} =
-  discard
-proc jsRemoveNamedItem*(self: NamedNodeMap; name: cstring): JsObject {.wasmBindgen.} =
-  discard
-proc jsItem*(self: NamedNodeMap; index: uint32): Option[JsObject] {.wasmBindgen.} =
-  discard
-proc jsGetNamedItemNS*(self: NamedNodeMap; namespaceURI: Option[cstring]; localName: cstring): Option[JsObject] {.wasmBindgen.} =
-  discard
-proc jsSetNamedItemNS*(self: NamedNodeMap; arg: JsObject): Option[JsObject] {.wasmBindgen.} =
-  discard
-proc jsRemoveNamedItemNS*(self: NamedNodeMap; namespaceURI: Option[cstring]; localName: cstring): JsObject {.wasmBindgen.} =
+proc jsMutationRecordRemovedAnimations*(self: MutationRecord): JsObject =
   discard
 
-
-proc jsNavigatorAutomationInformationWebdriver*(self: NavigatorAutomationInformation): bool {.wasmBindgen.} =
+proc jsMutationObserverMutationCallback*(self: MutationObserver): JsObject =
+  discard
+proc jsMutationObserverMergeAttributeRecords*(self: MutationObserver): bool =
+  discard
+proc jsObserve*(self: MutationObserver; target: JsObject; options: JsObject): void =
+  discard
+proc jsDisconnect*(self: MutationObserver): void =
+  discard
+proc jsTakeRecords*(self: MutationObserver): JsObject =
+  discard
+proc jsGetObservingInfo*(self: MutationObserver): JsObject =
   discard
 
-proc jsNetworkInformationTypeVal*(self: NetworkInformation): JsObject {.wasmBindgen.} =
+proc jsNamedNodeMapLength*(self: NamedNodeMap): uint32 =
   discard
-proc jsNetworkInformationOntypechange*(self: NetworkInformation): JsObject {.wasmBindgen.} =
+proc jsGetNamedItem*(self: NamedNodeMap; name: cstring): Option[JsObject] =
+  discard
+proc jsSetNamedItem*(self: NamedNodeMap; arg: JsObject): Option[JsObject] =
+  discard
+proc jsRemoveNamedItem*(self: NamedNodeMap; name: cstring): JsObject =
+  discard
+proc jsItem*(self: NamedNodeMap; index: uint32): Option[JsObject] =
+  discard
+proc jsGetNamedItemNS*(self: NamedNodeMap; namespaceURI: Option[cstring]; localName: cstring): Option[JsObject] =
+  discard
+proc jsSetNamedItemNS*(self: NamedNodeMap; arg: JsObject): Option[JsObject] =
+  discard
+proc jsRemoveNamedItemNS*(self: NamedNodeMap; namespaceURI: Option[cstring]; localName: cstring): JsObject =
+  discard
+
+
+proc jsNavigatorAutomationInformationWebdriver*(self: NavigatorAutomationInformation): bool =
+  discard
+
+proc jsNetworkInformationTypeVal*(self: NetworkInformation): JsObject =
+  discard
+proc jsNetworkInformationOntypechange*(self: NetworkInformation): JsObject =
   discard
 
 const jsNodeELEMENT_NODE* : uint16 = 0
@@ -7461,13 +7460,13 @@ const jsNodeDOCUMENT_NODE* : uint16 = 0
 const jsNodeDOCUMENT_TYPE_NODE* : uint16 = 0
 const jsNodeDOCUMENT_FRAGMENT_NODE* : uint16 = 0
 const jsNodeNOTATION_NODE* : uint16 = 0
-proc jsNodeNodeType*(self: Node): uint16 {.wasmBindgen.} =
+proc jsNodeNodeType*(self: Node): uint16 =
   discard
-proc jsNodeNodeName*(self: Node): cstring {.wasmBindgen.} =
+proc jsNodeNodeName*(self: Node): cstring =
   discard
-proc jsNodeIsConnected*(self: Node): bool {.wasmBindgen.} =
+proc jsNodeIsConnected*(self: Node): bool =
   discard
-proc jsNodeChildNodes*(self: Node): JsObject {.wasmBindgen.} =
+proc jsNodeChildNodes*(self: Node): JsObject =
   discard
 const jsNodeDOCUMENT_POSITION_DISCONNECTED* : uint16 = 0
 const jsNodeDOCUMENT_POSITION_PRECEDING* : uint16 = 0
@@ -7475,117 +7474,117 @@ const jsNodeDOCUMENT_POSITION_FOLLOWING* : uint16 = 0
 const jsNodeDOCUMENT_POSITION_CONTAINS* : uint16 = 0
 const jsNodeDOCUMENT_POSITION_CONTAINED_BY* : uint16 = 0
 const jsNodeDOCUMENT_POSITION_IMPLEMENTATION_SPECIFIC* : uint16 = 0
-proc jsGetRootNode*(self: Node; options: JsObject): JsObject {.wasmBindgen.} =
+proc jsGetRootNode*(self: Node; options: JsObject): JsObject =
   discard
-proc jsHasChildNodes*(self: Node): bool {.wasmBindgen.} =
+proc jsHasChildNodes*(self: Node): bool =
   discard
-proc jsInsertBefore*(self: Node; node: JsObject; child: Option[JsObject]): JsObject {.wasmBindgen.} =
+proc jsInsertBefore*(self: Node; node: JsObject; child: Option[JsObject]): JsObject =
   discard
-proc jsAppendChild*(self: Node; node: JsObject): JsObject {.wasmBindgen.} =
+proc jsAppendChild*(self: Node; node: JsObject): JsObject =
   discard
-proc jsReplaceChild*(self: Node; node: JsObject; child: JsObject): JsObject {.wasmBindgen.} =
+proc jsReplaceChild*(self: Node; node: JsObject; child: JsObject): JsObject =
   discard
-proc jsRemoveChild*(self: Node; child: JsObject): JsObject {.wasmBindgen.} =
+proc jsRemoveChild*(self: Node; child: JsObject): JsObject =
   discard
-proc jsNormalize*(self: Node): void {.wasmBindgen.} =
+proc jsNormalize*(self: Node): void =
   discard
-proc jsCloneNode*(self: Node; deep: bool): JsObject {.wasmBindgen.} =
+proc jsCloneNode*(self: Node; deep: bool): JsObject =
   discard
-proc jsIsSameNode*(self: Node; node: Option[JsObject]): bool {.wasmBindgen.} =
+proc jsIsSameNode*(self: Node; node: Option[JsObject]): bool =
   discard
-proc jsIsEqualNode*(self: Node; node: Option[JsObject]): bool {.wasmBindgen.} =
+proc jsIsEqualNode*(self: Node; node: Option[JsObject]): bool =
   discard
-proc jsCompareDocumentPosition*(self: Node; other: JsObject): uint16 {.wasmBindgen.} =
+proc jsCompareDocumentPosition*(self: Node; other: JsObject): uint16 =
   discard
-proc jsContains*(self: Node; other: Option[JsObject]): bool {.wasmBindgen.} =
+proc jsContains*(self: Node; other: Option[JsObject]): bool =
   discard
-proc jsLookupPrefix*(self: Node; namespace: Option[cstring]): Option[cstring] {.wasmBindgen.} =
+proc jsLookupPrefix*(self: Node; namespace: Option[cstring]): Option[cstring] =
   discard
-proc jsLookupNamespaceURI*(self: Node; prefix: Option[cstring]): Option[cstring] {.wasmBindgen.} =
+proc jsLookupNamespaceURI*(self: Node; prefix: Option[cstring]): Option[cstring] =
   discard
-proc jsIsDefaultNamespace*(self: Node; namespace: Option[cstring]): bool {.wasmBindgen.} =
-  discard
-
-proc jsNodeIteratorRoot*(self: NodeIterator): JsObject {.wasmBindgen.} =
-  discard
-proc jsNodeIteratorPointerBeforeReferenceNode*(self: NodeIterator): bool {.wasmBindgen.} =
-  discard
-proc jsNodeIteratorWhatToShow*(self: NodeIterator): uint32 {.wasmBindgen.} =
-  discard
-proc jsNextNode*(self: NodeIterator): Option[JsObject] {.wasmBindgen.} =
-  discard
-proc jsPreviousNode*(self: NodeIterator): Option[JsObject] {.wasmBindgen.} =
-  discard
-proc jsDetach*(self: NodeIterator): void {.wasmBindgen.} =
+proc jsIsDefaultNamespace*(self: Node; namespace: Option[cstring]): bool =
   discard
 
-proc jsNodeListLength*(self: NodeList): uint32 {.wasmBindgen.} =
+proc jsNodeIteratorRoot*(self: NodeIterator): JsObject =
   discard
-proc jsItem*(self: NodeList; index: uint32): Option[JsObject] {.wasmBindgen.} =
+proc jsNodeIteratorPointerBeforeReferenceNode*(self: NodeIterator): bool =
   discard
-
-proc jsNotificationPermission*(self: Notification): JsObject {.wasmBindgen.} =
+proc jsNodeIteratorWhatToShow*(self: NodeIterator): uint32 =
   discard
-proc jsNotificationMaxActions*(self: Notification): uint32 {.wasmBindgen.} =
+proc jsNextNode*(self: NodeIterator): Option[JsObject] =
   discard
-proc jsNotificationOnclick*(self: Notification): JsObject {.wasmBindgen.} =
+proc jsPreviousNode*(self: NodeIterator): Option[JsObject] =
   discard
-proc jsNotificationOnshow*(self: Notification): JsObject {.wasmBindgen.} =
-  discard
-proc jsNotificationOnerror*(self: Notification): JsObject {.wasmBindgen.} =
-  discard
-proc jsNotificationOnclose*(self: Notification): JsObject {.wasmBindgen.} =
-  discard
-proc jsNotificationTitle*(self: Notification): cstring {.wasmBindgen.} =
-  discard
-proc jsNotificationDir*(self: Notification): JsObject {.wasmBindgen.} =
-  discard
-proc jsNotificationImage*(self: Notification): cstring {.wasmBindgen.} =
-  discard
-proc jsNotificationBadge*(self: Notification): cstring {.wasmBindgen.} =
-  discard
-proc jsNotificationVibrate*(self: Notification): JsObject {.wasmBindgen.} =
-  discard
-proc jsNotificationTimestamp*(self: Notification): uint64 {.wasmBindgen.} =
-  discard
-proc jsNotificationRenotify*(self: Notification): bool {.wasmBindgen.} =
-  discard
-proc jsNotificationRequireInteraction*(self: Notification): bool {.wasmBindgen.} =
-  discard
-proc jsNotificationData*(self: Notification): JsObject {.wasmBindgen.} =
-  discard
-proc jsNotificationActions*(self: Notification): JsObject {.wasmBindgen.} =
-  discard
-proc jsRequestPermission*(self: typedesc[Notification]; permissionCallback: JsObject): JsObject {.wasmBindgen.} =
-  discard
-proc jsClose*(self: Notification): void {.wasmBindgen.} =
+proc jsDetach*(self: NodeIterator): void =
   discard
 
-proc jsNotificationEventNotification*(self: NotificationEvent): JsObject {.wasmBindgen.} =
+proc jsNodeListLength*(self: NodeList): uint32 =
+  discard
+proc jsItem*(self: NodeList; index: uint32): Option[JsObject] =
   discard
 
-proc jsNotifyPaintEventClientRects*(self: NotifyPaintEvent): JsObject {.wasmBindgen.} =
+proc jsNotificationPermission*(self: Notification): JsObject =
   discard
-proc jsNotifyPaintEventBoundingClientRect*(self: NotifyPaintEvent): JsObject {.wasmBindgen.} =
+proc jsNotificationMaxActions*(self: Notification): uint32 =
   discard
-proc jsNotifyPaintEventPaintRequests*(self: NotifyPaintEvent): JsObject {.wasmBindgen.} =
+proc jsNotificationOnclick*(self: Notification): JsObject =
   discard
-proc jsNotifyPaintEventTransactionId*(self: NotifyPaintEvent): uint64 {.wasmBindgen.} =
+proc jsNotificationOnshow*(self: Notification): JsObject =
   discard
-proc jsNotifyPaintEventPaintTimeStamp*(self: NotifyPaintEvent): JsObject {.wasmBindgen.} =
+proc jsNotificationOnerror*(self: Notification): JsObject =
+  discard
+proc jsNotificationOnclose*(self: Notification): JsObject =
+  discard
+proc jsNotificationTitle*(self: Notification): cstring =
+  discard
+proc jsNotificationDir*(self: Notification): JsObject =
+  discard
+proc jsNotificationImage*(self: Notification): cstring =
+  discard
+proc jsNotificationBadge*(self: Notification): cstring =
+  discard
+proc jsNotificationVibrate*(self: Notification): JsObject =
+  discard
+proc jsNotificationTimestamp*(self: Notification): uint64 =
+  discard
+proc jsNotificationRenotify*(self: Notification): bool =
+  discard
+proc jsNotificationRequireInteraction*(self: Notification): bool =
+  discard
+proc jsNotificationData*(self: Notification): JsObject =
+  discard
+proc jsNotificationActions*(self: Notification): JsObject =
+  discard
+proc jsRequestPermission*(self: typedesc[Notification]; permissionCallback: JsObject): JsObject =
+  discard
+proc jsClose*(self: Notification): void =
   discard
 
-proc jsFramebufferTextureMultiviewOVR*(self: OVR_multiview2; target: JsObject; attachment: JsObject; texture: Option[JsObject]; level: JsObject; baseViewIndex: JsObject; numViews: JsObject): void {.wasmBindgen.} =
+proc jsNotificationEventNotification*(self: NotificationEvent): JsObject =
   discard
 
-proc jsOfflineAudioCompletionEventRenderedBuffer*(self: OfflineAudioCompletionEvent): JsObject {.wasmBindgen.} =
+proc jsNotifyPaintEventClientRects*(self: NotifyPaintEvent): JsObject =
+  discard
+proc jsNotifyPaintEventBoundingClientRect*(self: NotifyPaintEvent): JsObject =
+  discard
+proc jsNotifyPaintEventPaintRequests*(self: NotifyPaintEvent): JsObject =
+  discard
+proc jsNotifyPaintEventTransactionId*(self: NotifyPaintEvent): uint64 =
+  discard
+proc jsNotifyPaintEventPaintTimeStamp*(self: NotifyPaintEvent): JsObject =
   discard
 
-proc jsOfflineAudioContextLength*(self: OfflineAudioContext): uint32 {.wasmBindgen.} =
+proc jsFramebufferTextureMultiviewOVR*(self: OVR_multiview2; target: JsObject; attachment: JsObject; texture: Option[JsObject]; level: JsObject; baseViewIndex: JsObject; numViews: JsObject): void =
   discard
-proc jsOfflineAudioContextOncomplete*(self: OfflineAudioContext): JsObject {.wasmBindgen.} =
+
+proc jsOfflineAudioCompletionEventRenderedBuffer*(self: OfflineAudioCompletionEvent): JsObject =
   discard
-proc jsStartRendering*(self: OfflineAudioContext): JsObject {.wasmBindgen.} =
+
+proc jsOfflineAudioContextLength*(self: OfflineAudioContext): uint32 =
+  discard
+proc jsOfflineAudioContextOncomplete*(self: OfflineAudioContext): JsObject =
+  discard
+proc jsStartRendering*(self: OfflineAudioContext): JsObject =
   discard
 
 const jsOfflineResourceListUNCACHED* : uint16 = 0
@@ -7594,174 +7593,174 @@ const jsOfflineResourceListCHECKING* : uint16 = 0
 const jsOfflineResourceListDOWNLOADING* : uint16 = 0
 const jsOfflineResourceListUPDATEREADY* : uint16 = 0
 const jsOfflineResourceListOBSOLETE* : uint16 = 0
-proc jsOfflineResourceListStatus*(self: OfflineResourceList): uint16 {.wasmBindgen.} =
+proc jsOfflineResourceListStatus*(self: OfflineResourceList): uint16 =
   discard
-proc jsOfflineResourceListOnchecking*(self: OfflineResourceList): JsObject {.wasmBindgen.} =
+proc jsOfflineResourceListOnchecking*(self: OfflineResourceList): JsObject =
   discard
-proc jsOfflineResourceListOnerror*(self: OfflineResourceList): JsObject {.wasmBindgen.} =
+proc jsOfflineResourceListOnerror*(self: OfflineResourceList): JsObject =
   discard
-proc jsOfflineResourceListOnnoupdate*(self: OfflineResourceList): JsObject {.wasmBindgen.} =
+proc jsOfflineResourceListOnnoupdate*(self: OfflineResourceList): JsObject =
   discard
-proc jsOfflineResourceListOndownloading*(self: OfflineResourceList): JsObject {.wasmBindgen.} =
+proc jsOfflineResourceListOndownloading*(self: OfflineResourceList): JsObject =
   discard
-proc jsOfflineResourceListOnprogress*(self: OfflineResourceList): JsObject {.wasmBindgen.} =
+proc jsOfflineResourceListOnprogress*(self: OfflineResourceList): JsObject =
   discard
-proc jsOfflineResourceListOnupdateready*(self: OfflineResourceList): JsObject {.wasmBindgen.} =
+proc jsOfflineResourceListOnupdateready*(self: OfflineResourceList): JsObject =
   discard
-proc jsOfflineResourceListOncached*(self: OfflineResourceList): JsObject {.wasmBindgen.} =
+proc jsOfflineResourceListOncached*(self: OfflineResourceList): JsObject =
   discard
-proc jsOfflineResourceListOnobsolete*(self: OfflineResourceList): JsObject {.wasmBindgen.} =
+proc jsOfflineResourceListOnobsolete*(self: OfflineResourceList): JsObject =
   discard
-proc jsUpdate*(self: OfflineResourceList): void {.wasmBindgen.} =
+proc jsUpdate*(self: OfflineResourceList): void =
   discard
-proc jsSwapCache*(self: OfflineResourceList): void {.wasmBindgen.} =
-  discard
-
-proc jsOffscreenCanvasWidth*(self: OffscreenCanvas): uint32 {.wasmBindgen.} =
-  discard
-proc jsOffscreenCanvasHeight*(self: OffscreenCanvas): uint32 {.wasmBindgen.} =
-  discard
-proc jsGetContext*(self: OffscreenCanvas; contextId: cstring; contextOptions: JsObject): Option[JsObject] {.wasmBindgen.} =
-  discard
-proc jsTransferToImageBitmap*(self: OffscreenCanvas): JsObject {.wasmBindgen.} =
-  discard
-proc jsConvertToBlob*(self: OffscreenCanvas; options: JsObject): JsObject {.wasmBindgen.} =
+proc jsSwapCache*(self: OfflineResourceList): void =
   discard
 
-proc jsOffscreenCanvasRenderingContext2DCanvas*(self: OffscreenCanvasRenderingContext2D): JsObject {.wasmBindgen.} =
+proc jsOffscreenCanvasWidth*(self: OffscreenCanvas): uint32 =
+  discard
+proc jsOffscreenCanvasHeight*(self: OffscreenCanvas): uint32 =
+  discard
+proc jsGetContext*(self: OffscreenCanvas; contextId: cstring; contextOptions: JsObject): Option[JsObject] =
+  discard
+proc jsTransferToImageBitmap*(self: OffscreenCanvas): JsObject =
+  discard
+proc jsConvertToBlob*(self: OffscreenCanvas; options: JsObject): JsObject =
   discard
 
-proc jsOscillatorNodeTypeVal*(self: OscillatorNode): JsObject {.wasmBindgen.} =
-  discard
-proc jsOscillatorNodeFrequency*(self: OscillatorNode): JsObject {.wasmBindgen.} =
-  discard
-proc jsOscillatorNodeDetune*(self: OscillatorNode): JsObject {.wasmBindgen.} =
-  discard
-proc jsSetPeriodicWave*(self: OscillatorNode; periodicWave: JsObject): void {.wasmBindgen.} =
+proc jsOffscreenCanvasRenderingContext2DCanvas*(self: OffscreenCanvasRenderingContext2D): JsObject =
   discard
 
-proc jsPageTransitionEventPersisted*(self: PageTransitionEvent): bool {.wasmBindgen.} =
+proc jsOscillatorNodeTypeVal*(self: OscillatorNode): JsObject =
   discard
-proc jsPageTransitionEventInFrameSwap*(self: PageTransitionEvent): bool {.wasmBindgen.} =
+proc jsOscillatorNodeFrequency*(self: OscillatorNode): JsObject =
   discard
-
-proc jsPaintRequestClientRect*(self: PaintRequest): JsObject {.wasmBindgen.} =
+proc jsOscillatorNodeDetune*(self: OscillatorNode): JsObject =
   discard
-proc jsPaintRequestReason*(self: PaintRequest): cstring {.wasmBindgen.} =
-  discard
-
-proc jsPaintRequestListLength*(self: PaintRequestList): uint32 {.wasmBindgen.} =
-  discard
-proc jsItem*(self: PaintRequestList; index: uint32): Option[JsObject] {.wasmBindgen.} =
+proc jsSetPeriodicWave*(self: OscillatorNode; periodicWave: JsObject): void =
   discard
 
-proc jsRegisterPaint*(self: PaintWorkletGlobalScope; name: cstring; paintCtor: JsObject): void {.wasmBindgen.} =
+proc jsPageTransitionEventPersisted*(self: PageTransitionEvent): bool =
+  discard
+proc jsPageTransitionEventInFrameSwap*(self: PageTransitionEvent): bool =
   discard
 
-proc jsPannerNodePanningModel*(self: PannerNode): JsObject {.wasmBindgen.} =
+proc jsPaintRequestClientRect*(self: PaintRequest): JsObject =
   discard
-proc jsPannerNodePositionX*(self: PannerNode): JsObject {.wasmBindgen.} =
-  discard
-proc jsPannerNodePositionY*(self: PannerNode): JsObject {.wasmBindgen.} =
-  discard
-proc jsPannerNodePositionZ*(self: PannerNode): JsObject {.wasmBindgen.} =
-  discard
-proc jsPannerNodeOrientationX*(self: PannerNode): JsObject {.wasmBindgen.} =
-  discard
-proc jsPannerNodeOrientationY*(self: PannerNode): JsObject {.wasmBindgen.} =
-  discard
-proc jsPannerNodeOrientationZ*(self: PannerNode): JsObject {.wasmBindgen.} =
-  discard
-proc jsPannerNodeDistanceModel*(self: PannerNode): JsObject {.wasmBindgen.} =
-  discard
-proc jsPannerNodeRefDistance*(self: PannerNode): float64 {.wasmBindgen.} =
-  discard
-proc jsPannerNodeMaxDistance*(self: PannerNode): float64 {.wasmBindgen.} =
-  discard
-proc jsPannerNodeRolloffFactor*(self: PannerNode): float64 {.wasmBindgen.} =
-  discard
-proc jsPannerNodeConeInnerAngle*(self: PannerNode): float64 {.wasmBindgen.} =
-  discard
-proc jsPannerNodeConeOuterAngle*(self: PannerNode): float64 {.wasmBindgen.} =
-  discard
-proc jsPannerNodeConeOuterGain*(self: PannerNode): float64 {.wasmBindgen.} =
-  discard
-proc jsSetPosition*(self: PannerNode; x: float64; y: float64; z: float64): void {.wasmBindgen.} =
-  discard
-proc jsSetOrientation*(self: PannerNode; x: float64; y: float64; z: float64): void {.wasmBindgen.} =
-  discard
-proc jsSetVelocity*(self: PannerNode; x: float64; y: float64; z: float64): void {.wasmBindgen.} =
+proc jsPaintRequestReason*(self: PaintRequest): cstring =
   discard
 
-proc jsPaymentAddressCountry*(self: PaymentAddress): cstring {.wasmBindgen.} =
+proc jsPaintRequestListLength*(self: PaintRequestList): uint32 =
   discard
-proc jsPaymentAddressAddressLine*(self: PaymentAddress): JsObject {.wasmBindgen.} =
-  discard
-proc jsPaymentAddressRegion*(self: PaymentAddress): cstring {.wasmBindgen.} =
-  discard
-proc jsPaymentAddressCity*(self: PaymentAddress): cstring {.wasmBindgen.} =
-  discard
-proc jsPaymentAddressDependentLocality*(self: PaymentAddress): cstring {.wasmBindgen.} =
-  discard
-proc jsPaymentAddressPostalCode*(self: PaymentAddress): cstring {.wasmBindgen.} =
-  discard
-proc jsPaymentAddressSortingCode*(self: PaymentAddress): cstring {.wasmBindgen.} =
-  discard
-proc jsPaymentAddressLanguageCode*(self: PaymentAddress): cstring {.wasmBindgen.} =
-  discard
-proc jsPaymentAddressOrganization*(self: PaymentAddress): cstring {.wasmBindgen.} =
-  discard
-proc jsPaymentAddressRecipient*(self: PaymentAddress): cstring {.wasmBindgen.} =
-  discard
-proc jsPaymentAddressPhone*(self: PaymentAddress): cstring {.wasmBindgen.} =
-  discard
-proc jsToJSON*(self: PaymentAddress): JsObject {.wasmBindgen.} =
+proc jsItem*(self: PaintRequestList; index: uint32): Option[JsObject] =
   discard
 
-proc jsPaymentMethodChangeEventMethodName*(self: PaymentMethodChangeEvent): cstring {.wasmBindgen.} =
+proc jsRegisterPaint*(self: PaintWorkletGlobalScope; name: cstring; paintCtor: JsObject): void =
   discard
 
-proc jsUpdateWith*(self: PaymentRequestUpdateEvent; detailsPromise: JsObject): void {.wasmBindgen.} =
+proc jsPannerNodePanningModel*(self: PannerNode): JsObject =
+  discard
+proc jsPannerNodePositionX*(self: PannerNode): JsObject =
+  discard
+proc jsPannerNodePositionY*(self: PannerNode): JsObject =
+  discard
+proc jsPannerNodePositionZ*(self: PannerNode): JsObject =
+  discard
+proc jsPannerNodeOrientationX*(self: PannerNode): JsObject =
+  discard
+proc jsPannerNodeOrientationY*(self: PannerNode): JsObject =
+  discard
+proc jsPannerNodeOrientationZ*(self: PannerNode): JsObject =
+  discard
+proc jsPannerNodeDistanceModel*(self: PannerNode): JsObject =
+  discard
+proc jsPannerNodeRefDistance*(self: PannerNode): float64 =
+  discard
+proc jsPannerNodeMaxDistance*(self: PannerNode): float64 =
+  discard
+proc jsPannerNodeRolloffFactor*(self: PannerNode): float64 =
+  discard
+proc jsPannerNodeConeInnerAngle*(self: PannerNode): float64 =
+  discard
+proc jsPannerNodeConeOuterAngle*(self: PannerNode): float64 =
+  discard
+proc jsPannerNodeConeOuterGain*(self: PannerNode): float64 =
+  discard
+proc jsSetPosition*(self: PannerNode; x: float64; y: float64; z: float64): void =
+  discard
+proc jsSetOrientation*(self: PannerNode; x: float64; y: float64; z: float64): void =
+  discard
+proc jsSetVelocity*(self: PannerNode; x: float64; y: float64; z: float64): void =
   discard
 
-proc jsPaymentResponseRequestId*(self: PaymentResponse): cstring {.wasmBindgen.} =
+proc jsPaymentAddressCountry*(self: PaymentAddress): cstring =
   discard
-proc jsPaymentResponseMethodName*(self: PaymentResponse): cstring {.wasmBindgen.} =
+proc jsPaymentAddressAddressLine*(self: PaymentAddress): JsObject =
   discard
-proc jsPaymentResponseDetails*(self: PaymentResponse): JsObject {.wasmBindgen.} =
+proc jsPaymentAddressRegion*(self: PaymentAddress): cstring =
   discard
-proc jsToJSON*(self: PaymentResponse): JsObject {.wasmBindgen.} =
+proc jsPaymentAddressCity*(self: PaymentAddress): cstring =
   discard
-proc jsComplete*(self: PaymentResponse; resultVal: JsObject): JsObject {.wasmBindgen.} =
+proc jsPaymentAddressDependentLocality*(self: PaymentAddress): cstring =
   discard
-
-proc jsPerformanceTimeOrigin*(self: Performance): JsObject {.wasmBindgen.} =
+proc jsPaymentAddressPostalCode*(self: PaymentAddress): cstring =
   discard
-proc jsNow*(self: Performance): JsObject {.wasmBindgen.} =
+proc jsPaymentAddressSortingCode*(self: PaymentAddress): cstring =
   discard
-
-proc jsPerformanceEntryName*(self: PerformanceEntry): cstring {.wasmBindgen.} =
+proc jsPaymentAddressLanguageCode*(self: PaymentAddress): cstring =
   discard
-proc jsPerformanceEntryEntryType*(self: PerformanceEntry): cstring {.wasmBindgen.} =
+proc jsPaymentAddressOrganization*(self: PaymentAddress): cstring =
   discard
-proc jsPerformanceEntryStartTime*(self: PerformanceEntry): JsObject {.wasmBindgen.} =
+proc jsPaymentAddressRecipient*(self: PaymentAddress): cstring =
   discard
-proc jsPerformanceEntryDuration*(self: PerformanceEntry): JsObject {.wasmBindgen.} =
+proc jsPaymentAddressPhone*(self: PaymentAddress): cstring =
   discard
-proc jsToJSON*(self: PerformanceEntry): JsObject {.wasmBindgen.} =
+proc jsToJSON*(self: PaymentAddress): JsObject =
   discard
 
-proc jsPerformanceEntryEventName*(self: PerformanceEntryEvent): cstring {.wasmBindgen.} =
+proc jsPaymentMethodChangeEventMethodName*(self: PaymentMethodChangeEvent): cstring =
   discard
-proc jsPerformanceEntryEventEntryType*(self: PerformanceEntryEvent): cstring {.wasmBindgen.} =
+
+proc jsUpdateWith*(self: PaymentRequestUpdateEvent; detailsPromise: JsObject): void =
   discard
-proc jsPerformanceEntryEventStartTime*(self: PerformanceEntryEvent): JsObject {.wasmBindgen.} =
+
+proc jsPaymentResponseRequestId*(self: PaymentResponse): cstring =
   discard
-proc jsPerformanceEntryEventDuration*(self: PerformanceEntryEvent): JsObject {.wasmBindgen.} =
+proc jsPaymentResponseMethodName*(self: PaymentResponse): cstring =
   discard
-proc jsPerformanceEntryEventEpoch*(self: PerformanceEntryEvent): float64 {.wasmBindgen.} =
+proc jsPaymentResponseDetails*(self: PaymentResponse): JsObject =
   discard
-proc jsPerformanceEntryEventOrigin*(self: PerformanceEntryEvent): cstring {.wasmBindgen.} =
+proc jsToJSON*(self: PaymentResponse): JsObject =
+  discard
+proc jsComplete*(self: PaymentResponse; resultVal: JsObject): JsObject =
+  discard
+
+proc jsPerformanceTimeOrigin*(self: Performance): JsObject =
+  discard
+proc jsNow*(self: Performance): JsObject =
+  discard
+
+proc jsPerformanceEntryName*(self: PerformanceEntry): cstring =
+  discard
+proc jsPerformanceEntryEntryType*(self: PerformanceEntry): cstring =
+  discard
+proc jsPerformanceEntryStartTime*(self: PerformanceEntry): JsObject =
+  discard
+proc jsPerformanceEntryDuration*(self: PerformanceEntry): JsObject =
+  discard
+proc jsToJSON*(self: PerformanceEntry): JsObject =
+  discard
+
+proc jsPerformanceEntryEventName*(self: PerformanceEntryEvent): cstring =
+  discard
+proc jsPerformanceEntryEventEntryType*(self: PerformanceEntryEvent): cstring =
+  discard
+proc jsPerformanceEntryEventStartTime*(self: PerformanceEntryEvent): JsObject =
+  discard
+proc jsPerformanceEntryEventDuration*(self: PerformanceEntryEvent): JsObject =
+  discard
+proc jsPerformanceEntryEventEpoch*(self: PerformanceEntryEvent): float64 =
+  discard
+proc jsPerformanceEntryEventOrigin*(self: PerformanceEntryEvent): cstring =
   discard
 
 
@@ -7770,737 +7769,737 @@ const jsPerformanceNavigationTYPE_NAVIGATE* : uint16 = 0
 const jsPerformanceNavigationTYPE_RELOAD* : uint16 = 0
 const jsPerformanceNavigationTYPE_BACK_FORWARD* : uint16 = 0
 const jsPerformanceNavigationTYPE_RESERVED* : uint16 = 0
-proc jsPerformanceNavigationTypeVal*(self: PerformanceNavigation): uint16 {.wasmBindgen.} =
+proc jsPerformanceNavigationTypeVal*(self: PerformanceNavigation): uint16 =
   discard
-proc jsPerformanceNavigationRedirectCount*(self: PerformanceNavigation): uint16 {.wasmBindgen.} =
+proc jsPerformanceNavigationRedirectCount*(self: PerformanceNavigation): uint16 =
   discard
-proc jsToJSON*(self: PerformanceNavigation): JsObject {.wasmBindgen.} =
-  discard
-
-proc jsPerformanceNavigationTimingUnloadEventStart*(self: PerformanceNavigationTiming): JsObject {.wasmBindgen.} =
-  discard
-proc jsPerformanceNavigationTimingUnloadEventEnd*(self: PerformanceNavigationTiming): JsObject {.wasmBindgen.} =
-  discard
-proc jsPerformanceNavigationTimingDomInteractive*(self: PerformanceNavigationTiming): JsObject {.wasmBindgen.} =
-  discard
-proc jsPerformanceNavigationTimingDomContentLoadedEventStart*(self: PerformanceNavigationTiming): JsObject {.wasmBindgen.} =
-  discard
-proc jsPerformanceNavigationTimingDomContentLoadedEventEnd*(self: PerformanceNavigationTiming): JsObject {.wasmBindgen.} =
-  discard
-proc jsPerformanceNavigationTimingDomComplete*(self: PerformanceNavigationTiming): JsObject {.wasmBindgen.} =
-  discard
-proc jsPerformanceNavigationTimingLoadEventStart*(self: PerformanceNavigationTiming): JsObject {.wasmBindgen.} =
-  discard
-proc jsPerformanceNavigationTimingLoadEventEnd*(self: PerformanceNavigationTiming): JsObject {.wasmBindgen.} =
-  discard
-proc jsPerformanceNavigationTimingTypeVal*(self: PerformanceNavigationTiming): JsObject {.wasmBindgen.} =
-  discard
-proc jsPerformanceNavigationTimingRedirectCount*(self: PerformanceNavigationTiming): uint16 {.wasmBindgen.} =
-  discard
-proc jsToJSON*(self: PerformanceNavigationTiming): JsObject {.wasmBindgen.} =
+proc jsToJSON*(self: PerformanceNavigation): JsObject =
   discard
 
-proc jsObserve*(self: PerformanceObserver; options: JsObject): void {.wasmBindgen.} =
+proc jsPerformanceNavigationTimingUnloadEventStart*(self: PerformanceNavigationTiming): JsObject =
   discard
-proc jsDisconnect*(self: PerformanceObserver): void {.wasmBindgen.} =
+proc jsPerformanceNavigationTimingUnloadEventEnd*(self: PerformanceNavigationTiming): JsObject =
   discard
-proc jsTakeRecords*(self: PerformanceObserver): JsObject {.wasmBindgen.} =
+proc jsPerformanceNavigationTimingDomInteractive*(self: PerformanceNavigationTiming): JsObject =
   discard
-
-proc jsGetEntries*(self: PerformanceObserverEntryList; filter: JsObject): JsObject {.wasmBindgen.} =
+proc jsPerformanceNavigationTimingDomContentLoadedEventStart*(self: PerformanceNavigationTiming): JsObject =
   discard
-proc jsGetEntriesByType*(self: PerformanceObserverEntryList; entryType: cstring): JsObject {.wasmBindgen.} =
+proc jsPerformanceNavigationTimingDomContentLoadedEventEnd*(self: PerformanceNavigationTiming): JsObject =
   discard
-proc jsGetEntriesByName*(self: PerformanceObserverEntryList; name: cstring; entryType: cstring): JsObject {.wasmBindgen.} =
+proc jsPerformanceNavigationTimingDomComplete*(self: PerformanceNavigationTiming): JsObject =
   discard
-
-proc jsPerformanceResourceTimingInitiatorType*(self: PerformanceResourceTiming): cstring {.wasmBindgen.} =
+proc jsPerformanceNavigationTimingLoadEventStart*(self: PerformanceNavigationTiming): JsObject =
   discard
-proc jsPerformanceResourceTimingNextHopProtocol*(self: PerformanceResourceTiming): cstring {.wasmBindgen.} =
+proc jsPerformanceNavigationTimingLoadEventEnd*(self: PerformanceNavigationTiming): JsObject =
   discard
-proc jsPerformanceResourceTimingWorkerStart*(self: PerformanceResourceTiming): JsObject {.wasmBindgen.} =
+proc jsPerformanceNavigationTimingTypeVal*(self: PerformanceNavigationTiming): JsObject =
   discard
-proc jsPerformanceResourceTimingRedirectStart*(self: PerformanceResourceTiming): JsObject {.wasmBindgen.} =
+proc jsPerformanceNavigationTimingRedirectCount*(self: PerformanceNavigationTiming): uint16 =
   discard
-proc jsPerformanceResourceTimingRedirectEnd*(self: PerformanceResourceTiming): JsObject {.wasmBindgen.} =
-  discard
-proc jsPerformanceResourceTimingFetchStart*(self: PerformanceResourceTiming): JsObject {.wasmBindgen.} =
-  discard
-proc jsPerformanceResourceTimingDomainLookupStart*(self: PerformanceResourceTiming): JsObject {.wasmBindgen.} =
-  discard
-proc jsPerformanceResourceTimingDomainLookupEnd*(self: PerformanceResourceTiming): JsObject {.wasmBindgen.} =
-  discard
-proc jsPerformanceResourceTimingConnectStart*(self: PerformanceResourceTiming): JsObject {.wasmBindgen.} =
-  discard
-proc jsPerformanceResourceTimingConnectEnd*(self: PerformanceResourceTiming): JsObject {.wasmBindgen.} =
-  discard
-proc jsPerformanceResourceTimingSecureConnectionStart*(self: PerformanceResourceTiming): JsObject {.wasmBindgen.} =
-  discard
-proc jsPerformanceResourceTimingRequestStart*(self: PerformanceResourceTiming): JsObject {.wasmBindgen.} =
-  discard
-proc jsPerformanceResourceTimingResponseStart*(self: PerformanceResourceTiming): JsObject {.wasmBindgen.} =
-  discard
-proc jsPerformanceResourceTimingResponseEnd*(self: PerformanceResourceTiming): JsObject {.wasmBindgen.} =
-  discard
-proc jsPerformanceResourceTimingTransferSize*(self: PerformanceResourceTiming): uint64 {.wasmBindgen.} =
-  discard
-proc jsPerformanceResourceTimingEncodedBodySize*(self: PerformanceResourceTiming): uint64 {.wasmBindgen.} =
-  discard
-proc jsPerformanceResourceTimingDecodedBodySize*(self: PerformanceResourceTiming): uint64 {.wasmBindgen.} =
-  discard
-proc jsPerformanceResourceTimingServerTiming*(self: PerformanceResourceTiming): JsObject {.wasmBindgen.} =
-  discard
-proc jsToJSON*(self: PerformanceResourceTiming): JsObject {.wasmBindgen.} =
+proc jsToJSON*(self: PerformanceNavigationTiming): JsObject =
   discard
 
-proc jsPerformanceServerTimingName*(self: PerformanceServerTiming): cstring {.wasmBindgen.} =
+proc jsObserve*(self: PerformanceObserver; options: JsObject): void =
   discard
-proc jsPerformanceServerTimingDuration*(self: PerformanceServerTiming): JsObject {.wasmBindgen.} =
+proc jsDisconnect*(self: PerformanceObserver): void =
   discard
-proc jsPerformanceServerTimingDescription*(self: PerformanceServerTiming): cstring {.wasmBindgen.} =
-  discard
-proc jsToJSON*(self: PerformanceServerTiming): JsObject {.wasmBindgen.} =
+proc jsTakeRecords*(self: PerformanceObserver): JsObject =
   discard
 
-proc jsPerformanceTimingNavigationStart*(self: PerformanceTiming): uint64 {.wasmBindgen.} =
+proc jsGetEntries*(self: PerformanceObserverEntryList; filter: JsObject): JsObject =
   discard
-proc jsPerformanceTimingUnloadEventStart*(self: PerformanceTiming): uint64 {.wasmBindgen.} =
+proc jsGetEntriesByType*(self: PerformanceObserverEntryList; entryType: cstring): JsObject =
   discard
-proc jsPerformanceTimingUnloadEventEnd*(self: PerformanceTiming): uint64 {.wasmBindgen.} =
-  discard
-proc jsPerformanceTimingRedirectStart*(self: PerformanceTiming): uint64 {.wasmBindgen.} =
-  discard
-proc jsPerformanceTimingRedirectEnd*(self: PerformanceTiming): uint64 {.wasmBindgen.} =
-  discard
-proc jsPerformanceTimingFetchStart*(self: PerformanceTiming): uint64 {.wasmBindgen.} =
-  discard
-proc jsPerformanceTimingDomainLookupStart*(self: PerformanceTiming): uint64 {.wasmBindgen.} =
-  discard
-proc jsPerformanceTimingDomainLookupEnd*(self: PerformanceTiming): uint64 {.wasmBindgen.} =
-  discard
-proc jsPerformanceTimingConnectStart*(self: PerformanceTiming): uint64 {.wasmBindgen.} =
-  discard
-proc jsPerformanceTimingConnectEnd*(self: PerformanceTiming): uint64 {.wasmBindgen.} =
-  discard
-proc jsPerformanceTimingSecureConnectionStart*(self: PerformanceTiming): uint64 {.wasmBindgen.} =
-  discard
-proc jsPerformanceTimingRequestStart*(self: PerformanceTiming): uint64 {.wasmBindgen.} =
-  discard
-proc jsPerformanceTimingResponseStart*(self: PerformanceTiming): uint64 {.wasmBindgen.} =
-  discard
-proc jsPerformanceTimingResponseEnd*(self: PerformanceTiming): uint64 {.wasmBindgen.} =
-  discard
-proc jsPerformanceTimingDomLoading*(self: PerformanceTiming): uint64 {.wasmBindgen.} =
-  discard
-proc jsPerformanceTimingDomInteractive*(self: PerformanceTiming): uint64 {.wasmBindgen.} =
-  discard
-proc jsPerformanceTimingDomContentLoadedEventStart*(self: PerformanceTiming): uint64 {.wasmBindgen.} =
-  discard
-proc jsPerformanceTimingDomContentLoadedEventEnd*(self: PerformanceTiming): uint64 {.wasmBindgen.} =
-  discard
-proc jsPerformanceTimingDomComplete*(self: PerformanceTiming): uint64 {.wasmBindgen.} =
-  discard
-proc jsPerformanceTimingLoadEventStart*(self: PerformanceTiming): uint64 {.wasmBindgen.} =
-  discard
-proc jsPerformanceTimingLoadEventEnd*(self: PerformanceTiming): uint64 {.wasmBindgen.} =
-  discard
-proc jsPerformanceTimingTimeToNonBlankPaint*(self: PerformanceTiming): uint64 {.wasmBindgen.} =
-  discard
-proc jsPerformanceTimingTimeToDOMContentFlushed*(self: PerformanceTiming): uint64 {.wasmBindgen.} =
-  discard
-proc jsToJSON*(self: PerformanceTiming): JsObject {.wasmBindgen.} =
+proc jsGetEntriesByName*(self: PerformanceObserverEntryList; name: cstring; entryType: cstring): JsObject =
   discard
 
-
-proc jsPermissionStatusState*(self: PermissionStatus): JsObject {.wasmBindgen.} =
+proc jsPerformanceResourceTimingInitiatorType*(self: PerformanceResourceTiming): cstring =
   discard
-proc jsPermissionStatusOnchange*(self: PermissionStatus): JsObject {.wasmBindgen.} =
+proc jsPerformanceResourceTimingNextHopProtocol*(self: PerformanceResourceTiming): cstring =
   discard
-
-proc jsQuery*(self: Permissions; permission: JsObject): JsObject {.wasmBindgen.} =
+proc jsPerformanceResourceTimingWorkerStart*(self: PerformanceResourceTiming): JsObject =
   discard
-proc jsRevoke*(self: Permissions; permission: JsObject): JsObject {.wasmBindgen.} =
+proc jsPerformanceResourceTimingRedirectStart*(self: PerformanceResourceTiming): JsObject =
   discard
-
-proc jsPluginDescription*(self: Plugin): cstring {.wasmBindgen.} =
+proc jsPerformanceResourceTimingRedirectEnd*(self: PerformanceResourceTiming): JsObject =
   discard
-proc jsPluginFilename*(self: Plugin): cstring {.wasmBindgen.} =
+proc jsPerformanceResourceTimingFetchStart*(self: PerformanceResourceTiming): JsObject =
   discard
-proc jsPluginVersion*(self: Plugin): cstring {.wasmBindgen.} =
+proc jsPerformanceResourceTimingDomainLookupStart*(self: PerformanceResourceTiming): JsObject =
   discard
-proc jsPluginName*(self: Plugin): cstring {.wasmBindgen.} =
+proc jsPerformanceResourceTimingDomainLookupEnd*(self: PerformanceResourceTiming): JsObject =
   discard
-proc jsPluginLength*(self: Plugin): uint32 {.wasmBindgen.} =
+proc jsPerformanceResourceTimingConnectStart*(self: PerformanceResourceTiming): JsObject =
   discard
-proc jsItem*(self: Plugin; index: uint32): Option[JsObject] {.wasmBindgen.} =
+proc jsPerformanceResourceTimingConnectEnd*(self: PerformanceResourceTiming): JsObject =
   discard
-proc jsNamedItem*(self: Plugin; name: cstring): Option[JsObject] {.wasmBindgen.} =
+proc jsPerformanceResourceTimingSecureConnectionStart*(self: PerformanceResourceTiming): JsObject =
   discard
-
-proc jsPluginArrayLength*(self: PluginArray): uint32 {.wasmBindgen.} =
+proc jsPerformanceResourceTimingRequestStart*(self: PerformanceResourceTiming): JsObject =
   discard
-proc jsItem*(self: PluginArray; index: uint32): Option[JsObject] {.wasmBindgen.} =
+proc jsPerformanceResourceTimingResponseStart*(self: PerformanceResourceTiming): JsObject =
   discard
-proc jsNamedItem*(self: PluginArray; name: cstring): Option[JsObject] {.wasmBindgen.} =
+proc jsPerformanceResourceTimingResponseEnd*(self: PerformanceResourceTiming): JsObject =
   discard
-proc jsRefresh*(self: PluginArray; reloadDocuments: bool): void {.wasmBindgen.} =
+proc jsPerformanceResourceTimingTransferSize*(self: PerformanceResourceTiming): uint64 =
   discard
-
-proc jsPluginCrashedEventPluginID*(self: PluginCrashedEvent): uint32 {.wasmBindgen.} =
+proc jsPerformanceResourceTimingEncodedBodySize*(self: PerformanceResourceTiming): uint64 =
   discard
-proc jsPluginCrashedEventPluginDumpID*(self: PluginCrashedEvent): cstring {.wasmBindgen.} =
+proc jsPerformanceResourceTimingDecodedBodySize*(self: PerformanceResourceTiming): uint64 =
   discard
-proc jsPluginCrashedEventPluginName*(self: PluginCrashedEvent): cstring {.wasmBindgen.} =
+proc jsPerformanceResourceTimingServerTiming*(self: PerformanceResourceTiming): JsObject =
   discard
-proc jsPluginCrashedEventSubmittedCrashReport*(self: PluginCrashedEvent): bool {.wasmBindgen.} =
-  discard
-proc jsPluginCrashedEventGmpPlugin*(self: PluginCrashedEvent): bool {.wasmBindgen.} =
+proc jsToJSON*(self: PerformanceResourceTiming): JsObject =
   discard
 
-proc jsPointerEventPointerId*(self: PointerEvent): int32 {.wasmBindgen.} =
+proc jsPerformanceServerTimingName*(self: PerformanceServerTiming): cstring =
   discard
-proc jsPointerEventWidth*(self: PointerEvent): int32 {.wasmBindgen.} =
+proc jsPerformanceServerTimingDuration*(self: PerformanceServerTiming): JsObject =
   discard
-proc jsPointerEventHeight*(self: PointerEvent): int32 {.wasmBindgen.} =
+proc jsPerformanceServerTimingDescription*(self: PerformanceServerTiming): cstring =
   discard
-proc jsPointerEventPressure*(self: PointerEvent): float32 {.wasmBindgen.} =
-  discard
-proc jsPointerEventTangentialPressure*(self: PointerEvent): float32 {.wasmBindgen.} =
-  discard
-proc jsPointerEventTiltX*(self: PointerEvent): int32 {.wasmBindgen.} =
-  discard
-proc jsPointerEventTiltY*(self: PointerEvent): int32 {.wasmBindgen.} =
-  discard
-proc jsPointerEventTwist*(self: PointerEvent): int32 {.wasmBindgen.} =
-  discard
-proc jsPointerEventPointerType*(self: PointerEvent): cstring {.wasmBindgen.} =
-  discard
-proc jsPointerEventIsPrimary*(self: PointerEvent): bool {.wasmBindgen.} =
-  discard
-proc jsGetCoalescedEvents*(self: PointerEvent): JsObject {.wasmBindgen.} =
+proc jsToJSON*(self: PerformanceServerTiming): JsObject =
   discard
 
-proc jsPopStateEventState*(self: PopStateEvent): JsObject {.wasmBindgen.} =
+proc jsPerformanceTimingNavigationStart*(self: PerformanceTiming): uint64 =
+  discard
+proc jsPerformanceTimingUnloadEventStart*(self: PerformanceTiming): uint64 =
+  discard
+proc jsPerformanceTimingUnloadEventEnd*(self: PerformanceTiming): uint64 =
+  discard
+proc jsPerformanceTimingRedirectStart*(self: PerformanceTiming): uint64 =
+  discard
+proc jsPerformanceTimingRedirectEnd*(self: PerformanceTiming): uint64 =
+  discard
+proc jsPerformanceTimingFetchStart*(self: PerformanceTiming): uint64 =
+  discard
+proc jsPerformanceTimingDomainLookupStart*(self: PerformanceTiming): uint64 =
+  discard
+proc jsPerformanceTimingDomainLookupEnd*(self: PerformanceTiming): uint64 =
+  discard
+proc jsPerformanceTimingConnectStart*(self: PerformanceTiming): uint64 =
+  discard
+proc jsPerformanceTimingConnectEnd*(self: PerformanceTiming): uint64 =
+  discard
+proc jsPerformanceTimingSecureConnectionStart*(self: PerformanceTiming): uint64 =
+  discard
+proc jsPerformanceTimingRequestStart*(self: PerformanceTiming): uint64 =
+  discard
+proc jsPerformanceTimingResponseStart*(self: PerformanceTiming): uint64 =
+  discard
+proc jsPerformanceTimingResponseEnd*(self: PerformanceTiming): uint64 =
+  discard
+proc jsPerformanceTimingDomLoading*(self: PerformanceTiming): uint64 =
+  discard
+proc jsPerformanceTimingDomInteractive*(self: PerformanceTiming): uint64 =
+  discard
+proc jsPerformanceTimingDomContentLoadedEventStart*(self: PerformanceTiming): uint64 =
+  discard
+proc jsPerformanceTimingDomContentLoadedEventEnd*(self: PerformanceTiming): uint64 =
+  discard
+proc jsPerformanceTimingDomComplete*(self: PerformanceTiming): uint64 =
+  discard
+proc jsPerformanceTimingLoadEventStart*(self: PerformanceTiming): uint64 =
+  discard
+proc jsPerformanceTimingLoadEventEnd*(self: PerformanceTiming): uint64 =
+  discard
+proc jsPerformanceTimingTimeToNonBlankPaint*(self: PerformanceTiming): uint64 =
+  discard
+proc jsPerformanceTimingTimeToDOMContentFlushed*(self: PerformanceTiming): uint64 =
+  discard
+proc jsToJSON*(self: PerformanceTiming): JsObject =
   discard
 
 
-proc jsPositionCoords*(self: Position): JsObject {.wasmBindgen.} =
+proc jsPermissionStatusState*(self: PermissionStatus): JsObject =
   discard
-proc jsPositionTimestamp*(self: Position): uint64 {.wasmBindgen.} =
+proc jsPermissionStatusOnchange*(self: PermissionStatus): JsObject =
+  discard
+
+proc jsQuery*(self: Permissions; permission: JsObject): JsObject =
+  discard
+proc jsRevoke*(self: Permissions; permission: JsObject): JsObject =
+  discard
+
+proc jsPluginDescription*(self: Plugin): cstring =
+  discard
+proc jsPluginFilename*(self: Plugin): cstring =
+  discard
+proc jsPluginVersion*(self: Plugin): cstring =
+  discard
+proc jsPluginName*(self: Plugin): cstring =
+  discard
+proc jsPluginLength*(self: Plugin): uint32 =
+  discard
+proc jsItem*(self: Plugin; index: uint32): Option[JsObject] =
+  discard
+proc jsNamedItem*(self: Plugin; name: cstring): Option[JsObject] =
+  discard
+
+proc jsPluginArrayLength*(self: PluginArray): uint32 =
+  discard
+proc jsItem*(self: PluginArray; index: uint32): Option[JsObject] =
+  discard
+proc jsNamedItem*(self: PluginArray; name: cstring): Option[JsObject] =
+  discard
+proc jsRefresh*(self: PluginArray; reloadDocuments: bool): void =
+  discard
+
+proc jsPluginCrashedEventPluginID*(self: PluginCrashedEvent): uint32 =
+  discard
+proc jsPluginCrashedEventPluginDumpID*(self: PluginCrashedEvent): cstring =
+  discard
+proc jsPluginCrashedEventPluginName*(self: PluginCrashedEvent): cstring =
+  discard
+proc jsPluginCrashedEventSubmittedCrashReport*(self: PluginCrashedEvent): bool =
+  discard
+proc jsPluginCrashedEventGmpPlugin*(self: PluginCrashedEvent): bool =
+  discard
+
+proc jsPointerEventPointerId*(self: PointerEvent): int32 =
+  discard
+proc jsPointerEventWidth*(self: PointerEvent): int32 =
+  discard
+proc jsPointerEventHeight*(self: PointerEvent): int32 =
+  discard
+proc jsPointerEventPressure*(self: PointerEvent): float32 =
+  discard
+proc jsPointerEventTangentialPressure*(self: PointerEvent): float32 =
+  discard
+proc jsPointerEventTiltX*(self: PointerEvent): int32 =
+  discard
+proc jsPointerEventTiltY*(self: PointerEvent): int32 =
+  discard
+proc jsPointerEventTwist*(self: PointerEvent): int32 =
+  discard
+proc jsPointerEventPointerType*(self: PointerEvent): cstring =
+  discard
+proc jsPointerEventIsPrimary*(self: PointerEvent): bool =
+  discard
+proc jsGetCoalescedEvents*(self: PointerEvent): JsObject =
+  discard
+
+proc jsPopStateEventState*(self: PopStateEvent): JsObject =
+  discard
+
+
+proc jsPositionCoords*(self: Position): JsObject =
+  discard
+proc jsPositionTimestamp*(self: Position): uint64 =
   discard
 
 const jsPositionErrorPERMISSION_DENIED* : uint16 = 0
 const jsPositionErrorPOSITION_UNAVAILABLE* : uint16 = 0
 const jsPositionErrorTIMEOUT* : uint16 = 0
-proc jsPositionErrorCode*(self: PositionError): uint16 {.wasmBindgen.} =
+proc jsPositionErrorCode*(self: PositionError): uint16 =
   discard
-proc jsPositionErrorMessage*(self: PositionError): cstring {.wasmBindgen.} =
-  discard
-
-
-proc jsPresentationAvailabilityValue*(self: PresentationAvailability): bool {.wasmBindgen.} =
-  discard
-proc jsPresentationAvailabilityOnchange*(self: PresentationAvailability): JsObject {.wasmBindgen.} =
-  discard
-
-proc jsPresentationConnectionId*(self: PresentationConnection): cstring {.wasmBindgen.} =
-  discard
-proc jsPresentationConnectionUrl*(self: PresentationConnection): cstring {.wasmBindgen.} =
-  discard
-proc jsPresentationConnectionState*(self: PresentationConnection): JsObject {.wasmBindgen.} =
-  discard
-proc jsPresentationConnectionOnconnect*(self: PresentationConnection): JsObject {.wasmBindgen.} =
-  discard
-proc jsPresentationConnectionOnclose*(self: PresentationConnection): JsObject {.wasmBindgen.} =
-  discard
-proc jsPresentationConnectionOnterminate*(self: PresentationConnection): JsObject {.wasmBindgen.} =
-  discard
-proc jsPresentationConnectionBinaryType*(self: PresentationConnection): JsObject {.wasmBindgen.} =
-  discard
-proc jsPresentationConnectionOnmessage*(self: PresentationConnection): JsObject {.wasmBindgen.} =
-  discard
-proc jsSend*(self: PresentationConnection; data: cstring): void {.wasmBindgen.} =
-  discard
-proc jsSend*(self: PresentationConnection; data: JsObject): void {.wasmBindgen.} =
-  discard
-proc jsClose*(self: PresentationConnection): void {.wasmBindgen.} =
-  discard
-proc jsTerminate*(self: PresentationConnection): void {.wasmBindgen.} =
-  discard
-
-proc jsPresentationConnectionAvailableEventConnection*(self: PresentationConnectionAvailableEvent): JsObject {.wasmBindgen.} =
-  discard
-
-proc jsPresentationConnectionCloseEventReason*(self: PresentationConnectionCloseEvent): JsObject {.wasmBindgen.} =
-  discard
-proc jsPresentationConnectionCloseEventMessage*(self: PresentationConnectionCloseEvent): cstring {.wasmBindgen.} =
-  discard
-
-proc jsPresentationConnectionListConnections*(self: PresentationConnectionList): JsObject {.wasmBindgen.} =
-  discard
-proc jsPresentationConnectionListOnconnectionavailable*(self: PresentationConnectionList): JsObject {.wasmBindgen.} =
-  discard
-
-proc jsPresentationReceiverConnectionList*(self: PresentationReceiver): JsObject {.wasmBindgen.} =
-  discard
-
-proc jsPresentationRequestOnconnectionavailable*(self: PresentationRequest): JsObject {.wasmBindgen.} =
-  discard
-proc jsStart*(self: PresentationRequest): JsObject {.wasmBindgen.} =
-  discard
-proc jsReconnect*(self: PresentationRequest; presentationId: cstring): JsObject {.wasmBindgen.} =
-  discard
-proc jsGetAvailability*(self: PresentationRequest): JsObject {.wasmBindgen.} =
-  discard
-proc jsStartWithDevice*(self: PresentationRequest; deviceId: cstring): JsObject {.wasmBindgen.} =
-  discard
-
-proc jsProcessingInstructionTarget*(self: ProcessingInstruction): cstring {.wasmBindgen.} =
-  discard
-
-proc jsProgressEventLengthComputable*(self: ProgressEvent): bool {.wasmBindgen.} =
-  discard
-proc jsProgressEventLoaded*(self: ProgressEvent): uint64 {.wasmBindgen.} =
-  discard
-proc jsProgressEventTotal*(self: ProgressEvent): uint64 {.wasmBindgen.} =
+proc jsPositionErrorMessage*(self: PositionError): cstring =
   discard
 
 
-proc jsPromiseRejectionEventPromise*(self: PromiseRejectionEvent): JsObject {.wasmBindgen.} =
+proc jsPresentationAvailabilityValue*(self: PresentationAvailability): bool =
   discard
-proc jsPromiseRejectionEventReason*(self: PromiseRejectionEvent): JsObject {.wasmBindgen.} =
+proc jsPresentationAvailabilityOnchange*(self: PresentationAvailability): JsObject =
+  discard
+
+proc jsPresentationConnectionId*(self: PresentationConnection): cstring =
+  discard
+proc jsPresentationConnectionUrl*(self: PresentationConnection): cstring =
+  discard
+proc jsPresentationConnectionState*(self: PresentationConnection): JsObject =
+  discard
+proc jsPresentationConnectionOnconnect*(self: PresentationConnection): JsObject =
+  discard
+proc jsPresentationConnectionOnclose*(self: PresentationConnection): JsObject =
+  discard
+proc jsPresentationConnectionOnterminate*(self: PresentationConnection): JsObject =
+  discard
+proc jsPresentationConnectionBinaryType*(self: PresentationConnection): JsObject =
+  discard
+proc jsPresentationConnectionOnmessage*(self: PresentationConnection): JsObject =
+  discard
+proc jsSend*(self: PresentationConnection; data: cstring): void =
+  discard
+proc jsSend*(self: PresentationConnection; data: JsObject): void =
+  discard
+proc jsClose*(self: PresentationConnection): void =
+  discard
+proc jsTerminate*(self: PresentationConnection): void =
+  discard
+
+proc jsPresentationConnectionAvailableEventConnection*(self: PresentationConnectionAvailableEvent): JsObject =
+  discard
+
+proc jsPresentationConnectionCloseEventReason*(self: PresentationConnectionCloseEvent): JsObject =
+  discard
+proc jsPresentationConnectionCloseEventMessage*(self: PresentationConnectionCloseEvent): cstring =
+  discard
+
+proc jsPresentationConnectionListConnections*(self: PresentationConnectionList): JsObject =
+  discard
+proc jsPresentationConnectionListOnconnectionavailable*(self: PresentationConnectionList): JsObject =
+  discard
+
+proc jsPresentationReceiverConnectionList*(self: PresentationReceiver): JsObject =
+  discard
+
+proc jsPresentationRequestOnconnectionavailable*(self: PresentationRequest): JsObject =
+  discard
+proc jsStart*(self: PresentationRequest): JsObject =
+  discard
+proc jsReconnect*(self: PresentationRequest; presentationId: cstring): JsObject =
+  discard
+proc jsGetAvailability*(self: PresentationRequest): JsObject =
+  discard
+proc jsStartWithDevice*(self: PresentationRequest; deviceId: cstring): JsObject =
+  discard
+
+proc jsProcessingInstructionTarget*(self: ProcessingInstruction): cstring =
+  discard
+
+proc jsProgressEventLengthComputable*(self: ProgressEvent): bool =
+  discard
+proc jsProgressEventLoaded*(self: ProgressEvent): uint64 =
+  discard
+proc jsProgressEventTotal*(self: ProgressEvent): uint64 =
   discard
 
 
-proc jsSubscribe*(self: PushManagerImpl; options: JsObject): JsObject {.wasmBindgen.} =
+proc jsPromiseRejectionEventPromise*(self: PromiseRejectionEvent): JsObject =
   discard
-proc jsGetSubscription*(self: PushManagerImpl): JsObject {.wasmBindgen.} =
-  discard
-proc jsPermissionState*(self: PushManagerImpl; options: JsObject): JsObject {.wasmBindgen.} =
-  discard
-
-proc jsSubscribe*(self: PushManager; options: JsObject): JsObject {.wasmBindgen.} =
-  discard
-proc jsGetSubscription*(self: PushManager): JsObject {.wasmBindgen.} =
-  discard
-proc jsPermissionState*(self: PushManager; options: JsObject): JsObject {.wasmBindgen.} =
-  discard
-
-proc jsArrayBuffer*(self: PushMessageData): JsObject {.wasmBindgen.} =
-  discard
-proc jsBlob*(self: PushMessageData): JsObject {.wasmBindgen.} =
-  discard
-proc jsJson*(self: PushMessageData): JsObject {.wasmBindgen.} =
-  discard
-proc jsText*(self: PushMessageData): cstring {.wasmBindgen.} =
-  discard
-
-proc jsPushSubscriptionEndpoint*(self: PushSubscription): cstring {.wasmBindgen.} =
-  discard
-proc jsPushSubscriptionOptions*(self: PushSubscription): JsObject {.wasmBindgen.} =
-  discard
-proc jsGetKey*(self: PushSubscription; name: JsObject): Option[JsObject] {.wasmBindgen.} =
-  discard
-proc jsUnsubscribe*(self: PushSubscription): JsObject {.wasmBindgen.} =
-  discard
-proc jsToJSON*(self: PushSubscription): JsObject {.wasmBindgen.} =
+proc jsPromiseRejectionEventReason*(self: PromiseRejectionEvent): JsObject =
   discard
 
 
-proc jsRTCCertificateExpires*(self: RTCCertificate): uint64 {.wasmBindgen.} =
+proc jsSubscribe*(self: PushManagerImpl; options: JsObject): JsObject =
+  discard
+proc jsGetSubscription*(self: PushManagerImpl): JsObject =
+  discard
+proc jsPermissionState*(self: PushManagerImpl; options: JsObject): JsObject =
   discard
 
-proc jsRTCDTMFSenderOntonechange*(self: RTCDTMFSender): JsObject {.wasmBindgen.} =
+proc jsSubscribe*(self: PushManager; options: JsObject): JsObject =
   discard
-proc jsRTCDTMFSenderToneBuffer*(self: RTCDTMFSender): cstring {.wasmBindgen.} =
+proc jsGetSubscription*(self: PushManager): JsObject =
   discard
-proc jsInsertDTMF*(self: RTCDTMFSender; tones: cstring; duration: uint32; interToneGap: uint32): void {.wasmBindgen.} =
-  discard
-
-proc jsRTCDTMFToneChangeEventTone*(self: RTCDTMFToneChangeEvent): cstring {.wasmBindgen.} =
+proc jsPermissionState*(self: PushManager; options: JsObject): JsObject =
   discard
 
-proc jsRTCDataChannelLabel*(self: RTCDataChannel): cstring {.wasmBindgen.} =
+proc jsArrayBuffer*(self: PushMessageData): JsObject =
   discard
-proc jsRTCDataChannelReliable*(self: RTCDataChannel): bool {.wasmBindgen.} =
+proc jsBlob*(self: PushMessageData): JsObject =
   discard
-proc jsRTCDataChannelReadyState*(self: RTCDataChannel): JsObject {.wasmBindgen.} =
+proc jsJson*(self: PushMessageData): JsObject =
   discard
-proc jsRTCDataChannelBufferedAmount*(self: RTCDataChannel): uint32 {.wasmBindgen.} =
-  discard
-proc jsRTCDataChannelBufferedAmountLowThreshold*(self: RTCDataChannel): uint32 {.wasmBindgen.} =
-  discard
-proc jsRTCDataChannelOnopen*(self: RTCDataChannel): JsObject {.wasmBindgen.} =
-  discard
-proc jsRTCDataChannelOnerror*(self: RTCDataChannel): JsObject {.wasmBindgen.} =
-  discard
-proc jsRTCDataChannelOnclose*(self: RTCDataChannel): JsObject {.wasmBindgen.} =
-  discard
-proc jsRTCDataChannelOnmessage*(self: RTCDataChannel): JsObject {.wasmBindgen.} =
-  discard
-proc jsRTCDataChannelOnbufferedamountlow*(self: RTCDataChannel): JsObject {.wasmBindgen.} =
-  discard
-proc jsRTCDataChannelBinaryType*(self: RTCDataChannel): JsObject {.wasmBindgen.} =
-  discard
-proc jsClose*(self: RTCDataChannel): void {.wasmBindgen.} =
-  discard
-proc jsSend*(self: RTCDataChannel; data: cstring): void {.wasmBindgen.} =
-  discard
-proc jsSend*(self: RTCDataChannel; data: JsObject): void {.wasmBindgen.} =
+proc jsText*(self: PushMessageData): cstring =
   discard
 
-proc jsRTCDataChannelEventChannel*(self: RTCDataChannelEvent): JsObject {.wasmBindgen.} =
+proc jsPushSubscriptionEndpoint*(self: PushSubscription): cstring =
   discard
-
-proc jsRTCIceCandidateCandidate*(self: RTCIceCandidate): cstring {.wasmBindgen.} =
+proc jsPushSubscriptionOptions*(self: PushSubscription): JsObject =
   discard
-proc jsToJSON*(self: RTCIceCandidate): JsObject {.wasmBindgen.} =
+proc jsGetKey*(self: PushSubscription; name: JsObject): Option[JsObject] =
   discard
-
-proc jsRTCIdentityProviderRegistrarHasIdp*(self: RTCIdentityProviderRegistrar): bool {.wasmBindgen.} =
+proc jsUnsubscribe*(self: PushSubscription): JsObject =
   discard
-proc jsRegister*(self: RTCIdentityProviderRegistrar; idp: JsObject): void {.wasmBindgen.} =
-  discard
-proc jsGenerateAssertion*(self: RTCIdentityProviderRegistrar; contents: cstring; origin: cstring; options: JsObject): JsObject {.wasmBindgen.} =
-  discard
-proc jsValidateAssertion*(self: RTCIdentityProviderRegistrar; assertion: cstring; origin: cstring): JsObject {.wasmBindgen.} =
-  discard
-
-proc jsRTCPeerConnectionSignalingState*(self: RTCPeerConnection): JsObject {.wasmBindgen.} =
-  discard
-proc jsRTCPeerConnectionIceGatheringState*(self: RTCPeerConnection): JsObject {.wasmBindgen.} =
-  discard
-proc jsRTCPeerConnectionIceConnectionState*(self: RTCPeerConnection): JsObject {.wasmBindgen.} =
-  discard
-proc jsRTCPeerConnectionConnectionState*(self: RTCPeerConnection): JsObject {.wasmBindgen.} =
-  discard
-proc jsRTCPeerConnectionPeerIdentity*(self: RTCPeerConnection): JsObject {.wasmBindgen.} =
-  discard
-proc jsRTCPeerConnectionId*(self: RTCPeerConnection): cstring {.wasmBindgen.} =
-  discard
-proc jsRTCPeerConnectionOnnegotiationneeded*(self: RTCPeerConnection): JsObject {.wasmBindgen.} =
-  discard
-proc jsRTCPeerConnectionOnicecandidate*(self: RTCPeerConnection): JsObject {.wasmBindgen.} =
-  discard
-proc jsRTCPeerConnectionOnsignalingstatechange*(self: RTCPeerConnection): JsObject {.wasmBindgen.} =
-  discard
-proc jsRTCPeerConnectionOnaddstream*(self: RTCPeerConnection): JsObject {.wasmBindgen.} =
-  discard
-proc jsRTCPeerConnectionOnaddtrack*(self: RTCPeerConnection): JsObject {.wasmBindgen.} =
-  discard
-proc jsRTCPeerConnectionOntrack*(self: RTCPeerConnection): JsObject {.wasmBindgen.} =
-  discard
-proc jsRTCPeerConnectionOnremovestream*(self: RTCPeerConnection): JsObject {.wasmBindgen.} =
-  discard
-proc jsRTCPeerConnectionOniceconnectionstatechange*(self: RTCPeerConnection): JsObject {.wasmBindgen.} =
-  discard
-proc jsRTCPeerConnectionOnicegatheringstatechange*(self: RTCPeerConnection): JsObject {.wasmBindgen.} =
-  discard
-proc jsRTCPeerConnectionOnconnectionstatechange*(self: RTCPeerConnection): JsObject {.wasmBindgen.} =
-  discard
-proc jsRTCPeerConnectionOndatachannel*(self: RTCPeerConnection): JsObject {.wasmBindgen.} =
-  discard
-proc jsGenerateCertificate*(self: typedesc[RTCPeerConnection]; keygenAlgorithm: JsObject): JsObject {.wasmBindgen.} =
-  discard
-proc jsSetIdentityProvider*(self: RTCPeerConnection; provider: cstring; options: JsObject): void {.wasmBindgen.} =
-  discard
-proc jsGetIdentityAssertion*(self: RTCPeerConnection): JsObject {.wasmBindgen.} =
-  discard
-proc jsCreateOffer*(self: RTCPeerConnection; options: JsObject): JsObject {.wasmBindgen.} =
-  discard
-proc jsCreateAnswer*(self: RTCPeerConnection; options: JsObject): JsObject {.wasmBindgen.} =
-  discard
-proc jsSetLocalDescription*(self: RTCPeerConnection; description: JsObject): JsObject {.wasmBindgen.} =
-  discard
-proc jsSetRemoteDescription*(self: RTCPeerConnection; description: JsObject): JsObject {.wasmBindgen.} =
-  discard
-proc jsAddIceCandidate*(self: RTCPeerConnection; candidate: Option[JsObject]): JsObject {.wasmBindgen.} =
-  discard
-proc jsSetConfiguration*(self: RTCPeerConnection; configuration: JsObject): void {.wasmBindgen.} =
-  discard
-proc jsGetConfiguration*(self: RTCPeerConnection): JsObject {.wasmBindgen.} =
-  discard
-proc jsGetLocalStreams*(self: RTCPeerConnection): JsObject {.wasmBindgen.} =
-  discard
-proc jsGetRemoteStreams*(self: RTCPeerConnection): JsObject {.wasmBindgen.} =
-  discard
-proc jsAddStream*(self: RTCPeerConnection; stream: JsObject): void {.wasmBindgen.} =
-  discard
-proc jsAddTrack*(self: RTCPeerConnection; track: JsObject; stream: JsObject; moreStreams: JsObject): JsObject {.wasmBindgen.} =
-  discard
-proc jsRemoveTrack*(self: RTCPeerConnection; sender: JsObject): void {.wasmBindgen.} =
-  discard
-proc jsAddTransceiver*(self: RTCPeerConnection; trackOrKind: JsObject; init: JsObject): JsObject {.wasmBindgen.} =
-  discard
-proc jsGetSenders*(self: RTCPeerConnection): JsObject {.wasmBindgen.} =
-  discard
-proc jsGetReceivers*(self: RTCPeerConnection): JsObject {.wasmBindgen.} =
-  discard
-proc jsGetTransceivers*(self: RTCPeerConnection): JsObject {.wasmBindgen.} =
-  discard
-proc jsClose*(self: RTCPeerConnection): void {.wasmBindgen.} =
-  discard
-proc jsGetStats*(self: RTCPeerConnection; selector: Option[JsObject]): JsObject {.wasmBindgen.} =
-  discard
-proc jsCreateDataChannel*(self: RTCPeerConnection; label: cstring; dataChannelDict: JsObject): JsObject {.wasmBindgen.} =
-  discard
-
-proc jsRTCPeerConnectionIceErrorEventUrl*(self: RTCPeerConnectionIceErrorEvent): cstring {.wasmBindgen.} =
-  discard
-proc jsRTCPeerConnectionIceErrorEventErrorCode*(self: RTCPeerConnectionIceErrorEvent): uint16 {.wasmBindgen.} =
-  discard
-proc jsRTCPeerConnectionIceErrorEventErrorText*(self: RTCPeerConnectionIceErrorEvent): cstring {.wasmBindgen.} =
+proc jsToJSON*(self: PushSubscription): JsObject =
   discard
 
 
-proc jsRTCRtpReceiverTrack*(self: RTCRtpReceiver): JsObject {.wasmBindgen.} =
-  discard
-proc jsGetCapabilities*(self: typedesc[RTCRtpReceiver]; kind: cstring): Option[JsObject] {.wasmBindgen.} =
-  discard
-proc jsGetStats*(self: RTCRtpReceiver): JsObject {.wasmBindgen.} =
-  discard
-proc jsGetContributingSources*(self: RTCRtpReceiver): JsObject {.wasmBindgen.} =
-  discard
-proc jsGetSynchronizationSources*(self: RTCRtpReceiver): JsObject {.wasmBindgen.} =
-  discard
-proc jsSetStreamIds*(self: RTCRtpReceiver; streamIds: JsObject): void {.wasmBindgen.} =
-  discard
-proc jsSetRemoteSendBit*(self: RTCRtpReceiver; sendBit: bool): void {.wasmBindgen.} =
-  discard
-proc jsProcessTrackAdditionsAndRemovals*(self: RTCRtpReceiver; transceiver: JsObject; postProcessing: JsObject): void {.wasmBindgen.} =
+proc jsRTCCertificateExpires*(self: RTCCertificate): uint64 =
   discard
 
-proc jsSetParameters*(self: RTCRtpSender; parameters: JsObject): JsObject {.wasmBindgen.} =
+proc jsRTCDTMFSenderOntonechange*(self: RTCDTMFSender): JsObject =
   discard
-proc jsGetParameters*(self: RTCRtpSender): JsObject {.wasmBindgen.} =
+proc jsRTCDTMFSenderToneBuffer*(self: RTCDTMFSender): cstring =
   discard
-proc jsReplaceTrack*(self: RTCRtpSender; withTrack: Option[JsObject]): JsObject {.wasmBindgen.} =
-  discard
-proc jsGetStats*(self: RTCRtpSender): JsObject {.wasmBindgen.} =
-  discard
-proc jsGetCapabilities*(self: typedesc[RTCRtpSender]; kind: cstring): Option[JsObject] {.wasmBindgen.} =
-  discard
-proc jsGetStreams*(self: RTCRtpSender): JsObject {.wasmBindgen.} =
-  discard
-proc jsSetStreams*(self: RTCRtpSender; streams: JsObject): void {.wasmBindgen.} =
-  discard
-proc jsSetTrack*(self: RTCRtpSender; track: Option[JsObject]): void {.wasmBindgen.} =
-  discard
-proc jsCheckWasCreatedByPc*(self: RTCRtpSender; pc: JsObject): void {.wasmBindgen.} =
+proc jsInsertDTMF*(self: RTCDTMFSender; tones: cstring; duration: uint32; interToneGap: uint32): void =
   discard
 
-proc jsRTCRtpTransceiverSender*(self: RTCRtpTransceiver): JsObject {.wasmBindgen.} =
-  discard
-proc jsRTCRtpTransceiverReceiver*(self: RTCRtpTransceiver): JsObject {.wasmBindgen.} =
-  discard
-proc jsRTCRtpTransceiverStopped*(self: RTCRtpTransceiver): bool {.wasmBindgen.} =
-  discard
-proc jsRTCRtpTransceiverDirection*(self: RTCRtpTransceiver): JsObject {.wasmBindgen.} =
-  discard
-proc jsRTCRtpTransceiverAddTrackMagic*(self: RTCRtpTransceiver): bool {.wasmBindgen.} =
-  discard
-proc jsRTCRtpTransceiverShouldRemove*(self: RTCRtpTransceiver): bool {.wasmBindgen.} =
-  discard
-proc jsStop*(self: RTCRtpTransceiver): void {.wasmBindgen.} =
-  discard
-proc jsSetCodecPreferences*(self: RTCRtpTransceiver; codecs: JsObject): void {.wasmBindgen.} =
-  discard
-proc jsSetRemoteTrackId*(self: RTCRtpTransceiver; trackId: cstring): void {.wasmBindgen.} =
-  discard
-proc jsRemoteTrackIdIs*(self: RTCRtpTransceiver; trackId: cstring): bool {.wasmBindgen.} =
-  discard
-proc jsGetRemoteTrackId*(self: RTCRtpTransceiver): cstring {.wasmBindgen.} =
-  discard
-proc jsSetAddTrackMagic*(self: RTCRtpTransceiver): void {.wasmBindgen.} =
-  discard
-proc jsSetCurrentDirection*(self: RTCRtpTransceiver; direction: JsObject): void {.wasmBindgen.} =
-  discard
-proc jsSetDirectionInternal*(self: RTCRtpTransceiver; direction: JsObject): void {.wasmBindgen.} =
-  discard
-proc jsSetMid*(self: RTCRtpTransceiver; mid: cstring): void {.wasmBindgen.} =
-  discard
-proc jsUnsetMid*(self: RTCRtpTransceiver): void {.wasmBindgen.} =
-  discard
-proc jsSetStopped*(self: RTCRtpTransceiver): void {.wasmBindgen.} =
-  discard
-proc jsGetKind*(self: RTCRtpTransceiver): cstring {.wasmBindgen.} =
-  discard
-proc jsHasBeenUsedToSend*(self: RTCRtpTransceiver): bool {.wasmBindgen.} =
-  discard
-proc jsSync*(self: RTCRtpTransceiver): void {.wasmBindgen.} =
-  discard
-proc jsInsertDTMF*(self: RTCRtpTransceiver; tones: cstring; duration: uint32; interToneGap: uint32): void {.wasmBindgen.} =
+proc jsRTCDTMFToneChangeEventTone*(self: RTCDTMFToneChangeEvent): cstring =
   discard
 
-proc jsRTCSessionDescriptionTypeVal*(self: RTCSessionDescription): JsObject {.wasmBindgen.} =
+proc jsRTCDataChannelLabel*(self: RTCDataChannel): cstring =
   discard
-proc jsRTCSessionDescriptionSdp*(self: RTCSessionDescription): cstring {.wasmBindgen.} =
+proc jsRTCDataChannelReliable*(self: RTCDataChannel): bool =
   discard
-proc jsToJSON*(self: RTCSessionDescription): JsObject {.wasmBindgen.} =
+proc jsRTCDataChannelReadyState*(self: RTCDataChannel): JsObject =
+  discard
+proc jsRTCDataChannelBufferedAmount*(self: RTCDataChannel): uint32 =
+  discard
+proc jsRTCDataChannelBufferedAmountLowThreshold*(self: RTCDataChannel): uint32 =
+  discard
+proc jsRTCDataChannelOnopen*(self: RTCDataChannel): JsObject =
+  discard
+proc jsRTCDataChannelOnerror*(self: RTCDataChannel): JsObject =
+  discard
+proc jsRTCDataChannelOnclose*(self: RTCDataChannel): JsObject =
+  discard
+proc jsRTCDataChannelOnmessage*(self: RTCDataChannel): JsObject =
+  discard
+proc jsRTCDataChannelOnbufferedamountlow*(self: RTCDataChannel): JsObject =
+  discard
+proc jsRTCDataChannelBinaryType*(self: RTCDataChannel): JsObject =
+  discard
+proc jsClose*(self: RTCDataChannel): void =
+  discard
+proc jsSend*(self: RTCDataChannel; data: cstring): void =
+  discard
+proc jsSend*(self: RTCDataChannel; data: JsObject): void =
+  discard
+
+proc jsRTCDataChannelEventChannel*(self: RTCDataChannelEvent): JsObject =
+  discard
+
+proc jsRTCIceCandidateCandidate*(self: RTCIceCandidate): cstring =
+  discard
+proc jsToJSON*(self: RTCIceCandidate): JsObject =
+  discard
+
+proc jsRTCIdentityProviderRegistrarHasIdp*(self: RTCIdentityProviderRegistrar): bool =
+  discard
+proc jsRegister*(self: RTCIdentityProviderRegistrar; idp: JsObject): void =
+  discard
+proc jsGenerateAssertion*(self: RTCIdentityProviderRegistrar; contents: cstring; origin: cstring; options: JsObject): JsObject =
+  discard
+proc jsValidateAssertion*(self: RTCIdentityProviderRegistrar; assertion: cstring; origin: cstring): JsObject =
+  discard
+
+proc jsRTCPeerConnectionSignalingState*(self: RTCPeerConnection): JsObject =
+  discard
+proc jsRTCPeerConnectionIceGatheringState*(self: RTCPeerConnection): JsObject =
+  discard
+proc jsRTCPeerConnectionIceConnectionState*(self: RTCPeerConnection): JsObject =
+  discard
+proc jsRTCPeerConnectionConnectionState*(self: RTCPeerConnection): JsObject =
+  discard
+proc jsRTCPeerConnectionPeerIdentity*(self: RTCPeerConnection): JsObject =
+  discard
+proc jsRTCPeerConnectionId*(self: RTCPeerConnection): cstring =
+  discard
+proc jsRTCPeerConnectionOnnegotiationneeded*(self: RTCPeerConnection): JsObject =
+  discard
+proc jsRTCPeerConnectionOnicecandidate*(self: RTCPeerConnection): JsObject =
+  discard
+proc jsRTCPeerConnectionOnsignalingstatechange*(self: RTCPeerConnection): JsObject =
+  discard
+proc jsRTCPeerConnectionOnaddstream*(self: RTCPeerConnection): JsObject =
+  discard
+proc jsRTCPeerConnectionOnaddtrack*(self: RTCPeerConnection): JsObject =
+  discard
+proc jsRTCPeerConnectionOntrack*(self: RTCPeerConnection): JsObject =
+  discard
+proc jsRTCPeerConnectionOnremovestream*(self: RTCPeerConnection): JsObject =
+  discard
+proc jsRTCPeerConnectionOniceconnectionstatechange*(self: RTCPeerConnection): JsObject =
+  discard
+proc jsRTCPeerConnectionOnicegatheringstatechange*(self: RTCPeerConnection): JsObject =
+  discard
+proc jsRTCPeerConnectionOnconnectionstatechange*(self: RTCPeerConnection): JsObject =
+  discard
+proc jsRTCPeerConnectionOndatachannel*(self: RTCPeerConnection): JsObject =
+  discard
+proc jsGenerateCertificate*(self: typedesc[RTCPeerConnection]; keygenAlgorithm: JsObject): JsObject =
+  discard
+proc jsSetIdentityProvider*(self: RTCPeerConnection; provider: cstring; options: JsObject): void =
+  discard
+proc jsGetIdentityAssertion*(self: RTCPeerConnection): JsObject =
+  discard
+proc jsCreateOffer*(self: RTCPeerConnection; options: JsObject): JsObject =
+  discard
+proc jsCreateAnswer*(self: RTCPeerConnection; options: JsObject): JsObject =
+  discard
+proc jsSetLocalDescription*(self: RTCPeerConnection; description: JsObject): JsObject =
+  discard
+proc jsSetRemoteDescription*(self: RTCPeerConnection; description: JsObject): JsObject =
+  discard
+proc jsAddIceCandidate*(self: RTCPeerConnection; candidate: Option[JsObject]): JsObject =
+  discard
+proc jsSetConfiguration*(self: RTCPeerConnection; configuration: JsObject): void =
+  discard
+proc jsGetConfiguration*(self: RTCPeerConnection): JsObject =
+  discard
+proc jsGetLocalStreams*(self: RTCPeerConnection): JsObject =
+  discard
+proc jsGetRemoteStreams*(self: RTCPeerConnection): JsObject =
+  discard
+proc jsAddStream*(self: RTCPeerConnection; stream: JsObject): void =
+  discard
+proc jsAddTrack*(self: RTCPeerConnection; track: JsObject; stream: JsObject; moreStreams: JsObject): JsObject =
+  discard
+proc jsRemoveTrack*(self: RTCPeerConnection; sender: JsObject): void =
+  discard
+proc jsAddTransceiver*(self: RTCPeerConnection; trackOrKind: JsObject; init: JsObject): JsObject =
+  discard
+proc jsGetSenders*(self: RTCPeerConnection): JsObject =
+  discard
+proc jsGetReceivers*(self: RTCPeerConnection): JsObject =
+  discard
+proc jsGetTransceivers*(self: RTCPeerConnection): JsObject =
+  discard
+proc jsClose*(self: RTCPeerConnection): void =
+  discard
+proc jsGetStats*(self: RTCPeerConnection; selector: Option[JsObject]): JsObject =
+  discard
+proc jsCreateDataChannel*(self: RTCPeerConnection; label: cstring; dataChannelDict: JsObject): JsObject =
+  discard
+
+proc jsRTCPeerConnectionIceErrorEventUrl*(self: RTCPeerConnectionIceErrorEvent): cstring =
+  discard
+proc jsRTCPeerConnectionIceErrorEventErrorCode*(self: RTCPeerConnectionIceErrorEvent): uint16 =
+  discard
+proc jsRTCPeerConnectionIceErrorEventErrorText*(self: RTCPeerConnectionIceErrorEvent): cstring =
   discard
 
 
-proc jsRTCTrackEventReceiver*(self: RTCTrackEvent): JsObject {.wasmBindgen.} =
+proc jsRTCRtpReceiverTrack*(self: RTCRtpReceiver): JsObject =
   discard
-proc jsRTCTrackEventTrack*(self: RTCTrackEvent): JsObject {.wasmBindgen.} =
+proc jsGetCapabilities*(self: typedesc[RTCRtpReceiver]; kind: cstring): Option[JsObject] =
   discard
-proc jsRTCTrackEventStreams*(self: RTCTrackEvent): JsObject {.wasmBindgen.} =
+proc jsGetStats*(self: RTCRtpReceiver): JsObject =
   discard
-proc jsRTCTrackEventTransceiver*(self: RTCTrackEvent): JsObject {.wasmBindgen.} =
+proc jsGetContributingSources*(self: RTCRtpReceiver): JsObject =
+  discard
+proc jsGetSynchronizationSources*(self: RTCRtpReceiver): JsObject =
+  discard
+proc jsSetStreamIds*(self: RTCRtpReceiver; streamIds: JsObject): void =
+  discard
+proc jsSetRemoteSendBit*(self: RTCRtpReceiver; sendBit: bool): void =
+  discard
+proc jsProcessTrackAdditionsAndRemovals*(self: RTCRtpReceiver; transceiver: JsObject; postProcessing: JsObject): void =
   discard
 
-proc jsRadioNodeListValue*(self: RadioNodeList): cstring {.wasmBindgen.} =
+proc jsSetParameters*(self: RTCRtpSender; parameters: JsObject): JsObject =
+  discard
+proc jsGetParameters*(self: RTCRtpSender): JsObject =
+  discard
+proc jsReplaceTrack*(self: RTCRtpSender; withTrack: Option[JsObject]): JsObject =
+  discard
+proc jsGetStats*(self: RTCRtpSender): JsObject =
+  discard
+proc jsGetCapabilities*(self: typedesc[RTCRtpSender]; kind: cstring): Option[JsObject] =
+  discard
+proc jsGetStreams*(self: RTCRtpSender): JsObject =
+  discard
+proc jsSetStreams*(self: RTCRtpSender; streams: JsObject): void =
+  discard
+proc jsSetTrack*(self: RTCRtpSender; track: Option[JsObject]): void =
+  discard
+proc jsCheckWasCreatedByPc*(self: RTCRtpSender; pc: JsObject): void =
   discard
 
-proc jsRangeStartContainer*(self: Range): JsObject {.wasmBindgen.} =
+proc jsRTCRtpTransceiverSender*(self: RTCRtpTransceiver): JsObject =
   discard
-proc jsRangeStartOffset*(self: Range): uint32 {.wasmBindgen.} =
+proc jsRTCRtpTransceiverReceiver*(self: RTCRtpTransceiver): JsObject =
   discard
-proc jsRangeEndContainer*(self: Range): JsObject {.wasmBindgen.} =
+proc jsRTCRtpTransceiverStopped*(self: RTCRtpTransceiver): bool =
   discard
-proc jsRangeEndOffset*(self: Range): uint32 {.wasmBindgen.} =
+proc jsRTCRtpTransceiverDirection*(self: RTCRtpTransceiver): JsObject =
   discard
-proc jsRangeCollapsed*(self: Range): bool {.wasmBindgen.} =
+proc jsRTCRtpTransceiverAddTrackMagic*(self: RTCRtpTransceiver): bool =
   discard
-proc jsRangeCommonAncestorContainer*(self: Range): JsObject {.wasmBindgen.} =
+proc jsRTCRtpTransceiverShouldRemove*(self: RTCRtpTransceiver): bool =
+  discard
+proc jsStop*(self: RTCRtpTransceiver): void =
+  discard
+proc jsSetCodecPreferences*(self: RTCRtpTransceiver; codecs: JsObject): void =
+  discard
+proc jsSetRemoteTrackId*(self: RTCRtpTransceiver; trackId: cstring): void =
+  discard
+proc jsRemoteTrackIdIs*(self: RTCRtpTransceiver; trackId: cstring): bool =
+  discard
+proc jsGetRemoteTrackId*(self: RTCRtpTransceiver): cstring =
+  discard
+proc jsSetAddTrackMagic*(self: RTCRtpTransceiver): void =
+  discard
+proc jsSetCurrentDirection*(self: RTCRtpTransceiver; direction: JsObject): void =
+  discard
+proc jsSetDirectionInternal*(self: RTCRtpTransceiver; direction: JsObject): void =
+  discard
+proc jsSetMid*(self: RTCRtpTransceiver; mid: cstring): void =
+  discard
+proc jsUnsetMid*(self: RTCRtpTransceiver): void =
+  discard
+proc jsSetStopped*(self: RTCRtpTransceiver): void =
+  discard
+proc jsGetKind*(self: RTCRtpTransceiver): cstring =
+  discard
+proc jsHasBeenUsedToSend*(self: RTCRtpTransceiver): bool =
+  discard
+proc jsSync*(self: RTCRtpTransceiver): void =
+  discard
+proc jsInsertDTMF*(self: RTCRtpTransceiver; tones: cstring; duration: uint32; interToneGap: uint32): void =
+  discard
+
+proc jsRTCSessionDescriptionTypeVal*(self: RTCSessionDescription): JsObject =
+  discard
+proc jsRTCSessionDescriptionSdp*(self: RTCSessionDescription): cstring =
+  discard
+proc jsToJSON*(self: RTCSessionDescription): JsObject =
+  discard
+
+
+proc jsRTCTrackEventReceiver*(self: RTCTrackEvent): JsObject =
+  discard
+proc jsRTCTrackEventTrack*(self: RTCTrackEvent): JsObject =
+  discard
+proc jsRTCTrackEventStreams*(self: RTCTrackEvent): JsObject =
+  discard
+proc jsRTCTrackEventTransceiver*(self: RTCTrackEvent): JsObject =
+  discard
+
+proc jsRadioNodeListValue*(self: RadioNodeList): cstring =
+  discard
+
+proc jsRangeStartContainer*(self: Range): JsObject =
+  discard
+proc jsRangeStartOffset*(self: Range): uint32 =
+  discard
+proc jsRangeEndContainer*(self: Range): JsObject =
+  discard
+proc jsRangeEndOffset*(self: Range): uint32 =
+  discard
+proc jsRangeCollapsed*(self: Range): bool =
+  discard
+proc jsRangeCommonAncestorContainer*(self: Range): JsObject =
   discard
 const jsRangeSTART_TO_START* : uint16 = 0
 const jsRangeSTART_TO_END* : uint16 = 0
 const jsRangeEND_TO_END* : uint16 = 0
 const jsRangeEND_TO_START* : uint16 = 0
-proc jsSetStart*(self: Range; refNode: JsObject; offset: uint32): void {.wasmBindgen.} =
+proc jsSetStart*(self: Range; refNode: JsObject; offset: uint32): void =
   discard
-proc jsSetEnd*(self: Range; refNode: JsObject; offset: uint32): void {.wasmBindgen.} =
+proc jsSetEnd*(self: Range; refNode: JsObject; offset: uint32): void =
   discard
-proc jsSetStartBefore*(self: Range; refNode: JsObject): void {.wasmBindgen.} =
+proc jsSetStartBefore*(self: Range; refNode: JsObject): void =
   discard
-proc jsSetStartAfter*(self: Range; refNode: JsObject): void {.wasmBindgen.} =
+proc jsSetStartAfter*(self: Range; refNode: JsObject): void =
   discard
-proc jsSetEndBefore*(self: Range; refNode: JsObject): void {.wasmBindgen.} =
+proc jsSetEndBefore*(self: Range; refNode: JsObject): void =
   discard
-proc jsSetEndAfter*(self: Range; refNode: JsObject): void {.wasmBindgen.} =
+proc jsSetEndAfter*(self: Range; refNode: JsObject): void =
   discard
-proc jsCollapse*(self: Range; toStart: bool): void {.wasmBindgen.} =
+proc jsCollapse*(self: Range; toStart: bool): void =
   discard
-proc jsSelectNode*(self: Range; refNode: JsObject): void {.wasmBindgen.} =
+proc jsSelectNode*(self: Range; refNode: JsObject): void =
   discard
-proc jsSelectNodeContents*(self: Range; refNode: JsObject): void {.wasmBindgen.} =
+proc jsSelectNodeContents*(self: Range; refNode: JsObject): void =
   discard
-proc jsCompareBoundaryPoints*(self: Range; how: uint16; sourceRange: JsObject): int16 {.wasmBindgen.} =
+proc jsCompareBoundaryPoints*(self: Range; how: uint16; sourceRange: JsObject): int16 =
   discard
-proc jsDeleteContents*(self: Range): void {.wasmBindgen.} =
+proc jsDeleteContents*(self: Range): void =
   discard
-proc jsExtractContents*(self: Range): JsObject {.wasmBindgen.} =
+proc jsExtractContents*(self: Range): JsObject =
   discard
-proc jsCloneContents*(self: Range): JsObject {.wasmBindgen.} =
+proc jsCloneContents*(self: Range): JsObject =
   discard
-proc jsInsertNode*(self: Range; node: JsObject): void {.wasmBindgen.} =
+proc jsInsertNode*(self: Range; node: JsObject): void =
   discard
-proc jsSurroundContents*(self: Range; newParent: JsObject): void {.wasmBindgen.} =
+proc jsSurroundContents*(self: Range; newParent: JsObject): void =
   discard
-proc jsCloneRange*(self: Range): JsObject {.wasmBindgen.} =
+proc jsCloneRange*(self: Range): JsObject =
   discard
-proc jsDetach*(self: Range): void {.wasmBindgen.} =
+proc jsDetach*(self: Range): void =
   discard
-proc jsIsPointInRange*(self: Range; node: JsObject; offset: uint32): bool {.wasmBindgen.} =
+proc jsIsPointInRange*(self: Range; node: JsObject; offset: uint32): bool =
   discard
-proc jsComparePoint*(self: Range; node: JsObject; offset: uint32): int16 {.wasmBindgen.} =
+proc jsComparePoint*(self: Range; node: JsObject; offset: uint32): int16 =
   discard
-proc jsIntersectsNode*(self: Range; node: JsObject): bool {.wasmBindgen.} =
-  discard
-
-proc jsRequestMethodVal*(self: Request): cstring {.wasmBindgen.} =
-  discard
-proc jsRequestUrl*(self: Request): cstring {.wasmBindgen.} =
-  discard
-proc jsRequestHeaders*(self: Request): JsObject {.wasmBindgen.} =
-  discard
-proc jsRequestDestination*(self: Request): JsObject {.wasmBindgen.} =
-  discard
-proc jsRequestReferrer*(self: Request): cstring {.wasmBindgen.} =
-  discard
-proc jsRequestReferrerPolicy*(self: Request): JsObject {.wasmBindgen.} =
-  discard
-proc jsRequestMode*(self: Request): JsObject {.wasmBindgen.} =
-  discard
-proc jsRequestCredentials*(self: Request): JsObject {.wasmBindgen.} =
-  discard
-proc jsRequestCache*(self: Request): JsObject {.wasmBindgen.} =
-  discard
-proc jsRequestRedirect*(self: Request): JsObject {.wasmBindgen.} =
-  discard
-proc jsRequestIntegrity*(self: Request): cstring {.wasmBindgen.} =
-  discard
-proc jsRequestSignal*(self: Request): JsObject {.wasmBindgen.} =
-  discard
-proc jsClone*(self: Request): JsObject {.wasmBindgen.} =
-  discard
-proc jsOverrideContentPolicyType*(self: Request; context: JsObject): void {.wasmBindgen.} =
+proc jsIntersectsNode*(self: Range; node: JsObject): bool =
   discard
 
-proc jsObserve*(self: ResizeObserver; target: JsObject; options: JsObject): void {.wasmBindgen.} =
+proc jsRequestMethodVal*(self: Request): cstring =
   discard
-proc jsUnobserve*(self: ResizeObserver; target: JsObject): void {.wasmBindgen.} =
+proc jsRequestUrl*(self: Request): cstring =
   discard
-proc jsDisconnect*(self: ResizeObserver): void {.wasmBindgen.} =
+proc jsRequestHeaders*(self: Request): JsObject =
   discard
-
-proc jsResizeObserverEntryTarget*(self: ResizeObserverEntry): JsObject {.wasmBindgen.} =
+proc jsRequestDestination*(self: Request): JsObject =
   discard
-proc jsResizeObserverEntryContentRect*(self: ResizeObserverEntry): JsObject {.wasmBindgen.} =
+proc jsRequestReferrer*(self: Request): cstring =
   discard
-proc jsResizeObserverEntryBorderBoxSize*(self: ResizeObserverEntry): JsObject {.wasmBindgen.} =
+proc jsRequestReferrerPolicy*(self: Request): JsObject =
   discard
-proc jsResizeObserverEntryContentBoxSize*(self: ResizeObserverEntry): JsObject {.wasmBindgen.} =
+proc jsRequestMode*(self: Request): JsObject =
   discard
-proc jsResizeObserverEntryDevicePixelContentBoxSize*(self: ResizeObserverEntry): JsObject {.wasmBindgen.} =
+proc jsRequestCredentials*(self: Request): JsObject =
   discard
-
-proc jsResizeObserverSizeInlineSize*(self: ResizeObserverSize): float64 {.wasmBindgen.} =
+proc jsRequestCache*(self: Request): JsObject =
   discard
-proc jsResizeObserverSizeBlockSize*(self: ResizeObserverSize): float64 {.wasmBindgen.} =
+proc jsRequestRedirect*(self: Request): JsObject =
   discard
-
-proc jsResponseTypeVal*(self: Response): JsObject {.wasmBindgen.} =
+proc jsRequestIntegrity*(self: Request): cstring =
   discard
-proc jsResponseUrl*(self: Response): cstring {.wasmBindgen.} =
+proc jsRequestSignal*(self: Request): JsObject =
   discard
-proc jsResponseRedirected*(self: Response): bool {.wasmBindgen.} =
+proc jsClone*(self: Request): JsObject =
   discard
-proc jsResponseStatus*(self: Response): uint16 {.wasmBindgen.} =
-  discard
-proc jsResponseOk*(self: Response): bool {.wasmBindgen.} =
-  discard
-proc jsResponseStatusText*(self: Response): cstring {.wasmBindgen.} =
-  discard
-proc jsResponseHeaders*(self: Response): JsObject {.wasmBindgen.} =
-  discard
-proc jsError*(self: typedesc[Response]): JsObject {.wasmBindgen.} =
-  discard
-proc jsRedirect*(self: typedesc[Response]; url: cstring; status: uint16): JsObject {.wasmBindgen.} =
-  discard
-proc jsClone*(self: Response): JsObject {.wasmBindgen.} =
-  discard
-proc jsCloneUnfiltered*(self: Response): JsObject {.wasmBindgen.} =
+proc jsOverrideContentPolicyType*(self: Request; context: JsObject): void =
   discard
 
-proc jsSVGAElementTarget*(self: SVGAElement): JsObject {.wasmBindgen.} =
+proc jsObserve*(self: ResizeObserver; target: JsObject; options: JsObject): void =
   discard
-proc jsSVGAElementDownload*(self: SVGAElement): cstring {.wasmBindgen.} =
+proc jsUnobserve*(self: ResizeObserver; target: JsObject): void =
   discard
-proc jsSVGAElementPing*(self: SVGAElement): cstring {.wasmBindgen.} =
+proc jsDisconnect*(self: ResizeObserver): void =
   discard
-proc jsSVGAElementRel*(self: SVGAElement): cstring {.wasmBindgen.} =
+
+proc jsResizeObserverEntryTarget*(self: ResizeObserverEntry): JsObject =
   discard
-proc jsSVGAElementReferrerPolicy*(self: SVGAElement): cstring {.wasmBindgen.} =
+proc jsResizeObserverEntryContentRect*(self: ResizeObserverEntry): JsObject =
   discard
-proc jsSVGAElementRelList*(self: SVGAElement): JsObject {.wasmBindgen.} =
+proc jsResizeObserverEntryBorderBoxSize*(self: ResizeObserverEntry): JsObject =
   discard
-proc jsSVGAElementHreflang*(self: SVGAElement): cstring {.wasmBindgen.} =
+proc jsResizeObserverEntryContentBoxSize*(self: ResizeObserverEntry): JsObject =
   discard
-proc jsSVGAElementTypeVal*(self: SVGAElement): cstring {.wasmBindgen.} =
+proc jsResizeObserverEntryDevicePixelContentBoxSize*(self: ResizeObserverEntry): JsObject =
   discard
-proc jsSVGAElementText*(self: SVGAElement): cstring {.wasmBindgen.} =
+
+proc jsResizeObserverSizeInlineSize*(self: ResizeObserverSize): float64 =
+  discard
+proc jsResizeObserverSizeBlockSize*(self: ResizeObserverSize): float64 =
+  discard
+
+proc jsResponseTypeVal*(self: Response): JsObject =
+  discard
+proc jsResponseUrl*(self: Response): cstring =
+  discard
+proc jsResponseRedirected*(self: Response): bool =
+  discard
+proc jsResponseStatus*(self: Response): uint16 =
+  discard
+proc jsResponseOk*(self: Response): bool =
+  discard
+proc jsResponseStatusText*(self: Response): cstring =
+  discard
+proc jsResponseHeaders*(self: Response): JsObject =
+  discard
+proc jsError*(self: typedesc[Response]): JsObject =
+  discard
+proc jsRedirect*(self: typedesc[Response]; url: cstring; status: uint16): JsObject =
+  discard
+proc jsClone*(self: Response): JsObject =
+  discard
+proc jsCloneUnfiltered*(self: Response): JsObject =
+  discard
+
+proc jsSVGAElementTarget*(self: SVGAElement): JsObject =
+  discard
+proc jsSVGAElementDownload*(self: SVGAElement): cstring =
+  discard
+proc jsSVGAElementPing*(self: SVGAElement): cstring =
+  discard
+proc jsSVGAElementRel*(self: SVGAElement): cstring =
+  discard
+proc jsSVGAElementReferrerPolicy*(self: SVGAElement): cstring =
+  discard
+proc jsSVGAElementRelList*(self: SVGAElement): JsObject =
+  discard
+proc jsSVGAElementHreflang*(self: SVGAElement): cstring =
+  discard
+proc jsSVGAElementTypeVal*(self: SVGAElement): cstring =
+  discard
+proc jsSVGAElementText*(self: SVGAElement): cstring =
   discard
 
 const jsSVGAngleSVG_ANGLETYPE_UNKNOWN* : uint16 = 0
@@ -8508,103 +8507,103 @@ const jsSVGAngleSVG_ANGLETYPE_UNSPECIFIED* : uint16 = 0
 const jsSVGAngleSVG_ANGLETYPE_DEG* : uint16 = 0
 const jsSVGAngleSVG_ANGLETYPE_RAD* : uint16 = 0
 const jsSVGAngleSVG_ANGLETYPE_GRAD* : uint16 = 0
-proc jsSVGAngleUnitType*(self: SVGAngle): uint16 {.wasmBindgen.} =
+proc jsSVGAngleUnitType*(self: SVGAngle): uint16 =
   discard
-proc jsSVGAngleValue*(self: SVGAngle): float32 {.wasmBindgen.} =
+proc jsSVGAngleValue*(self: SVGAngle): float32 =
   discard
-proc jsSVGAngleValueInSpecifiedUnits*(self: SVGAngle): float32 {.wasmBindgen.} =
+proc jsSVGAngleValueInSpecifiedUnits*(self: SVGAngle): float32 =
   discard
-proc jsSVGAngleValueAsString*(self: SVGAngle): cstring {.wasmBindgen.} =
+proc jsSVGAngleValueAsString*(self: SVGAngle): cstring =
   discard
-proc jsNewValueSpecifiedUnits*(self: SVGAngle; unitType: uint16; valueInSpecifiedUnits: float32): void {.wasmBindgen.} =
+proc jsNewValueSpecifiedUnits*(self: SVGAngle; unitType: uint16; valueInSpecifiedUnits: float32): void =
   discard
-proc jsConvertToSpecifiedUnits*(self: SVGAngle; unitType: uint16): void {.wasmBindgen.} =
-  discard
-
-
-
-
-proc jsSVGAnimatedAngleBaseVal*(self: SVGAnimatedAngle): JsObject {.wasmBindgen.} =
-  discard
-proc jsSVGAnimatedAngleAnimVal*(self: SVGAnimatedAngle): JsObject {.wasmBindgen.} =
-  discard
-
-proc jsSVGAnimatedBooleanBaseVal*(self: SVGAnimatedBoolean): bool {.wasmBindgen.} =
-  discard
-proc jsSVGAnimatedBooleanAnimVal*(self: SVGAnimatedBoolean): bool {.wasmBindgen.} =
-  discard
-
-proc jsSVGAnimatedEnumerationBaseVal*(self: SVGAnimatedEnumeration): uint16 {.wasmBindgen.} =
-  discard
-proc jsSVGAnimatedEnumerationAnimVal*(self: SVGAnimatedEnumeration): uint16 {.wasmBindgen.} =
-  discard
-
-proc jsSVGAnimatedIntegerBaseVal*(self: SVGAnimatedInteger): int32 {.wasmBindgen.} =
-  discard
-proc jsSVGAnimatedIntegerAnimVal*(self: SVGAnimatedInteger): int32 {.wasmBindgen.} =
-  discard
-
-proc jsSVGAnimatedLengthBaseVal*(self: SVGAnimatedLength): JsObject {.wasmBindgen.} =
-  discard
-proc jsSVGAnimatedLengthAnimVal*(self: SVGAnimatedLength): JsObject {.wasmBindgen.} =
-  discard
-
-proc jsSVGAnimatedLengthListBaseVal*(self: SVGAnimatedLengthList): JsObject {.wasmBindgen.} =
-  discard
-proc jsSVGAnimatedLengthListAnimVal*(self: SVGAnimatedLengthList): JsObject {.wasmBindgen.} =
-  discard
-
-proc jsSVGAnimatedNumberBaseVal*(self: SVGAnimatedNumber): float32 {.wasmBindgen.} =
-  discard
-proc jsSVGAnimatedNumberAnimVal*(self: SVGAnimatedNumber): float32 {.wasmBindgen.} =
-  discard
-
-proc jsSVGAnimatedNumberListBaseVal*(self: SVGAnimatedNumberList): JsObject {.wasmBindgen.} =
-  discard
-proc jsSVGAnimatedNumberListAnimVal*(self: SVGAnimatedNumberList): JsObject {.wasmBindgen.} =
-  discard
-
-proc jsSVGAnimatedPreserveAspectRatioBaseVal*(self: SVGAnimatedPreserveAspectRatio): JsObject {.wasmBindgen.} =
-  discard
-proc jsSVGAnimatedPreserveAspectRatioAnimVal*(self: SVGAnimatedPreserveAspectRatio): JsObject {.wasmBindgen.} =
+proc jsConvertToSpecifiedUnits*(self: SVGAngle; unitType: uint16): void =
   discard
 
 
-proc jsSVGAnimatedStringBaseVal*(self: SVGAnimatedString): cstring {.wasmBindgen.} =
+
+
+proc jsSVGAnimatedAngleBaseVal*(self: SVGAnimatedAngle): JsObject =
   discard
-proc jsSVGAnimatedStringAnimVal*(self: SVGAnimatedString): cstring {.wasmBindgen.} =
+proc jsSVGAnimatedAngleAnimVal*(self: SVGAnimatedAngle): JsObject =
   discard
 
-proc jsSVGAnimatedTransformListBaseVal*(self: SVGAnimatedTransformList): JsObject {.wasmBindgen.} =
+proc jsSVGAnimatedBooleanBaseVal*(self: SVGAnimatedBoolean): bool =
   discard
-proc jsSVGAnimatedTransformListAnimVal*(self: SVGAnimatedTransformList): JsObject {.wasmBindgen.} =
-  discard
-
-proc jsGetStartTime*(self: SVGAnimationElement): float32 {.wasmBindgen.} =
-  discard
-proc jsGetCurrentTime*(self: SVGAnimationElement): float32 {.wasmBindgen.} =
-  discard
-proc jsGetSimpleDuration*(self: SVGAnimationElement): float32 {.wasmBindgen.} =
-  discard
-proc jsBeginElement*(self: SVGAnimationElement): void {.wasmBindgen.} =
-  discard
-proc jsBeginElementAt*(self: SVGAnimationElement; offset: float32): void {.wasmBindgen.} =
-  discard
-proc jsEndElement*(self: SVGAnimationElement): void {.wasmBindgen.} =
-  discard
-proc jsEndElementAt*(self: SVGAnimationElement; offset: float32): void {.wasmBindgen.} =
+proc jsSVGAnimatedBooleanAnimVal*(self: SVGAnimatedBoolean): bool =
   discard
 
-proc jsSVGCircleElementCx*(self: SVGCircleElement): JsObject {.wasmBindgen.} =
+proc jsSVGAnimatedEnumerationBaseVal*(self: SVGAnimatedEnumeration): uint16 =
   discard
-proc jsSVGCircleElementCy*(self: SVGCircleElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsSVGCircleElementR*(self: SVGCircleElement): JsObject {.wasmBindgen.} =
+proc jsSVGAnimatedEnumerationAnimVal*(self: SVGAnimatedEnumeration): uint16 =
   discard
 
-proc jsSVGClipPathElementClipPathUnits*(self: SVGClipPathElement): JsObject {.wasmBindgen.} =
+proc jsSVGAnimatedIntegerBaseVal*(self: SVGAnimatedInteger): int32 =
   discard
-proc jsSVGClipPathElementTransform*(self: SVGClipPathElement): JsObject {.wasmBindgen.} =
+proc jsSVGAnimatedIntegerAnimVal*(self: SVGAnimatedInteger): int32 =
+  discard
+
+proc jsSVGAnimatedLengthBaseVal*(self: SVGAnimatedLength): JsObject =
+  discard
+proc jsSVGAnimatedLengthAnimVal*(self: SVGAnimatedLength): JsObject =
+  discard
+
+proc jsSVGAnimatedLengthListBaseVal*(self: SVGAnimatedLengthList): JsObject =
+  discard
+proc jsSVGAnimatedLengthListAnimVal*(self: SVGAnimatedLengthList): JsObject =
+  discard
+
+proc jsSVGAnimatedNumberBaseVal*(self: SVGAnimatedNumber): float32 =
+  discard
+proc jsSVGAnimatedNumberAnimVal*(self: SVGAnimatedNumber): float32 =
+  discard
+
+proc jsSVGAnimatedNumberListBaseVal*(self: SVGAnimatedNumberList): JsObject =
+  discard
+proc jsSVGAnimatedNumberListAnimVal*(self: SVGAnimatedNumberList): JsObject =
+  discard
+
+proc jsSVGAnimatedPreserveAspectRatioBaseVal*(self: SVGAnimatedPreserveAspectRatio): JsObject =
+  discard
+proc jsSVGAnimatedPreserveAspectRatioAnimVal*(self: SVGAnimatedPreserveAspectRatio): JsObject =
+  discard
+
+
+proc jsSVGAnimatedStringBaseVal*(self: SVGAnimatedString): cstring =
+  discard
+proc jsSVGAnimatedStringAnimVal*(self: SVGAnimatedString): cstring =
+  discard
+
+proc jsSVGAnimatedTransformListBaseVal*(self: SVGAnimatedTransformList): JsObject =
+  discard
+proc jsSVGAnimatedTransformListAnimVal*(self: SVGAnimatedTransformList): JsObject =
+  discard
+
+proc jsGetStartTime*(self: SVGAnimationElement): float32 =
+  discard
+proc jsGetCurrentTime*(self: SVGAnimationElement): float32 =
+  discard
+proc jsGetSimpleDuration*(self: SVGAnimationElement): float32 =
+  discard
+proc jsBeginElement*(self: SVGAnimationElement): void =
+  discard
+proc jsBeginElementAt*(self: SVGAnimationElement; offset: float32): void =
+  discard
+proc jsEndElement*(self: SVGAnimationElement): void =
+  discard
+proc jsEndElementAt*(self: SVGAnimationElement; offset: float32): void =
+  discard
+
+proc jsSVGCircleElementCx*(self: SVGCircleElement): JsObject =
+  discard
+proc jsSVGCircleElementCy*(self: SVGCircleElement): JsObject =
+  discard
+proc jsSVGCircleElementR*(self: SVGCircleElement): JsObject =
+  discard
+
+proc jsSVGClipPathElementClipPathUnits*(self: SVGClipPathElement): JsObject =
+  discard
+proc jsSVGClipPathElementTransform*(self: SVGClipPathElement): JsObject =
   discard
 
 const jsSVGComponentTransferFunctionElementSVG_FECOMPONENTTRANSFER_TYPE_UNKNOWN* : uint16 = 0
@@ -8613,35 +8612,35 @@ const jsSVGComponentTransferFunctionElementSVG_FECOMPONENTTRANSFER_TYPE_TABLE* :
 const jsSVGComponentTransferFunctionElementSVG_FECOMPONENTTRANSFER_TYPE_DISCRETE* : uint16 = 0
 const jsSVGComponentTransferFunctionElementSVG_FECOMPONENTTRANSFER_TYPE_LINEAR* : uint16 = 0
 const jsSVGComponentTransferFunctionElementSVG_FECOMPONENTTRANSFER_TYPE_GAMMA* : uint16 = 0
-proc jsSVGComponentTransferFunctionElementTypeVal*(self: SVGComponentTransferFunctionElement): JsObject {.wasmBindgen.} =
+proc jsSVGComponentTransferFunctionElementTypeVal*(self: SVGComponentTransferFunctionElement): JsObject =
   discard
-proc jsSVGComponentTransferFunctionElementTableValues*(self: SVGComponentTransferFunctionElement): JsObject {.wasmBindgen.} =
+proc jsSVGComponentTransferFunctionElementTableValues*(self: SVGComponentTransferFunctionElement): JsObject =
   discard
-proc jsSVGComponentTransferFunctionElementSlope*(self: SVGComponentTransferFunctionElement): JsObject {.wasmBindgen.} =
+proc jsSVGComponentTransferFunctionElementSlope*(self: SVGComponentTransferFunctionElement): JsObject =
   discard
-proc jsSVGComponentTransferFunctionElementIntercept*(self: SVGComponentTransferFunctionElement): JsObject {.wasmBindgen.} =
+proc jsSVGComponentTransferFunctionElementIntercept*(self: SVGComponentTransferFunctionElement): JsObject =
   discard
-proc jsSVGComponentTransferFunctionElementAmplitude*(self: SVGComponentTransferFunctionElement): JsObject {.wasmBindgen.} =
+proc jsSVGComponentTransferFunctionElementAmplitude*(self: SVGComponentTransferFunctionElement): JsObject =
   discard
-proc jsSVGComponentTransferFunctionElementExponent*(self: SVGComponentTransferFunctionElement): JsObject {.wasmBindgen.} =
+proc jsSVGComponentTransferFunctionElementExponent*(self: SVGComponentTransferFunctionElement): JsObject =
   discard
-proc jsSVGComponentTransferFunctionElementOffset*(self: SVGComponentTransferFunctionElement): JsObject {.wasmBindgen.} =
-  discard
-
-
-
-proc jsSVGElementId*(self: SVGElement): cstring {.wasmBindgen.} =
-  discard
-proc jsSVGElementClassName*(self: SVGElement): JsObject {.wasmBindgen.} =
+proc jsSVGComponentTransferFunctionElementOffset*(self: SVGComponentTransferFunctionElement): JsObject =
   discard
 
-proc jsSVGEllipseElementCx*(self: SVGEllipseElement): JsObject {.wasmBindgen.} =
+
+
+proc jsSVGElementId*(self: SVGElement): cstring =
   discard
-proc jsSVGEllipseElementCy*(self: SVGEllipseElement): JsObject {.wasmBindgen.} =
+proc jsSVGElementClassName*(self: SVGElement): JsObject =
   discard
-proc jsSVGEllipseElementRx*(self: SVGEllipseElement): JsObject {.wasmBindgen.} =
+
+proc jsSVGEllipseElementCx*(self: SVGEllipseElement): JsObject =
   discard
-proc jsSVGEllipseElementRy*(self: SVGEllipseElement): JsObject {.wasmBindgen.} =
+proc jsSVGEllipseElementCy*(self: SVGEllipseElement): JsObject =
+  discard
+proc jsSVGEllipseElementRx*(self: SVGEllipseElement): JsObject =
+  discard
+proc jsSVGEllipseElementRy*(self: SVGEllipseElement): JsObject =
   discard
 
 const jsSVGFEBlendElementSVG_FEBLEND_MODE_UNKNOWN* : uint16 = 0
@@ -8661,11 +8660,11 @@ const jsSVGFEBlendElementSVG_FEBLEND_MODE_HUE* : uint16 = 0
 const jsSVGFEBlendElementSVG_FEBLEND_MODE_SATURATION* : uint16 = 0
 const jsSVGFEBlendElementSVG_FEBLEND_MODE_COLOR* : uint16 = 0
 const jsSVGFEBlendElementSVG_FEBLEND_MODE_LUMINOSITY* : uint16 = 0
-proc jsSVGFEBlendElementIn1*(self: SVGFEBlendElement): JsObject {.wasmBindgen.} =
+proc jsSVGFEBlendElementIn1*(self: SVGFEBlendElement): JsObject =
   discard
-proc jsSVGFEBlendElementIn2*(self: SVGFEBlendElement): JsObject {.wasmBindgen.} =
+proc jsSVGFEBlendElementIn2*(self: SVGFEBlendElement): JsObject =
   discard
-proc jsSVGFEBlendElementMode*(self: SVGFEBlendElement): JsObject {.wasmBindgen.} =
+proc jsSVGFEBlendElementMode*(self: SVGFEBlendElement): JsObject =
   discard
 
 const jsSVGFEColorMatrixElementSVG_FECOLORMATRIX_TYPE_UNKNOWN* : uint16 = 0
@@ -8673,14 +8672,14 @@ const jsSVGFEColorMatrixElementSVG_FECOLORMATRIX_TYPE_MATRIX* : uint16 = 0
 const jsSVGFEColorMatrixElementSVG_FECOLORMATRIX_TYPE_SATURATE* : uint16 = 0
 const jsSVGFEColorMatrixElementSVG_FECOLORMATRIX_TYPE_HUEROTATE* : uint16 = 0
 const jsSVGFEColorMatrixElementSVG_FECOLORMATRIX_TYPE_LUMINANCETOALPHA* : uint16 = 0
-proc jsSVGFEColorMatrixElementIn1*(self: SVGFEColorMatrixElement): JsObject {.wasmBindgen.} =
+proc jsSVGFEColorMatrixElementIn1*(self: SVGFEColorMatrixElement): JsObject =
   discard
-proc jsSVGFEColorMatrixElementTypeVal*(self: SVGFEColorMatrixElement): JsObject {.wasmBindgen.} =
+proc jsSVGFEColorMatrixElementTypeVal*(self: SVGFEColorMatrixElement): JsObject =
   discard
-proc jsSVGFEColorMatrixElementValues*(self: SVGFEColorMatrixElement): JsObject {.wasmBindgen.} =
+proc jsSVGFEColorMatrixElementValues*(self: SVGFEColorMatrixElement): JsObject =
   discard
 
-proc jsSVGFEComponentTransferElementIn1*(self: SVGFEComponentTransferElement): JsObject {.wasmBindgen.} =
+proc jsSVGFEComponentTransferElementIn1*(self: SVGFEComponentTransferElement): JsObject =
   discard
 
 const jsSVGFECompositeElementSVG_FECOMPOSITE_OPERATOR_UNKNOWN* : uint16 = 0
@@ -8690,59 +8689,59 @@ const jsSVGFECompositeElementSVG_FECOMPOSITE_OPERATOR_OUT* : uint16 = 0
 const jsSVGFECompositeElementSVG_FECOMPOSITE_OPERATOR_ATOP* : uint16 = 0
 const jsSVGFECompositeElementSVG_FECOMPOSITE_OPERATOR_XOR* : uint16 = 0
 const jsSVGFECompositeElementSVG_FECOMPOSITE_OPERATOR_ARITHMETIC* : uint16 = 0
-proc jsSVGFECompositeElementIn1*(self: SVGFECompositeElement): JsObject {.wasmBindgen.} =
+proc jsSVGFECompositeElementIn1*(self: SVGFECompositeElement): JsObject =
   discard
-proc jsSVGFECompositeElementIn2*(self: SVGFECompositeElement): JsObject {.wasmBindgen.} =
+proc jsSVGFECompositeElementIn2*(self: SVGFECompositeElement): JsObject =
   discard
-proc jsSVGFECompositeElementOperator*(self: SVGFECompositeElement): JsObject {.wasmBindgen.} =
+proc jsSVGFECompositeElementOperator*(self: SVGFECompositeElement): JsObject =
   discard
-proc jsSVGFECompositeElementK1*(self: SVGFECompositeElement): JsObject {.wasmBindgen.} =
+proc jsSVGFECompositeElementK1*(self: SVGFECompositeElement): JsObject =
   discard
-proc jsSVGFECompositeElementK2*(self: SVGFECompositeElement): JsObject {.wasmBindgen.} =
+proc jsSVGFECompositeElementK2*(self: SVGFECompositeElement): JsObject =
   discard
-proc jsSVGFECompositeElementK3*(self: SVGFECompositeElement): JsObject {.wasmBindgen.} =
+proc jsSVGFECompositeElementK3*(self: SVGFECompositeElement): JsObject =
   discard
-proc jsSVGFECompositeElementK4*(self: SVGFECompositeElement): JsObject {.wasmBindgen.} =
+proc jsSVGFECompositeElementK4*(self: SVGFECompositeElement): JsObject =
   discard
 
 const jsSVGFEConvolveMatrixElementSVG_EDGEMODE_UNKNOWN* : uint16 = 0
 const jsSVGFEConvolveMatrixElementSVG_EDGEMODE_DUPLICATE* : uint16 = 0
 const jsSVGFEConvolveMatrixElementSVG_EDGEMODE_WRAP* : uint16 = 0
 const jsSVGFEConvolveMatrixElementSVG_EDGEMODE_NONE* : uint16 = 0
-proc jsSVGFEConvolveMatrixElementIn1*(self: SVGFEConvolveMatrixElement): JsObject {.wasmBindgen.} =
+proc jsSVGFEConvolveMatrixElementIn1*(self: SVGFEConvolveMatrixElement): JsObject =
   discard
-proc jsSVGFEConvolveMatrixElementOrderX*(self: SVGFEConvolveMatrixElement): JsObject {.wasmBindgen.} =
+proc jsSVGFEConvolveMatrixElementOrderX*(self: SVGFEConvolveMatrixElement): JsObject =
   discard
-proc jsSVGFEConvolveMatrixElementOrderY*(self: SVGFEConvolveMatrixElement): JsObject {.wasmBindgen.} =
+proc jsSVGFEConvolveMatrixElementOrderY*(self: SVGFEConvolveMatrixElement): JsObject =
   discard
-proc jsSVGFEConvolveMatrixElementKernelMatrix*(self: SVGFEConvolveMatrixElement): JsObject {.wasmBindgen.} =
+proc jsSVGFEConvolveMatrixElementKernelMatrix*(self: SVGFEConvolveMatrixElement): JsObject =
   discard
-proc jsSVGFEConvolveMatrixElementDivisor*(self: SVGFEConvolveMatrixElement): JsObject {.wasmBindgen.} =
+proc jsSVGFEConvolveMatrixElementDivisor*(self: SVGFEConvolveMatrixElement): JsObject =
   discard
-proc jsSVGFEConvolveMatrixElementBias*(self: SVGFEConvolveMatrixElement): JsObject {.wasmBindgen.} =
+proc jsSVGFEConvolveMatrixElementBias*(self: SVGFEConvolveMatrixElement): JsObject =
   discard
-proc jsSVGFEConvolveMatrixElementTargetX*(self: SVGFEConvolveMatrixElement): JsObject {.wasmBindgen.} =
+proc jsSVGFEConvolveMatrixElementTargetX*(self: SVGFEConvolveMatrixElement): JsObject =
   discard
-proc jsSVGFEConvolveMatrixElementTargetY*(self: SVGFEConvolveMatrixElement): JsObject {.wasmBindgen.} =
+proc jsSVGFEConvolveMatrixElementTargetY*(self: SVGFEConvolveMatrixElement): JsObject =
   discard
-proc jsSVGFEConvolveMatrixElementEdgeMode*(self: SVGFEConvolveMatrixElement): JsObject {.wasmBindgen.} =
+proc jsSVGFEConvolveMatrixElementEdgeMode*(self: SVGFEConvolveMatrixElement): JsObject =
   discard
-proc jsSVGFEConvolveMatrixElementKernelUnitLengthX*(self: SVGFEConvolveMatrixElement): JsObject {.wasmBindgen.} =
+proc jsSVGFEConvolveMatrixElementKernelUnitLengthX*(self: SVGFEConvolveMatrixElement): JsObject =
   discard
-proc jsSVGFEConvolveMatrixElementKernelUnitLengthY*(self: SVGFEConvolveMatrixElement): JsObject {.wasmBindgen.} =
+proc jsSVGFEConvolveMatrixElementKernelUnitLengthY*(self: SVGFEConvolveMatrixElement): JsObject =
   discard
-proc jsSVGFEConvolveMatrixElementPreserveAlpha*(self: SVGFEConvolveMatrixElement): JsObject {.wasmBindgen.} =
+proc jsSVGFEConvolveMatrixElementPreserveAlpha*(self: SVGFEConvolveMatrixElement): JsObject =
   discard
 
-proc jsSVGFEDiffuseLightingElementIn1*(self: SVGFEDiffuseLightingElement): JsObject {.wasmBindgen.} =
+proc jsSVGFEDiffuseLightingElementIn1*(self: SVGFEDiffuseLightingElement): JsObject =
   discard
-proc jsSVGFEDiffuseLightingElementSurfaceScale*(self: SVGFEDiffuseLightingElement): JsObject {.wasmBindgen.} =
+proc jsSVGFEDiffuseLightingElementSurfaceScale*(self: SVGFEDiffuseLightingElement): JsObject =
   discard
-proc jsSVGFEDiffuseLightingElementDiffuseConstant*(self: SVGFEDiffuseLightingElement): JsObject {.wasmBindgen.} =
+proc jsSVGFEDiffuseLightingElementDiffuseConstant*(self: SVGFEDiffuseLightingElement): JsObject =
   discard
-proc jsSVGFEDiffuseLightingElementKernelUnitLengthX*(self: SVGFEDiffuseLightingElement): JsObject {.wasmBindgen.} =
+proc jsSVGFEDiffuseLightingElementKernelUnitLengthX*(self: SVGFEDiffuseLightingElement): JsObject =
   discard
-proc jsSVGFEDiffuseLightingElementKernelUnitLengthY*(self: SVGFEDiffuseLightingElement): JsObject {.wasmBindgen.} =
+proc jsSVGFEDiffuseLightingElementKernelUnitLengthY*(self: SVGFEDiffuseLightingElement): JsObject =
   discard
 
 const jsSVGFEDisplacementMapElementSVG_CHANNEL_UNKNOWN* : uint16 = 0
@@ -8750,113 +8749,113 @@ const jsSVGFEDisplacementMapElementSVG_CHANNEL_R* : uint16 = 0
 const jsSVGFEDisplacementMapElementSVG_CHANNEL_G* : uint16 = 0
 const jsSVGFEDisplacementMapElementSVG_CHANNEL_B* : uint16 = 0
 const jsSVGFEDisplacementMapElementSVG_CHANNEL_A* : uint16 = 0
-proc jsSVGFEDisplacementMapElementIn1*(self: SVGFEDisplacementMapElement): JsObject {.wasmBindgen.} =
+proc jsSVGFEDisplacementMapElementIn1*(self: SVGFEDisplacementMapElement): JsObject =
   discard
-proc jsSVGFEDisplacementMapElementIn2*(self: SVGFEDisplacementMapElement): JsObject {.wasmBindgen.} =
+proc jsSVGFEDisplacementMapElementIn2*(self: SVGFEDisplacementMapElement): JsObject =
   discard
-proc jsSVGFEDisplacementMapElementScale*(self: SVGFEDisplacementMapElement): JsObject {.wasmBindgen.} =
+proc jsSVGFEDisplacementMapElementScale*(self: SVGFEDisplacementMapElement): JsObject =
   discard
-proc jsSVGFEDisplacementMapElementXChannelSelector*(self: SVGFEDisplacementMapElement): JsObject {.wasmBindgen.} =
+proc jsSVGFEDisplacementMapElementXChannelSelector*(self: SVGFEDisplacementMapElement): JsObject =
   discard
-proc jsSVGFEDisplacementMapElementYChannelSelector*(self: SVGFEDisplacementMapElement): JsObject {.wasmBindgen.} =
-  discard
-
-proc jsSVGFEDistantLightElementAzimuth*(self: SVGFEDistantLightElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsSVGFEDistantLightElementElevation*(self: SVGFEDistantLightElement): JsObject {.wasmBindgen.} =
+proc jsSVGFEDisplacementMapElementYChannelSelector*(self: SVGFEDisplacementMapElement): JsObject =
   discard
 
-proc jsSVGFEDropShadowElementIn1*(self: SVGFEDropShadowElement): JsObject {.wasmBindgen.} =
+proc jsSVGFEDistantLightElementAzimuth*(self: SVGFEDistantLightElement): JsObject =
   discard
-proc jsSVGFEDropShadowElementDx*(self: SVGFEDropShadowElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsSVGFEDropShadowElementDy*(self: SVGFEDropShadowElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsSVGFEDropShadowElementStdDeviationX*(self: SVGFEDropShadowElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsSVGFEDropShadowElementStdDeviationY*(self: SVGFEDropShadowElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsSetStdDeviation*(self: SVGFEDropShadowElement; stdDeviationX: float32; stdDeviationY: float32): void {.wasmBindgen.} =
+proc jsSVGFEDistantLightElementElevation*(self: SVGFEDistantLightElement): JsObject =
   discard
 
-
+proc jsSVGFEDropShadowElementIn1*(self: SVGFEDropShadowElement): JsObject =
+  discard
+proc jsSVGFEDropShadowElementDx*(self: SVGFEDropShadowElement): JsObject =
+  discard
+proc jsSVGFEDropShadowElementDy*(self: SVGFEDropShadowElement): JsObject =
+  discard
+proc jsSVGFEDropShadowElementStdDeviationX*(self: SVGFEDropShadowElement): JsObject =
+  discard
+proc jsSVGFEDropShadowElementStdDeviationY*(self: SVGFEDropShadowElement): JsObject =
+  discard
+proc jsSetStdDeviation*(self: SVGFEDropShadowElement; stdDeviationX: float32; stdDeviationY: float32): void =
+  discard
 
 
 
 
-proc jsSVGFEGaussianBlurElementIn1*(self: SVGFEGaussianBlurElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsSVGFEGaussianBlurElementStdDeviationX*(self: SVGFEGaussianBlurElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsSVGFEGaussianBlurElementStdDeviationY*(self: SVGFEGaussianBlurElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsSetStdDeviation*(self: SVGFEGaussianBlurElement; stdDeviationX: float32; stdDeviationY: float32): void {.wasmBindgen.} =
-  discard
-
-proc jsSVGFEImageElementPreserveAspectRatio*(self: SVGFEImageElement): JsObject {.wasmBindgen.} =
-  discard
 
 
-proc jsSVGFEMergeNodeElementIn1*(self: SVGFEMergeNodeElement): JsObject {.wasmBindgen.} =
+proc jsSVGFEGaussianBlurElementIn1*(self: SVGFEGaussianBlurElement): JsObject =
+  discard
+proc jsSVGFEGaussianBlurElementStdDeviationX*(self: SVGFEGaussianBlurElement): JsObject =
+  discard
+proc jsSVGFEGaussianBlurElementStdDeviationY*(self: SVGFEGaussianBlurElement): JsObject =
+  discard
+proc jsSetStdDeviation*(self: SVGFEGaussianBlurElement; stdDeviationX: float32; stdDeviationY: float32): void =
+  discard
+
+proc jsSVGFEImageElementPreserveAspectRatio*(self: SVGFEImageElement): JsObject =
+  discard
+
+
+proc jsSVGFEMergeNodeElementIn1*(self: SVGFEMergeNodeElement): JsObject =
   discard
 
 const jsSVGFEMorphologyElementSVG_MORPHOLOGY_OPERATOR_UNKNOWN* : uint16 = 0
 const jsSVGFEMorphologyElementSVG_MORPHOLOGY_OPERATOR_ERODE* : uint16 = 0
 const jsSVGFEMorphologyElementSVG_MORPHOLOGY_OPERATOR_DILATE* : uint16 = 0
-proc jsSVGFEMorphologyElementIn1*(self: SVGFEMorphologyElement): JsObject {.wasmBindgen.} =
+proc jsSVGFEMorphologyElementIn1*(self: SVGFEMorphologyElement): JsObject =
   discard
-proc jsSVGFEMorphologyElementOperator*(self: SVGFEMorphologyElement): JsObject {.wasmBindgen.} =
+proc jsSVGFEMorphologyElementOperator*(self: SVGFEMorphologyElement): JsObject =
   discard
-proc jsSVGFEMorphologyElementRadiusX*(self: SVGFEMorphologyElement): JsObject {.wasmBindgen.} =
+proc jsSVGFEMorphologyElementRadiusX*(self: SVGFEMorphologyElement): JsObject =
   discard
-proc jsSVGFEMorphologyElementRadiusY*(self: SVGFEMorphologyElement): JsObject {.wasmBindgen.} =
-  discard
-
-proc jsSVGFEOffsetElementIn1*(self: SVGFEOffsetElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsSVGFEOffsetElementDx*(self: SVGFEOffsetElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsSVGFEOffsetElementDy*(self: SVGFEOffsetElement): JsObject {.wasmBindgen.} =
+proc jsSVGFEMorphologyElementRadiusY*(self: SVGFEMorphologyElement): JsObject =
   discard
 
-proc jsSVGFEPointLightElementX*(self: SVGFEPointLightElement): JsObject {.wasmBindgen.} =
+proc jsSVGFEOffsetElementIn1*(self: SVGFEOffsetElement): JsObject =
   discard
-proc jsSVGFEPointLightElementY*(self: SVGFEPointLightElement): JsObject {.wasmBindgen.} =
+proc jsSVGFEOffsetElementDx*(self: SVGFEOffsetElement): JsObject =
   discard
-proc jsSVGFEPointLightElementZ*(self: SVGFEPointLightElement): JsObject {.wasmBindgen.} =
-  discard
-
-proc jsSVGFESpecularLightingElementIn1*(self: SVGFESpecularLightingElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsSVGFESpecularLightingElementSurfaceScale*(self: SVGFESpecularLightingElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsSVGFESpecularLightingElementSpecularConstant*(self: SVGFESpecularLightingElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsSVGFESpecularLightingElementSpecularExponent*(self: SVGFESpecularLightingElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsSVGFESpecularLightingElementKernelUnitLengthX*(self: SVGFESpecularLightingElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsSVGFESpecularLightingElementKernelUnitLengthY*(self: SVGFESpecularLightingElement): JsObject {.wasmBindgen.} =
+proc jsSVGFEOffsetElementDy*(self: SVGFEOffsetElement): JsObject =
   discard
 
-proc jsSVGFESpotLightElementX*(self: SVGFESpotLightElement): JsObject {.wasmBindgen.} =
+proc jsSVGFEPointLightElementX*(self: SVGFEPointLightElement): JsObject =
   discard
-proc jsSVGFESpotLightElementY*(self: SVGFESpotLightElement): JsObject {.wasmBindgen.} =
+proc jsSVGFEPointLightElementY*(self: SVGFEPointLightElement): JsObject =
   discard
-proc jsSVGFESpotLightElementZ*(self: SVGFESpotLightElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsSVGFESpotLightElementPointsAtX*(self: SVGFESpotLightElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsSVGFESpotLightElementPointsAtY*(self: SVGFESpotLightElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsSVGFESpotLightElementPointsAtZ*(self: SVGFESpotLightElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsSVGFESpotLightElementSpecularExponent*(self: SVGFESpotLightElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsSVGFESpotLightElementLimitingConeAngle*(self: SVGFESpotLightElement): JsObject {.wasmBindgen.} =
+proc jsSVGFEPointLightElementZ*(self: SVGFEPointLightElement): JsObject =
   discard
 
-proc jsSVGFETileElementIn1*(self: SVGFETileElement): JsObject {.wasmBindgen.} =
+proc jsSVGFESpecularLightingElementIn1*(self: SVGFESpecularLightingElement): JsObject =
+  discard
+proc jsSVGFESpecularLightingElementSurfaceScale*(self: SVGFESpecularLightingElement): JsObject =
+  discard
+proc jsSVGFESpecularLightingElementSpecularConstant*(self: SVGFESpecularLightingElement): JsObject =
+  discard
+proc jsSVGFESpecularLightingElementSpecularExponent*(self: SVGFESpecularLightingElement): JsObject =
+  discard
+proc jsSVGFESpecularLightingElementKernelUnitLengthX*(self: SVGFESpecularLightingElement): JsObject =
+  discard
+proc jsSVGFESpecularLightingElementKernelUnitLengthY*(self: SVGFESpecularLightingElement): JsObject =
+  discard
+
+proc jsSVGFESpotLightElementX*(self: SVGFESpotLightElement): JsObject =
+  discard
+proc jsSVGFESpotLightElementY*(self: SVGFESpotLightElement): JsObject =
+  discard
+proc jsSVGFESpotLightElementZ*(self: SVGFESpotLightElement): JsObject =
+  discard
+proc jsSVGFESpotLightElementPointsAtX*(self: SVGFESpotLightElement): JsObject =
+  discard
+proc jsSVGFESpotLightElementPointsAtY*(self: SVGFESpotLightElement): JsObject =
+  discard
+proc jsSVGFESpotLightElementPointsAtZ*(self: SVGFESpotLightElement): JsObject =
+  discard
+proc jsSVGFESpotLightElementSpecularExponent*(self: SVGFESpotLightElement): JsObject =
+  discard
+proc jsSVGFESpotLightElementLimitingConeAngle*(self: SVGFESpotLightElement): JsObject =
+  discard
+
+proc jsSVGFETileElementIn1*(self: SVGFETileElement): JsObject =
   discard
 
 const jsSVGFETurbulenceElementSVG_TURBULENCE_TYPE_UNKNOWN* : uint16 = 0
@@ -8865,84 +8864,84 @@ const jsSVGFETurbulenceElementSVG_TURBULENCE_TYPE_TURBULENCE* : uint16 = 0
 const jsSVGFETurbulenceElementSVG_STITCHTYPE_UNKNOWN* : uint16 = 0
 const jsSVGFETurbulenceElementSVG_STITCHTYPE_STITCH* : uint16 = 0
 const jsSVGFETurbulenceElementSVG_STITCHTYPE_NOSTITCH* : uint16 = 0
-proc jsSVGFETurbulenceElementBaseFrequencyX*(self: SVGFETurbulenceElement): JsObject {.wasmBindgen.} =
+proc jsSVGFETurbulenceElementBaseFrequencyX*(self: SVGFETurbulenceElement): JsObject =
   discard
-proc jsSVGFETurbulenceElementBaseFrequencyY*(self: SVGFETurbulenceElement): JsObject {.wasmBindgen.} =
+proc jsSVGFETurbulenceElementBaseFrequencyY*(self: SVGFETurbulenceElement): JsObject =
   discard
-proc jsSVGFETurbulenceElementNumOctaves*(self: SVGFETurbulenceElement): JsObject {.wasmBindgen.} =
+proc jsSVGFETurbulenceElementNumOctaves*(self: SVGFETurbulenceElement): JsObject =
   discard
-proc jsSVGFETurbulenceElementSeed*(self: SVGFETurbulenceElement): JsObject {.wasmBindgen.} =
+proc jsSVGFETurbulenceElementSeed*(self: SVGFETurbulenceElement): JsObject =
   discard
-proc jsSVGFETurbulenceElementStitchTiles*(self: SVGFETurbulenceElement): JsObject {.wasmBindgen.} =
+proc jsSVGFETurbulenceElementStitchTiles*(self: SVGFETurbulenceElement): JsObject =
   discard
-proc jsSVGFETurbulenceElementTypeVal*(self: SVGFETurbulenceElement): JsObject {.wasmBindgen.} =
-  discard
-
-proc jsSVGFilterElementFilterUnits*(self: SVGFilterElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsSVGFilterElementPrimitiveUnits*(self: SVGFilterElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsSVGFilterElementX*(self: SVGFilterElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsSVGFilterElementY*(self: SVGFilterElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsSVGFilterElementWidth*(self: SVGFilterElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsSVGFilterElementHeight*(self: SVGFilterElement): JsObject {.wasmBindgen.} =
+proc jsSVGFETurbulenceElementTypeVal*(self: SVGFETurbulenceElement): JsObject =
   discard
 
-proc jsSVGForeignObjectElementX*(self: SVGForeignObjectElement): JsObject {.wasmBindgen.} =
+proc jsSVGFilterElementFilterUnits*(self: SVGFilterElement): JsObject =
   discard
-proc jsSVGForeignObjectElementY*(self: SVGForeignObjectElement): JsObject {.wasmBindgen.} =
+proc jsSVGFilterElementPrimitiveUnits*(self: SVGFilterElement): JsObject =
   discard
-proc jsSVGForeignObjectElementWidth*(self: SVGForeignObjectElement): JsObject {.wasmBindgen.} =
+proc jsSVGFilterElementX*(self: SVGFilterElement): JsObject =
   discard
-proc jsSVGForeignObjectElementHeight*(self: SVGForeignObjectElement): JsObject {.wasmBindgen.} =
+proc jsSVGFilterElementY*(self: SVGFilterElement): JsObject =
+  discard
+proc jsSVGFilterElementWidth*(self: SVGFilterElement): JsObject =
+  discard
+proc jsSVGFilterElementHeight*(self: SVGFilterElement): JsObject =
+  discard
+
+proc jsSVGForeignObjectElementX*(self: SVGForeignObjectElement): JsObject =
+  discard
+proc jsSVGForeignObjectElementY*(self: SVGForeignObjectElement): JsObject =
+  discard
+proc jsSVGForeignObjectElementWidth*(self: SVGForeignObjectElement): JsObject =
+  discard
+proc jsSVGForeignObjectElementHeight*(self: SVGForeignObjectElement): JsObject =
   discard
 
 
-proc jsSVGGeometryElementPathLength*(self: SVGGeometryElement): JsObject {.wasmBindgen.} =
+proc jsSVGGeometryElementPathLength*(self: SVGGeometryElement): JsObject =
   discard
-proc jsGetTotalLength*(self: SVGGeometryElement): float32 {.wasmBindgen.} =
+proc jsGetTotalLength*(self: SVGGeometryElement): float32 =
   discard
-proc jsGetPointAtLength*(self: SVGGeometryElement; distance: float32): JsObject {.wasmBindgen.} =
+proc jsGetPointAtLength*(self: SVGGeometryElement; distance: float32): JsObject =
   discard
-proc jsIsPointInFill*(self: SVGGeometryElement; point: JsObject): bool {.wasmBindgen.} =
+proc jsIsPointInFill*(self: SVGGeometryElement; point: JsObject): bool =
   discard
-proc jsIsPointInStroke*(self: SVGGeometryElement; point: JsObject): bool {.wasmBindgen.} =
+proc jsIsPointInStroke*(self: SVGGeometryElement; point: JsObject): bool =
   discard
 
 const jsSVGGradientElementSVG_SPREADMETHOD_UNKNOWN* : uint16 = 0
 const jsSVGGradientElementSVG_SPREADMETHOD_PAD* : uint16 = 0
 const jsSVGGradientElementSVG_SPREADMETHOD_REFLECT* : uint16 = 0
 const jsSVGGradientElementSVG_SPREADMETHOD_REPEAT* : uint16 = 0
-proc jsSVGGradientElementGradientUnits*(self: SVGGradientElement): JsObject {.wasmBindgen.} =
+proc jsSVGGradientElementGradientUnits*(self: SVGGradientElement): JsObject =
   discard
-proc jsSVGGradientElementGradientTransform*(self: SVGGradientElement): JsObject {.wasmBindgen.} =
+proc jsSVGGradientElementGradientTransform*(self: SVGGradientElement): JsObject =
   discard
-proc jsSVGGradientElementSpreadMethod*(self: SVGGradientElement): JsObject {.wasmBindgen.} =
-  discard
-
-proc jsSVGGraphicsElementTransform*(self: SVGGraphicsElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsGetBBox*(self: SVGGraphicsElement; aOptions: JsObject): JsObject {.wasmBindgen.} =
-  discard
-proc jsGetCTM*(self: SVGGraphicsElement): Option[JsObject] {.wasmBindgen.} =
-  discard
-proc jsGetScreenCTM*(self: SVGGraphicsElement): Option[JsObject] {.wasmBindgen.} =
-  discard
-proc jsGetTransformToElement*(self: SVGGraphicsElement; element: JsObject): JsObject {.wasmBindgen.} =
+proc jsSVGGradientElementSpreadMethod*(self: SVGGradientElement): JsObject =
   discard
 
-proc jsSVGImageElementX*(self: SVGImageElement): JsObject {.wasmBindgen.} =
+proc jsSVGGraphicsElementTransform*(self: SVGGraphicsElement): JsObject =
   discard
-proc jsSVGImageElementY*(self: SVGImageElement): JsObject {.wasmBindgen.} =
+proc jsGetBBox*(self: SVGGraphicsElement; aOptions: JsObject): JsObject =
   discard
-proc jsSVGImageElementWidth*(self: SVGImageElement): JsObject {.wasmBindgen.} =
+proc jsGetCTM*(self: SVGGraphicsElement): Option[JsObject] =
   discard
-proc jsSVGImageElementHeight*(self: SVGImageElement): JsObject {.wasmBindgen.} =
+proc jsGetScreenCTM*(self: SVGGraphicsElement): Option[JsObject] =
   discard
-proc jsSVGImageElementPreserveAspectRatio*(self: SVGImageElement): JsObject {.wasmBindgen.} =
+proc jsGetTransformToElement*(self: SVGGraphicsElement; element: JsObject): JsObject =
+  discard
+
+proc jsSVGImageElementX*(self: SVGImageElement): JsObject =
+  discard
+proc jsSVGImageElementY*(self: SVGImageElement): JsObject =
+  discard
+proc jsSVGImageElementWidth*(self: SVGImageElement): JsObject =
+  discard
+proc jsSVGImageElementHeight*(self: SVGImageElement): JsObject =
+  discard
+proc jsSVGImageElementPreserveAspectRatio*(self: SVGImageElement): JsObject =
   discard
 
 const jsSVGLengthSVG_LENGTHTYPE_UNKNOWN* : uint16 = 0
@@ -8956,52 +8955,52 @@ const jsSVGLengthSVG_LENGTHTYPE_MM* : uint16 = 0
 const jsSVGLengthSVG_LENGTHTYPE_IN* : uint16 = 0
 const jsSVGLengthSVG_LENGTHTYPE_PT* : uint16 = 0
 const jsSVGLengthSVG_LENGTHTYPE_PC* : uint16 = 0
-proc jsSVGLengthUnitType*(self: SVGLength): uint16 {.wasmBindgen.} =
+proc jsSVGLengthUnitType*(self: SVGLength): uint16 =
   discard
-proc jsSVGLengthValue*(self: SVGLength): float32 {.wasmBindgen.} =
+proc jsSVGLengthValue*(self: SVGLength): float32 =
   discard
-proc jsSVGLengthValueInSpecifiedUnits*(self: SVGLength): float32 {.wasmBindgen.} =
+proc jsSVGLengthValueInSpecifiedUnits*(self: SVGLength): float32 =
   discard
-proc jsSVGLengthValueAsString*(self: SVGLength): cstring {.wasmBindgen.} =
+proc jsSVGLengthValueAsString*(self: SVGLength): cstring =
   discard
-proc jsNewValueSpecifiedUnits*(self: SVGLength; unitType: uint16; valueInSpecifiedUnits: float32): void {.wasmBindgen.} =
+proc jsNewValueSpecifiedUnits*(self: SVGLength; unitType: uint16; valueInSpecifiedUnits: float32): void =
   discard
-proc jsConvertToSpecifiedUnits*(self: SVGLength; unitType: uint16): void {.wasmBindgen.} =
-  discard
-
-proc jsSVGLengthListNumberOfItems*(self: SVGLengthList): uint32 {.wasmBindgen.} =
-  discard
-proc jsClear*(self: SVGLengthList): void {.wasmBindgen.} =
-  discard
-proc jsInitialize*(self: SVGLengthList; newItem: JsObject): JsObject {.wasmBindgen.} =
-  discard
-proc jsGetItem*(self: SVGLengthList; index: uint32): JsObject {.wasmBindgen.} =
-  discard
-proc jsInsertItemBefore*(self: SVGLengthList; newItem: JsObject; index: uint32): JsObject {.wasmBindgen.} =
-  discard
-proc jsReplaceItem*(self: SVGLengthList; newItem: JsObject; index: uint32): JsObject {.wasmBindgen.} =
-  discard
-proc jsRemoveItem*(self: SVGLengthList; index: uint32): JsObject {.wasmBindgen.} =
-  discard
-proc jsAppendItem*(self: SVGLengthList; newItem: JsObject): JsObject {.wasmBindgen.} =
+proc jsConvertToSpecifiedUnits*(self: SVGLength; unitType: uint16): void =
   discard
 
-proc jsSVGLineElementX1*(self: SVGLineElement): JsObject {.wasmBindgen.} =
+proc jsSVGLengthListNumberOfItems*(self: SVGLengthList): uint32 =
   discard
-proc jsSVGLineElementY1*(self: SVGLineElement): JsObject {.wasmBindgen.} =
+proc jsClear*(self: SVGLengthList): void =
   discard
-proc jsSVGLineElementX2*(self: SVGLineElement): JsObject {.wasmBindgen.} =
+proc jsInitialize*(self: SVGLengthList; newItem: JsObject): JsObject =
   discard
-proc jsSVGLineElementY2*(self: SVGLineElement): JsObject {.wasmBindgen.} =
+proc jsGetItem*(self: SVGLengthList; index: uint32): JsObject =
+  discard
+proc jsInsertItemBefore*(self: SVGLengthList; newItem: JsObject; index: uint32): JsObject =
+  discard
+proc jsReplaceItem*(self: SVGLengthList; newItem: JsObject; index: uint32): JsObject =
+  discard
+proc jsRemoveItem*(self: SVGLengthList; index: uint32): JsObject =
+  discard
+proc jsAppendItem*(self: SVGLengthList; newItem: JsObject): JsObject =
   discard
 
-proc jsSVGLinearGradientElementX1*(self: SVGLinearGradientElement): JsObject {.wasmBindgen.} =
+proc jsSVGLineElementX1*(self: SVGLineElement): JsObject =
   discard
-proc jsSVGLinearGradientElementY1*(self: SVGLinearGradientElement): JsObject {.wasmBindgen.} =
+proc jsSVGLineElementY1*(self: SVGLineElement): JsObject =
   discard
-proc jsSVGLinearGradientElementX2*(self: SVGLinearGradientElement): JsObject {.wasmBindgen.} =
+proc jsSVGLineElementX2*(self: SVGLineElement): JsObject =
   discard
-proc jsSVGLinearGradientElementY2*(self: SVGLinearGradientElement): JsObject {.wasmBindgen.} =
+proc jsSVGLineElementY2*(self: SVGLineElement): JsObject =
+  discard
+
+proc jsSVGLinearGradientElementX1*(self: SVGLinearGradientElement): JsObject =
+  discard
+proc jsSVGLinearGradientElementY1*(self: SVGLinearGradientElement): JsObject =
+  discard
+proc jsSVGLinearGradientElementX2*(self: SVGLinearGradientElement): JsObject =
+  discard
+proc jsSVGLinearGradientElementY2*(self: SVGLinearGradientElement): JsObject =
   discard
 
 
@@ -9011,97 +9010,97 @@ const jsSVGMarkerElementSVG_MARKERUNITS_STROKEWIDTH* : uint16 = 0
 const jsSVGMarkerElementSVG_MARKER_ORIENT_UNKNOWN* : uint16 = 0
 const jsSVGMarkerElementSVG_MARKER_ORIENT_AUTO* : uint16 = 0
 const jsSVGMarkerElementSVG_MARKER_ORIENT_ANGLE* : uint16 = 0
-proc jsSVGMarkerElementRefX*(self: SVGMarkerElement): JsObject {.wasmBindgen.} =
+proc jsSVGMarkerElementRefX*(self: SVGMarkerElement): JsObject =
   discard
-proc jsSVGMarkerElementRefY*(self: SVGMarkerElement): JsObject {.wasmBindgen.} =
+proc jsSVGMarkerElementRefY*(self: SVGMarkerElement): JsObject =
   discard
-proc jsSVGMarkerElementMarkerUnits*(self: SVGMarkerElement): JsObject {.wasmBindgen.} =
+proc jsSVGMarkerElementMarkerUnits*(self: SVGMarkerElement): JsObject =
   discard
-proc jsSVGMarkerElementMarkerWidth*(self: SVGMarkerElement): JsObject {.wasmBindgen.} =
+proc jsSVGMarkerElementMarkerWidth*(self: SVGMarkerElement): JsObject =
   discard
-proc jsSVGMarkerElementMarkerHeight*(self: SVGMarkerElement): JsObject {.wasmBindgen.} =
+proc jsSVGMarkerElementMarkerHeight*(self: SVGMarkerElement): JsObject =
   discard
-proc jsSVGMarkerElementOrientType*(self: SVGMarkerElement): JsObject {.wasmBindgen.} =
+proc jsSVGMarkerElementOrientType*(self: SVGMarkerElement): JsObject =
   discard
-proc jsSVGMarkerElementOrientAngle*(self: SVGMarkerElement): JsObject {.wasmBindgen.} =
+proc jsSVGMarkerElementOrientAngle*(self: SVGMarkerElement): JsObject =
   discard
-proc jsSetOrientToAuto*(self: SVGMarkerElement): void {.wasmBindgen.} =
+proc jsSetOrientToAuto*(self: SVGMarkerElement): void =
   discard
-proc jsSetOrientToAngle*(self: SVGMarkerElement; angle: JsObject): void {.wasmBindgen.} =
+proc jsSetOrientToAngle*(self: SVGMarkerElement; angle: JsObject): void =
   discard
 
 const jsSVGMaskElementSVG_MASKTYPE_LUMINANCE* : uint16 = 0
 const jsSVGMaskElementSVG_MASKTYPE_ALPHA* : uint16 = 0
-proc jsSVGMaskElementMaskUnits*(self: SVGMaskElement): JsObject {.wasmBindgen.} =
+proc jsSVGMaskElementMaskUnits*(self: SVGMaskElement): JsObject =
   discard
-proc jsSVGMaskElementMaskContentUnits*(self: SVGMaskElement): JsObject {.wasmBindgen.} =
+proc jsSVGMaskElementMaskContentUnits*(self: SVGMaskElement): JsObject =
   discard
-proc jsSVGMaskElementX*(self: SVGMaskElement): JsObject {.wasmBindgen.} =
+proc jsSVGMaskElementX*(self: SVGMaskElement): JsObject =
   discard
-proc jsSVGMaskElementY*(self: SVGMaskElement): JsObject {.wasmBindgen.} =
+proc jsSVGMaskElementY*(self: SVGMaskElement): JsObject =
   discard
-proc jsSVGMaskElementWidth*(self: SVGMaskElement): JsObject {.wasmBindgen.} =
+proc jsSVGMaskElementWidth*(self: SVGMaskElement): JsObject =
   discard
-proc jsSVGMaskElementHeight*(self: SVGMaskElement): JsObject {.wasmBindgen.} =
-  discard
-
-proc jsSVGMatrixA*(self: SVGMatrix): float32 {.wasmBindgen.} =
-  discard
-proc jsSVGMatrixB*(self: SVGMatrix): float32 {.wasmBindgen.} =
-  discard
-proc jsSVGMatrixC*(self: SVGMatrix): float32 {.wasmBindgen.} =
-  discard
-proc jsSVGMatrixD*(self: SVGMatrix): float32 {.wasmBindgen.} =
-  discard
-proc jsSVGMatrixE*(self: SVGMatrix): float32 {.wasmBindgen.} =
-  discard
-proc jsSVGMatrixF*(self: SVGMatrix): float32 {.wasmBindgen.} =
-  discard
-proc jsMultiply*(self: SVGMatrix; secondMatrix: JsObject): JsObject {.wasmBindgen.} =
-  discard
-proc jsInverse*(self: SVGMatrix): JsObject {.wasmBindgen.} =
-  discard
-proc jsTranslate*(self: SVGMatrix; x: float32; y: float32): JsObject {.wasmBindgen.} =
-  discard
-proc jsScale*(self: SVGMatrix; scaleFactor: float32): JsObject {.wasmBindgen.} =
-  discard
-proc jsScaleNonUniform*(self: SVGMatrix; scaleFactorX: float32; scaleFactorY: float32): JsObject {.wasmBindgen.} =
-  discard
-proc jsRotate*(self: SVGMatrix; angle: float32): JsObject {.wasmBindgen.} =
-  discard
-proc jsRotateFromVector*(self: SVGMatrix; x: float32; y: float32): JsObject {.wasmBindgen.} =
-  discard
-proc jsFlipX*(self: SVGMatrix): JsObject {.wasmBindgen.} =
-  discard
-proc jsFlipY*(self: SVGMatrix): JsObject {.wasmBindgen.} =
-  discard
-proc jsSkewX*(self: SVGMatrix; angle: float32): JsObject {.wasmBindgen.} =
-  discard
-proc jsSkewY*(self: SVGMatrix; angle: float32): JsObject {.wasmBindgen.} =
+proc jsSVGMaskElementHeight*(self: SVGMaskElement): JsObject =
   discard
 
-
-proc jsSVGNumberValue*(self: SVGNumber): float32 {.wasmBindgen.} =
+proc jsSVGMatrixA*(self: SVGMatrix): float32 =
+  discard
+proc jsSVGMatrixB*(self: SVGMatrix): float32 =
+  discard
+proc jsSVGMatrixC*(self: SVGMatrix): float32 =
+  discard
+proc jsSVGMatrixD*(self: SVGMatrix): float32 =
+  discard
+proc jsSVGMatrixE*(self: SVGMatrix): float32 =
+  discard
+proc jsSVGMatrixF*(self: SVGMatrix): float32 =
+  discard
+proc jsMultiply*(self: SVGMatrix; secondMatrix: JsObject): JsObject =
+  discard
+proc jsInverse*(self: SVGMatrix): JsObject =
+  discard
+proc jsTranslate*(self: SVGMatrix; x: float32; y: float32): JsObject =
+  discard
+proc jsScale*(self: SVGMatrix; scaleFactor: float32): JsObject =
+  discard
+proc jsScaleNonUniform*(self: SVGMatrix; scaleFactorX: float32; scaleFactorY: float32): JsObject =
+  discard
+proc jsRotate*(self: SVGMatrix; angle: float32): JsObject =
+  discard
+proc jsRotateFromVector*(self: SVGMatrix; x: float32; y: float32): JsObject =
+  discard
+proc jsFlipX*(self: SVGMatrix): JsObject =
+  discard
+proc jsFlipY*(self: SVGMatrix): JsObject =
+  discard
+proc jsSkewX*(self: SVGMatrix; angle: float32): JsObject =
+  discard
+proc jsSkewY*(self: SVGMatrix; angle: float32): JsObject =
   discard
 
-proc jsSVGNumberListNumberOfItems*(self: SVGNumberList): uint32 {.wasmBindgen.} =
-  discard
-proc jsClear*(self: SVGNumberList): void {.wasmBindgen.} =
-  discard
-proc jsInitialize*(self: SVGNumberList; newItem: JsObject): JsObject {.wasmBindgen.} =
-  discard
-proc jsGetItem*(self: SVGNumberList; index: uint32): JsObject {.wasmBindgen.} =
-  discard
-proc jsInsertItemBefore*(self: SVGNumberList; newItem: JsObject; index: uint32): JsObject {.wasmBindgen.} =
-  discard
-proc jsReplaceItem*(self: SVGNumberList; newItem: JsObject; index: uint32): JsObject {.wasmBindgen.} =
-  discard
-proc jsRemoveItem*(self: SVGNumberList; index: uint32): JsObject {.wasmBindgen.} =
-  discard
-proc jsAppendItem*(self: SVGNumberList; newItem: JsObject): JsObject {.wasmBindgen.} =
+
+proc jsSVGNumberValue*(self: SVGNumber): float32 =
   discard
 
-proc jsGetPathSegAtLength*(self: SVGPathElement; distance: float32): uint32 {.wasmBindgen.} =
+proc jsSVGNumberListNumberOfItems*(self: SVGNumberList): uint32 =
+  discard
+proc jsClear*(self: SVGNumberList): void =
+  discard
+proc jsInitialize*(self: SVGNumberList; newItem: JsObject): JsObject =
+  discard
+proc jsGetItem*(self: SVGNumberList; index: uint32): JsObject =
+  discard
+proc jsInsertItemBefore*(self: SVGNumberList; newItem: JsObject; index: uint32): JsObject =
+  discard
+proc jsReplaceItem*(self: SVGNumberList; newItem: JsObject; index: uint32): JsObject =
+  discard
+proc jsRemoveItem*(self: SVGNumberList; index: uint32): JsObject =
+  discard
+proc jsAppendItem*(self: SVGNumberList; newItem: JsObject): JsObject =
+  discard
+
+proc jsGetPathSegAtLength*(self: SVGPathElement; distance: float32): uint32 =
   discard
 
 const jsSVGPathSegPATHSEG_UNKNOWN* : uint16 = 0
@@ -9124,188 +9123,188 @@ const jsSVGPathSegPATHSEG_CURVETO_CUBIC_SMOOTH_ABS* : uint16 = 0
 const jsSVGPathSegPATHSEG_CURVETO_CUBIC_SMOOTH_REL* : uint16 = 0
 const jsSVGPathSegPATHSEG_CURVETO_QUADRATIC_SMOOTH_ABS* : uint16 = 0
 const jsSVGPathSegPATHSEG_CURVETO_QUADRATIC_SMOOTH_REL* : uint16 = 0
-proc jsSVGPathSegPathSegType*(self: SVGPathSeg): uint16 {.wasmBindgen.} =
+proc jsSVGPathSegPathSegType*(self: SVGPathSeg): uint16 =
   discard
-proc jsSVGPathSegPathSegTypeAsLetter*(self: SVGPathSeg): cstring {.wasmBindgen.} =
-  discard
-
-
-proc jsSVGPathSegMovetoAbsX*(self: SVGPathSegMovetoAbs): float32 {.wasmBindgen.} =
-  discard
-proc jsSVGPathSegMovetoAbsY*(self: SVGPathSegMovetoAbs): float32 {.wasmBindgen.} =
+proc jsSVGPathSegPathSegTypeAsLetter*(self: SVGPathSeg): cstring =
   discard
 
-proc jsSVGPathSegMovetoRelX*(self: SVGPathSegMovetoRel): float32 {.wasmBindgen.} =
+
+proc jsSVGPathSegMovetoAbsX*(self: SVGPathSegMovetoAbs): float32 =
   discard
-proc jsSVGPathSegMovetoRelY*(self: SVGPathSegMovetoRel): float32 {.wasmBindgen.} =
+proc jsSVGPathSegMovetoAbsY*(self: SVGPathSegMovetoAbs): float32 =
   discard
 
-proc jsSVGPathSegLinetoAbsX*(self: SVGPathSegLinetoAbs): float32 {.wasmBindgen.} =
+proc jsSVGPathSegMovetoRelX*(self: SVGPathSegMovetoRel): float32 =
   discard
-proc jsSVGPathSegLinetoAbsY*(self: SVGPathSegLinetoAbs): float32 {.wasmBindgen.} =
-  discard
-
-proc jsSVGPathSegLinetoRelX*(self: SVGPathSegLinetoRel): float32 {.wasmBindgen.} =
-  discard
-proc jsSVGPathSegLinetoRelY*(self: SVGPathSegLinetoRel): float32 {.wasmBindgen.} =
+proc jsSVGPathSegMovetoRelY*(self: SVGPathSegMovetoRel): float32 =
   discard
 
-proc jsSVGPathSegCurvetoCubicAbsX*(self: SVGPathSegCurvetoCubicAbs): float32 {.wasmBindgen.} =
+proc jsSVGPathSegLinetoAbsX*(self: SVGPathSegLinetoAbs): float32 =
   discard
-proc jsSVGPathSegCurvetoCubicAbsY*(self: SVGPathSegCurvetoCubicAbs): float32 {.wasmBindgen.} =
-  discard
-proc jsSVGPathSegCurvetoCubicAbsX1*(self: SVGPathSegCurvetoCubicAbs): float32 {.wasmBindgen.} =
-  discard
-proc jsSVGPathSegCurvetoCubicAbsY1*(self: SVGPathSegCurvetoCubicAbs): float32 {.wasmBindgen.} =
-  discard
-proc jsSVGPathSegCurvetoCubicAbsX2*(self: SVGPathSegCurvetoCubicAbs): float32 {.wasmBindgen.} =
-  discard
-proc jsSVGPathSegCurvetoCubicAbsY2*(self: SVGPathSegCurvetoCubicAbs): float32 {.wasmBindgen.} =
+proc jsSVGPathSegLinetoAbsY*(self: SVGPathSegLinetoAbs): float32 =
   discard
 
-proc jsSVGPathSegCurvetoCubicRelX*(self: SVGPathSegCurvetoCubicRel): float32 {.wasmBindgen.} =
+proc jsSVGPathSegLinetoRelX*(self: SVGPathSegLinetoRel): float32 =
   discard
-proc jsSVGPathSegCurvetoCubicRelY*(self: SVGPathSegCurvetoCubicRel): float32 {.wasmBindgen.} =
-  discard
-proc jsSVGPathSegCurvetoCubicRelX1*(self: SVGPathSegCurvetoCubicRel): float32 {.wasmBindgen.} =
-  discard
-proc jsSVGPathSegCurvetoCubicRelY1*(self: SVGPathSegCurvetoCubicRel): float32 {.wasmBindgen.} =
-  discard
-proc jsSVGPathSegCurvetoCubicRelX2*(self: SVGPathSegCurvetoCubicRel): float32 {.wasmBindgen.} =
-  discard
-proc jsSVGPathSegCurvetoCubicRelY2*(self: SVGPathSegCurvetoCubicRel): float32 {.wasmBindgen.} =
+proc jsSVGPathSegLinetoRelY*(self: SVGPathSegLinetoRel): float32 =
   discard
 
-proc jsSVGPathSegCurvetoQuadraticAbsX*(self: SVGPathSegCurvetoQuadraticAbs): float32 {.wasmBindgen.} =
+proc jsSVGPathSegCurvetoCubicAbsX*(self: SVGPathSegCurvetoCubicAbs): float32 =
   discard
-proc jsSVGPathSegCurvetoQuadraticAbsY*(self: SVGPathSegCurvetoQuadraticAbs): float32 {.wasmBindgen.} =
+proc jsSVGPathSegCurvetoCubicAbsY*(self: SVGPathSegCurvetoCubicAbs): float32 =
   discard
-proc jsSVGPathSegCurvetoQuadraticAbsX1*(self: SVGPathSegCurvetoQuadraticAbs): float32 {.wasmBindgen.} =
+proc jsSVGPathSegCurvetoCubicAbsX1*(self: SVGPathSegCurvetoCubicAbs): float32 =
   discard
-proc jsSVGPathSegCurvetoQuadraticAbsY1*(self: SVGPathSegCurvetoQuadraticAbs): float32 {.wasmBindgen.} =
+proc jsSVGPathSegCurvetoCubicAbsY1*(self: SVGPathSegCurvetoCubicAbs): float32 =
   discard
-
-proc jsSVGPathSegCurvetoQuadraticRelX*(self: SVGPathSegCurvetoQuadraticRel): float32 {.wasmBindgen.} =
+proc jsSVGPathSegCurvetoCubicAbsX2*(self: SVGPathSegCurvetoCubicAbs): float32 =
   discard
-proc jsSVGPathSegCurvetoQuadraticRelY*(self: SVGPathSegCurvetoQuadraticRel): float32 {.wasmBindgen.} =
-  discard
-proc jsSVGPathSegCurvetoQuadraticRelX1*(self: SVGPathSegCurvetoQuadraticRel): float32 {.wasmBindgen.} =
-  discard
-proc jsSVGPathSegCurvetoQuadraticRelY1*(self: SVGPathSegCurvetoQuadraticRel): float32 {.wasmBindgen.} =
+proc jsSVGPathSegCurvetoCubicAbsY2*(self: SVGPathSegCurvetoCubicAbs): float32 =
   discard
 
-proc jsSVGPathSegArcAbsX*(self: SVGPathSegArcAbs): float32 {.wasmBindgen.} =
+proc jsSVGPathSegCurvetoCubicRelX*(self: SVGPathSegCurvetoCubicRel): float32 =
   discard
-proc jsSVGPathSegArcAbsY*(self: SVGPathSegArcAbs): float32 {.wasmBindgen.} =
+proc jsSVGPathSegCurvetoCubicRelY*(self: SVGPathSegCurvetoCubicRel): float32 =
   discard
-proc jsSVGPathSegArcAbsR1*(self: SVGPathSegArcAbs): float32 {.wasmBindgen.} =
+proc jsSVGPathSegCurvetoCubicRelX1*(self: SVGPathSegCurvetoCubicRel): float32 =
   discard
-proc jsSVGPathSegArcAbsR2*(self: SVGPathSegArcAbs): float32 {.wasmBindgen.} =
+proc jsSVGPathSegCurvetoCubicRelY1*(self: SVGPathSegCurvetoCubicRel): float32 =
   discard
-proc jsSVGPathSegArcAbsAngle*(self: SVGPathSegArcAbs): float32 {.wasmBindgen.} =
+proc jsSVGPathSegCurvetoCubicRelX2*(self: SVGPathSegCurvetoCubicRel): float32 =
   discard
-proc jsSVGPathSegArcAbsLargeArcFlag*(self: SVGPathSegArcAbs): bool {.wasmBindgen.} =
-  discard
-proc jsSVGPathSegArcAbsSweepFlag*(self: SVGPathSegArcAbs): bool {.wasmBindgen.} =
+proc jsSVGPathSegCurvetoCubicRelY2*(self: SVGPathSegCurvetoCubicRel): float32 =
   discard
 
-proc jsSVGPathSegArcRelX*(self: SVGPathSegArcRel): float32 {.wasmBindgen.} =
+proc jsSVGPathSegCurvetoQuadraticAbsX*(self: SVGPathSegCurvetoQuadraticAbs): float32 =
   discard
-proc jsSVGPathSegArcRelY*(self: SVGPathSegArcRel): float32 {.wasmBindgen.} =
+proc jsSVGPathSegCurvetoQuadraticAbsY*(self: SVGPathSegCurvetoQuadraticAbs): float32 =
   discard
-proc jsSVGPathSegArcRelR1*(self: SVGPathSegArcRel): float32 {.wasmBindgen.} =
+proc jsSVGPathSegCurvetoQuadraticAbsX1*(self: SVGPathSegCurvetoQuadraticAbs): float32 =
   discard
-proc jsSVGPathSegArcRelR2*(self: SVGPathSegArcRel): float32 {.wasmBindgen.} =
-  discard
-proc jsSVGPathSegArcRelAngle*(self: SVGPathSegArcRel): float32 {.wasmBindgen.} =
-  discard
-proc jsSVGPathSegArcRelLargeArcFlag*(self: SVGPathSegArcRel): bool {.wasmBindgen.} =
-  discard
-proc jsSVGPathSegArcRelSweepFlag*(self: SVGPathSegArcRel): bool {.wasmBindgen.} =
+proc jsSVGPathSegCurvetoQuadraticAbsY1*(self: SVGPathSegCurvetoQuadraticAbs): float32 =
   discard
 
-proc jsSVGPathSegLinetoHorizontalAbsX*(self: SVGPathSegLinetoHorizontalAbs): float32 {.wasmBindgen.} =
+proc jsSVGPathSegCurvetoQuadraticRelX*(self: SVGPathSegCurvetoQuadraticRel): float32 =
+  discard
+proc jsSVGPathSegCurvetoQuadraticRelY*(self: SVGPathSegCurvetoQuadraticRel): float32 =
+  discard
+proc jsSVGPathSegCurvetoQuadraticRelX1*(self: SVGPathSegCurvetoQuadraticRel): float32 =
+  discard
+proc jsSVGPathSegCurvetoQuadraticRelY1*(self: SVGPathSegCurvetoQuadraticRel): float32 =
   discard
 
-proc jsSVGPathSegLinetoHorizontalRelX*(self: SVGPathSegLinetoHorizontalRel): float32 {.wasmBindgen.} =
+proc jsSVGPathSegArcAbsX*(self: SVGPathSegArcAbs): float32 =
+  discard
+proc jsSVGPathSegArcAbsY*(self: SVGPathSegArcAbs): float32 =
+  discard
+proc jsSVGPathSegArcAbsR1*(self: SVGPathSegArcAbs): float32 =
+  discard
+proc jsSVGPathSegArcAbsR2*(self: SVGPathSegArcAbs): float32 =
+  discard
+proc jsSVGPathSegArcAbsAngle*(self: SVGPathSegArcAbs): float32 =
+  discard
+proc jsSVGPathSegArcAbsLargeArcFlag*(self: SVGPathSegArcAbs): bool =
+  discard
+proc jsSVGPathSegArcAbsSweepFlag*(self: SVGPathSegArcAbs): bool =
   discard
 
-proc jsSVGPathSegLinetoVerticalAbsY*(self: SVGPathSegLinetoVerticalAbs): float32 {.wasmBindgen.} =
+proc jsSVGPathSegArcRelX*(self: SVGPathSegArcRel): float32 =
+  discard
+proc jsSVGPathSegArcRelY*(self: SVGPathSegArcRel): float32 =
+  discard
+proc jsSVGPathSegArcRelR1*(self: SVGPathSegArcRel): float32 =
+  discard
+proc jsSVGPathSegArcRelR2*(self: SVGPathSegArcRel): float32 =
+  discard
+proc jsSVGPathSegArcRelAngle*(self: SVGPathSegArcRel): float32 =
+  discard
+proc jsSVGPathSegArcRelLargeArcFlag*(self: SVGPathSegArcRel): bool =
+  discard
+proc jsSVGPathSegArcRelSweepFlag*(self: SVGPathSegArcRel): bool =
   discard
 
-proc jsSVGPathSegLinetoVerticalRelY*(self: SVGPathSegLinetoVerticalRel): float32 {.wasmBindgen.} =
+proc jsSVGPathSegLinetoHorizontalAbsX*(self: SVGPathSegLinetoHorizontalAbs): float32 =
   discard
 
-proc jsSVGPathSegCurvetoCubicSmoothAbsX*(self: SVGPathSegCurvetoCubicSmoothAbs): float32 {.wasmBindgen.} =
-  discard
-proc jsSVGPathSegCurvetoCubicSmoothAbsY*(self: SVGPathSegCurvetoCubicSmoothAbs): float32 {.wasmBindgen.} =
-  discard
-proc jsSVGPathSegCurvetoCubicSmoothAbsX2*(self: SVGPathSegCurvetoCubicSmoothAbs): float32 {.wasmBindgen.} =
-  discard
-proc jsSVGPathSegCurvetoCubicSmoothAbsY2*(self: SVGPathSegCurvetoCubicSmoothAbs): float32 {.wasmBindgen.} =
+proc jsSVGPathSegLinetoHorizontalRelX*(self: SVGPathSegLinetoHorizontalRel): float32 =
   discard
 
-proc jsSVGPathSegCurvetoCubicSmoothRelX*(self: SVGPathSegCurvetoCubicSmoothRel): float32 {.wasmBindgen.} =
-  discard
-proc jsSVGPathSegCurvetoCubicSmoothRelY*(self: SVGPathSegCurvetoCubicSmoothRel): float32 {.wasmBindgen.} =
-  discard
-proc jsSVGPathSegCurvetoCubicSmoothRelX2*(self: SVGPathSegCurvetoCubicSmoothRel): float32 {.wasmBindgen.} =
-  discard
-proc jsSVGPathSegCurvetoCubicSmoothRelY2*(self: SVGPathSegCurvetoCubicSmoothRel): float32 {.wasmBindgen.} =
+proc jsSVGPathSegLinetoVerticalAbsY*(self: SVGPathSegLinetoVerticalAbs): float32 =
   discard
 
-proc jsSVGPathSegCurvetoQuadraticSmoothAbsX*(self: SVGPathSegCurvetoQuadraticSmoothAbs): float32 {.wasmBindgen.} =
-  discard
-proc jsSVGPathSegCurvetoQuadraticSmoothAbsY*(self: SVGPathSegCurvetoQuadraticSmoothAbs): float32 {.wasmBindgen.} =
+proc jsSVGPathSegLinetoVerticalRelY*(self: SVGPathSegLinetoVerticalRel): float32 =
   discard
 
-proc jsSVGPathSegCurvetoQuadraticSmoothRelX*(self: SVGPathSegCurvetoQuadraticSmoothRel): float32 {.wasmBindgen.} =
+proc jsSVGPathSegCurvetoCubicSmoothAbsX*(self: SVGPathSegCurvetoCubicSmoothAbs): float32 =
   discard
-proc jsSVGPathSegCurvetoQuadraticSmoothRelY*(self: SVGPathSegCurvetoQuadraticSmoothRel): float32 {.wasmBindgen.} =
+proc jsSVGPathSegCurvetoCubicSmoothAbsY*(self: SVGPathSegCurvetoCubicSmoothAbs): float32 =
   discard
-
-proc jsSVGPathSegListNumberOfItems*(self: SVGPathSegList): uint32 {.wasmBindgen.} =
+proc jsSVGPathSegCurvetoCubicSmoothAbsX2*(self: SVGPathSegCurvetoCubicSmoothAbs): float32 =
   discard
-proc jsGetItem*(self: SVGPathSegList; index: uint32): JsObject {.wasmBindgen.} =
-  discard
-
-proc jsSVGPatternElementPatternUnits*(self: SVGPatternElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsSVGPatternElementPatternContentUnits*(self: SVGPatternElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsSVGPatternElementPatternTransform*(self: SVGPatternElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsSVGPatternElementX*(self: SVGPatternElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsSVGPatternElementY*(self: SVGPatternElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsSVGPatternElementWidth*(self: SVGPatternElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsSVGPatternElementHeight*(self: SVGPatternElement): JsObject {.wasmBindgen.} =
+proc jsSVGPathSegCurvetoCubicSmoothAbsY2*(self: SVGPathSegCurvetoCubicSmoothAbs): float32 =
   discard
 
-proc jsSVGPointX*(self: SVGPoint): float32 {.wasmBindgen.} =
+proc jsSVGPathSegCurvetoCubicSmoothRelX*(self: SVGPathSegCurvetoCubicSmoothRel): float32 =
   discard
-proc jsSVGPointY*(self: SVGPoint): float32 {.wasmBindgen.} =
+proc jsSVGPathSegCurvetoCubicSmoothRelY*(self: SVGPathSegCurvetoCubicSmoothRel): float32 =
   discard
-proc jsMatrixTransform*(self: SVGPoint; matrix: JsObject): JsObject {.wasmBindgen.} =
+proc jsSVGPathSegCurvetoCubicSmoothRelX2*(self: SVGPathSegCurvetoCubicSmoothRel): float32 =
+  discard
+proc jsSVGPathSegCurvetoCubicSmoothRelY2*(self: SVGPathSegCurvetoCubicSmoothRel): float32 =
   discard
 
-proc jsSVGPointListNumberOfItems*(self: SVGPointList): uint32 {.wasmBindgen.} =
+proc jsSVGPathSegCurvetoQuadraticSmoothAbsX*(self: SVGPathSegCurvetoQuadraticSmoothAbs): float32 =
   discard
-proc jsClear*(self: SVGPointList): void {.wasmBindgen.} =
+proc jsSVGPathSegCurvetoQuadraticSmoothAbsY*(self: SVGPathSegCurvetoQuadraticSmoothAbs): float32 =
   discard
-proc jsInitialize*(self: SVGPointList; newItem: JsObject): JsObject {.wasmBindgen.} =
+
+proc jsSVGPathSegCurvetoQuadraticSmoothRelX*(self: SVGPathSegCurvetoQuadraticSmoothRel): float32 =
   discard
-proc jsGetItem*(self: SVGPointList; index: uint32): JsObject {.wasmBindgen.} =
+proc jsSVGPathSegCurvetoQuadraticSmoothRelY*(self: SVGPathSegCurvetoQuadraticSmoothRel): float32 =
   discard
-proc jsInsertItemBefore*(self: SVGPointList; newItem: JsObject; index: uint32): JsObject {.wasmBindgen.} =
+
+proc jsSVGPathSegListNumberOfItems*(self: SVGPathSegList): uint32 =
   discard
-proc jsReplaceItem*(self: SVGPointList; newItem: JsObject; index: uint32): JsObject {.wasmBindgen.} =
+proc jsGetItem*(self: SVGPathSegList; index: uint32): JsObject =
   discard
-proc jsRemoveItem*(self: SVGPointList; index: uint32): JsObject {.wasmBindgen.} =
+
+proc jsSVGPatternElementPatternUnits*(self: SVGPatternElement): JsObject =
   discard
-proc jsAppendItem*(self: SVGPointList; newItem: JsObject): JsObject {.wasmBindgen.} =
+proc jsSVGPatternElementPatternContentUnits*(self: SVGPatternElement): JsObject =
+  discard
+proc jsSVGPatternElementPatternTransform*(self: SVGPatternElement): JsObject =
+  discard
+proc jsSVGPatternElementX*(self: SVGPatternElement): JsObject =
+  discard
+proc jsSVGPatternElementY*(self: SVGPatternElement): JsObject =
+  discard
+proc jsSVGPatternElementWidth*(self: SVGPatternElement): JsObject =
+  discard
+proc jsSVGPatternElementHeight*(self: SVGPatternElement): JsObject =
+  discard
+
+proc jsSVGPointX*(self: SVGPoint): float32 =
+  discard
+proc jsSVGPointY*(self: SVGPoint): float32 =
+  discard
+proc jsMatrixTransform*(self: SVGPoint; matrix: JsObject): JsObject =
+  discard
+
+proc jsSVGPointListNumberOfItems*(self: SVGPointList): uint32 =
+  discard
+proc jsClear*(self: SVGPointList): void =
+  discard
+proc jsInitialize*(self: SVGPointList; newItem: JsObject): JsObject =
+  discard
+proc jsGetItem*(self: SVGPointList; index: uint32): JsObject =
+  discard
+proc jsInsertItemBefore*(self: SVGPointList; newItem: JsObject; index: uint32): JsObject =
+  discard
+proc jsReplaceItem*(self: SVGPointList; newItem: JsObject; index: uint32): JsObject =
+  discard
+proc jsRemoveItem*(self: SVGPointList; index: uint32): JsObject =
+  discard
+proc jsAppendItem*(self: SVGPointList; newItem: JsObject): JsObject =
   discard
 
 
@@ -9324,132 +9323,132 @@ const jsSVGPreserveAspectRatioSVG_PRESERVEASPECTRATIO_XMAXYMAX* : uint16 = 0
 const jsSVGPreserveAspectRatioSVG_MEETORSLICE_UNKNOWN* : uint16 = 0
 const jsSVGPreserveAspectRatioSVG_MEETORSLICE_MEET* : uint16 = 0
 const jsSVGPreserveAspectRatioSVG_MEETORSLICE_SLICE* : uint16 = 0
-proc jsSVGPreserveAspectRatioAlign*(self: SVGPreserveAspectRatio): uint16 {.wasmBindgen.} =
+proc jsSVGPreserveAspectRatioAlign*(self: SVGPreserveAspectRatio): uint16 =
   discard
-proc jsSVGPreserveAspectRatioMeetOrSlice*(self: SVGPreserveAspectRatio): uint16 {.wasmBindgen.} =
-  discard
-
-proc jsSVGRadialGradientElementCx*(self: SVGRadialGradientElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsSVGRadialGradientElementCy*(self: SVGRadialGradientElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsSVGRadialGradientElementR*(self: SVGRadialGradientElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsSVGRadialGradientElementFx*(self: SVGRadialGradientElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsSVGRadialGradientElementFy*(self: SVGRadialGradientElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsSVGRadialGradientElementFr*(self: SVGRadialGradientElement): JsObject {.wasmBindgen.} =
+proc jsSVGPreserveAspectRatioMeetOrSlice*(self: SVGPreserveAspectRatio): uint16 =
   discard
 
-proc jsSVGRectX*(self: SVGRect): float32 {.wasmBindgen.} =
+proc jsSVGRadialGradientElementCx*(self: SVGRadialGradientElement): JsObject =
   discard
-proc jsSVGRectY*(self: SVGRect): float32 {.wasmBindgen.} =
+proc jsSVGRadialGradientElementCy*(self: SVGRadialGradientElement): JsObject =
   discard
-proc jsSVGRectWidth*(self: SVGRect): float32 {.wasmBindgen.} =
+proc jsSVGRadialGradientElementR*(self: SVGRadialGradientElement): JsObject =
   discard
-proc jsSVGRectHeight*(self: SVGRect): float32 {.wasmBindgen.} =
+proc jsSVGRadialGradientElementFx*(self: SVGRadialGradientElement): JsObject =
   discard
-
-proc jsSVGRectElementX*(self: SVGRectElement): JsObject {.wasmBindgen.} =
+proc jsSVGRadialGradientElementFy*(self: SVGRadialGradientElement): JsObject =
   discard
-proc jsSVGRectElementY*(self: SVGRectElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsSVGRectElementWidth*(self: SVGRectElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsSVGRectElementHeight*(self: SVGRectElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsSVGRectElementRx*(self: SVGRectElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsSVGRectElementRy*(self: SVGRectElement): JsObject {.wasmBindgen.} =
+proc jsSVGRadialGradientElementFr*(self: SVGRadialGradientElement): JsObject =
   discard
 
-proc jsSVGSVGElementX*(self: SVGSVGElement): JsObject {.wasmBindgen.} =
+proc jsSVGRectX*(self: SVGRect): float32 =
   discard
-proc jsSVGSVGElementY*(self: SVGSVGElement): JsObject {.wasmBindgen.} =
+proc jsSVGRectY*(self: SVGRect): float32 =
   discard
-proc jsSVGSVGElementWidth*(self: SVGSVGElement): JsObject {.wasmBindgen.} =
+proc jsSVGRectWidth*(self: SVGRect): float32 =
   discard
-proc jsSVGSVGElementHeight*(self: SVGSVGElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsSVGSVGElementUseCurrentView*(self: SVGSVGElement): bool {.wasmBindgen.} =
-  discard
-proc jsSVGSVGElementCurrentScale*(self: SVGSVGElement): float32 {.wasmBindgen.} =
-  discard
-proc jsSVGSVGElementCurrentTranslate*(self: SVGSVGElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsSuspendRedraw*(self: SVGSVGElement; maxWaitMilliseconds: uint32): uint32 {.wasmBindgen.} =
-  discard
-proc jsUnsuspendRedraw*(self: SVGSVGElement; suspendHandleID: uint32): void {.wasmBindgen.} =
-  discard
-proc jsUnsuspendRedrawAll*(self: SVGSVGElement): void {.wasmBindgen.} =
-  discard
-proc jsForceRedraw*(self: SVGSVGElement): void {.wasmBindgen.} =
-  discard
-proc jsPauseAnimations*(self: SVGSVGElement): void {.wasmBindgen.} =
-  discard
-proc jsUnpauseAnimations*(self: SVGSVGElement): void {.wasmBindgen.} =
-  discard
-proc jsAnimationsPaused*(self: SVGSVGElement): bool {.wasmBindgen.} =
-  discard
-proc jsGetCurrentTime*(self: SVGSVGElement): float32 {.wasmBindgen.} =
-  discard
-proc jsSetCurrentTime*(self: SVGSVGElement; seconds: float32): void {.wasmBindgen.} =
-  discard
-proc jsDeselectAll*(self: SVGSVGElement): void {.wasmBindgen.} =
-  discard
-proc jsCreateSVGNumber*(self: SVGSVGElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsCreateSVGLength*(self: SVGSVGElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsCreateSVGAngle*(self: SVGSVGElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsCreateSVGPoint*(self: SVGSVGElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsCreateSVGMatrix*(self: SVGSVGElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsCreateSVGRect*(self: SVGSVGElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsCreateSVGTransform*(self: SVGSVGElement): JsObject {.wasmBindgen.} =
-  discard
-proc jsCreateSVGTransformFromMatrix*(self: SVGSVGElement; matrix: JsObject): JsObject {.wasmBindgen.} =
-  discard
-proc jsGetElementById*(self: SVGSVGElement; elementId: cstring): Option[JsObject] {.wasmBindgen.} =
+proc jsSVGRectHeight*(self: SVGRect): float32 =
   discard
 
-proc jsSVGScriptElementTypeVal*(self: SVGScriptElement): cstring {.wasmBindgen.} =
+proc jsSVGRectElementX*(self: SVGRectElement): JsObject =
+  discard
+proc jsSVGRectElementY*(self: SVGRectElement): JsObject =
+  discard
+proc jsSVGRectElementWidth*(self: SVGRectElement): JsObject =
+  discard
+proc jsSVGRectElementHeight*(self: SVGRectElement): JsObject =
+  discard
+proc jsSVGRectElementRx*(self: SVGRectElement): JsObject =
+  discard
+proc jsSVGRectElementRy*(self: SVGRectElement): JsObject =
+  discard
+
+proc jsSVGSVGElementX*(self: SVGSVGElement): JsObject =
+  discard
+proc jsSVGSVGElementY*(self: SVGSVGElement): JsObject =
+  discard
+proc jsSVGSVGElementWidth*(self: SVGSVGElement): JsObject =
+  discard
+proc jsSVGSVGElementHeight*(self: SVGSVGElement): JsObject =
+  discard
+proc jsSVGSVGElementUseCurrentView*(self: SVGSVGElement): bool =
+  discard
+proc jsSVGSVGElementCurrentScale*(self: SVGSVGElement): float32 =
+  discard
+proc jsSVGSVGElementCurrentTranslate*(self: SVGSVGElement): JsObject =
+  discard
+proc jsSuspendRedraw*(self: SVGSVGElement; maxWaitMilliseconds: uint32): uint32 =
+  discard
+proc jsUnsuspendRedraw*(self: SVGSVGElement; suspendHandleID: uint32): void =
+  discard
+proc jsUnsuspendRedrawAll*(self: SVGSVGElement): void =
+  discard
+proc jsForceRedraw*(self: SVGSVGElement): void =
+  discard
+proc jsPauseAnimations*(self: SVGSVGElement): void =
+  discard
+proc jsUnpauseAnimations*(self: SVGSVGElement): void =
+  discard
+proc jsAnimationsPaused*(self: SVGSVGElement): bool =
+  discard
+proc jsGetCurrentTime*(self: SVGSVGElement): float32 =
+  discard
+proc jsSetCurrentTime*(self: SVGSVGElement; seconds: float32): void =
+  discard
+proc jsDeselectAll*(self: SVGSVGElement): void =
+  discard
+proc jsCreateSVGNumber*(self: SVGSVGElement): JsObject =
+  discard
+proc jsCreateSVGLength*(self: SVGSVGElement): JsObject =
+  discard
+proc jsCreateSVGAngle*(self: SVGSVGElement): JsObject =
+  discard
+proc jsCreateSVGPoint*(self: SVGSVGElement): JsObject =
+  discard
+proc jsCreateSVGMatrix*(self: SVGSVGElement): JsObject =
+  discard
+proc jsCreateSVGRect*(self: SVGSVGElement): JsObject =
+  discard
+proc jsCreateSVGTransform*(self: SVGSVGElement): JsObject =
+  discard
+proc jsCreateSVGTransformFromMatrix*(self: SVGSVGElement; matrix: JsObject): JsObject =
+  discard
+proc jsGetElementById*(self: SVGSVGElement; elementId: cstring): Option[JsObject] =
+  discard
+
+proc jsSVGScriptElementTypeVal*(self: SVGScriptElement): cstring =
   discard
 
 
-proc jsSVGStopElementOffset*(self: SVGStopElement): JsObject {.wasmBindgen.} =
+proc jsSVGStopElementOffset*(self: SVGStopElement): JsObject =
   discard
 
-proc jsSVGStringListLength*(self: SVGStringList): uint32 {.wasmBindgen.} =
+proc jsSVGStringListLength*(self: SVGStringList): uint32 =
   discard
-proc jsSVGStringListNumberOfItems*(self: SVGStringList): uint32 {.wasmBindgen.} =
+proc jsSVGStringListNumberOfItems*(self: SVGStringList): uint32 =
   discard
-proc jsClear*(self: SVGStringList): void {.wasmBindgen.} =
+proc jsClear*(self: SVGStringList): void =
   discard
-proc jsInitialize*(self: SVGStringList; newItem: cstring): cstring {.wasmBindgen.} =
+proc jsInitialize*(self: SVGStringList; newItem: cstring): cstring =
   discard
-proc jsGetItem*(self: SVGStringList; index: uint32): cstring {.wasmBindgen.} =
+proc jsGetItem*(self: SVGStringList; index: uint32): cstring =
   discard
-proc jsInsertItemBefore*(self: SVGStringList; newItem: cstring; index: uint32): cstring {.wasmBindgen.} =
+proc jsInsertItemBefore*(self: SVGStringList; newItem: cstring; index: uint32): cstring =
   discard
-proc jsReplaceItem*(self: SVGStringList; newItem: cstring; index: uint32): cstring {.wasmBindgen.} =
+proc jsReplaceItem*(self: SVGStringList; newItem: cstring; index: uint32): cstring =
   discard
-proc jsRemoveItem*(self: SVGStringList; index: uint32): cstring {.wasmBindgen.} =
+proc jsRemoveItem*(self: SVGStringList; index: uint32): cstring =
   discard
-proc jsAppendItem*(self: SVGStringList; newItem: cstring): cstring {.wasmBindgen.} =
+proc jsAppendItem*(self: SVGStringList; newItem: cstring): cstring =
   discard
 
-proc jsSVGStyleElementXmlspace*(self: SVGStyleElement): cstring {.wasmBindgen.} =
+proc jsSVGStyleElementXmlspace*(self: SVGStyleElement): cstring =
   discard
-proc jsSVGStyleElementTypeVal*(self: SVGStyleElement): cstring {.wasmBindgen.} =
+proc jsSVGStyleElementTypeVal*(self: SVGStyleElement): cstring =
   discard
-proc jsSVGStyleElementMedia*(self: SVGStyleElement): cstring {.wasmBindgen.} =
+proc jsSVGStyleElementMedia*(self: SVGStyleElement): cstring =
   discard
-proc jsSVGStyleElementTitle*(self: SVGStyleElement): cstring {.wasmBindgen.} =
+proc jsSVGStyleElementTitle*(self: SVGStyleElement): cstring =
   discard
 
 
@@ -9458,27 +9457,27 @@ proc jsSVGStyleElementTitle*(self: SVGStyleElement): cstring {.wasmBindgen.} =
 const jsSVGTextContentElementLENGTHADJUST_UNKNOWN* : uint16 = 0
 const jsSVGTextContentElementLENGTHADJUST_SPACING* : uint16 = 0
 const jsSVGTextContentElementLENGTHADJUST_SPACINGANDGLYPHS* : uint16 = 0
-proc jsSVGTextContentElementTextLength*(self: SVGTextContentElement): JsObject {.wasmBindgen.} =
+proc jsSVGTextContentElementTextLength*(self: SVGTextContentElement): JsObject =
   discard
-proc jsSVGTextContentElementLengthAdjust*(self: SVGTextContentElement): JsObject {.wasmBindgen.} =
+proc jsSVGTextContentElementLengthAdjust*(self: SVGTextContentElement): JsObject =
   discard
-proc jsGetNumberOfChars*(self: SVGTextContentElement): int32 {.wasmBindgen.} =
+proc jsGetNumberOfChars*(self: SVGTextContentElement): int32 =
   discard
-proc jsGetComputedTextLength*(self: SVGTextContentElement): float32 {.wasmBindgen.} =
+proc jsGetComputedTextLength*(self: SVGTextContentElement): float32 =
   discard
-proc jsGetSubStringLength*(self: SVGTextContentElement; charnum: uint32; nchars: uint32): float32 {.wasmBindgen.} =
+proc jsGetSubStringLength*(self: SVGTextContentElement; charnum: uint32; nchars: uint32): float32 =
   discard
-proc jsGetStartPositionOfChar*(self: SVGTextContentElement; charnum: uint32): JsObject {.wasmBindgen.} =
+proc jsGetStartPositionOfChar*(self: SVGTextContentElement; charnum: uint32): JsObject =
   discard
-proc jsGetEndPositionOfChar*(self: SVGTextContentElement; charnum: uint32): JsObject {.wasmBindgen.} =
+proc jsGetEndPositionOfChar*(self: SVGTextContentElement; charnum: uint32): JsObject =
   discard
-proc jsGetExtentOfChar*(self: SVGTextContentElement; charnum: uint32): JsObject {.wasmBindgen.} =
+proc jsGetExtentOfChar*(self: SVGTextContentElement; charnum: uint32): JsObject =
   discard
-proc jsGetRotationOfChar*(self: SVGTextContentElement; charnum: uint32): float32 {.wasmBindgen.} =
+proc jsGetRotationOfChar*(self: SVGTextContentElement; charnum: uint32): float32 =
   discard
-proc jsGetCharNumAtPosition*(self: SVGTextContentElement; point: JsObject): int32 {.wasmBindgen.} =
+proc jsGetCharNumAtPosition*(self: SVGTextContentElement; point: JsObject): int32 =
   discard
-proc jsSelectSubString*(self: SVGTextContentElement; charnum: uint32; nchars: uint32): void {.wasmBindgen.} =
+proc jsSelectSubString*(self: SVGTextContentElement; charnum: uint32; nchars: uint32): void =
   discard
 
 
@@ -9488,22 +9487,22 @@ const jsSVGTextPathElementTEXTPATH_METHODTYPE_STRETCH* : uint16 = 0
 const jsSVGTextPathElementTEXTPATH_SPACINGTYPE_UNKNOWN* : uint16 = 0
 const jsSVGTextPathElementTEXTPATH_SPACINGTYPE_AUTO* : uint16 = 0
 const jsSVGTextPathElementTEXTPATH_SPACINGTYPE_EXACT* : uint16 = 0
-proc jsSVGTextPathElementStartOffset*(self: SVGTextPathElement): JsObject {.wasmBindgen.} =
+proc jsSVGTextPathElementStartOffset*(self: SVGTextPathElement): JsObject =
   discard
-proc jsSVGTextPathElementMethodVal*(self: SVGTextPathElement): JsObject {.wasmBindgen.} =
+proc jsSVGTextPathElementMethodVal*(self: SVGTextPathElement): JsObject =
   discard
-proc jsSVGTextPathElementSpacing*(self: SVGTextPathElement): JsObject {.wasmBindgen.} =
+proc jsSVGTextPathElementSpacing*(self: SVGTextPathElement): JsObject =
   discard
 
-proc jsSVGTextPositioningElementX*(self: SVGTextPositioningElement): JsObject {.wasmBindgen.} =
+proc jsSVGTextPositioningElementX*(self: SVGTextPositioningElement): JsObject =
   discard
-proc jsSVGTextPositioningElementY*(self: SVGTextPositioningElement): JsObject {.wasmBindgen.} =
+proc jsSVGTextPositioningElementY*(self: SVGTextPositioningElement): JsObject =
   discard
-proc jsSVGTextPositioningElementDx*(self: SVGTextPositioningElement): JsObject {.wasmBindgen.} =
+proc jsSVGTextPositioningElementDx*(self: SVGTextPositioningElement): JsObject =
   discard
-proc jsSVGTextPositioningElementDy*(self: SVGTextPositioningElement): JsObject {.wasmBindgen.} =
+proc jsSVGTextPositioningElementDy*(self: SVGTextPositioningElement): JsObject =
   discard
-proc jsSVGTextPositioningElementRotate*(self: SVGTextPositioningElement): JsObject {.wasmBindgen.} =
+proc jsSVGTextPositioningElementRotate*(self: SVGTextPositioningElement): JsObject =
   discard
 
 
@@ -9514,999 +9513,999 @@ const jsSVGTransformSVG_TRANSFORM_SCALE* : uint16 = 0
 const jsSVGTransformSVG_TRANSFORM_ROTATE* : uint16 = 0
 const jsSVGTransformSVG_TRANSFORM_SKEWX* : uint16 = 0
 const jsSVGTransformSVG_TRANSFORM_SKEWY* : uint16 = 0
-proc jsSVGTransformTypeVal*(self: SVGTransform): uint16 {.wasmBindgen.} =
+proc jsSVGTransformTypeVal*(self: SVGTransform): uint16 =
   discard
-proc jsSVGTransformMatrix*(self: SVGTransform): JsObject {.wasmBindgen.} =
+proc jsSVGTransformMatrix*(self: SVGTransform): JsObject =
   discard
-proc jsSVGTransformAngle*(self: SVGTransform): float32 {.wasmBindgen.} =
+proc jsSVGTransformAngle*(self: SVGTransform): float32 =
   discard
-proc jsSetMatrix*(self: SVGTransform; matrix: JsObject): void {.wasmBindgen.} =
+proc jsSetMatrix*(self: SVGTransform; matrix: JsObject): void =
   discard
-proc jsSetTranslate*(self: SVGTransform; tx: float32; ty: float32): void {.wasmBindgen.} =
+proc jsSetTranslate*(self: SVGTransform; tx: float32; ty: float32): void =
   discard
-proc jsSetScale*(self: SVGTransform; sx: float32; sy: float32): void {.wasmBindgen.} =
+proc jsSetScale*(self: SVGTransform; sx: float32; sy: float32): void =
   discard
-proc jsSetRotate*(self: SVGTransform; angle: float32; cx: float32; cy: float32): void {.wasmBindgen.} =
+proc jsSetRotate*(self: SVGTransform; angle: float32; cx: float32; cy: float32): void =
   discard
-proc jsSetSkewX*(self: SVGTransform; angle: float32): void {.wasmBindgen.} =
+proc jsSetSkewX*(self: SVGTransform; angle: float32): void =
   discard
-proc jsSetSkewY*(self: SVGTransform; angle: float32): void {.wasmBindgen.} =
+proc jsSetSkewY*(self: SVGTransform; angle: float32): void =
   discard
 
-proc jsSVGTransformListNumberOfItems*(self: SVGTransformList): uint32 {.wasmBindgen.} =
+proc jsSVGTransformListNumberOfItems*(self: SVGTransformList): uint32 =
   discard
-proc jsClear*(self: SVGTransformList): void {.wasmBindgen.} =
+proc jsClear*(self: SVGTransformList): void =
   discard
-proc jsInitialize*(self: SVGTransformList; newItem: JsObject): JsObject {.wasmBindgen.} =
+proc jsInitialize*(self: SVGTransformList; newItem: JsObject): JsObject =
   discard
-proc jsGetItem*(self: SVGTransformList; index: uint32): JsObject {.wasmBindgen.} =
+proc jsGetItem*(self: SVGTransformList; index: uint32): JsObject =
   discard
-proc jsInsertItemBefore*(self: SVGTransformList; newItem: JsObject; index: uint32): JsObject {.wasmBindgen.} =
+proc jsInsertItemBefore*(self: SVGTransformList; newItem: JsObject; index: uint32): JsObject =
   discard
-proc jsReplaceItem*(self: SVGTransformList; newItem: JsObject; index: uint32): JsObject {.wasmBindgen.} =
+proc jsReplaceItem*(self: SVGTransformList; newItem: JsObject; index: uint32): JsObject =
   discard
-proc jsRemoveItem*(self: SVGTransformList; index: uint32): JsObject {.wasmBindgen.} =
+proc jsRemoveItem*(self: SVGTransformList; index: uint32): JsObject =
   discard
-proc jsAppendItem*(self: SVGTransformList; newItem: JsObject): JsObject {.wasmBindgen.} =
+proc jsAppendItem*(self: SVGTransformList; newItem: JsObject): JsObject =
   discard
-proc jsCreateSVGTransformFromMatrix*(self: SVGTransformList; matrix: JsObject): JsObject {.wasmBindgen.} =
+proc jsCreateSVGTransformFromMatrix*(self: SVGTransformList; matrix: JsObject): JsObject =
   discard
-proc jsConsolidate*(self: SVGTransformList): Option[JsObject] {.wasmBindgen.} =
+proc jsConsolidate*(self: SVGTransformList): Option[JsObject] =
   discard
 
 const jsSVGUnitTypesSVG_UNIT_TYPE_UNKNOWN* : uint16 = 0
 const jsSVGUnitTypesSVG_UNIT_TYPE_USERSPACEONUSE* : uint16 = 0
 const jsSVGUnitTypesSVG_UNIT_TYPE_OBJECTBOUNDINGBOX* : uint16 = 0
 
-proc jsSVGUseElementX*(self: SVGUseElement): JsObject {.wasmBindgen.} =
+proc jsSVGUseElementX*(self: SVGUseElement): JsObject =
   discard
-proc jsSVGUseElementY*(self: SVGUseElement): JsObject {.wasmBindgen.} =
+proc jsSVGUseElementY*(self: SVGUseElement): JsObject =
   discard
-proc jsSVGUseElementWidth*(self: SVGUseElement): JsObject {.wasmBindgen.} =
+proc jsSVGUseElementWidth*(self: SVGUseElement): JsObject =
   discard
-proc jsSVGUseElementHeight*(self: SVGUseElement): JsObject {.wasmBindgen.} =
+proc jsSVGUseElementHeight*(self: SVGUseElement): JsObject =
   discard
 
 
 
-proc jsScreenAvailWidth*(self: Screen): int32 {.wasmBindgen.} =
+proc jsScreenAvailWidth*(self: Screen): int32 =
   discard
-proc jsScreenAvailHeight*(self: Screen): int32 {.wasmBindgen.} =
+proc jsScreenAvailHeight*(self: Screen): int32 =
   discard
-proc jsScreenWidth*(self: Screen): int32 {.wasmBindgen.} =
+proc jsScreenWidth*(self: Screen): int32 =
   discard
-proc jsScreenHeight*(self: Screen): int32 {.wasmBindgen.} =
+proc jsScreenHeight*(self: Screen): int32 =
   discard
-proc jsScreenColorDepth*(self: Screen): int32 {.wasmBindgen.} =
+proc jsScreenColorDepth*(self: Screen): int32 =
   discard
-proc jsScreenPixelDepth*(self: Screen): int32 {.wasmBindgen.} =
+proc jsScreenPixelDepth*(self: Screen): int32 =
   discard
-proc jsScreenTop*(self: Screen): int32 {.wasmBindgen.} =
+proc jsScreenTop*(self: Screen): int32 =
   discard
-proc jsScreenLeft*(self: Screen): int32 {.wasmBindgen.} =
+proc jsScreenLeft*(self: Screen): int32 =
   discard
-proc jsScreenAvailTop*(self: Screen): int32 {.wasmBindgen.} =
+proc jsScreenAvailTop*(self: Screen): int32 =
   discard
-proc jsScreenAvailLeft*(self: Screen): int32 {.wasmBindgen.} =
+proc jsScreenAvailLeft*(self: Screen): int32 =
   discard
 
-proc jsScreenLuminanceMin*(self: ScreenLuminance): float64 {.wasmBindgen.} =
+proc jsScreenLuminanceMin*(self: ScreenLuminance): float64 =
   discard
-proc jsScreenLuminanceMax*(self: ScreenLuminance): float64 {.wasmBindgen.} =
+proc jsScreenLuminanceMax*(self: ScreenLuminance): float64 =
   discard
-proc jsScreenLuminanceMaxAverage*(self: ScreenLuminance): float64 {.wasmBindgen.} =
+proc jsScreenLuminanceMaxAverage*(self: ScreenLuminance): float64 =
   discard
 
-proc jsScreenOrientationTypeVal*(self: ScreenOrientation): JsObject {.wasmBindgen.} =
+proc jsScreenOrientationTypeVal*(self: ScreenOrientation): JsObject =
   discard
-proc jsScreenOrientationAngle*(self: ScreenOrientation): uint16 {.wasmBindgen.} =
+proc jsScreenOrientationAngle*(self: ScreenOrientation): uint16 =
   discard
-proc jsScreenOrientationOnchange*(self: ScreenOrientation): JsObject {.wasmBindgen.} =
+proc jsScreenOrientationOnchange*(self: ScreenOrientation): JsObject =
   discard
-proc jsLock*(self: ScreenOrientation; orientation: JsObject): JsObject {.wasmBindgen.} =
+proc jsLock*(self: ScreenOrientation; orientation: JsObject): JsObject =
   discard
-proc jsUnlock*(self: ScreenOrientation): void {.wasmBindgen.} =
+proc jsUnlock*(self: ScreenOrientation): void =
   discard
 
-proc jsScriptProcessorNodeOnaudioprocess*(self: ScriptProcessorNode): JsObject {.wasmBindgen.} =
+proc jsScriptProcessorNodeOnaudioprocess*(self: ScriptProcessorNode): JsObject =
   discard
-proc jsScriptProcessorNodeBufferSize*(self: ScriptProcessorNode): int32 {.wasmBindgen.} =
+proc jsScriptProcessorNodeBufferSize*(self: ScriptProcessorNode): int32 =
   discard
 
-proc jsScrollAreaEventX*(self: ScrollAreaEvent): float32 {.wasmBindgen.} =
+proc jsScrollAreaEventX*(self: ScrollAreaEvent): float32 =
   discard
-proc jsScrollAreaEventY*(self: ScrollAreaEvent): float32 {.wasmBindgen.} =
+proc jsScrollAreaEventY*(self: ScrollAreaEvent): float32 =
   discard
-proc jsScrollAreaEventWidth*(self: ScrollAreaEvent): float32 {.wasmBindgen.} =
+proc jsScrollAreaEventWidth*(self: ScrollAreaEvent): float32 =
   discard
-proc jsScrollAreaEventHeight*(self: ScrollAreaEvent): float32 {.wasmBindgen.} =
+proc jsScrollAreaEventHeight*(self: ScrollAreaEvent): float32 =
   discard
-proc jsInitScrollAreaEvent*(self: ScrollAreaEvent; typeVal: cstring; canBubble: bool; cancelable: bool; view: Option[JsObject]; detail: int32; x: float32; y: float32; width: float32; height: float32): void {.wasmBindgen.} =
+proc jsInitScrollAreaEvent*(self: ScrollAreaEvent; typeVal: cstring; canBubble: bool; cancelable: bool; view: Option[JsObject]; detail: int32; x: float32; y: float32; width: float32; height: float32): void =
   discard
 
-proc jsScrollBoxObjectPositionX*(self: ScrollBoxObject): int32 {.wasmBindgen.} =
+proc jsScrollBoxObjectPositionX*(self: ScrollBoxObject): int32 =
   discard
-proc jsScrollBoxObjectPositionY*(self: ScrollBoxObject): int32 {.wasmBindgen.} =
+proc jsScrollBoxObjectPositionY*(self: ScrollBoxObject): int32 =
   discard
-proc jsScrollBoxObjectScrolledWidth*(self: ScrollBoxObject): int32 {.wasmBindgen.} =
+proc jsScrollBoxObjectScrolledWidth*(self: ScrollBoxObject): int32 =
   discard
-proc jsScrollBoxObjectScrolledHeight*(self: ScrollBoxObject): int32 {.wasmBindgen.} =
+proc jsScrollBoxObjectScrolledHeight*(self: ScrollBoxObject): int32 =
   discard
-proc jsScrollTo*(self: ScrollBoxObject; x: int32; y: int32): void {.wasmBindgen.} =
+proc jsScrollTo*(self: ScrollBoxObject; x: int32; y: int32): void =
   discard
-proc jsScrollBy*(self: ScrollBoxObject; dx: int32; dy: int32): void {.wasmBindgen.} =
+proc jsScrollBy*(self: ScrollBoxObject; dx: int32; dy: int32): void =
   discard
-proc jsScrollByIndex*(self: ScrollBoxObject; dindexes: int32): void {.wasmBindgen.} =
+proc jsScrollByIndex*(self: ScrollBoxObject; dindexes: int32): void =
   discard
-proc jsScrollToElement*(self: ScrollBoxObject; child: JsObject): void {.wasmBindgen.} =
+proc jsScrollToElement*(self: ScrollBoxObject; child: JsObject): void =
   discard
-proc jsEnsureElementIsVisible*(self: ScrollBoxObject; child: JsObject): void {.wasmBindgen.} =
+proc jsEnsureElementIsVisible*(self: ScrollBoxObject; child: JsObject): void =
   discard
 
-proc jsScrollViewChangeEventState*(self: ScrollViewChangeEvent): JsObject {.wasmBindgen.} =
+proc jsScrollViewChangeEventState*(self: ScrollViewChangeEvent): JsObject =
   discard
 
-proc jsSecurityPolicyViolationEventDocumentURI*(self: SecurityPolicyViolationEvent): cstring {.wasmBindgen.} =
+proc jsSecurityPolicyViolationEventDocumentURI*(self: SecurityPolicyViolationEvent): cstring =
   discard
-proc jsSecurityPolicyViolationEventReferrer*(self: SecurityPolicyViolationEvent): cstring {.wasmBindgen.} =
+proc jsSecurityPolicyViolationEventReferrer*(self: SecurityPolicyViolationEvent): cstring =
   discard
-proc jsSecurityPolicyViolationEventBlockedURI*(self: SecurityPolicyViolationEvent): cstring {.wasmBindgen.} =
+proc jsSecurityPolicyViolationEventBlockedURI*(self: SecurityPolicyViolationEvent): cstring =
   discard
-proc jsSecurityPolicyViolationEventViolatedDirective*(self: SecurityPolicyViolationEvent): cstring {.wasmBindgen.} =
+proc jsSecurityPolicyViolationEventViolatedDirective*(self: SecurityPolicyViolationEvent): cstring =
   discard
-proc jsSecurityPolicyViolationEventEffectiveDirective*(self: SecurityPolicyViolationEvent): cstring {.wasmBindgen.} =
+proc jsSecurityPolicyViolationEventEffectiveDirective*(self: SecurityPolicyViolationEvent): cstring =
   discard
-proc jsSecurityPolicyViolationEventOriginalPolicy*(self: SecurityPolicyViolationEvent): cstring {.wasmBindgen.} =
+proc jsSecurityPolicyViolationEventOriginalPolicy*(self: SecurityPolicyViolationEvent): cstring =
   discard
-proc jsSecurityPolicyViolationEventSourceFile*(self: SecurityPolicyViolationEvent): cstring {.wasmBindgen.} =
+proc jsSecurityPolicyViolationEventSourceFile*(self: SecurityPolicyViolationEvent): cstring =
   discard
-proc jsSecurityPolicyViolationEventSample*(self: SecurityPolicyViolationEvent): cstring {.wasmBindgen.} =
+proc jsSecurityPolicyViolationEventSample*(self: SecurityPolicyViolationEvent): cstring =
   discard
-proc jsSecurityPolicyViolationEventDisposition*(self: SecurityPolicyViolationEvent): JsObject {.wasmBindgen.} =
+proc jsSecurityPolicyViolationEventDisposition*(self: SecurityPolicyViolationEvent): JsObject =
   discard
-proc jsSecurityPolicyViolationEventStatusCode*(self: SecurityPolicyViolationEvent): uint16 {.wasmBindgen.} =
+proc jsSecurityPolicyViolationEventStatusCode*(self: SecurityPolicyViolationEvent): uint16 =
   discard
-proc jsSecurityPolicyViolationEventLineNumber*(self: SecurityPolicyViolationEvent): int32 {.wasmBindgen.} =
+proc jsSecurityPolicyViolationEventLineNumber*(self: SecurityPolicyViolationEvent): int32 =
   discard
-proc jsSecurityPolicyViolationEventColumnNumber*(self: SecurityPolicyViolationEvent): int32 {.wasmBindgen.} =
+proc jsSecurityPolicyViolationEventColumnNumber*(self: SecurityPolicyViolationEvent): int32 =
   discard
 
-proc jsSelectionAnchorOffset*(self: Selection): uint32 {.wasmBindgen.} =
+proc jsSelectionAnchorOffset*(self: Selection): uint32 =
   discard
-proc jsSelectionFocusOffset*(self: Selection): uint32 {.wasmBindgen.} =
+proc jsSelectionFocusOffset*(self: Selection): uint32 =
   discard
-proc jsSelectionIsCollapsed*(self: Selection): bool {.wasmBindgen.} =
+proc jsSelectionIsCollapsed*(self: Selection): bool =
   discard
-proc jsSelectionRangeCount*(self: Selection): uint32 {.wasmBindgen.} =
+proc jsSelectionRangeCount*(self: Selection): uint32 =
   discard
-proc jsSelectionTypeVal*(self: Selection): cstring {.wasmBindgen.} =
+proc jsSelectionTypeVal*(self: Selection): cstring =
   discard
-proc jsGetRangeAt*(self: Selection; index: uint32): JsObject {.wasmBindgen.} =
+proc jsGetRangeAt*(self: Selection; index: uint32): JsObject =
   discard
-proc jsAddRange*(self: Selection; range: JsObject): void {.wasmBindgen.} =
+proc jsAddRange*(self: Selection; range: JsObject): void =
   discard
-proc jsRemoveRange*(self: Selection; range: JsObject): void {.wasmBindgen.} =
+proc jsRemoveRange*(self: Selection; range: JsObject): void =
   discard
-proc jsRemoveAllRanges*(self: Selection): void {.wasmBindgen.} =
+proc jsRemoveAllRanges*(self: Selection): void =
   discard
-proc jsEmpty*(self: Selection): void {.wasmBindgen.} =
+proc jsEmpty*(self: Selection): void =
   discard
-proc jsCollapse*(self: Selection; node: Option[JsObject]; offset: uint32): void {.wasmBindgen.} =
+proc jsCollapse*(self: Selection; node: Option[JsObject]; offset: uint32): void =
   discard
-proc jsSetPosition*(self: Selection; node: Option[JsObject]; offset: uint32): void {.wasmBindgen.} =
+proc jsSetPosition*(self: Selection; node: Option[JsObject]; offset: uint32): void =
   discard
-proc jsCollapseToStart*(self: Selection): void {.wasmBindgen.} =
+proc jsCollapseToStart*(self: Selection): void =
   discard
-proc jsCollapseToEnd*(self: Selection): void {.wasmBindgen.} =
+proc jsCollapseToEnd*(self: Selection): void =
   discard
-proc jsExtend*(self: Selection; node: JsObject; offset: uint32): void {.wasmBindgen.} =
+proc jsExtend*(self: Selection; node: JsObject; offset: uint32): void =
   discard
-proc jsSetBaseAndExtent*(self: Selection; anchorNode: JsObject; anchorOffset: uint32; focusNode: JsObject; focusOffset: uint32): void {.wasmBindgen.} =
+proc jsSetBaseAndExtent*(self: Selection; anchorNode: JsObject; anchorOffset: uint32; focusNode: JsObject; focusOffset: uint32): void =
   discard
-proc jsSelectAllChildren*(self: Selection; node: JsObject): void {.wasmBindgen.} =
+proc jsSelectAllChildren*(self: Selection; node: JsObject): void =
   discard
-proc jsDeleteFromDocument*(self: Selection): void {.wasmBindgen.} =
+proc jsDeleteFromDocument*(self: Selection): void =
   discard
-proc jsContainsNode*(self: Selection; node: JsObject; allowPartialContainment: bool): bool {.wasmBindgen.} =
+proc jsContainsNode*(self: Selection; node: JsObject; allowPartialContainment: bool): bool =
   discard
 
-proc jsServiceWorkerScriptURL*(self: ServiceWorker): cstring {.wasmBindgen.} =
+proc jsServiceWorkerScriptURL*(self: ServiceWorker): cstring =
   discard
-proc jsServiceWorkerState*(self: ServiceWorker): JsObject {.wasmBindgen.} =
+proc jsServiceWorkerState*(self: ServiceWorker): JsObject =
   discard
-proc jsServiceWorkerOnstatechange*(self: ServiceWorker): JsObject {.wasmBindgen.} =
+proc jsServiceWorkerOnstatechange*(self: ServiceWorker): JsObject =
   discard
-proc jsPostMessage*(self: ServiceWorker; message: JsObject; transferable: JsObject): void {.wasmBindgen.} =
+proc jsPostMessage*(self: ServiceWorker; message: JsObject; transferable: JsObject): void =
   discard
 
-proc jsServiceWorkerContainerReady*(self: ServiceWorkerContainer): JsObject {.wasmBindgen.} =
+proc jsServiceWorkerContainerReady*(self: ServiceWorkerContainer): JsObject =
   discard
-proc jsServiceWorkerContainerOncontrollerchange*(self: ServiceWorkerContainer): JsObject {.wasmBindgen.} =
+proc jsServiceWorkerContainerOncontrollerchange*(self: ServiceWorkerContainer): JsObject =
   discard
-proc jsServiceWorkerContainerOnerror*(self: ServiceWorkerContainer): JsObject {.wasmBindgen.} =
+proc jsServiceWorkerContainerOnerror*(self: ServiceWorkerContainer): JsObject =
   discard
-proc jsServiceWorkerContainerOnmessage*(self: ServiceWorkerContainer): JsObject {.wasmBindgen.} =
+proc jsServiceWorkerContainerOnmessage*(self: ServiceWorkerContainer): JsObject =
   discard
-proc jsRegister*(self: ServiceWorkerContainer; scriptURL: cstring; options: JsObject): JsObject {.wasmBindgen.} =
+proc jsRegister*(self: ServiceWorkerContainer; scriptURL: cstring; options: JsObject): JsObject =
   discard
-proc jsGetRegistration*(self: ServiceWorkerContainer; documentURL: cstring): JsObject {.wasmBindgen.} =
+proc jsGetRegistration*(self: ServiceWorkerContainer; documentURL: cstring): JsObject =
   discard
-proc jsGetRegistrations*(self: ServiceWorkerContainer): JsObject {.wasmBindgen.} =
+proc jsGetRegistrations*(self: ServiceWorkerContainer): JsObject =
   discard
 
-proc jsServiceWorkerGlobalScopeClients*(self: ServiceWorkerGlobalScope): JsObject {.wasmBindgen.} =
+proc jsServiceWorkerGlobalScopeClients*(self: ServiceWorkerGlobalScope): JsObject =
   discard
-proc jsServiceWorkerGlobalScopeRegistration*(self: ServiceWorkerGlobalScope): JsObject {.wasmBindgen.} =
+proc jsServiceWorkerGlobalScopeRegistration*(self: ServiceWorkerGlobalScope): JsObject =
   discard
-proc jsServiceWorkerGlobalScopeOninstall*(self: ServiceWorkerGlobalScope): JsObject {.wasmBindgen.} =
+proc jsServiceWorkerGlobalScopeOninstall*(self: ServiceWorkerGlobalScope): JsObject =
   discard
-proc jsServiceWorkerGlobalScopeOnactivate*(self: ServiceWorkerGlobalScope): JsObject {.wasmBindgen.} =
+proc jsServiceWorkerGlobalScopeOnactivate*(self: ServiceWorkerGlobalScope): JsObject =
   discard
-proc jsServiceWorkerGlobalScopeOnfetch*(self: ServiceWorkerGlobalScope): JsObject {.wasmBindgen.} =
+proc jsServiceWorkerGlobalScopeOnfetch*(self: ServiceWorkerGlobalScope): JsObject =
   discard
-proc jsServiceWorkerGlobalScopeOnmessage*(self: ServiceWorkerGlobalScope): JsObject {.wasmBindgen.} =
+proc jsServiceWorkerGlobalScopeOnmessage*(self: ServiceWorkerGlobalScope): JsObject =
   discard
-proc jsSkipWaiting*(self: ServiceWorkerGlobalScope): JsObject {.wasmBindgen.} =
+proc jsSkipWaiting*(self: ServiceWorkerGlobalScope): JsObject =
   discard
 
-proc jsServiceWorkerRegistrationScope*(self: ServiceWorkerRegistration): cstring {.wasmBindgen.} =
+proc jsServiceWorkerRegistrationScope*(self: ServiceWorkerRegistration): cstring =
   discard
-proc jsServiceWorkerRegistrationUpdateViaCache*(self: ServiceWorkerRegistration): JsObject {.wasmBindgen.} =
+proc jsServiceWorkerRegistrationUpdateViaCache*(self: ServiceWorkerRegistration): JsObject =
   discard
-proc jsServiceWorkerRegistrationOnupdatefound*(self: ServiceWorkerRegistration): JsObject {.wasmBindgen.} =
+proc jsServiceWorkerRegistrationOnupdatefound*(self: ServiceWorkerRegistration): JsObject =
   discard
-proc jsUpdate*(self: ServiceWorkerRegistration): JsObject {.wasmBindgen.} =
+proc jsUpdate*(self: ServiceWorkerRegistration): JsObject =
   discard
-proc jsUnregister*(self: ServiceWorkerRegistration): JsObject {.wasmBindgen.} =
+proc jsUnregister*(self: ServiceWorkerRegistration): JsObject =
   discard
 
-proc jsShadowRootMode*(self: ShadowRoot): JsObject {.wasmBindgen.} =
+proc jsShadowRootMode*(self: ShadowRoot): JsObject =
   discard
-proc jsShadowRootHost*(self: ShadowRoot): JsObject {.wasmBindgen.} =
+proc jsShadowRootHost*(self: ShadowRoot): JsObject =
   discard
-proc jsShadowRootInnerHTML*(self: ShadowRoot): cstring {.wasmBindgen.} =
+proc jsShadowRootInnerHTML*(self: ShadowRoot): cstring =
   discard
-proc jsGetElementById*(self: ShadowRoot; elementId: cstring): Option[JsObject] {.wasmBindgen.} =
+proc jsGetElementById*(self: ShadowRoot; elementId: cstring): Option[JsObject] =
   discard
-proc jsGetElementsByTagName*(self: ShadowRoot; localName: cstring): JsObject {.wasmBindgen.} =
+proc jsGetElementsByTagName*(self: ShadowRoot; localName: cstring): JsObject =
   discard
-proc jsGetElementsByTagNameNS*(self: ShadowRoot; namespace: Option[cstring]; localName: cstring): JsObject {.wasmBindgen.} =
+proc jsGetElementsByTagNameNS*(self: ShadowRoot; namespace: Option[cstring]; localName: cstring): JsObject =
   discard
-proc jsGetElementsByClassName*(self: ShadowRoot; classNames: cstring): JsObject {.wasmBindgen.} =
+proc jsGetElementsByClassName*(self: ShadowRoot; classNames: cstring): JsObject =
   discard
 
-proc jsSharedWorkerPort*(self: SharedWorker): JsObject {.wasmBindgen.} =
+proc jsSharedWorkerPort*(self: SharedWorker): JsObject =
   discard
 
-proc jsSharedWorkerGlobalScopeName*(self: SharedWorkerGlobalScope): cstring {.wasmBindgen.} =
+proc jsSharedWorkerGlobalScopeName*(self: SharedWorkerGlobalScope): cstring =
   discard
-proc jsSharedWorkerGlobalScopeOnconnect*(self: SharedWorkerGlobalScope): JsObject {.wasmBindgen.} =
+proc jsSharedWorkerGlobalScopeOnconnect*(self: SharedWorkerGlobalScope): JsObject =
   discard
-proc jsClose*(self: SharedWorkerGlobalScope): void {.wasmBindgen.} =
+proc jsClose*(self: SharedWorkerGlobalScope): void =
   discard
 
-proc jsSourceBufferMode*(self: SourceBuffer): JsObject {.wasmBindgen.} =
+proc jsSourceBufferMode*(self: SourceBuffer): JsObject =
   discard
-proc jsSourceBufferUpdating*(self: SourceBuffer): bool {.wasmBindgen.} =
+proc jsSourceBufferUpdating*(self: SourceBuffer): bool =
   discard
-proc jsSourceBufferBuffered*(self: SourceBuffer): JsObject {.wasmBindgen.} =
+proc jsSourceBufferBuffered*(self: SourceBuffer): JsObject =
   discard
-proc jsSourceBufferTimestampOffset*(self: SourceBuffer): float64 {.wasmBindgen.} =
+proc jsSourceBufferTimestampOffset*(self: SourceBuffer): float64 =
   discard
-proc jsSourceBufferAudioTracks*(self: SourceBuffer): JsObject {.wasmBindgen.} =
+proc jsSourceBufferAudioTracks*(self: SourceBuffer): JsObject =
   discard
-proc jsSourceBufferVideoTracks*(self: SourceBuffer): JsObject {.wasmBindgen.} =
+proc jsSourceBufferVideoTracks*(self: SourceBuffer): JsObject =
   discard
-proc jsSourceBufferTextTracks*(self: SourceBuffer): JsObject {.wasmBindgen.} =
+proc jsSourceBufferTextTracks*(self: SourceBuffer): JsObject =
   discard
-proc jsSourceBufferAppendWindowStart*(self: SourceBuffer): float64 {.wasmBindgen.} =
+proc jsSourceBufferAppendWindowStart*(self: SourceBuffer): float64 =
   discard
-proc jsSourceBufferAppendWindowEnd*(self: SourceBuffer): float64 {.wasmBindgen.} =
+proc jsSourceBufferAppendWindowEnd*(self: SourceBuffer): float64 =
   discard
-proc jsSourceBufferOnupdatestart*(self: SourceBuffer): JsObject {.wasmBindgen.} =
+proc jsSourceBufferOnupdatestart*(self: SourceBuffer): JsObject =
   discard
-proc jsSourceBufferOnupdate*(self: SourceBuffer): JsObject {.wasmBindgen.} =
+proc jsSourceBufferOnupdate*(self: SourceBuffer): JsObject =
   discard
-proc jsSourceBufferOnupdateend*(self: SourceBuffer): JsObject {.wasmBindgen.} =
+proc jsSourceBufferOnupdateend*(self: SourceBuffer): JsObject =
   discard
-proc jsSourceBufferOnerror*(self: SourceBuffer): JsObject {.wasmBindgen.} =
+proc jsSourceBufferOnerror*(self: SourceBuffer): JsObject =
   discard
-proc jsSourceBufferOnabort*(self: SourceBuffer): JsObject {.wasmBindgen.} =
+proc jsSourceBufferOnabort*(self: SourceBuffer): JsObject =
   discard
-proc jsAppendBuffer*(self: SourceBuffer; data: JsObject): void {.wasmBindgen.} =
+proc jsAppendBuffer*(self: SourceBuffer; data: JsObject): void =
   discard
-proc jsAppendBufferAsync*(self: SourceBuffer; data: JsObject): JsObject {.wasmBindgen.} =
+proc jsAppendBufferAsync*(self: SourceBuffer; data: JsObject): JsObject =
   discard
-proc jsAbort*(self: SourceBuffer): void {.wasmBindgen.} =
+proc jsAbort*(self: SourceBuffer): void =
   discard
-proc jsRemove*(self: SourceBuffer; start: float64; endVal: float64): void {.wasmBindgen.} =
+proc jsRemove*(self: SourceBuffer; start: float64; endVal: float64): void =
   discard
-proc jsRemoveAsync*(self: SourceBuffer; start: float64; endVal: float64): JsObject {.wasmBindgen.} =
+proc jsRemoveAsync*(self: SourceBuffer; start: float64; endVal: float64): JsObject =
   discard
-proc jsChangeType*(self: SourceBuffer; typeVal: cstring): void {.wasmBindgen.} =
+proc jsChangeType*(self: SourceBuffer; typeVal: cstring): void =
   discard
 
-proc jsSourceBufferListLength*(self: SourceBufferList): uint32 {.wasmBindgen.} =
+proc jsSourceBufferListLength*(self: SourceBufferList): uint32 =
   discard
-proc jsSourceBufferListOnaddsourcebuffer*(self: SourceBufferList): JsObject {.wasmBindgen.} =
+proc jsSourceBufferListOnaddsourcebuffer*(self: SourceBufferList): JsObject =
   discard
-proc jsSourceBufferListOnremovesourcebuffer*(self: SourceBufferList): JsObject {.wasmBindgen.} =
+proc jsSourceBufferListOnremovesourcebuffer*(self: SourceBufferList): JsObject =
   discard
 
-proc jsSpeechGrammarSrc*(self: SpeechGrammar): cstring {.wasmBindgen.} =
+proc jsSpeechGrammarSrc*(self: SpeechGrammar): cstring =
   discard
-proc jsSpeechGrammarWeight*(self: SpeechGrammar): float32 {.wasmBindgen.} =
+proc jsSpeechGrammarWeight*(self: SpeechGrammar): float32 =
   discard
 
-proc jsSpeechGrammarListLength*(self: SpeechGrammarList): uint32 {.wasmBindgen.} =
+proc jsSpeechGrammarListLength*(self: SpeechGrammarList): uint32 =
   discard
-proc jsItem*(self: SpeechGrammarList; index: uint32): JsObject {.wasmBindgen.} =
+proc jsItem*(self: SpeechGrammarList; index: uint32): JsObject =
   discard
-proc jsAddFromURI*(self: SpeechGrammarList; src: cstring; weight: float32): void {.wasmBindgen.} =
+proc jsAddFromURI*(self: SpeechGrammarList; src: cstring; weight: float32): void =
   discard
-proc jsAddFromString*(self: SpeechGrammarList; string: cstring; weight: float32): void {.wasmBindgen.} =
+proc jsAddFromString*(self: SpeechGrammarList; string: cstring; weight: float32): void =
   discard
 
-proc jsSpeechRecognitionGrammars*(self: SpeechRecognition): JsObject {.wasmBindgen.} =
+proc jsSpeechRecognitionGrammars*(self: SpeechRecognition): JsObject =
   discard
-proc jsSpeechRecognitionLang*(self: SpeechRecognition): cstring {.wasmBindgen.} =
+proc jsSpeechRecognitionLang*(self: SpeechRecognition): cstring =
   discard
-proc jsSpeechRecognitionContinuous*(self: SpeechRecognition): bool {.wasmBindgen.} =
+proc jsSpeechRecognitionContinuous*(self: SpeechRecognition): bool =
   discard
-proc jsSpeechRecognitionInterimResults*(self: SpeechRecognition): bool {.wasmBindgen.} =
+proc jsSpeechRecognitionInterimResults*(self: SpeechRecognition): bool =
   discard
-proc jsSpeechRecognitionMaxAlternatives*(self: SpeechRecognition): uint32 {.wasmBindgen.} =
+proc jsSpeechRecognitionMaxAlternatives*(self: SpeechRecognition): uint32 =
   discard
-proc jsSpeechRecognitionServiceURI*(self: SpeechRecognition): cstring {.wasmBindgen.} =
+proc jsSpeechRecognitionServiceURI*(self: SpeechRecognition): cstring =
   discard
-proc jsSpeechRecognitionOnaudiostart*(self: SpeechRecognition): JsObject {.wasmBindgen.} =
+proc jsSpeechRecognitionOnaudiostart*(self: SpeechRecognition): JsObject =
   discard
-proc jsSpeechRecognitionOnsoundstart*(self: SpeechRecognition): JsObject {.wasmBindgen.} =
+proc jsSpeechRecognitionOnsoundstart*(self: SpeechRecognition): JsObject =
   discard
-proc jsSpeechRecognitionOnspeechstart*(self: SpeechRecognition): JsObject {.wasmBindgen.} =
+proc jsSpeechRecognitionOnspeechstart*(self: SpeechRecognition): JsObject =
   discard
-proc jsSpeechRecognitionOnspeechend*(self: SpeechRecognition): JsObject {.wasmBindgen.} =
+proc jsSpeechRecognitionOnspeechend*(self: SpeechRecognition): JsObject =
   discard
-proc jsSpeechRecognitionOnsoundend*(self: SpeechRecognition): JsObject {.wasmBindgen.} =
+proc jsSpeechRecognitionOnsoundend*(self: SpeechRecognition): JsObject =
   discard
-proc jsSpeechRecognitionOnaudioend*(self: SpeechRecognition): JsObject {.wasmBindgen.} =
+proc jsSpeechRecognitionOnaudioend*(self: SpeechRecognition): JsObject =
   discard
-proc jsSpeechRecognitionOnresult*(self: SpeechRecognition): JsObject {.wasmBindgen.} =
+proc jsSpeechRecognitionOnresult*(self: SpeechRecognition): JsObject =
   discard
-proc jsSpeechRecognitionOnnomatch*(self: SpeechRecognition): JsObject {.wasmBindgen.} =
+proc jsSpeechRecognitionOnnomatch*(self: SpeechRecognition): JsObject =
   discard
-proc jsSpeechRecognitionOnerror*(self: SpeechRecognition): JsObject {.wasmBindgen.} =
+proc jsSpeechRecognitionOnerror*(self: SpeechRecognition): JsObject =
   discard
-proc jsSpeechRecognitionOnstart*(self: SpeechRecognition): JsObject {.wasmBindgen.} =
+proc jsSpeechRecognitionOnstart*(self: SpeechRecognition): JsObject =
   discard
-proc jsSpeechRecognitionOnend*(self: SpeechRecognition): JsObject {.wasmBindgen.} =
+proc jsSpeechRecognitionOnend*(self: SpeechRecognition): JsObject =
   discard
-proc jsStart*(self: SpeechRecognition; stream: JsObject): void {.wasmBindgen.} =
+proc jsStart*(self: SpeechRecognition; stream: JsObject): void =
   discard
-proc jsStop*(self: SpeechRecognition): void {.wasmBindgen.} =
+proc jsStop*(self: SpeechRecognition): void =
   discard
-proc jsAbort*(self: SpeechRecognition): void {.wasmBindgen.} =
+proc jsAbort*(self: SpeechRecognition): void =
   discard
 
-proc jsSpeechRecognitionAlternativeTranscript*(self: SpeechRecognitionAlternative): cstring {.wasmBindgen.} =
+proc jsSpeechRecognitionAlternativeTranscript*(self: SpeechRecognitionAlternative): cstring =
   discard
-proc jsSpeechRecognitionAlternativeConfidence*(self: SpeechRecognitionAlternative): float32 {.wasmBindgen.} =
+proc jsSpeechRecognitionAlternativeConfidence*(self: SpeechRecognitionAlternative): float32 =
   discard
 
-proc jsSpeechRecognitionErrorError*(self: SpeechRecognitionError): JsObject {.wasmBindgen.} =
+proc jsSpeechRecognitionErrorError*(self: SpeechRecognitionError): JsObject =
   discard
 
-proc jsSpeechRecognitionEventResultIndex*(self: SpeechRecognitionEvent): uint32 {.wasmBindgen.} =
+proc jsSpeechRecognitionEventResultIndex*(self: SpeechRecognitionEvent): uint32 =
   discard
-proc jsSpeechRecognitionEventInterpretation*(self: SpeechRecognitionEvent): JsObject {.wasmBindgen.} =
+proc jsSpeechRecognitionEventInterpretation*(self: SpeechRecognitionEvent): JsObject =
   discard
 
-proc jsSpeechRecognitionResultLength*(self: SpeechRecognitionResult): uint32 {.wasmBindgen.} =
+proc jsSpeechRecognitionResultLength*(self: SpeechRecognitionResult): uint32 =
   discard
-proc jsSpeechRecognitionResultIsFinal*(self: SpeechRecognitionResult): bool {.wasmBindgen.} =
+proc jsSpeechRecognitionResultIsFinal*(self: SpeechRecognitionResult): bool =
   discard
-proc jsItem*(self: SpeechRecognitionResult; index: uint32): JsObject {.wasmBindgen.} =
+proc jsItem*(self: SpeechRecognitionResult; index: uint32): JsObject =
   discard
 
-proc jsSpeechRecognitionResultListLength*(self: SpeechRecognitionResultList): uint32 {.wasmBindgen.} =
+proc jsSpeechRecognitionResultListLength*(self: SpeechRecognitionResultList): uint32 =
   discard
-proc jsItem*(self: SpeechRecognitionResultList; index: uint32): JsObject {.wasmBindgen.} =
+proc jsItem*(self: SpeechRecognitionResultList; index: uint32): JsObject =
   discard
 
-proc jsSpeechSynthesisPending*(self: SpeechSynthesis): bool {.wasmBindgen.} =
+proc jsSpeechSynthesisPending*(self: SpeechSynthesis): bool =
   discard
-proc jsSpeechSynthesisSpeaking*(self: SpeechSynthesis): bool {.wasmBindgen.} =
+proc jsSpeechSynthesisSpeaking*(self: SpeechSynthesis): bool =
   discard
-proc jsSpeechSynthesisPaused*(self: SpeechSynthesis): bool {.wasmBindgen.} =
+proc jsSpeechSynthesisPaused*(self: SpeechSynthesis): bool =
   discard
-proc jsSpeechSynthesisOnvoiceschanged*(self: SpeechSynthesis): JsObject {.wasmBindgen.} =
+proc jsSpeechSynthesisOnvoiceschanged*(self: SpeechSynthesis): JsObject =
   discard
-proc jsSpeak*(self: SpeechSynthesis; utterance: JsObject): void {.wasmBindgen.} =
+proc jsSpeak*(self: SpeechSynthesis; utterance: JsObject): void =
   discard
-proc jsCancel*(self: SpeechSynthesis): void {.wasmBindgen.} =
+proc jsCancel*(self: SpeechSynthesis): void =
   discard
-proc jsPause*(self: SpeechSynthesis): void {.wasmBindgen.} =
+proc jsPause*(self: SpeechSynthesis): void =
   discard
-proc jsResume*(self: SpeechSynthesis): void {.wasmBindgen.} =
+proc jsResume*(self: SpeechSynthesis): void =
   discard
-proc jsGetVoices*(self: SpeechSynthesis): JsObject {.wasmBindgen.} =
+proc jsGetVoices*(self: SpeechSynthesis): JsObject =
   discard
-proc jsForceEnd*(self: SpeechSynthesis): void {.wasmBindgen.} =
+proc jsForceEnd*(self: SpeechSynthesis): void =
   discard
 
-proc jsSpeechSynthesisErrorEventError*(self: SpeechSynthesisErrorEvent): JsObject {.wasmBindgen.} =
+proc jsSpeechSynthesisErrorEventError*(self: SpeechSynthesisErrorEvent): JsObject =
   discard
 
-proc jsSpeechSynthesisEventUtterance*(self: SpeechSynthesisEvent): JsObject {.wasmBindgen.} =
+proc jsSpeechSynthesisEventUtterance*(self: SpeechSynthesisEvent): JsObject =
   discard
-proc jsSpeechSynthesisEventCharIndex*(self: SpeechSynthesisEvent): uint32 {.wasmBindgen.} =
+proc jsSpeechSynthesisEventCharIndex*(self: SpeechSynthesisEvent): uint32 =
   discard
-proc jsSpeechSynthesisEventElapsedTime*(self: SpeechSynthesisEvent): float32 {.wasmBindgen.} =
+proc jsSpeechSynthesisEventElapsedTime*(self: SpeechSynthesisEvent): float32 =
   discard
 
-proc jsSpeechSynthesisUtteranceText*(self: SpeechSynthesisUtterance): cstring {.wasmBindgen.} =
+proc jsSpeechSynthesisUtteranceText*(self: SpeechSynthesisUtterance): cstring =
   discard
-proc jsSpeechSynthesisUtteranceLang*(self: SpeechSynthesisUtterance): cstring {.wasmBindgen.} =
+proc jsSpeechSynthesisUtteranceLang*(self: SpeechSynthesisUtterance): cstring =
   discard
-proc jsSpeechSynthesisUtteranceVolume*(self: SpeechSynthesisUtterance): float32 {.wasmBindgen.} =
+proc jsSpeechSynthesisUtteranceVolume*(self: SpeechSynthesisUtterance): float32 =
   discard
-proc jsSpeechSynthesisUtteranceRate*(self: SpeechSynthesisUtterance): float32 {.wasmBindgen.} =
+proc jsSpeechSynthesisUtteranceRate*(self: SpeechSynthesisUtterance): float32 =
   discard
-proc jsSpeechSynthesisUtterancePitch*(self: SpeechSynthesisUtterance): float32 {.wasmBindgen.} =
+proc jsSpeechSynthesisUtterancePitch*(self: SpeechSynthesisUtterance): float32 =
   discard
-proc jsSpeechSynthesisUtteranceOnstart*(self: SpeechSynthesisUtterance): JsObject {.wasmBindgen.} =
+proc jsSpeechSynthesisUtteranceOnstart*(self: SpeechSynthesisUtterance): JsObject =
   discard
-proc jsSpeechSynthesisUtteranceOnend*(self: SpeechSynthesisUtterance): JsObject {.wasmBindgen.} =
+proc jsSpeechSynthesisUtteranceOnend*(self: SpeechSynthesisUtterance): JsObject =
   discard
-proc jsSpeechSynthesisUtteranceOnerror*(self: SpeechSynthesisUtterance): JsObject {.wasmBindgen.} =
+proc jsSpeechSynthesisUtteranceOnerror*(self: SpeechSynthesisUtterance): JsObject =
   discard
-proc jsSpeechSynthesisUtteranceOnpause*(self: SpeechSynthesisUtterance): JsObject {.wasmBindgen.} =
+proc jsSpeechSynthesisUtteranceOnpause*(self: SpeechSynthesisUtterance): JsObject =
   discard
-proc jsSpeechSynthesisUtteranceOnresume*(self: SpeechSynthesisUtterance): JsObject {.wasmBindgen.} =
+proc jsSpeechSynthesisUtteranceOnresume*(self: SpeechSynthesisUtterance): JsObject =
   discard
-proc jsSpeechSynthesisUtteranceOnmark*(self: SpeechSynthesisUtterance): JsObject {.wasmBindgen.} =
+proc jsSpeechSynthesisUtteranceOnmark*(self: SpeechSynthesisUtterance): JsObject =
   discard
-proc jsSpeechSynthesisUtteranceOnboundary*(self: SpeechSynthesisUtterance): JsObject {.wasmBindgen.} =
+proc jsSpeechSynthesisUtteranceOnboundary*(self: SpeechSynthesisUtterance): JsObject =
   discard
-proc jsSpeechSynthesisUtteranceChosenVoiceURI*(self: SpeechSynthesisUtterance): cstring {.wasmBindgen.} =
+proc jsSpeechSynthesisUtteranceChosenVoiceURI*(self: SpeechSynthesisUtterance): cstring =
   discard
 
-proc jsSpeechSynthesisVoiceVoiceURI*(self: SpeechSynthesisVoice): cstring {.wasmBindgen.} =
+proc jsSpeechSynthesisVoiceVoiceURI*(self: SpeechSynthesisVoice): cstring =
   discard
-proc jsSpeechSynthesisVoiceName*(self: SpeechSynthesisVoice): cstring {.wasmBindgen.} =
+proc jsSpeechSynthesisVoiceName*(self: SpeechSynthesisVoice): cstring =
   discard
-proc jsSpeechSynthesisVoiceLang*(self: SpeechSynthesisVoice): cstring {.wasmBindgen.} =
+proc jsSpeechSynthesisVoiceLang*(self: SpeechSynthesisVoice): cstring =
   discard
-proc jsSpeechSynthesisVoiceLocalService*(self: SpeechSynthesisVoice): bool {.wasmBindgen.} =
+proc jsSpeechSynthesisVoiceLocalService*(self: SpeechSynthesisVoice): bool =
   discard
-proc jsSpeechSynthesisVoiceDefault*(self: SpeechSynthesisVoice): bool {.wasmBindgen.} =
+proc jsSpeechSynthesisVoiceDefault*(self: SpeechSynthesisVoice): bool =
   discard
 
 
-proc jsStereoPannerNodePan*(self: StereoPannerNode): JsObject {.wasmBindgen.} =
+proc jsStereoPannerNodePan*(self: StereoPannerNode): JsObject =
   discard
 
-proc jsStorageLength*(self: Storage): uint32 {.wasmBindgen.} =
+proc jsStorageLength*(self: Storage): uint32 =
   discard
-proc jsStorageIsSessionOnly*(self: Storage): bool {.wasmBindgen.} =
+proc jsStorageIsSessionOnly*(self: Storage): bool =
   discard
-proc jsKey*(self: Storage; index: uint32): Option[cstring] {.wasmBindgen.} =
+proc jsKey*(self: Storage; index: uint32): Option[cstring] =
   discard
-proc jsGetItem*(self: Storage; key: cstring): Option[cstring] {.wasmBindgen.} =
+proc jsGetItem*(self: Storage; key: cstring): Option[cstring] =
   discard
-proc jsSetItem*(self: Storage; key: cstring; value: cstring): void {.wasmBindgen.} =
+proc jsSetItem*(self: Storage; key: cstring; value: cstring): void =
   discard
-proc jsRemoveItem*(self: Storage; key: cstring): void {.wasmBindgen.} =
+proc jsRemoveItem*(self: Storage; key: cstring): void =
   discard
-proc jsClear*(self: Storage): void {.wasmBindgen.} =
+proc jsClear*(self: Storage): void =
   discard
 
-proc jsInitStorageEvent*(self: StorageEvent; typeVal: cstring; canBubble: bool; cancelable: bool; key: Option[cstring]; oldValue: Option[cstring]; newValue: Option[cstring]; url: Option[cstring]; storageArea: Option[JsObject]): void {.wasmBindgen.} =
+proc jsInitStorageEvent*(self: StorageEvent; typeVal: cstring; canBubble: bool; cancelable: bool; key: Option[cstring]; oldValue: Option[cstring]; newValue: Option[cstring]; url: Option[cstring]; storageArea: Option[JsObject]): void =
   discard
 
-proc jsPersisted*(self: StorageManager): JsObject {.wasmBindgen.} =
+proc jsPersisted*(self: StorageManager): JsObject =
   discard
-proc jsPersist*(self: StorageManager): JsObject {.wasmBindgen.} =
+proc jsPersist*(self: StorageManager): JsObject =
   discard
-proc jsEstimate*(self: StorageManager): JsObject {.wasmBindgen.} =
+proc jsEstimate*(self: StorageManager): JsObject =
   discard
 
-proc jsReadableStreamLocked*(self: ReadableStream): bool {.wasmBindgen.} =
+proc jsReadableStreamLocked*(self: ReadableStream): bool =
   discard
-proc jsReadableStreamIterable*(self: ReadableStream): JsObject {.wasmBindgen.} =
+proc jsReadableStreamIterable*(self: ReadableStream): JsObject =
   discard
-proc jsReadableStreamAny*(self: ReadableStream): JsObject {.wasmBindgen.} =
+proc jsReadableStreamAny*(self: ReadableStream): JsObject =
   discard
-proc jsReadableStreamReadableStreamIteratorOptions*(self: ReadableStream): JsObject {.wasmBindgen.} =
+proc jsReadableStreamReadableStreamIteratorOptions*(self: ReadableStream): JsObject =
   discard
-proc jsCancel*(self: ReadableStream; reason: JsObject): JsObject {.wasmBindgen.} =
+proc jsCancel*(self: ReadableStream; reason: JsObject): JsObject =
   discard
-proc jsGetReader*(self: ReadableStream; options: JsObject): JsObject {.wasmBindgen.} =
+proc jsGetReader*(self: ReadableStream; options: JsObject): JsObject =
   discard
-proc jsPipeThrough*(self: ReadableStream; transform: JsObject; options: JsObject): JsObject {.wasmBindgen.} =
+proc jsPipeThrough*(self: ReadableStream; transform: JsObject; options: JsObject): JsObject =
   discard
-proc jsPipeTo*(self: ReadableStream; destination: JsObject; options: JsObject): JsObject {.wasmBindgen.} =
+proc jsPipeTo*(self: ReadableStream; destination: JsObject; options: JsObject): JsObject =
   discard
-proc jsTee*(self: ReadableStream): JsObject {.wasmBindgen.} =
+proc jsTee*(self: ReadableStream): JsObject =
   discard
 
-proc jsRead*(self: ReadableStreamDefaultReader): JsObject {.wasmBindgen.} =
+proc jsRead*(self: ReadableStreamDefaultReader): JsObject =
   discard
-proc jsReleaseLock*(self: ReadableStreamDefaultReader): void {.wasmBindgen.} =
+proc jsReleaseLock*(self: ReadableStreamDefaultReader): void =
   discard
 
-proc jsRead*(self: ReadableStreamBYOBReader; view: JsObject): JsObject {.wasmBindgen.} =
+proc jsRead*(self: ReadableStreamBYOBReader; view: JsObject): JsObject =
   discard
-proc jsReleaseLock*(self: ReadableStreamBYOBReader): void {.wasmBindgen.} =
+proc jsReleaseLock*(self: ReadableStreamBYOBReader): void =
   discard
 
-proc jsClose*(self: ReadableStreamDefaultController): void {.wasmBindgen.} =
+proc jsClose*(self: ReadableStreamDefaultController): void =
   discard
-proc jsEnqueue*(self: ReadableStreamDefaultController; chunk: JsObject): void {.wasmBindgen.} =
+proc jsEnqueue*(self: ReadableStreamDefaultController; chunk: JsObject): void =
   discard
-proc jsError*(self: ReadableStreamDefaultController; e: JsObject): void {.wasmBindgen.} =
+proc jsError*(self: ReadableStreamDefaultController; e: JsObject): void =
   discard
 
-proc jsClose*(self: ReadableByteStreamController): void {.wasmBindgen.} =
+proc jsClose*(self: ReadableByteStreamController): void =
   discard
-proc jsEnqueue*(self: ReadableByteStreamController; chunk: JsObject): void {.wasmBindgen.} =
+proc jsEnqueue*(self: ReadableByteStreamController; chunk: JsObject): void =
   discard
-proc jsError*(self: ReadableByteStreamController; e: JsObject): void {.wasmBindgen.} =
+proc jsError*(self: ReadableByteStreamController; e: JsObject): void =
   discard
 
-proc jsRespond*(self: ReadableStreamBYOBRequest; bytesWritten: uint64): void {.wasmBindgen.} =
+proc jsRespond*(self: ReadableStreamBYOBRequest; bytesWritten: uint64): void =
   discard
-proc jsRespondWithNewView*(self: ReadableStreamBYOBRequest; view: JsObject): void {.wasmBindgen.} =
+proc jsRespondWithNewView*(self: ReadableStreamBYOBRequest; view: JsObject): void =
   discard
 
-proc jsWritableStreamLocked*(self: WritableStream): bool {.wasmBindgen.} =
+proc jsWritableStreamLocked*(self: WritableStream): bool =
   discard
-proc jsAbort*(self: WritableStream; reason: JsObject): JsObject {.wasmBindgen.} =
+proc jsAbort*(self: WritableStream; reason: JsObject): JsObject =
   discard
-proc jsClose*(self: WritableStream): JsObject {.wasmBindgen.} =
+proc jsClose*(self: WritableStream): JsObject =
   discard
-proc jsGetWriter*(self: WritableStream): JsObject {.wasmBindgen.} =
+proc jsGetWriter*(self: WritableStream): JsObject =
   discard
 
-proc jsWritableStreamDefaultWriterClosed*(self: WritableStreamDefaultWriter): JsObject {.wasmBindgen.} =
+proc jsWritableStreamDefaultWriterClosed*(self: WritableStreamDefaultWriter): JsObject =
   discard
-proc jsWritableStreamDefaultWriterReady*(self: WritableStreamDefaultWriter): JsObject {.wasmBindgen.} =
+proc jsWritableStreamDefaultWriterReady*(self: WritableStreamDefaultWriter): JsObject =
   discard
-proc jsAbort*(self: WritableStreamDefaultWriter; reason: JsObject): JsObject {.wasmBindgen.} =
+proc jsAbort*(self: WritableStreamDefaultWriter; reason: JsObject): JsObject =
   discard
-proc jsClose*(self: WritableStreamDefaultWriter): JsObject {.wasmBindgen.} =
+proc jsClose*(self: WritableStreamDefaultWriter): JsObject =
   discard
-proc jsReleaseLock*(self: WritableStreamDefaultWriter): void {.wasmBindgen.} =
+proc jsReleaseLock*(self: WritableStreamDefaultWriter): void =
   discard
-proc jsWrite*(self: WritableStreamDefaultWriter; chunk: JsObject): JsObject {.wasmBindgen.} =
+proc jsWrite*(self: WritableStreamDefaultWriter; chunk: JsObject): JsObject =
   discard
 
-proc jsWritableStreamDefaultControllerSignal*(self: WritableStreamDefaultController): JsObject {.wasmBindgen.} =
+proc jsWritableStreamDefaultControllerSignal*(self: WritableStreamDefaultController): JsObject =
   discard
-proc jsError*(self: WritableStreamDefaultController; e: JsObject): void {.wasmBindgen.} =
+proc jsError*(self: WritableStreamDefaultController; e: JsObject): void =
   discard
 
-proc jsTransformStreamReadable*(self: TransformStream): JsObject {.wasmBindgen.} =
+proc jsTransformStreamReadable*(self: TransformStream): JsObject =
   discard
-proc jsTransformStreamWritable*(self: TransformStream): JsObject {.wasmBindgen.} =
+proc jsTransformStreamWritable*(self: TransformStream): JsObject =
   discard
 
-proc jsEnqueue*(self: TransformStreamDefaultController; chunk: JsObject): void {.wasmBindgen.} =
+proc jsEnqueue*(self: TransformStreamDefaultController; chunk: JsObject): void =
   discard
-proc jsError*(self: TransformStreamDefaultController; reason: JsObject): void {.wasmBindgen.} =
+proc jsError*(self: TransformStreamDefaultController; reason: JsObject): void =
   discard
-proc jsTerminate*(self: TransformStreamDefaultController): void {.wasmBindgen.} =
+proc jsTerminate*(self: TransformStreamDefaultController): void =
   discard
 
-proc jsByteLengthQueuingStrategyHighWaterMark*(self: ByteLengthQueuingStrategy): float64 {.wasmBindgen.} =
+proc jsByteLengthQueuingStrategyHighWaterMark*(self: ByteLengthQueuingStrategy): float64 =
   discard
-proc jsByteLengthQueuingStrategySize*(self: ByteLengthQueuingStrategy): JsObject {.wasmBindgen.} =
+proc jsByteLengthQueuingStrategySize*(self: ByteLengthQueuingStrategy): JsObject =
   discard
 
-proc jsCountQueuingStrategyHighWaterMark*(self: CountQueuingStrategy): float64 {.wasmBindgen.} =
+proc jsCountQueuingStrategyHighWaterMark*(self: CountQueuingStrategy): float64 =
   discard
-proc jsCountQueuingStrategySize*(self: CountQueuingStrategy): JsObject {.wasmBindgen.} =
+proc jsCountQueuingStrategySize*(self: CountQueuingStrategy): JsObject =
   discard
 
 
-proc jsStyleSheetTypeVal*(self: StyleSheet): cstring {.wasmBindgen.} =
+proc jsStyleSheetTypeVal*(self: StyleSheet): cstring =
   discard
-proc jsStyleSheetMedia*(self: StyleSheet): JsObject {.wasmBindgen.} =
+proc jsStyleSheetMedia*(self: StyleSheet): JsObject =
   discard
-proc jsStyleSheetDisabled*(self: StyleSheet): bool {.wasmBindgen.} =
+proc jsStyleSheetDisabled*(self: StyleSheet): bool =
   discard
-proc jsStyleSheetSourceMapURL*(self: StyleSheet): cstring {.wasmBindgen.} =
+proc jsStyleSheetSourceMapURL*(self: StyleSheet): cstring =
   discard
-proc jsStyleSheetSourceURL*(self: StyleSheet): cstring {.wasmBindgen.} =
+proc jsStyleSheetSourceURL*(self: StyleSheet): cstring =
   discard
 
-proc jsStyleSheetApplicableStateChangeEventApplicable*(self: StyleSheetApplicableStateChangeEvent): bool {.wasmBindgen.} =
+proc jsStyleSheetApplicableStateChangeEventApplicable*(self: StyleSheetApplicableStateChangeEvent): bool =
   discard
 
-proc jsStyleSheetChangeEventDocumentSheet*(self: StyleSheetChangeEvent): bool {.wasmBindgen.} =
+proc jsStyleSheetChangeEventDocumentSheet*(self: StyleSheetChangeEvent): bool =
   discard
 
-proc jsStyleSheetListLength*(self: StyleSheetList): uint32 {.wasmBindgen.} =
+proc jsStyleSheetListLength*(self: StyleSheetList): uint32 =
   discard
-proc jsItem*(self: StyleSheetList; index: uint32): Option[JsObject] {.wasmBindgen.} =
+proc jsItem*(self: StyleSheetList; index: uint32): Option[JsObject] =
   discard
 
 
-proc jsCryptoKeyTypeVal*(self: CryptoKey): JsObject {.wasmBindgen.} =
+proc jsCryptoKeyTypeVal*(self: CryptoKey): JsObject =
   discard
-proc jsCryptoKeyExtractable*(self: CryptoKey): bool {.wasmBindgen.} =
+proc jsCryptoKeyExtractable*(self: CryptoKey): bool =
   discard
-proc jsCryptoKeyAlgorithm*(self: CryptoKey): JsObject {.wasmBindgen.} =
+proc jsCryptoKeyAlgorithm*(self: CryptoKey): JsObject =
   discard
-proc jsCryptoKeyUsages*(self: CryptoKey): JsObject {.wasmBindgen.} =
+proc jsCryptoKeyUsages*(self: CryptoKey): JsObject =
   discard
 
-proc jsEncrypt*(self: SubtleCrypto; algorithm: JsObject; key: JsObject; data: JsObject): JsObject {.wasmBindgen.} =
+proc jsEncrypt*(self: SubtleCrypto; algorithm: JsObject; key: JsObject; data: JsObject): JsObject =
   discard
-proc jsDecrypt*(self: SubtleCrypto; algorithm: JsObject; key: JsObject; data: JsObject): JsObject {.wasmBindgen.} =
+proc jsDecrypt*(self: SubtleCrypto; algorithm: JsObject; key: JsObject; data: JsObject): JsObject =
   discard
-proc jsSign*(self: SubtleCrypto; algorithm: JsObject; key: JsObject; data: JsObject): JsObject {.wasmBindgen.} =
+proc jsSign*(self: SubtleCrypto; algorithm: JsObject; key: JsObject; data: JsObject): JsObject =
   discard
-proc jsVerify*(self: SubtleCrypto; algorithm: JsObject; key: JsObject; signature: JsObject; data: JsObject): JsObject {.wasmBindgen.} =
+proc jsVerify*(self: SubtleCrypto; algorithm: JsObject; key: JsObject; signature: JsObject; data: JsObject): JsObject =
   discard
-proc jsDigest*(self: SubtleCrypto; algorithm: JsObject; data: JsObject): JsObject {.wasmBindgen.} =
+proc jsDigest*(self: SubtleCrypto; algorithm: JsObject; data: JsObject): JsObject =
   discard
-proc jsGenerateKey*(self: SubtleCrypto; algorithm: JsObject; extractable: bool; keyUsages: JsObject): JsObject {.wasmBindgen.} =
+proc jsGenerateKey*(self: SubtleCrypto; algorithm: JsObject; extractable: bool; keyUsages: JsObject): JsObject =
   discard
-proc jsDeriveKey*(self: SubtleCrypto; algorithm: JsObject; baseKey: JsObject; derivedKeyType: JsObject; extractable: bool; keyUsages: JsObject): JsObject {.wasmBindgen.} =
+proc jsDeriveKey*(self: SubtleCrypto; algorithm: JsObject; baseKey: JsObject; derivedKeyType: JsObject; extractable: bool; keyUsages: JsObject): JsObject =
   discard
-proc jsDeriveBits*(self: SubtleCrypto; algorithm: JsObject; baseKey: JsObject; length: uint32): JsObject {.wasmBindgen.} =
+proc jsDeriveBits*(self: SubtleCrypto; algorithm: JsObject; baseKey: JsObject; length: uint32): JsObject =
   discard
-proc jsImportKey*(self: SubtleCrypto; format: JsObject; keyData: JsObject; algorithm: JsObject; extractable: bool; keyUsages: JsObject): JsObject {.wasmBindgen.} =
+proc jsImportKey*(self: SubtleCrypto; format: JsObject; keyData: JsObject; algorithm: JsObject; extractable: bool; keyUsages: JsObject): JsObject =
   discard
-proc jsExportKey*(self: SubtleCrypto; format: JsObject; key: JsObject): JsObject {.wasmBindgen.} =
+proc jsExportKey*(self: SubtleCrypto; format: JsObject; key: JsObject): JsObject =
   discard
-proc jsWrapKey*(self: SubtleCrypto; format: JsObject; key: JsObject; wrappingKey: JsObject; wrapAlgorithm: JsObject): JsObject {.wasmBindgen.} =
+proc jsWrapKey*(self: SubtleCrypto; format: JsObject; key: JsObject; wrappingKey: JsObject; wrapAlgorithm: JsObject): JsObject =
   discard
-proc jsUnwrapKey*(self: SubtleCrypto; format: JsObject; wrappedKey: JsObject; unwrappingKey: JsObject; unwrapAlgorithm: JsObject; unwrappedKeyAlgorithm: JsObject; extractable: bool; keyUsages: JsObject): JsObject {.wasmBindgen.} =
+proc jsUnwrapKey*(self: SubtleCrypto; format: JsObject; wrappedKey: JsObject; unwrappingKey: JsObject; unwrapAlgorithm: JsObject; unwrappedKeyAlgorithm: JsObject; extractable: bool; keyUsages: JsObject): JsObject =
   discard
 
-proc jsTCPServerSocketLocalPort*(self: TCPServerSocket): uint16 {.wasmBindgen.} =
+proc jsTCPServerSocketLocalPort*(self: TCPServerSocket): uint16 =
   discard
-proc jsTCPServerSocketOnconnect*(self: TCPServerSocket): JsObject {.wasmBindgen.} =
+proc jsTCPServerSocketOnconnect*(self: TCPServerSocket): JsObject =
   discard
-proc jsTCPServerSocketOnerror*(self: TCPServerSocket): JsObject {.wasmBindgen.} =
+proc jsTCPServerSocketOnerror*(self: TCPServerSocket): JsObject =
   discard
-proc jsClose*(self: TCPServerSocket): void {.wasmBindgen.} =
+proc jsClose*(self: TCPServerSocket): void =
   discard
 
-proc jsTCPServerSocketEventSocket*(self: TCPServerSocketEvent): JsObject {.wasmBindgen.} =
+proc jsTCPServerSocketEventSocket*(self: TCPServerSocketEvent): JsObject =
   discard
 
-proc jsTCPSocketHost*(self: TCPSocket): cstring {.wasmBindgen.} =
+proc jsTCPSocketHost*(self: TCPSocket): cstring =
   discard
-proc jsTCPSocketPort*(self: TCPSocket): uint16 {.wasmBindgen.} =
+proc jsTCPSocketPort*(self: TCPSocket): uint16 =
   discard
-proc jsTCPSocketSsl*(self: TCPSocket): bool {.wasmBindgen.} =
+proc jsTCPSocketSsl*(self: TCPSocket): bool =
   discard
-proc jsTCPSocketBufferedAmount*(self: TCPSocket): uint64 {.wasmBindgen.} =
+proc jsTCPSocketBufferedAmount*(self: TCPSocket): uint64 =
   discard
-proc jsTCPSocketReadyState*(self: TCPSocket): JsObject {.wasmBindgen.} =
+proc jsTCPSocketReadyState*(self: TCPSocket): JsObject =
   discard
-proc jsTCPSocketBinaryType*(self: TCPSocket): JsObject {.wasmBindgen.} =
+proc jsTCPSocketBinaryType*(self: TCPSocket): JsObject =
   discard
-proc jsTCPSocketOnopen*(self: TCPSocket): JsObject {.wasmBindgen.} =
+proc jsTCPSocketOnopen*(self: TCPSocket): JsObject =
   discard
-proc jsTCPSocketOndrain*(self: TCPSocket): JsObject {.wasmBindgen.} =
+proc jsTCPSocketOndrain*(self: TCPSocket): JsObject =
   discard
-proc jsTCPSocketOndata*(self: TCPSocket): JsObject {.wasmBindgen.} =
+proc jsTCPSocketOndata*(self: TCPSocket): JsObject =
   discard
-proc jsTCPSocketOnerror*(self: TCPSocket): JsObject {.wasmBindgen.} =
+proc jsTCPSocketOnerror*(self: TCPSocket): JsObject =
   discard
-proc jsTCPSocketOnclose*(self: TCPSocket): JsObject {.wasmBindgen.} =
+proc jsTCPSocketOnclose*(self: TCPSocket): JsObject =
   discard
-proc jsUpgradeToSecure*(self: TCPSocket): void {.wasmBindgen.} =
+proc jsUpgradeToSecure*(self: TCPSocket): void =
   discard
-proc jsSuspend*(self: TCPSocket): void {.wasmBindgen.} =
+proc jsSuspend*(self: TCPSocket): void =
   discard
-proc jsResume*(self: TCPSocket): void {.wasmBindgen.} =
+proc jsResume*(self: TCPSocket): void =
   discard
-proc jsClose*(self: TCPSocket): void {.wasmBindgen.} =
+proc jsClose*(self: TCPSocket): void =
   discard
-proc jsCloseImmediately*(self: TCPSocket): void {.wasmBindgen.} =
+proc jsCloseImmediately*(self: TCPSocket): void =
   discard
-proc jsSend*(self: TCPSocket; data: cstring): bool {.wasmBindgen.} =
+proc jsSend*(self: TCPSocket; data: cstring): bool =
   discard
-proc jsSend*(self: TCPSocket; data: JsObject; byteOffset: uint32; byteLength: uint32): bool {.wasmBindgen.} =
+proc jsSend*(self: TCPSocket; data: JsObject; byteOffset: uint32; byteLength: uint32): bool =
   discard
 
-proc jsTCPSocketErrorEventName*(self: TCPSocketErrorEvent): cstring {.wasmBindgen.} =
+proc jsTCPSocketErrorEventName*(self: TCPSocketErrorEvent): cstring =
   discard
-proc jsTCPSocketErrorEventMessage*(self: TCPSocketErrorEvent): cstring {.wasmBindgen.} =
+proc jsTCPSocketErrorEventMessage*(self: TCPSocketErrorEvent): cstring =
   discard
 
-proc jsTCPSocketEventData*(self: TCPSocketEvent): JsObject {.wasmBindgen.} =
+proc jsTCPSocketEventData*(self: TCPSocketEvent): JsObject =
   discard
 
-proc jsTextWholeText*(self: Text): cstring {.wasmBindgen.} =
+proc jsTextWholeText*(self: Text): cstring =
   discard
-proc jsSplitText*(self: Text; offset: uint32): JsObject {.wasmBindgen.} =
+proc jsSplitText*(self: Text; offset: uint32): JsObject =
   discard
 
-proc jsTextClauseStartOffset*(self: TextClause): int32 {.wasmBindgen.} =
+proc jsTextClauseStartOffset*(self: TextClause): int32 =
   discard
-proc jsTextClauseEndOffset*(self: TextClause): int32 {.wasmBindgen.} =
+proc jsTextClauseEndOffset*(self: TextClause): int32 =
   discard
-proc jsTextClauseIsCaret*(self: TextClause): bool {.wasmBindgen.} =
+proc jsTextClauseIsCaret*(self: TextClause): bool =
   discard
-proc jsTextClauseIsTargetClause*(self: TextClause): bool {.wasmBindgen.} =
+proc jsTextClauseIsTargetClause*(self: TextClause): bool =
   discard
 
-proc jsTextDecoderEncoding*(self: TextDecoder): cstring {.wasmBindgen.} =
+proc jsTextDecoderEncoding*(self: TextDecoder): cstring =
   discard
-proc jsTextDecoderFatal*(self: TextDecoder): bool {.wasmBindgen.} =
+proc jsTextDecoderFatal*(self: TextDecoder): bool =
   discard
-proc jsDecode*(self: TextDecoder; input: JsObject; options: JsObject): cstring {.wasmBindgen.} =
+proc jsDecode*(self: TextDecoder; input: JsObject; options: JsObject): cstring =
   discard
 
-proc jsTextEncoderEncoding*(self: TextEncoder): cstring {.wasmBindgen.} =
+proc jsTextEncoderEncoding*(self: TextEncoder): cstring =
   discard
-proc jsEncode*(self: TextEncoder; input: cstring): seq[uint8] {.wasmBindgen.} =
+proc jsEncode*(self: TextEncoder; input: cstring): seq[uint8] =
   discard
 
-proc jsTextTrackKind*(self: TextTrack): JsObject {.wasmBindgen.} =
+proc jsTextTrackKind*(self: TextTrack): JsObject =
   discard
-proc jsTextTrackLabel*(self: TextTrack): cstring {.wasmBindgen.} =
+proc jsTextTrackLabel*(self: TextTrack): cstring =
   discard
-proc jsTextTrackLanguage*(self: TextTrack): cstring {.wasmBindgen.} =
+proc jsTextTrackLanguage*(self: TextTrack): cstring =
   discard
-proc jsTextTrackId*(self: TextTrack): cstring {.wasmBindgen.} =
+proc jsTextTrackId*(self: TextTrack): cstring =
   discard
-proc jsTextTrackInBandMetadataTrackDispatchType*(self: TextTrack): cstring {.wasmBindgen.} =
+proc jsTextTrackInBandMetadataTrackDispatchType*(self: TextTrack): cstring =
   discard
-proc jsTextTrackMode*(self: TextTrack): JsObject {.wasmBindgen.} =
+proc jsTextTrackMode*(self: TextTrack): JsObject =
   discard
-proc jsTextTrackOncuechange*(self: TextTrack): JsObject {.wasmBindgen.} =
+proc jsTextTrackOncuechange*(self: TextTrack): JsObject =
   discard
-proc jsAddCue*(self: TextTrack; cue: JsObject): void {.wasmBindgen.} =
+proc jsAddCue*(self: TextTrack; cue: JsObject): void =
   discard
-proc jsRemoveCue*(self: TextTrack; cue: JsObject): void {.wasmBindgen.} =
+proc jsRemoveCue*(self: TextTrack; cue: JsObject): void =
   discard
 
-proc jsTextTrackCueId*(self: TextTrackCue): cstring {.wasmBindgen.} =
+proc jsTextTrackCueId*(self: TextTrackCue): cstring =
   discard
-proc jsTextTrackCueStartTime*(self: TextTrackCue): float64 {.wasmBindgen.} =
+proc jsTextTrackCueStartTime*(self: TextTrackCue): float64 =
   discard
-proc jsTextTrackCueEndTime*(self: TextTrackCue): float64 {.wasmBindgen.} =
+proc jsTextTrackCueEndTime*(self: TextTrackCue): float64 =
   discard
-proc jsTextTrackCuePauseOnExit*(self: TextTrackCue): bool {.wasmBindgen.} =
+proc jsTextTrackCuePauseOnExit*(self: TextTrackCue): bool =
   discard
-proc jsTextTrackCueOnenter*(self: TextTrackCue): JsObject {.wasmBindgen.} =
+proc jsTextTrackCueOnenter*(self: TextTrackCue): JsObject =
   discard
-proc jsTextTrackCueOnexit*(self: TextTrackCue): JsObject {.wasmBindgen.} =
+proc jsTextTrackCueOnexit*(self: TextTrackCue): JsObject =
   discard
 
-proc jsTextTrackCueListLength*(self: TextTrackCueList): uint32 {.wasmBindgen.} =
+proc jsTextTrackCueListLength*(self: TextTrackCueList): uint32 =
   discard
-proc jsGetCueById*(self: TextTrackCueList; id: cstring): Option[JsObject] {.wasmBindgen.} =
+proc jsGetCueById*(self: TextTrackCueList; id: cstring): Option[JsObject] =
   discard
 
-proc jsTextTrackListLength*(self: TextTrackList): uint32 {.wasmBindgen.} =
+proc jsTextTrackListLength*(self: TextTrackList): uint32 =
   discard
-proc jsTextTrackListOnchange*(self: TextTrackList): JsObject {.wasmBindgen.} =
+proc jsTextTrackListOnchange*(self: TextTrackList): JsObject =
   discard
-proc jsTextTrackListOnaddtrack*(self: TextTrackList): JsObject {.wasmBindgen.} =
+proc jsTextTrackListOnaddtrack*(self: TextTrackList): JsObject =
   discard
-proc jsTextTrackListOnremovetrack*(self: TextTrackList): JsObject {.wasmBindgen.} =
+proc jsTextTrackListOnremovetrack*(self: TextTrackList): JsObject =
   discard
-proc jsGetTrackById*(self: TextTrackList; id: cstring): Option[JsObject] {.wasmBindgen.} =
+proc jsGetTrackById*(self: TextTrackList; id: cstring): Option[JsObject] =
   discard
 
-proc jsTimeEventDetail*(self: TimeEvent): int32 {.wasmBindgen.} =
+proc jsTimeEventDetail*(self: TimeEvent): int32 =
   discard
-proc jsInitTimeEvent*(self: TimeEvent; aType: cstring; aView: Option[JsObject]; aDetail: int32): void {.wasmBindgen.} =
+proc jsInitTimeEvent*(self: TimeEvent; aType: cstring; aView: Option[JsObject]; aDetail: int32): void =
   discard
 
-proc jsTimeRangesLength*(self: TimeRanges): uint32 {.wasmBindgen.} =
+proc jsTimeRangesLength*(self: TimeRanges): uint32 =
   discard
-proc jsStart*(self: TimeRanges; index: uint32): float64 {.wasmBindgen.} =
+proc jsStart*(self: TimeRanges; index: uint32): float64 =
   discard
-proc jsEndVal*(self: TimeRanges; index: uint32): float64 {.wasmBindgen.} =
+proc jsEndVal*(self: TimeRanges; index: uint32): float64 =
   discard
 
-proc jsToggleEventOldState*(self: ToggleEvent): cstring {.wasmBindgen.} =
+proc jsToggleEventOldState*(self: ToggleEvent): cstring =
   discard
-proc jsToggleEventNewState*(self: ToggleEvent): cstring {.wasmBindgen.} =
+proc jsToggleEventNewState*(self: ToggleEvent): cstring =
   discard
 
-proc jsTouchIdentifier*(self: Touch): int32 {.wasmBindgen.} =
+proc jsTouchIdentifier*(self: Touch): int32 =
   discard
-proc jsTouchScreenX*(self: Touch): int32 {.wasmBindgen.} =
+proc jsTouchScreenX*(self: Touch): int32 =
   discard
-proc jsTouchScreenY*(self: Touch): int32 {.wasmBindgen.} =
+proc jsTouchScreenY*(self: Touch): int32 =
   discard
-proc jsTouchClientX*(self: Touch): int32 {.wasmBindgen.} =
+proc jsTouchClientX*(self: Touch): int32 =
   discard
-proc jsTouchClientY*(self: Touch): int32 {.wasmBindgen.} =
+proc jsTouchClientY*(self: Touch): int32 =
   discard
-proc jsTouchPageX*(self: Touch): int32 {.wasmBindgen.} =
+proc jsTouchPageX*(self: Touch): int32 =
   discard
-proc jsTouchPageY*(self: Touch): int32 {.wasmBindgen.} =
+proc jsTouchPageY*(self: Touch): int32 =
   discard
-proc jsTouchRadiusX*(self: Touch): int32 {.wasmBindgen.} =
+proc jsTouchRadiusX*(self: Touch): int32 =
   discard
-proc jsTouchRadiusY*(self: Touch): int32 {.wasmBindgen.} =
+proc jsTouchRadiusY*(self: Touch): int32 =
   discard
-proc jsTouchRotationAngle*(self: Touch): float32 {.wasmBindgen.} =
+proc jsTouchRotationAngle*(self: Touch): float32 =
   discard
-proc jsTouchForce*(self: Touch): float32 {.wasmBindgen.} =
+proc jsTouchForce*(self: Touch): float32 =
   discard
 
-proc jsTouchEventTouches*(self: TouchEvent): JsObject {.wasmBindgen.} =
+proc jsTouchEventTouches*(self: TouchEvent): JsObject =
   discard
-proc jsTouchEventTargetTouches*(self: TouchEvent): JsObject {.wasmBindgen.} =
+proc jsTouchEventTargetTouches*(self: TouchEvent): JsObject =
   discard
-proc jsTouchEventChangedTouches*(self: TouchEvent): JsObject {.wasmBindgen.} =
+proc jsTouchEventChangedTouches*(self: TouchEvent): JsObject =
   discard
-proc jsTouchEventAltKey*(self: TouchEvent): bool {.wasmBindgen.} =
+proc jsTouchEventAltKey*(self: TouchEvent): bool =
   discard
-proc jsTouchEventMetaKey*(self: TouchEvent): bool {.wasmBindgen.} =
+proc jsTouchEventMetaKey*(self: TouchEvent): bool =
   discard
-proc jsTouchEventCtrlKey*(self: TouchEvent): bool {.wasmBindgen.} =
+proc jsTouchEventCtrlKey*(self: TouchEvent): bool =
   discard
-proc jsTouchEventShiftKey*(self: TouchEvent): bool {.wasmBindgen.} =
+proc jsTouchEventShiftKey*(self: TouchEvent): bool =
   discard
-proc jsInitTouchEvent*(self: TouchEvent; typeVal: cstring; canBubble: bool; cancelable: bool; view: Option[JsObject]; detail: int32; ctrlKey: bool; altKey: bool; shiftKey: bool; metaKey: bool; touches: Option[JsObject]; targetTouches: Option[JsObject]; changedTouches: Option[JsObject]): void {.wasmBindgen.} =
+proc jsInitTouchEvent*(self: TouchEvent; typeVal: cstring; canBubble: bool; cancelable: bool; view: Option[JsObject]; detail: int32; ctrlKey: bool; altKey: bool; shiftKey: bool; metaKey: bool; touches: Option[JsObject]; targetTouches: Option[JsObject]; changedTouches: Option[JsObject]): void =
   discard
 
-proc jsTouchListLength*(self: TouchList): uint32 {.wasmBindgen.} =
+proc jsTouchListLength*(self: TouchList): uint32 =
   discard
-proc jsItem*(self: TouchList; index: uint32): Option[JsObject] {.wasmBindgen.} =
+proc jsItem*(self: TouchList; index: uint32): Option[JsObject] =
   discard
 
 
-proc jsTransitionEventPropertyName*(self: TransitionEvent): cstring {.wasmBindgen.} =
+proc jsTransitionEventPropertyName*(self: TransitionEvent): cstring =
   discard
-proc jsTransitionEventElapsedTime*(self: TransitionEvent): float32 {.wasmBindgen.} =
+proc jsTransitionEventElapsedTime*(self: TransitionEvent): float32 =
   discard
-proc jsTransitionEventPseudoElement*(self: TransitionEvent): cstring {.wasmBindgen.} =
+proc jsTransitionEventPseudoElement*(self: TransitionEvent): cstring =
   discard
 
-proc jsTreeBoxObjectFocused*(self: TreeBoxObject): bool {.wasmBindgen.} =
+proc jsTreeBoxObjectFocused*(self: TreeBoxObject): bool =
   discard
-proc jsTreeBoxObjectRowHeight*(self: TreeBoxObject): int32 {.wasmBindgen.} =
+proc jsTreeBoxObjectRowHeight*(self: TreeBoxObject): int32 =
   discard
-proc jsTreeBoxObjectRowWidth*(self: TreeBoxObject): int32 {.wasmBindgen.} =
+proc jsTreeBoxObjectRowWidth*(self: TreeBoxObject): int32 =
   discard
-proc jsTreeBoxObjectHorizontalPosition*(self: TreeBoxObject): int32 {.wasmBindgen.} =
+proc jsTreeBoxObjectHorizontalPosition*(self: TreeBoxObject): int32 =
   discard
-proc jsTreeBoxObjectSelectionRegion*(self: TreeBoxObject): JsObject {.wasmBindgen.} =
+proc jsTreeBoxObjectSelectionRegion*(self: TreeBoxObject): JsObject =
   discard
-proc jsGetFirstVisibleRow*(self: TreeBoxObject): int32 {.wasmBindgen.} =
+proc jsGetFirstVisibleRow*(self: TreeBoxObject): int32 =
   discard
-proc jsGetLastVisibleRow*(self: TreeBoxObject): int32 {.wasmBindgen.} =
+proc jsGetLastVisibleRow*(self: TreeBoxObject): int32 =
   discard
-proc jsGetPageLength*(self: TreeBoxObject): int32 {.wasmBindgen.} =
+proc jsGetPageLength*(self: TreeBoxObject): int32 =
   discard
-proc jsEnsureRowIsVisible*(self: TreeBoxObject; index: int32): void {.wasmBindgen.} =
+proc jsEnsureRowIsVisible*(self: TreeBoxObject; index: int32): void =
   discard
-proc jsEnsureCellIsVisible*(self: TreeBoxObject; row: int32; col: Option[JsObject]): void {.wasmBindgen.} =
+proc jsEnsureCellIsVisible*(self: TreeBoxObject; row: int32; col: Option[JsObject]): void =
   discard
-proc jsScrollToRow*(self: TreeBoxObject; index: int32): void {.wasmBindgen.} =
+proc jsScrollToRow*(self: TreeBoxObject; index: int32): void =
   discard
-proc jsScrollByLines*(self: TreeBoxObject; numLines: int32): void {.wasmBindgen.} =
+proc jsScrollByLines*(self: TreeBoxObject; numLines: int32): void =
   discard
-proc jsScrollByPages*(self: TreeBoxObject; numPages: int32): void {.wasmBindgen.} =
+proc jsScrollByPages*(self: TreeBoxObject; numPages: int32): void =
   discard
-proc jsInvalidate*(self: TreeBoxObject): void {.wasmBindgen.} =
+proc jsInvalidate*(self: TreeBoxObject): void =
   discard
-proc jsInvalidateColumn*(self: TreeBoxObject; col: Option[JsObject]): void {.wasmBindgen.} =
+proc jsInvalidateColumn*(self: TreeBoxObject; col: Option[JsObject]): void =
   discard
-proc jsInvalidateRow*(self: TreeBoxObject; index: int32): void {.wasmBindgen.} =
+proc jsInvalidateRow*(self: TreeBoxObject; index: int32): void =
   discard
-proc jsInvalidateCell*(self: TreeBoxObject; row: int32; col: Option[JsObject]): void {.wasmBindgen.} =
+proc jsInvalidateCell*(self: TreeBoxObject; row: int32; col: Option[JsObject]): void =
   discard
-proc jsInvalidateRange*(self: TreeBoxObject; startIndex: int32; endIndex: int32): void {.wasmBindgen.} =
+proc jsInvalidateRange*(self: TreeBoxObject; startIndex: int32; endIndex: int32): void =
   discard
-proc jsGetRowAt*(self: TreeBoxObject; x: int32; y: int32): int32 {.wasmBindgen.} =
+proc jsGetRowAt*(self: TreeBoxObject; x: int32; y: int32): int32 =
   discard
-proc jsGetCellAt*(self: TreeBoxObject; x: int32; y: int32): JsObject {.wasmBindgen.} =
+proc jsGetCellAt*(self: TreeBoxObject; x: int32; y: int32): JsObject =
   discard
-proc jsGetCellAt*(self: TreeBoxObject; x: int32; y: int32; row: JsObject; column: JsObject; childElt: JsObject): void {.wasmBindgen.} =
+proc jsGetCellAt*(self: TreeBoxObject; x: int32; y: int32; row: JsObject; column: JsObject; childElt: JsObject): void =
   discard
-proc jsGetCoordsForCellItem*(self: TreeBoxObject; row: int32; col: JsObject; element: cstring): Option[JsObject] {.wasmBindgen.} =
+proc jsGetCoordsForCellItem*(self: TreeBoxObject; row: int32; col: JsObject; element: cstring): Option[JsObject] =
   discard
-proc jsGetCoordsForCellItem*(self: TreeBoxObject; row: int32; col: JsObject; element: cstring; x: JsObject; y: JsObject; width: JsObject; height: JsObject): void {.wasmBindgen.} =
+proc jsGetCoordsForCellItem*(self: TreeBoxObject; row: int32; col: JsObject; element: cstring; x: JsObject; y: JsObject; width: JsObject; height: JsObject): void =
   discard
-proc jsIsCellCropped*(self: TreeBoxObject; row: int32; col: Option[JsObject]): bool {.wasmBindgen.} =
+proc jsIsCellCropped*(self: TreeBoxObject; row: int32; col: Option[JsObject]): bool =
   discard
-proc jsRowCountChanged*(self: TreeBoxObject; index: int32; count: int32): void {.wasmBindgen.} =
+proc jsRowCountChanged*(self: TreeBoxObject; index: int32; count: int32): void =
   discard
-proc jsBeginUpdateBatch*(self: TreeBoxObject): void {.wasmBindgen.} =
+proc jsBeginUpdateBatch*(self: TreeBoxObject): void =
   discard
-proc jsEndUpdateBatch*(self: TreeBoxObject): void {.wasmBindgen.} =
+proc jsEndUpdateBatch*(self: TreeBoxObject): void =
   discard
-proc jsClearStyleAndImageCaches*(self: TreeBoxObject): void {.wasmBindgen.} =
+proc jsClearStyleAndImageCaches*(self: TreeBoxObject): void =
   discard
-proc jsRemoveImageCacheEntry*(self: TreeBoxObject; row: int32; col: JsObject): void {.wasmBindgen.} =
+proc jsRemoveImageCacheEntry*(self: TreeBoxObject; row: int32; col: JsObject): void =
   discard
 
-proc jsTreeViewRowCount*(self: TreeView): int32 {.wasmBindgen.} =
+proc jsTreeViewRowCount*(self: TreeView): int32 =
   discard
 const jsTreeViewDROP_BEFORE* : int16 = 0
 const jsTreeViewDROP_ON* : int16 = 0
 const jsTreeViewDROP_AFTER* : int16 = 0
-proc jsGetRowProperties*(self: TreeView; row: int32): cstring {.wasmBindgen.} =
+proc jsGetRowProperties*(self: TreeView; row: int32): cstring =
   discard
-proc jsGetCellProperties*(self: TreeView; row: int32; column: JsObject): cstring {.wasmBindgen.} =
+proc jsGetCellProperties*(self: TreeView; row: int32; column: JsObject): cstring =
   discard
-proc jsGetColumnProperties*(self: TreeView; column: JsObject): cstring {.wasmBindgen.} =
+proc jsGetColumnProperties*(self: TreeView; column: JsObject): cstring =
   discard
-proc jsIsContainer*(self: TreeView; row: int32): bool {.wasmBindgen.} =
+proc jsIsContainer*(self: TreeView; row: int32): bool =
   discard
-proc jsIsContainerOpen*(self: TreeView; row: int32): bool {.wasmBindgen.} =
+proc jsIsContainerOpen*(self: TreeView; row: int32): bool =
   discard
-proc jsIsContainerEmpty*(self: TreeView; row: int32): bool {.wasmBindgen.} =
+proc jsIsContainerEmpty*(self: TreeView; row: int32): bool =
   discard
-proc jsIsSeparator*(self: TreeView; row: int32): bool {.wasmBindgen.} =
+proc jsIsSeparator*(self: TreeView; row: int32): bool =
   discard
-proc jsIsSorted*(self: TreeView): bool {.wasmBindgen.} =
+proc jsIsSorted*(self: TreeView): bool =
   discard
-proc jsCanDrop*(self: TreeView; row: int32; orientation: int32; dataTransfer: Option[JsObject]): bool {.wasmBindgen.} =
+proc jsCanDrop*(self: TreeView; row: int32; orientation: int32; dataTransfer: Option[JsObject]): bool =
   discard
-proc jsDrop*(self: TreeView; row: int32; orientation: int32; dataTransfer: Option[JsObject]): void {.wasmBindgen.} =
+proc jsDrop*(self: TreeView; row: int32; orientation: int32; dataTransfer: Option[JsObject]): void =
   discard
-proc jsGetParentIndex*(self: TreeView; row: int32): int32 {.wasmBindgen.} =
+proc jsGetParentIndex*(self: TreeView; row: int32): int32 =
   discard
-proc jsHasNextSibling*(self: TreeView; row: int32; afterIndex: int32): bool {.wasmBindgen.} =
+proc jsHasNextSibling*(self: TreeView; row: int32; afterIndex: int32): bool =
   discard
-proc jsGetLevel*(self: TreeView; row: int32): int32 {.wasmBindgen.} =
+proc jsGetLevel*(self: TreeView; row: int32): int32 =
   discard
-proc jsGetImageSrc*(self: TreeView; row: int32; column: JsObject): cstring {.wasmBindgen.} =
+proc jsGetImageSrc*(self: TreeView; row: int32; column: JsObject): cstring =
   discard
-proc jsGetCellValue*(self: TreeView; row: int32; column: JsObject): cstring {.wasmBindgen.} =
+proc jsGetCellValue*(self: TreeView; row: int32; column: JsObject): cstring =
   discard
-proc jsGetCellText*(self: TreeView; row: int32; column: JsObject): cstring {.wasmBindgen.} =
+proc jsGetCellText*(self: TreeView; row: int32; column: JsObject): cstring =
   discard
-proc jsSetTree*(self: TreeView; tree: Option[JsObject]): void {.wasmBindgen.} =
+proc jsSetTree*(self: TreeView; tree: Option[JsObject]): void =
   discard
-proc jsToggleOpenState*(self: TreeView; row: int32): void {.wasmBindgen.} =
+proc jsToggleOpenState*(self: TreeView; row: int32): void =
   discard
-proc jsCycleHeader*(self: TreeView; column: JsObject): void {.wasmBindgen.} =
+proc jsCycleHeader*(self: TreeView; column: JsObject): void =
   discard
-proc jsSelectionChanged*(self: TreeView): void {.wasmBindgen.} =
+proc jsSelectionChanged*(self: TreeView): void =
   discard
-proc jsCycleCell*(self: TreeView; row: int32; column: JsObject): void {.wasmBindgen.} =
+proc jsCycleCell*(self: TreeView; row: int32; column: JsObject): void =
   discard
-proc jsIsEditable*(self: TreeView; row: int32; column: JsObject): bool {.wasmBindgen.} =
+proc jsIsEditable*(self: TreeView; row: int32; column: JsObject): bool =
   discard
-proc jsIsSelectable*(self: TreeView; row: int32; column: JsObject): bool {.wasmBindgen.} =
+proc jsIsSelectable*(self: TreeView; row: int32; column: JsObject): bool =
   discard
-proc jsSetCellValue*(self: TreeView; row: int32; column: JsObject; value: cstring): void {.wasmBindgen.} =
+proc jsSetCellValue*(self: TreeView; row: int32; column: JsObject; value: cstring): void =
   discard
-proc jsSetCellText*(self: TreeView; row: int32; column: JsObject; value: cstring): void {.wasmBindgen.} =
+proc jsSetCellText*(self: TreeView; row: int32; column: JsObject; value: cstring): void =
   discard
-proc jsPerformAction*(self: TreeView; action: cstring): void {.wasmBindgen.} =
+proc jsPerformAction*(self: TreeView; action: cstring): void =
   discard
-proc jsPerformActionOnRow*(self: TreeView; action: cstring; row: int32): void {.wasmBindgen.} =
+proc jsPerformActionOnRow*(self: TreeView; action: cstring; row: int32): void =
   discard
-proc jsPerformActionOnCell*(self: TreeView; action: cstring; row: int32; column: JsObject): void {.wasmBindgen.} =
+proc jsPerformActionOnCell*(self: TreeView; action: cstring; row: int32; column: JsObject): void =
   discard
 
-proc jsTreeWalkerRoot*(self: TreeWalker): JsObject {.wasmBindgen.} =
+proc jsTreeWalkerRoot*(self: TreeWalker): JsObject =
   discard
-proc jsTreeWalkerWhatToShow*(self: TreeWalker): uint32 {.wasmBindgen.} =
+proc jsTreeWalkerWhatToShow*(self: TreeWalker): uint32 =
   discard
-proc jsTreeWalkerCurrentNode*(self: TreeWalker): JsObject {.wasmBindgen.} =
+proc jsTreeWalkerCurrentNode*(self: TreeWalker): JsObject =
   discard
-proc jsParentNode*(self: TreeWalker): Option[JsObject] {.wasmBindgen.} =
+proc jsParentNode*(self: TreeWalker): Option[JsObject] =
   discard
-proc jsFirstChild*(self: TreeWalker): Option[JsObject] {.wasmBindgen.} =
+proc jsFirstChild*(self: TreeWalker): Option[JsObject] =
   discard
-proc jsLastChild*(self: TreeWalker): Option[JsObject] {.wasmBindgen.} =
+proc jsLastChild*(self: TreeWalker): Option[JsObject] =
   discard
-proc jsPreviousSibling*(self: TreeWalker): Option[JsObject] {.wasmBindgen.} =
+proc jsPreviousSibling*(self: TreeWalker): Option[JsObject] =
   discard
-proc jsNextSibling*(self: TreeWalker): Option[JsObject] {.wasmBindgen.} =
+proc jsNextSibling*(self: TreeWalker): Option[JsObject] =
   discard
-proc jsPreviousNode*(self: TreeWalker): Option[JsObject] {.wasmBindgen.} =
+proc jsPreviousNode*(self: TreeWalker): Option[JsObject] =
   discard
-proc jsNextNode*(self: TreeWalker): Option[JsObject] {.wasmBindgen.} =
+proc jsNextNode*(self: TreeWalker): Option[JsObject] =
   discard
 
 const jsU2FOK* : uint16 = 0
@@ -10515,366 +10514,366 @@ const jsU2FBAD_REQUEST* : uint16 = 0
 const jsU2FCONFIGURATION_UNSUPPORTED* : uint16 = 0
 const jsU2FDEVICE_INELIGIBLE* : uint16 = 0
 const jsU2FTIMEOUT* : uint16 = 0
-proc jsRegister*(self: U2F; appId: cstring; registerRequests: JsObject; registeredKeys: JsObject; callback: JsObject; opt_timeoutSeconds: Option[int32]): void {.wasmBindgen.} =
+proc jsRegister*(self: U2F; appId: cstring; registerRequests: JsObject; registeredKeys: JsObject; callback: JsObject; opt_timeoutSeconds: Option[int32]): void =
   discard
-proc jsSign*(self: U2F; appId: cstring; challenge: cstring; registeredKeys: JsObject; callback: JsObject; opt_timeoutSeconds: Option[int32]): void {.wasmBindgen.} =
+proc jsSign*(self: U2F; appId: cstring; challenge: cstring; registeredKeys: JsObject; callback: JsObject; opt_timeoutSeconds: Option[int32]): void =
   discard
 
-proc jsUDPMessageEventRemoteAddress*(self: UDPMessageEvent): cstring {.wasmBindgen.} =
+proc jsUDPMessageEventRemoteAddress*(self: UDPMessageEvent): cstring =
   discard
-proc jsUDPMessageEventRemotePort*(self: UDPMessageEvent): uint16 {.wasmBindgen.} =
+proc jsUDPMessageEventRemotePort*(self: UDPMessageEvent): uint16 =
   discard
-proc jsUDPMessageEventData*(self: UDPMessageEvent): JsObject {.wasmBindgen.} =
+proc jsUDPMessageEventData*(self: UDPMessageEvent): JsObject =
   discard
 
-proc jsUDPSocketAddressReuse*(self: UDPSocket): bool {.wasmBindgen.} =
+proc jsUDPSocketAddressReuse*(self: UDPSocket): bool =
   discard
-proc jsUDPSocketLoopback*(self: UDPSocket): bool {.wasmBindgen.} =
+proc jsUDPSocketLoopback*(self: UDPSocket): bool =
   discard
-proc jsUDPSocketReadyState*(self: UDPSocket): JsObject {.wasmBindgen.} =
+proc jsUDPSocketReadyState*(self: UDPSocket): JsObject =
   discard
-proc jsUDPSocketOpened*(self: UDPSocket): JsObject {.wasmBindgen.} =
+proc jsUDPSocketOpened*(self: UDPSocket): JsObject =
   discard
-proc jsUDPSocketClosed*(self: UDPSocket): JsObject {.wasmBindgen.} =
+proc jsUDPSocketClosed*(self: UDPSocket): JsObject =
   discard
-proc jsUDPSocketOnmessage*(self: UDPSocket): JsObject {.wasmBindgen.} =
+proc jsUDPSocketOnmessage*(self: UDPSocket): JsObject =
   discard
-proc jsClose*(self: UDPSocket): JsObject {.wasmBindgen.} =
+proc jsClose*(self: UDPSocket): JsObject =
   discard
-proc jsJoinMulticastGroup*(self: UDPSocket; multicastGroupAddress: cstring): void {.wasmBindgen.} =
+proc jsJoinMulticastGroup*(self: UDPSocket; multicastGroupAddress: cstring): void =
   discard
-proc jsLeaveMulticastGroup*(self: UDPSocket; multicastGroupAddress: cstring): void {.wasmBindgen.} =
+proc jsLeaveMulticastGroup*(self: UDPSocket; multicastGroupAddress: cstring): void =
   discard
-proc jsSend*(self: UDPSocket; data: JsObject; remoteAddress: Option[cstring]; remotePort: Option[uint16]): bool {.wasmBindgen.} =
+proc jsSend*(self: UDPSocket; data: JsObject; remoteAddress: Option[cstring]; remotePort: Option[uint16]): bool =
   discard
 
-proc jsUIEventDetail*(self: UIEvent): int32 {.wasmBindgen.} =
+proc jsUIEventDetail*(self: UIEvent): int32 =
   discard
-proc jsInitUIEvent*(self: UIEvent; aType: cstring; aCanBubble: bool; aCancelable: bool; aView: Option[JsObject]; aDetail: int32): void {.wasmBindgen.} =
+proc jsInitUIEvent*(self: UIEvent; aType: cstring; aCanBubble: bool; aCancelable: bool; aView: Option[JsObject]; aDetail: int32): void =
   discard
 
-proc jsURLHref*(self: URL): cstring {.wasmBindgen.} =
+proc jsURLHref*(self: URL): cstring =
   discard
-proc jsURLOrigin*(self: URL): cstring {.wasmBindgen.} =
+proc jsURLOrigin*(self: URL): cstring =
   discard
-proc jsURLProtocol*(self: URL): cstring {.wasmBindgen.} =
+proc jsURLProtocol*(self: URL): cstring =
   discard
-proc jsURLUsername*(self: URL): cstring {.wasmBindgen.} =
+proc jsURLUsername*(self: URL): cstring =
   discard
-proc jsURLPassword*(self: URL): cstring {.wasmBindgen.} =
+proc jsURLPassword*(self: URL): cstring =
   discard
-proc jsURLHost*(self: URL): cstring {.wasmBindgen.} =
+proc jsURLHost*(self: URL): cstring =
   discard
-proc jsURLHostname*(self: URL): cstring {.wasmBindgen.} =
+proc jsURLHostname*(self: URL): cstring =
   discard
-proc jsURLPort*(self: URL): cstring {.wasmBindgen.} =
+proc jsURLPort*(self: URL): cstring =
   discard
-proc jsURLPathname*(self: URL): cstring {.wasmBindgen.} =
+proc jsURLPathname*(self: URL): cstring =
   discard
-proc jsURLSearch*(self: URL): cstring {.wasmBindgen.} =
+proc jsURLSearch*(self: URL): cstring =
   discard
-proc jsURLSearchParams*(self: URL): JsObject {.wasmBindgen.} =
+proc jsURLSearchParams*(self: URL): JsObject =
   discard
-proc jsURLHash*(self: URL): cstring {.wasmBindgen.} =
+proc jsURLHash*(self: URL): cstring =
   discard
-proc jsToJSON*(self: URL): cstring {.wasmBindgen.} =
+proc jsToJSON*(self: URL): cstring =
   discard
 
-proc jsAppend*(self: URLSearchParams; name: cstring; value: cstring): void {.wasmBindgen.} =
+proc jsAppend*(self: URLSearchParams; name: cstring; value: cstring): void =
   discard
-proc jsDelete*(self: URLSearchParams; name: cstring): void {.wasmBindgen.} =
+proc jsDelete*(self: URLSearchParams; name: cstring): void =
   discard
-proc jsGet*(self: URLSearchParams; name: cstring): Option[cstring] {.wasmBindgen.} =
+proc jsGet*(self: URLSearchParams; name: cstring): Option[cstring] =
   discard
-proc jsGetAll*(self: URLSearchParams; name: cstring): JsObject {.wasmBindgen.} =
+proc jsGetAll*(self: URLSearchParams; name: cstring): JsObject =
   discard
-proc jsHas*(self: URLSearchParams; name: cstring): bool {.wasmBindgen.} =
+proc jsHas*(self: URLSearchParams; name: cstring): bool =
   discard
-proc jsSet*(self: URLSearchParams; name: cstring; value: cstring): void {.wasmBindgen.} =
+proc jsSet*(self: URLSearchParams; name: cstring; value: cstring): void =
   discard
-proc jsSort*(self: URLSearchParams): void {.wasmBindgen.} =
+proc jsSort*(self: URLSearchParams): void =
   discard
 
-proc jsUserActivationHasBeenActive*(self: UserActivation): bool {.wasmBindgen.} =
+proc jsUserActivationHasBeenActive*(self: UserActivation): bool =
   discard
-proc jsUserActivationIsActive*(self: UserActivation): bool {.wasmBindgen.} =
+proc jsUserActivationIsActive*(self: UserActivation): bool =
   discard
 
-proc jsUserProximityEventNear*(self: UserProximityEvent): bool {.wasmBindgen.} =
+proc jsUserProximityEventNear*(self: UserProximityEvent): bool =
   discard
 
-proc jsVRFieldOfViewUpDegrees*(self: VRFieldOfView): float64 {.wasmBindgen.} =
+proc jsVRFieldOfViewUpDegrees*(self: VRFieldOfView): float64 =
   discard
-proc jsVRFieldOfViewRightDegrees*(self: VRFieldOfView): float64 {.wasmBindgen.} =
+proc jsVRFieldOfViewRightDegrees*(self: VRFieldOfView): float64 =
   discard
-proc jsVRFieldOfViewDownDegrees*(self: VRFieldOfView): float64 {.wasmBindgen.} =
+proc jsVRFieldOfViewDownDegrees*(self: VRFieldOfView): float64 =
   discard
-proc jsVRFieldOfViewLeftDegrees*(self: VRFieldOfView): float64 {.wasmBindgen.} =
+proc jsVRFieldOfViewLeftDegrees*(self: VRFieldOfView): float64 =
   discard
 
-proc jsVRDisplayCapabilitiesHasPosition*(self: VRDisplayCapabilities): bool {.wasmBindgen.} =
+proc jsVRDisplayCapabilitiesHasPosition*(self: VRDisplayCapabilities): bool =
   discard
-proc jsVRDisplayCapabilitiesHasOrientation*(self: VRDisplayCapabilities): bool {.wasmBindgen.} =
+proc jsVRDisplayCapabilitiesHasOrientation*(self: VRDisplayCapabilities): bool =
   discard
-proc jsVRDisplayCapabilitiesHasExternalDisplay*(self: VRDisplayCapabilities): bool {.wasmBindgen.} =
+proc jsVRDisplayCapabilitiesHasExternalDisplay*(self: VRDisplayCapabilities): bool =
   discard
-proc jsVRDisplayCapabilitiesCanPresent*(self: VRDisplayCapabilities): bool {.wasmBindgen.} =
+proc jsVRDisplayCapabilitiesCanPresent*(self: VRDisplayCapabilities): bool =
   discard
-proc jsVRDisplayCapabilitiesMaxLayers*(self: VRDisplayCapabilities): uint32 {.wasmBindgen.} =
+proc jsVRDisplayCapabilitiesMaxLayers*(self: VRDisplayCapabilities): uint32 =
   discard
 
-proc jsVRStageParametersSizeX*(self: VRStageParameters): float32 {.wasmBindgen.} =
+proc jsVRStageParametersSizeX*(self: VRStageParameters): float32 =
   discard
-proc jsVRStageParametersSizeZ*(self: VRStageParameters): float32 {.wasmBindgen.} =
+proc jsVRStageParametersSizeZ*(self: VRStageParameters): float32 =
   discard
 
 
-proc jsVRFrameDataTimestamp*(self: VRFrameData): JsObject {.wasmBindgen.} =
+proc jsVRFrameDataTimestamp*(self: VRFrameData): JsObject =
   discard
-proc jsVRFrameDataPose*(self: VRFrameData): JsObject {.wasmBindgen.} =
+proc jsVRFrameDataPose*(self: VRFrameData): JsObject =
   discard
 
-proc jsVRSubmitFrameResultFrameNum*(self: VRSubmitFrameResult): uint32 {.wasmBindgen.} =
+proc jsVRSubmitFrameResultFrameNum*(self: VRSubmitFrameResult): uint32 =
   discard
 
-proc jsVREyeParametersFieldOfView*(self: VREyeParameters): JsObject {.wasmBindgen.} =
+proc jsVREyeParametersFieldOfView*(self: VREyeParameters): JsObject =
   discard
-proc jsVREyeParametersRenderWidth*(self: VREyeParameters): uint32 {.wasmBindgen.} =
+proc jsVREyeParametersRenderWidth*(self: VREyeParameters): uint32 =
   discard
-proc jsVREyeParametersRenderHeight*(self: VREyeParameters): uint32 {.wasmBindgen.} =
+proc jsVREyeParametersRenderHeight*(self: VREyeParameters): uint32 =
   discard
 
-proc jsVRDisplayPresentingGroups*(self: VRDisplay): uint32 {.wasmBindgen.} =
+proc jsVRDisplayPresentingGroups*(self: VRDisplay): uint32 =
   discard
-proc jsVRDisplayGroupMask*(self: VRDisplay): uint32 {.wasmBindgen.} =
+proc jsVRDisplayGroupMask*(self: VRDisplay): uint32 =
   discard
-proc jsVRDisplayIsConnected*(self: VRDisplay): bool {.wasmBindgen.} =
+proc jsVRDisplayIsConnected*(self: VRDisplay): bool =
   discard
-proc jsVRDisplayIsPresenting*(self: VRDisplay): bool {.wasmBindgen.} =
+proc jsVRDisplayIsPresenting*(self: VRDisplay): bool =
   discard
-proc jsVRDisplayCapabilities*(self: VRDisplay): JsObject {.wasmBindgen.} =
+proc jsVRDisplayCapabilities*(self: VRDisplay): JsObject =
   discard
-proc jsVRDisplayDisplayId*(self: VRDisplay): uint32 {.wasmBindgen.} =
+proc jsVRDisplayDisplayId*(self: VRDisplay): uint32 =
   discard
-proc jsVRDisplayDisplayName*(self: VRDisplay): cstring {.wasmBindgen.} =
+proc jsVRDisplayDisplayName*(self: VRDisplay): cstring =
   discard
-proc jsVRDisplayDepthNear*(self: VRDisplay): float64 {.wasmBindgen.} =
+proc jsVRDisplayDepthNear*(self: VRDisplay): float64 =
   discard
-proc jsVRDisplayDepthFar*(self: VRDisplay): float64 {.wasmBindgen.} =
+proc jsVRDisplayDepthFar*(self: VRDisplay): float64 =
   discard
-proc jsGetEyeParameters*(self: VRDisplay; whichEye: JsObject): JsObject {.wasmBindgen.} =
+proc jsGetEyeParameters*(self: VRDisplay; whichEye: JsObject): JsObject =
   discard
-proc jsGetFrameData*(self: VRDisplay; frameData: JsObject): bool {.wasmBindgen.} =
+proc jsGetFrameData*(self: VRDisplay; frameData: JsObject): bool =
   discard
-proc jsGetPose*(self: VRDisplay): JsObject {.wasmBindgen.} =
+proc jsGetPose*(self: VRDisplay): JsObject =
   discard
-proc jsGetSubmitFrameResult*(self: VRDisplay; resultVal: JsObject): bool {.wasmBindgen.} =
+proc jsGetSubmitFrameResult*(self: VRDisplay; resultVal: JsObject): bool =
   discard
-proc jsResetPose*(self: VRDisplay): void {.wasmBindgen.} =
+proc jsResetPose*(self: VRDisplay): void =
   discard
-proc jsRequestAnimationFrame*(self: VRDisplay; callback: JsObject): int32 {.wasmBindgen.} =
+proc jsRequestAnimationFrame*(self: VRDisplay; callback: JsObject): int32 =
   discard
-proc jsCancelAnimationFrame*(self: VRDisplay; handle: int32): void {.wasmBindgen.} =
+proc jsCancelAnimationFrame*(self: VRDisplay; handle: int32): void =
   discard
-proc jsRequestPresent*(self: VRDisplay; layers: JsObject): JsObject {.wasmBindgen.} =
+proc jsRequestPresent*(self: VRDisplay; layers: JsObject): JsObject =
   discard
-proc jsExitPresent*(self: VRDisplay): JsObject {.wasmBindgen.} =
+proc jsExitPresent*(self: VRDisplay): JsObject =
   discard
-proc jsGetLayers*(self: VRDisplay): JsObject {.wasmBindgen.} =
+proc jsGetLayers*(self: VRDisplay): JsObject =
   discard
-proc jsSubmitFrame*(self: VRDisplay): void {.wasmBindgen.} =
+proc jsSubmitFrame*(self: VRDisplay): void =
   discard
 
-proc jsSetEyeResolution*(self: VRMockDisplay; aRenderWidth: uint32; aRenderHeight: uint32): void {.wasmBindgen.} =
+proc jsSetEyeResolution*(self: VRMockDisplay; aRenderWidth: uint32; aRenderHeight: uint32): void =
   discard
-proc jsSetEyeParameter*(self: VRMockDisplay; eye: JsObject; offsetX: float64; offsetY: float64; offsetZ: float64; upDegree: float64; rightDegree: float64; downDegree: float64; leftDegree: float64): void {.wasmBindgen.} =
+proc jsSetEyeParameter*(self: VRMockDisplay; eye: JsObject; offsetX: float64; offsetY: float64; offsetZ: float64; upDegree: float64; rightDegree: float64; downDegree: float64; leftDegree: float64): void =
   discard
-proc jsSetPose*(self: VRMockDisplay; position: Option[seq[float32]]; linearVelocity: Option[seq[float32]]; linearAcceleration: Option[seq[float32]]; orientation: Option[seq[float32]]; angularVelocity: Option[seq[float32]]; angularAcceleration: Option[seq[float32]]): void {.wasmBindgen.} =
+proc jsSetPose*(self: VRMockDisplay; position: Option[seq[float32]]; linearVelocity: Option[seq[float32]]; linearAcceleration: Option[seq[float32]]; orientation: Option[seq[float32]]; angularVelocity: Option[seq[float32]]; angularAcceleration: Option[seq[float32]]): void =
   discard
-proc jsSetMountState*(self: VRMockDisplay; isMounted: bool): void {.wasmBindgen.} =
+proc jsSetMountState*(self: VRMockDisplay; isMounted: bool): void =
   discard
-proc jsUpdate*(self: VRMockDisplay): void {.wasmBindgen.} =
+proc jsUpdate*(self: VRMockDisplay): void =
   discard
 
-proc jsNewButtonEvent*(self: VRMockController; button: uint32; pressed: bool): void {.wasmBindgen.} =
+proc jsNewButtonEvent*(self: VRMockController; button: uint32; pressed: bool): void =
   discard
-proc jsNewAxisMoveEvent*(self: VRMockController; axis: uint32; value: float64): void {.wasmBindgen.} =
+proc jsNewAxisMoveEvent*(self: VRMockController; axis: uint32; value: float64): void =
   discard
-proc jsNewPoseMove*(self: VRMockController; position: Option[seq[float32]]; linearVelocity: Option[seq[float32]]; linearAcceleration: Option[seq[float32]]; orientation: Option[seq[float32]]; angularVelocity: Option[seq[float32]]; angularAcceleration: Option[seq[float32]]): void {.wasmBindgen.} =
+proc jsNewPoseMove*(self: VRMockController; position: Option[seq[float32]]; linearVelocity: Option[seq[float32]]; linearAcceleration: Option[seq[float32]]; orientation: Option[seq[float32]]; angularVelocity: Option[seq[float32]]; angularAcceleration: Option[seq[float32]]): void =
   discard
 
-proc jsAttachVRDisplay*(self: VRServiceTest; id: cstring): JsObject {.wasmBindgen.} =
+proc jsAttachVRDisplay*(self: VRServiceTest; id: cstring): JsObject =
   discard
-proc jsAttachVRController*(self: VRServiceTest; id: cstring): JsObject {.wasmBindgen.} =
+proc jsAttachVRController*(self: VRServiceTest; id: cstring): JsObject =
   discard
 
-proc jsVTTCueVertical*(self: VTTCue): JsObject {.wasmBindgen.} =
+proc jsVTTCueVertical*(self: VTTCue): JsObject =
   discard
-proc jsVTTCueSnapToLines*(self: VTTCue): bool {.wasmBindgen.} =
+proc jsVTTCueSnapToLines*(self: VTTCue): bool =
   discard
-proc jsVTTCueLine*(self: VTTCue): JsObject {.wasmBindgen.} =
+proc jsVTTCueLine*(self: VTTCue): JsObject =
   discard
-proc jsVTTCueLineAlign*(self: VTTCue): JsObject {.wasmBindgen.} =
+proc jsVTTCueLineAlign*(self: VTTCue): JsObject =
   discard
-proc jsVTTCuePosition*(self: VTTCue): JsObject {.wasmBindgen.} =
+proc jsVTTCuePosition*(self: VTTCue): JsObject =
   discard
-proc jsVTTCuePositionAlign*(self: VTTCue): JsObject {.wasmBindgen.} =
+proc jsVTTCuePositionAlign*(self: VTTCue): JsObject =
   discard
-proc jsVTTCueSize*(self: VTTCue): float64 {.wasmBindgen.} =
+proc jsVTTCueSize*(self: VTTCue): float64 =
   discard
-proc jsVTTCueAlign*(self: VTTCue): JsObject {.wasmBindgen.} =
+proc jsVTTCueAlign*(self: VTTCue): JsObject =
   discard
-proc jsVTTCueText*(self: VTTCue): cstring {.wasmBindgen.} =
+proc jsVTTCueText*(self: VTTCue): cstring =
   discard
-proc jsGetCueAsHTML*(self: VTTCue): JsObject {.wasmBindgen.} =
+proc jsGetCueAsHTML*(self: VTTCue): JsObject =
   discard
 
-proc jsVTTRegionId*(self: VTTRegion): cstring {.wasmBindgen.} =
+proc jsVTTRegionId*(self: VTTRegion): cstring =
   discard
-proc jsVTTRegionWidth*(self: VTTRegion): float64 {.wasmBindgen.} =
+proc jsVTTRegionWidth*(self: VTTRegion): float64 =
   discard
-proc jsVTTRegionLines*(self: VTTRegion): int32 {.wasmBindgen.} =
+proc jsVTTRegionLines*(self: VTTRegion): int32 =
   discard
-proc jsVTTRegionRegionAnchorX*(self: VTTRegion): float64 {.wasmBindgen.} =
+proc jsVTTRegionRegionAnchorX*(self: VTTRegion): float64 =
   discard
-proc jsVTTRegionRegionAnchorY*(self: VTTRegion): float64 {.wasmBindgen.} =
+proc jsVTTRegionRegionAnchorY*(self: VTTRegion): float64 =
   discard
-proc jsVTTRegionViewportAnchorX*(self: VTTRegion): float64 {.wasmBindgen.} =
+proc jsVTTRegionViewportAnchorX*(self: VTTRegion): float64 =
   discard
-proc jsVTTRegionViewportAnchorY*(self: VTTRegion): float64 {.wasmBindgen.} =
+proc jsVTTRegionViewportAnchorY*(self: VTTRegion): float64 =
   discard
-proc jsVTTRegionScroll*(self: VTTRegion): JsObject {.wasmBindgen.} =
+proc jsVTTRegionScroll*(self: VTTRegion): JsObject =
   discard
 
-proc jsValidityStateValueMissing*(self: ValidityState): bool {.wasmBindgen.} =
+proc jsValidityStateValueMissing*(self: ValidityState): bool =
   discard
-proc jsValidityStateTypeMismatch*(self: ValidityState): bool {.wasmBindgen.} =
+proc jsValidityStateTypeMismatch*(self: ValidityState): bool =
   discard
-proc jsValidityStatePatternMismatch*(self: ValidityState): bool {.wasmBindgen.} =
+proc jsValidityStatePatternMismatch*(self: ValidityState): bool =
   discard
-proc jsValidityStateTooLong*(self: ValidityState): bool {.wasmBindgen.} =
+proc jsValidityStateTooLong*(self: ValidityState): bool =
   discard
-proc jsValidityStateTooShort*(self: ValidityState): bool {.wasmBindgen.} =
+proc jsValidityStateTooShort*(self: ValidityState): bool =
   discard
-proc jsValidityStateRangeUnderflow*(self: ValidityState): bool {.wasmBindgen.} =
+proc jsValidityStateRangeUnderflow*(self: ValidityState): bool =
   discard
-proc jsValidityStateRangeOverflow*(self: ValidityState): bool {.wasmBindgen.} =
+proc jsValidityStateRangeOverflow*(self: ValidityState): bool =
   discard
-proc jsValidityStateStepMismatch*(self: ValidityState): bool {.wasmBindgen.} =
+proc jsValidityStateStepMismatch*(self: ValidityState): bool =
   discard
-proc jsValidityStateBadInput*(self: ValidityState): bool {.wasmBindgen.} =
+proc jsValidityStateBadInput*(self: ValidityState): bool =
   discard
-proc jsValidityStateCustomError*(self: ValidityState): bool {.wasmBindgen.} =
+proc jsValidityStateCustomError*(self: ValidityState): bool =
   discard
-proc jsValidityStateValid*(self: ValidityState): bool {.wasmBindgen.} =
+proc jsValidityStateValid*(self: ValidityState): bool =
   discard
 
-proc jsVideoFrameCodedWidth*(self: VideoFrame): uint32 {.wasmBindgen.} =
+proc jsVideoFrameCodedWidth*(self: VideoFrame): uint32 =
   discard
-proc jsVideoFrameCodedHeight*(self: VideoFrame): uint32 {.wasmBindgen.} =
+proc jsVideoFrameCodedHeight*(self: VideoFrame): uint32 =
   discard
-proc jsVideoFrameDisplayWidth*(self: VideoFrame): uint32 {.wasmBindgen.} =
+proc jsVideoFrameDisplayWidth*(self: VideoFrame): uint32 =
   discard
-proc jsVideoFrameDisplayHeight*(self: VideoFrame): uint32 {.wasmBindgen.} =
+proc jsVideoFrameDisplayHeight*(self: VideoFrame): uint32 =
   discard
-proc jsVideoFrameTimestamp*(self: VideoFrame): int64 {.wasmBindgen.} =
+proc jsVideoFrameTimestamp*(self: VideoFrame): int64 =
   discard
-proc jsVideoFrameColorSpace*(self: VideoFrame): JsObject {.wasmBindgen.} =
+proc jsVideoFrameColorSpace*(self: VideoFrame): JsObject =
   discard
-proc jsAllocationSize*(self: VideoFrame; options: JsObject): uint32 {.wasmBindgen.} =
+proc jsAllocationSize*(self: VideoFrame; options: JsObject): uint32 =
   discard
-proc jsCopyTo*(self: VideoFrame; destination: JsObject; options: JsObject): JsObject {.wasmBindgen.} =
+proc jsCopyTo*(self: VideoFrame; destination: JsObject; options: JsObject): JsObject =
   discard
-proc jsClone*(self: VideoFrame): JsObject {.wasmBindgen.} =
+proc jsClone*(self: VideoFrame): JsObject =
   discard
-proc jsClose*(self: VideoFrame): void {.wasmBindgen.} =
+proc jsClose*(self: VideoFrame): void =
   discard
 
-proc jsToJSON*(self: VideoColorSpace): JsObject {.wasmBindgen.} =
+proc jsToJSON*(self: VideoColorSpace): JsObject =
   discard
 
-proc jsVideoPlaybackQualityCreationTime*(self: VideoPlaybackQuality): JsObject {.wasmBindgen.} =
+proc jsVideoPlaybackQualityCreationTime*(self: VideoPlaybackQuality): JsObject =
   discard
-proc jsVideoPlaybackQualityTotalVideoFrames*(self: VideoPlaybackQuality): uint32 {.wasmBindgen.} =
+proc jsVideoPlaybackQualityTotalVideoFrames*(self: VideoPlaybackQuality): uint32 =
   discard
-proc jsVideoPlaybackQualityDroppedVideoFrames*(self: VideoPlaybackQuality): uint32 {.wasmBindgen.} =
+proc jsVideoPlaybackQualityDroppedVideoFrames*(self: VideoPlaybackQuality): uint32 =
   discard
-proc jsVideoPlaybackQualityCorruptedVideoFrames*(self: VideoPlaybackQuality): uint32 {.wasmBindgen.} =
+proc jsVideoPlaybackQualityCorruptedVideoFrames*(self: VideoPlaybackQuality): uint32 =
   discard
 
 
-proc jsVideoTrackId*(self: VideoTrack): cstring {.wasmBindgen.} =
+proc jsVideoTrackId*(self: VideoTrack): cstring =
   discard
-proc jsVideoTrackKind*(self: VideoTrack): cstring {.wasmBindgen.} =
+proc jsVideoTrackKind*(self: VideoTrack): cstring =
   discard
-proc jsVideoTrackLabel*(self: VideoTrack): cstring {.wasmBindgen.} =
+proc jsVideoTrackLabel*(self: VideoTrack): cstring =
   discard
-proc jsVideoTrackLanguage*(self: VideoTrack): cstring {.wasmBindgen.} =
+proc jsVideoTrackLanguage*(self: VideoTrack): cstring =
   discard
-proc jsVideoTrackSelected*(self: VideoTrack): bool {.wasmBindgen.} =
+proc jsVideoTrackSelected*(self: VideoTrack): bool =
   discard
 
-proc jsVideoTrackListLength*(self: VideoTrackList): uint32 {.wasmBindgen.} =
+proc jsVideoTrackListLength*(self: VideoTrackList): uint32 =
   discard
-proc jsVideoTrackListSelectedIndex*(self: VideoTrackList): int32 {.wasmBindgen.} =
+proc jsVideoTrackListSelectedIndex*(self: VideoTrackList): int32 =
   discard
-proc jsVideoTrackListOnchange*(self: VideoTrackList): JsObject {.wasmBindgen.} =
+proc jsVideoTrackListOnchange*(self: VideoTrackList): JsObject =
   discard
-proc jsVideoTrackListOnaddtrack*(self: VideoTrackList): JsObject {.wasmBindgen.} =
+proc jsVideoTrackListOnaddtrack*(self: VideoTrackList): JsObject =
   discard
-proc jsVideoTrackListOnremovetrack*(self: VideoTrackList): JsObject {.wasmBindgen.} =
+proc jsVideoTrackListOnremovetrack*(self: VideoTrackList): JsObject =
   discard
-proc jsGetTrackById*(self: VideoTrackList; id: cstring): Option[JsObject] {.wasmBindgen.} =
+proc jsGetTrackById*(self: VideoTrackList; id: cstring): Option[JsObject] =
   discard
 
-proc jsVisualViewportOffsetLeft*(self: VisualViewport): float64 {.wasmBindgen.} =
+proc jsVisualViewportOffsetLeft*(self: VisualViewport): float64 =
   discard
-proc jsVisualViewportOffsetTop*(self: VisualViewport): float64 {.wasmBindgen.} =
+proc jsVisualViewportOffsetTop*(self: VisualViewport): float64 =
   discard
-proc jsVisualViewportPageLeft*(self: VisualViewport): float64 {.wasmBindgen.} =
+proc jsVisualViewportPageLeft*(self: VisualViewport): float64 =
   discard
-proc jsVisualViewportPageTop*(self: VisualViewport): float64 {.wasmBindgen.} =
+proc jsVisualViewportPageTop*(self: VisualViewport): float64 =
   discard
-proc jsVisualViewportWidth*(self: VisualViewport): float64 {.wasmBindgen.} =
+proc jsVisualViewportWidth*(self: VisualViewport): float64 =
   discard
-proc jsVisualViewportHeight*(self: VisualViewport): float64 {.wasmBindgen.} =
+proc jsVisualViewportHeight*(self: VisualViewport): float64 =
   discard
-proc jsVisualViewportScale*(self: VisualViewport): float64 {.wasmBindgen.} =
+proc jsVisualViewportScale*(self: VisualViewport): float64 =
   discard
-proc jsVisualViewportOnresize*(self: VisualViewport): JsObject {.wasmBindgen.} =
+proc jsVisualViewportOnresize*(self: VisualViewport): JsObject =
   discard
-proc jsVisualViewportOnscroll*(self: VisualViewport): JsObject {.wasmBindgen.} =
+proc jsVisualViewportOnscroll*(self: VisualViewport): JsObject =
   discard
-proc jsVisualViewportOnscrollend*(self: VisualViewport): JsObject {.wasmBindgen.} =
+proc jsVisualViewportOnscrollend*(self: VisualViewport): JsObject =
   discard
 
-proc jsWaveShaperNodeOversample*(self: WaveShaperNode): JsObject {.wasmBindgen.} =
+proc jsWaveShaperNodeOversample*(self: WaveShaperNode): JsObject =
   discard
 
-proc jsPublicKeyCredentialRawId*(self: PublicKeyCredential): JsObject {.wasmBindgen.} =
+proc jsPublicKeyCredentialRawId*(self: PublicKeyCredential): JsObject =
   discard
-proc jsPublicKeyCredentialResponse*(self: PublicKeyCredential): JsObject {.wasmBindgen.} =
+proc jsPublicKeyCredentialResponse*(self: PublicKeyCredential): JsObject =
   discard
-proc jsGetClientExtensionResults*(self: PublicKeyCredential): JsObject {.wasmBindgen.} =
+proc jsGetClientExtensionResults*(self: PublicKeyCredential): JsObject =
   discard
 
-proc jsAuthenticatorResponseClientDataJSON*(self: AuthenticatorResponse): JsObject {.wasmBindgen.} =
+proc jsAuthenticatorResponseClientDataJSON*(self: AuthenticatorResponse): JsObject =
   discard
 
-proc jsAuthenticatorAttestationResponseAttestationObject*(self: AuthenticatorAttestationResponse): JsObject {.wasmBindgen.} =
+proc jsAuthenticatorAttestationResponseAttestationObject*(self: AuthenticatorAttestationResponse): JsObject =
   discard
-proc jsGetTransports*(self: AuthenticatorAttestationResponse): JsObject {.wasmBindgen.} =
+proc jsGetTransports*(self: AuthenticatorAttestationResponse): JsObject =
   discard
-proc jsGetAuthenticatorData*(self: AuthenticatorAttestationResponse): JsObject {.wasmBindgen.} =
+proc jsGetAuthenticatorData*(self: AuthenticatorAttestationResponse): JsObject =
   discard
-proc jsGetPublicKey*(self: AuthenticatorAttestationResponse): Option[JsObject] {.wasmBindgen.} =
+proc jsGetPublicKey*(self: AuthenticatorAttestationResponse): Option[JsObject] =
   discard
-proc jsGetPublicKeyAlgorithm*(self: AuthenticatorAttestationResponse): JsObject {.wasmBindgen.} =
+proc jsGetPublicKeyAlgorithm*(self: AuthenticatorAttestationResponse): JsObject =
   discard
 
-proc jsAuthenticatorAssertionResponseAuthenticatorData*(self: AuthenticatorAssertionResponse): JsObject {.wasmBindgen.} =
+proc jsAuthenticatorAssertionResponseAuthenticatorData*(self: AuthenticatorAssertionResponse): JsObject =
   discard
-proc jsAuthenticatorAssertionResponseSignature*(self: AuthenticatorAssertionResponse): JsObject {.wasmBindgen.} =
+proc jsAuthenticatorAssertionResponseSignature*(self: AuthenticatorAssertionResponse): JsObject =
   discard
 
 
@@ -10883,16 +10882,16 @@ proc jsAuthenticatorAssertionResponseSignature*(self: AuthenticatorAssertionResp
 
 
 
-proc jsWebGLContextEventStatusMessage*(self: WebGLContextEvent): cstring {.wasmBindgen.} =
+proc jsWebGLContextEventStatusMessage*(self: WebGLContextEvent): cstring =
   discard
 
-proc jsMultiDrawArraysWEBGL*(self: WEBGL_multi_draw; mode: JsObject; firstsList: JsObject; firstsOffset: JsObject; countsList: JsObject; countsOffset: JsObject; drawcount: JsObject): void {.wasmBindgen.} =
+proc jsMultiDrawArraysWEBGL*(self: WEBGL_multi_draw; mode: JsObject; firstsList: JsObject; firstsOffset: JsObject; countsList: JsObject; countsOffset: JsObject; drawcount: JsObject): void =
   discard
-proc jsMultiDrawElementsWEBGL*(self: WEBGL_multi_draw; mode: JsObject; countsList: JsObject; countsOffset: JsObject; typeVal: JsObject; offsetsList: JsObject; offsetsOffset: JsObject; drawcount: JsObject): void {.wasmBindgen.} =
+proc jsMultiDrawElementsWEBGL*(self: WEBGL_multi_draw; mode: JsObject; countsList: JsObject; countsOffset: JsObject; typeVal: JsObject; offsetsList: JsObject; offsetsOffset: JsObject; drawcount: JsObject): void =
   discard
-proc jsMultiDrawArraysInstancedWEBGL*(self: WEBGL_multi_draw; mode: JsObject; firstsList: JsObject; firstsOffset: JsObject; countsList: JsObject; countsOffset: JsObject; instanceCountsList: JsObject; instanceCountsOffset: JsObject; drawcount: JsObject): void {.wasmBindgen.} =
+proc jsMultiDrawArraysInstancedWEBGL*(self: WEBGL_multi_draw; mode: JsObject; firstsList: JsObject; firstsOffset: JsObject; countsList: JsObject; countsOffset: JsObject; instanceCountsList: JsObject; instanceCountsOffset: JsObject; drawcount: JsObject): void =
   discard
-proc jsMultiDrawElementsInstancedWEBGL*(self: WEBGL_multi_draw; mode: JsObject; countsList: JsObject; countsOffset: JsObject; typeVal: JsObject; offsetsList: JsObject; offsetsOffset: JsObject; instanceCountsList: JsObject; instanceCountsOffset: JsObject; drawcount: JsObject): void {.wasmBindgen.} =
+proc jsMultiDrawElementsInstancedWEBGL*(self: WEBGL_multi_draw; mode: JsObject; countsList: JsObject; countsOffset: JsObject; typeVal: JsObject; offsetsList: JsObject; offsetsOffset: JsObject; instanceCountsList: JsObject; instanceCountsOffset: JsObject; drawcount: JsObject): void =
   discard
 
 
@@ -10903,84 +10902,84 @@ proc jsMultiDrawElementsInstancedWEBGL*(self: WEBGL_multi_draw; mode: JsObject; 
 
 
 
-proc jsWebGLActiveInfoSize*(self: WebGLActiveInfo): JsObject {.wasmBindgen.} =
+proc jsWebGLActiveInfoSize*(self: WebGLActiveInfo): JsObject =
   discard
-proc jsWebGLActiveInfoTypeVal*(self: WebGLActiveInfo): JsObject {.wasmBindgen.} =
+proc jsWebGLActiveInfoTypeVal*(self: WebGLActiveInfo): JsObject =
   discard
-proc jsWebGLActiveInfoName*(self: WebGLActiveInfo): cstring {.wasmBindgen.} =
+proc jsWebGLActiveInfoName*(self: WebGLActiveInfo): cstring =
   discard
 
-proc jsWebGLShaderPrecisionFormatRangeMin*(self: WebGLShaderPrecisionFormat): JsObject {.wasmBindgen.} =
+proc jsWebGLShaderPrecisionFormatRangeMin*(self: WebGLShaderPrecisionFormat): JsObject =
   discard
-proc jsWebGLShaderPrecisionFormatRangeMax*(self: WebGLShaderPrecisionFormat): JsObject {.wasmBindgen.} =
+proc jsWebGLShaderPrecisionFormatRangeMax*(self: WebGLShaderPrecisionFormat): JsObject =
   discard
-proc jsWebGLShaderPrecisionFormatPrecision*(self: WebGLShaderPrecisionFormat): JsObject {.wasmBindgen.} =
+proc jsWebGLShaderPrecisionFormatPrecision*(self: WebGLShaderPrecisionFormat): JsObject =
   discard
 
-proc jsBufferData*(self: WebGLRenderingContext; target: JsObject; size: JsObject; usage: JsObject): void {.wasmBindgen.} =
+proc jsBufferData*(self: WebGLRenderingContext; target: JsObject; size: JsObject; usage: JsObject): void =
   discard
-proc jsBufferData*(self: WebGLRenderingContext; target: JsObject; data: Option[JsObject]; usage: JsObject): void {.wasmBindgen.} =
+proc jsBufferData*(self: WebGLRenderingContext; target: JsObject; data: Option[JsObject]; usage: JsObject): void =
   discard
-proc jsBufferData*(self: WebGLRenderingContext; target: JsObject; data: JsObject; usage: JsObject): void {.wasmBindgen.} =
+proc jsBufferData*(self: WebGLRenderingContext; target: JsObject; data: JsObject; usage: JsObject): void =
   discard
-proc jsBufferSubData*(self: WebGLRenderingContext; target: JsObject; offset: JsObject; data: JsObject): void {.wasmBindgen.} =
+proc jsBufferSubData*(self: WebGLRenderingContext; target: JsObject; offset: JsObject; data: JsObject): void =
   discard
-proc jsCompressedTexImage2D*(self: WebGLRenderingContext; target: JsObject; level: JsObject; internalformat: JsObject; width: JsObject; height: JsObject; border: JsObject; data: JsObject): void {.wasmBindgen.} =
+proc jsCompressedTexImage2D*(self: WebGLRenderingContext; target: JsObject; level: JsObject; internalformat: JsObject; width: JsObject; height: JsObject; border: JsObject; data: JsObject): void =
   discard
-proc jsCompressedTexSubImage2D*(self: WebGLRenderingContext; target: JsObject; level: JsObject; xoffset: JsObject; yoffset: JsObject; width: JsObject; height: JsObject; format: JsObject; data: JsObject): void {.wasmBindgen.} =
+proc jsCompressedTexSubImage2D*(self: WebGLRenderingContext; target: JsObject; level: JsObject; xoffset: JsObject; yoffset: JsObject; width: JsObject; height: JsObject; format: JsObject; data: JsObject): void =
   discard
-proc jsReadPixels*(self: WebGLRenderingContext; x: JsObject; y: JsObject; width: JsObject; height: JsObject; format: JsObject; typeVal: JsObject; pixels: Option[JsObject]): void {.wasmBindgen.} =
+proc jsReadPixels*(self: WebGLRenderingContext; x: JsObject; y: JsObject; width: JsObject; height: JsObject; format: JsObject; typeVal: JsObject; pixels: Option[JsObject]): void =
   discard
-proc jsTexImage2D*(self: WebGLRenderingContext; target: JsObject; level: JsObject; internalformat: JsObject; width: JsObject; height: JsObject; border: JsObject; format: JsObject; typeVal: JsObject; pixels: Option[JsObject]): void {.wasmBindgen.} =
+proc jsTexImage2D*(self: WebGLRenderingContext; target: JsObject; level: JsObject; internalformat: JsObject; width: JsObject; height: JsObject; border: JsObject; format: JsObject; typeVal: JsObject; pixels: Option[JsObject]): void =
   discard
-proc jsTexImage2D*(self: WebGLRenderingContext; target: JsObject; level: JsObject; internalformat: JsObject; format: JsObject; typeVal: JsObject; pixels: JsObject): void {.wasmBindgen.} =
+proc jsTexImage2D*(self: WebGLRenderingContext; target: JsObject; level: JsObject; internalformat: JsObject; format: JsObject; typeVal: JsObject; pixels: JsObject): void =
   discard
-proc jsTexImage2D*(self: WebGLRenderingContext; target: JsObject; level: JsObject; internalformat: JsObject; format: JsObject; typeVal: JsObject; image: JsObject): void {.wasmBindgen.} =
+proc jsTexImage2D*(self: WebGLRenderingContext; target: JsObject; level: JsObject; internalformat: JsObject; format: JsObject; typeVal: JsObject; image: JsObject): void =
   discard
-proc jsTexImage2D*(self: WebGLRenderingContext; target: JsObject; level: JsObject; internalformat: JsObject; format: JsObject; typeVal: JsObject; canvas: JsObject): void {.wasmBindgen.} =
+proc jsTexImage2D*(self: WebGLRenderingContext; target: JsObject; level: JsObject; internalformat: JsObject; format: JsObject; typeVal: JsObject; canvas: JsObject): void =
   discard
-proc jsTexImage2D*(self: WebGLRenderingContext; target: JsObject; level: JsObject; internalformat: JsObject; format: JsObject; typeVal: JsObject; video: JsObject): void {.wasmBindgen.} =
+proc jsTexImage2D*(self: WebGLRenderingContext; target: JsObject; level: JsObject; internalformat: JsObject; format: JsObject; typeVal: JsObject; video: JsObject): void =
   discard
-proc jsTexImage2D*(self: WebGLRenderingContext; target: JsObject; level: JsObject; internalformat: JsObject; format: JsObject; typeVal: JsObject; video_frame: JsObject): void {.wasmBindgen.} =
+proc jsTexImage2D*(self: WebGLRenderingContext; target: JsObject; level: JsObject; internalformat: JsObject; format: JsObject; typeVal: JsObject; video_frame: JsObject): void =
   discard
-proc jsTexSubImage2D*(self: WebGLRenderingContext; target: JsObject; level: JsObject; xoffset: JsObject; yoffset: JsObject; width: JsObject; height: JsObject; format: JsObject; typeVal: JsObject; pixels: Option[JsObject]): void {.wasmBindgen.} =
+proc jsTexSubImage2D*(self: WebGLRenderingContext; target: JsObject; level: JsObject; xoffset: JsObject; yoffset: JsObject; width: JsObject; height: JsObject; format: JsObject; typeVal: JsObject; pixels: Option[JsObject]): void =
   discard
-proc jsTexSubImage2D*(self: WebGLRenderingContext; target: JsObject; level: JsObject; xoffset: JsObject; yoffset: JsObject; format: JsObject; typeVal: JsObject; pixels: JsObject): void {.wasmBindgen.} =
+proc jsTexSubImage2D*(self: WebGLRenderingContext; target: JsObject; level: JsObject; xoffset: JsObject; yoffset: JsObject; format: JsObject; typeVal: JsObject; pixels: JsObject): void =
   discard
-proc jsTexSubImage2D*(self: WebGLRenderingContext; target: JsObject; level: JsObject; xoffset: JsObject; yoffset: JsObject; format: JsObject; typeVal: JsObject; image: JsObject): void {.wasmBindgen.} =
+proc jsTexSubImage2D*(self: WebGLRenderingContext; target: JsObject; level: JsObject; xoffset: JsObject; yoffset: JsObject; format: JsObject; typeVal: JsObject; image: JsObject): void =
   discard
-proc jsTexSubImage2D*(self: WebGLRenderingContext; target: JsObject; level: JsObject; xoffset: JsObject; yoffset: JsObject; format: JsObject; typeVal: JsObject; canvas: JsObject): void {.wasmBindgen.} =
+proc jsTexSubImage2D*(self: WebGLRenderingContext; target: JsObject; level: JsObject; xoffset: JsObject; yoffset: JsObject; format: JsObject; typeVal: JsObject; canvas: JsObject): void =
   discard
-proc jsTexSubImage2D*(self: WebGLRenderingContext; target: JsObject; level: JsObject; xoffset: JsObject; yoffset: JsObject; format: JsObject; typeVal: JsObject; video: JsObject): void {.wasmBindgen.} =
+proc jsTexSubImage2D*(self: WebGLRenderingContext; target: JsObject; level: JsObject; xoffset: JsObject; yoffset: JsObject; format: JsObject; typeVal: JsObject; video: JsObject): void =
   discard
-proc jsTexSubImage2D*(self: WebGLRenderingContext; target: JsObject; level: JsObject; xoffset: JsObject; yoffset: JsObject; format: JsObject; typeVal: JsObject; video_frame: JsObject): void {.wasmBindgen.} =
+proc jsTexSubImage2D*(self: WebGLRenderingContext; target: JsObject; level: JsObject; xoffset: JsObject; yoffset: JsObject; format: JsObject; typeVal: JsObject; video_frame: JsObject): void =
   discard
-proc jsUniform1fv*(self: WebGLRenderingContext; location: Option[JsObject]; data: JsObject): void {.wasmBindgen.} =
+proc jsUniform1fv*(self: WebGLRenderingContext; location: Option[JsObject]; data: JsObject): void =
   discard
-proc jsUniform2fv*(self: WebGLRenderingContext; location: Option[JsObject]; data: JsObject): void {.wasmBindgen.} =
+proc jsUniform2fv*(self: WebGLRenderingContext; location: Option[JsObject]; data: JsObject): void =
   discard
-proc jsUniform3fv*(self: WebGLRenderingContext; location: Option[JsObject]; data: JsObject): void {.wasmBindgen.} =
+proc jsUniform3fv*(self: WebGLRenderingContext; location: Option[JsObject]; data: JsObject): void =
   discard
-proc jsUniform4fv*(self: WebGLRenderingContext; location: Option[JsObject]; data: JsObject): void {.wasmBindgen.} =
+proc jsUniform4fv*(self: WebGLRenderingContext; location: Option[JsObject]; data: JsObject): void =
   discard
-proc jsUniform1iv*(self: WebGLRenderingContext; location: Option[JsObject]; data: JsObject): void {.wasmBindgen.} =
+proc jsUniform1iv*(self: WebGLRenderingContext; location: Option[JsObject]; data: JsObject): void =
   discard
-proc jsUniform2iv*(self: WebGLRenderingContext; location: Option[JsObject]; data: JsObject): void {.wasmBindgen.} =
+proc jsUniform2iv*(self: WebGLRenderingContext; location: Option[JsObject]; data: JsObject): void =
   discard
-proc jsUniform3iv*(self: WebGLRenderingContext; location: Option[JsObject]; data: JsObject): void {.wasmBindgen.} =
+proc jsUniform3iv*(self: WebGLRenderingContext; location: Option[JsObject]; data: JsObject): void =
   discard
-proc jsUniform4iv*(self: WebGLRenderingContext; location: Option[JsObject]; data: JsObject): void {.wasmBindgen.} =
+proc jsUniform4iv*(self: WebGLRenderingContext; location: Option[JsObject]; data: JsObject): void =
   discard
-proc jsUniformMatrix2fv*(self: WebGLRenderingContext; location: Option[JsObject]; transpose: JsObject; data: JsObject): void {.wasmBindgen.} =
+proc jsUniformMatrix2fv*(self: WebGLRenderingContext; location: Option[JsObject]; transpose: JsObject; data: JsObject): void =
   discard
-proc jsUniformMatrix3fv*(self: WebGLRenderingContext; location: Option[JsObject]; transpose: JsObject; data: JsObject): void {.wasmBindgen.} =
+proc jsUniformMatrix3fv*(self: WebGLRenderingContext; location: Option[JsObject]; transpose: JsObject; data: JsObject): void =
   discard
-proc jsUniformMatrix4fv*(self: WebGLRenderingContext; location: Option[JsObject]; transpose: JsObject; data: JsObject): void {.wasmBindgen.} =
+proc jsUniformMatrix4fv*(self: WebGLRenderingContext; location: Option[JsObject]; transpose: JsObject; data: JsObject): void =
   discard
 
 
 
-proc jsGetSupportedProfiles*(self: WEBGL_compressed_texture_astc): Option[JsObject] {.wasmBindgen.} =
+proc jsGetSupportedProfiles*(self: WEBGL_compressed_texture_astc): Option[JsObject] =
   discard
 
 
@@ -10988,22 +10987,22 @@ proc jsGetSupportedProfiles*(self: WEBGL_compressed_texture_astc): Option[JsObje
 
 
 
-proc jsGetTranslatedShaderSource*(self: WEBGL_debug_shaders; shader: JsObject): cstring {.wasmBindgen.} =
+proc jsGetTranslatedShaderSource*(self: WEBGL_debug_shaders; shader: JsObject): cstring =
   discard
 
 
 
 
-proc jsLoseContext*(self: WEBGL_lose_context): void {.wasmBindgen.} =
+proc jsLoseContext*(self: WEBGL_lose_context): void =
   discard
-proc jsRestoreContext*(self: WEBGL_lose_context): void {.wasmBindgen.} =
+proc jsRestoreContext*(self: WEBGL_lose_context): void =
   discard
 
 
 
 
 
-proc jsDrawBuffersWEBGL*(self: WEBGL_draw_buffers; buffers: JsObject): void {.wasmBindgen.} =
+proc jsDrawBuffersWEBGL*(self: WEBGL_draw_buffers; buffers: JsObject): void =
   discard
 
 
@@ -11012,308 +11011,308 @@ proc jsDrawBuffersWEBGL*(self: WEBGL_draw_buffers; buffers: JsObject): void {.wa
 
 
 
-proc jsCreateVertexArrayOES*(self: OES_vertex_array_object): Option[JsObject] {.wasmBindgen.} =
+proc jsCreateVertexArrayOES*(self: OES_vertex_array_object): Option[JsObject] =
   discard
-proc jsDeleteVertexArrayOES*(self: OES_vertex_array_object; arrayObject: Option[JsObject]): void {.wasmBindgen.} =
+proc jsDeleteVertexArrayOES*(self: OES_vertex_array_object; arrayObject: Option[JsObject]): void =
   discard
-proc jsIsVertexArrayOES*(self: OES_vertex_array_object; arrayObject: Option[JsObject]): JsObject {.wasmBindgen.} =
+proc jsIsVertexArrayOES*(self: OES_vertex_array_object; arrayObject: Option[JsObject]): JsObject =
   discard
-proc jsBindVertexArrayOES*(self: OES_vertex_array_object; arrayObject: Option[JsObject]): void {.wasmBindgen.} =
+proc jsBindVertexArrayOES*(self: OES_vertex_array_object; arrayObject: Option[JsObject]): void =
   discard
 
-proc jsDrawArraysInstancedANGLE*(self: ANGLE_instanced_arrays; mode: JsObject; first: JsObject; count: JsObject; primcount: JsObject): void {.wasmBindgen.} =
+proc jsDrawArraysInstancedANGLE*(self: ANGLE_instanced_arrays; mode: JsObject; first: JsObject; count: JsObject; primcount: JsObject): void =
   discard
-proc jsDrawElementsInstancedANGLE*(self: ANGLE_instanced_arrays; mode: JsObject; count: JsObject; typeVal: JsObject; offset: JsObject; primcount: JsObject): void {.wasmBindgen.} =
+proc jsDrawElementsInstancedANGLE*(self: ANGLE_instanced_arrays; mode: JsObject; count: JsObject; typeVal: JsObject; offset: JsObject; primcount: JsObject): void =
   discard
-proc jsVertexAttribDivisorANGLE*(self: ANGLE_instanced_arrays; index: JsObject; divisor: JsObject): void {.wasmBindgen.} =
+proc jsVertexAttribDivisorANGLE*(self: ANGLE_instanced_arrays; index: JsObject; divisor: JsObject): void =
   discard
 
 
 
-proc jsCreateQueryEXT*(self: EXT_disjoint_timer_query): Option[JsObject] {.wasmBindgen.} =
+proc jsCreateQueryEXT*(self: EXT_disjoint_timer_query): Option[JsObject] =
   discard
-proc jsDeleteQueryEXT*(self: EXT_disjoint_timer_query; query: Option[JsObject]): void {.wasmBindgen.} =
+proc jsDeleteQueryEXT*(self: EXT_disjoint_timer_query; query: Option[JsObject]): void =
   discard
-proc jsIsQueryEXT*(self: EXT_disjoint_timer_query; query: Option[JsObject]): bool {.wasmBindgen.} =
+proc jsIsQueryEXT*(self: EXT_disjoint_timer_query; query: Option[JsObject]): bool =
   discard
-proc jsBeginQueryEXT*(self: EXT_disjoint_timer_query; target: JsObject; query: JsObject): void {.wasmBindgen.} =
+proc jsBeginQueryEXT*(self: EXT_disjoint_timer_query; target: JsObject; query: JsObject): void =
   discard
-proc jsEndQueryEXT*(self: EXT_disjoint_timer_query; target: JsObject): void {.wasmBindgen.} =
+proc jsEndQueryEXT*(self: EXT_disjoint_timer_query; target: JsObject): void =
   discard
-proc jsQueryCounterEXT*(self: EXT_disjoint_timer_query; query: JsObject; target: JsObject): void {.wasmBindgen.} =
+proc jsQueryCounterEXT*(self: EXT_disjoint_timer_query; query: JsObject; target: JsObject): void =
   discard
-proc jsGetQueryEXT*(self: EXT_disjoint_timer_query; target: JsObject; pname: JsObject): JsObject {.wasmBindgen.} =
+proc jsGetQueryEXT*(self: EXT_disjoint_timer_query; target: JsObject; pname: JsObject): JsObject =
   discard
-proc jsGetQueryObjectEXT*(self: EXT_disjoint_timer_query; query: JsObject; pname: JsObject): JsObject {.wasmBindgen.} =
+proc jsGetQueryObjectEXT*(self: EXT_disjoint_timer_query; query: JsObject; pname: JsObject): JsObject =
   discard
 
-proc jsGetParameter*(self: MOZ_debug; pname: JsObject): JsObject {.wasmBindgen.} =
+proc jsGetParameter*(self: MOZ_debug; pname: JsObject): JsObject =
   discard
 
-proc jsSetMatrixValue*(self: WebKitCSSMatrix; transformList: cstring): JsObject {.wasmBindgen.} =
+proc jsSetMatrixValue*(self: WebKitCSSMatrix; transformList: cstring): JsObject =
   discard
-proc jsMultiply*(self: WebKitCSSMatrix; other: JsObject): JsObject {.wasmBindgen.} =
+proc jsMultiply*(self: WebKitCSSMatrix; other: JsObject): JsObject =
   discard
-proc jsInverse*(self: WebKitCSSMatrix): JsObject {.wasmBindgen.} =
+proc jsInverse*(self: WebKitCSSMatrix): JsObject =
   discard
-proc jsTranslate*(self: WebKitCSSMatrix; tx: float64; ty: float64; tz: float64): JsObject {.wasmBindgen.} =
+proc jsTranslate*(self: WebKitCSSMatrix; tx: float64; ty: float64; tz: float64): JsObject =
   discard
-proc jsScale*(self: WebKitCSSMatrix; scaleX: float64; scaleY: float64; scaleZ: float64): JsObject {.wasmBindgen.} =
+proc jsScale*(self: WebKitCSSMatrix; scaleX: float64; scaleY: float64; scaleZ: float64): JsObject =
   discard
-proc jsRotate*(self: WebKitCSSMatrix; rotX: float64; rotY: float64; rotZ: float64): JsObject {.wasmBindgen.} =
+proc jsRotate*(self: WebKitCSSMatrix; rotX: float64; rotY: float64; rotZ: float64): JsObject =
   discard
-proc jsRotateAxisAngle*(self: WebKitCSSMatrix; x: float64; y: float64; z: float64; angle: float64): JsObject {.wasmBindgen.} =
+proc jsRotateAxisAngle*(self: WebKitCSSMatrix; x: float64; y: float64; z: float64; angle: float64): JsObject =
   discard
-proc jsSkewX*(self: WebKitCSSMatrix; sx: float64): JsObject {.wasmBindgen.} =
+proc jsSkewX*(self: WebKitCSSMatrix; sx: float64): JsObject =
   discard
-proc jsSkewY*(self: WebKitCSSMatrix; sy: float64): JsObject {.wasmBindgen.} =
+proc jsSkewY*(self: WebKitCSSMatrix; sy: float64): JsObject =
   discard
 
-proc jsWebSocketUrl*(self: WebSocket): cstring {.wasmBindgen.} =
+proc jsWebSocketUrl*(self: WebSocket): cstring =
   discard
 const jsWebSocketCONNECTING* : uint16 = 0
 const jsWebSocketOPEN* : uint16 = 0
 const jsWebSocketCLOSING* : uint16 = 0
 const jsWebSocketCLOSED* : uint16 = 0
-proc jsWebSocketReadyState*(self: WebSocket): uint16 {.wasmBindgen.} =
+proc jsWebSocketReadyState*(self: WebSocket): uint16 =
   discard
-proc jsWebSocketBufferedAmount*(self: WebSocket): uint32 {.wasmBindgen.} =
+proc jsWebSocketBufferedAmount*(self: WebSocket): uint32 =
   discard
-proc jsWebSocketOnopen*(self: WebSocket): JsObject {.wasmBindgen.} =
+proc jsWebSocketOnopen*(self: WebSocket): JsObject =
   discard
-proc jsWebSocketOnerror*(self: WebSocket): JsObject {.wasmBindgen.} =
+proc jsWebSocketOnerror*(self: WebSocket): JsObject =
   discard
-proc jsWebSocketOnclose*(self: WebSocket): JsObject {.wasmBindgen.} =
+proc jsWebSocketOnclose*(self: WebSocket): JsObject =
   discard
-proc jsWebSocketExtensions*(self: WebSocket): cstring {.wasmBindgen.} =
+proc jsWebSocketExtensions*(self: WebSocket): cstring =
   discard
-proc jsWebSocketProtocol*(self: WebSocket): cstring {.wasmBindgen.} =
+proc jsWebSocketProtocol*(self: WebSocket): cstring =
   discard
-proc jsWebSocketOnmessage*(self: WebSocket): JsObject {.wasmBindgen.} =
+proc jsWebSocketOnmessage*(self: WebSocket): JsObject =
   discard
-proc jsWebSocketBinaryType*(self: WebSocket): JsObject {.wasmBindgen.} =
+proc jsWebSocketBinaryType*(self: WebSocket): JsObject =
   discard
-proc jsClose*(self: WebSocket; code: uint16; reason: cstring): void {.wasmBindgen.} =
+proc jsClose*(self: WebSocket; code: uint16; reason: cstring): void =
   discard
-proc jsSend*(self: WebSocket; data: cstring): void {.wasmBindgen.} =
+proc jsSend*(self: WebSocket; data: cstring): void =
   discard
-proc jsSend*(self: WebSocket; data: JsObject): void {.wasmBindgen.} =
+proc jsSend*(self: WebSocket; data: JsObject): void =
   discard
 
 const jsWheelEventDOM_DELTA_PIXEL* : uint32 = 0
 const jsWheelEventDOM_DELTA_LINE* : uint32 = 0
 const jsWheelEventDOM_DELTA_PAGE* : uint32 = 0
-proc jsWheelEventDeltaX*(self: WheelEvent): float64 {.wasmBindgen.} =
+proc jsWheelEventDeltaX*(self: WheelEvent): float64 =
   discard
-proc jsWheelEventDeltaY*(self: WheelEvent): float64 {.wasmBindgen.} =
+proc jsWheelEventDeltaY*(self: WheelEvent): float64 =
   discard
-proc jsWheelEventDeltaZ*(self: WheelEvent): float64 {.wasmBindgen.} =
+proc jsWheelEventDeltaZ*(self: WheelEvent): float64 =
   discard
-proc jsWheelEventDeltaMode*(self: WheelEvent): uint32 {.wasmBindgen.} =
-  discard
-
-proc jsWindowWindow*(self: Window): JsObject {.wasmBindgen.} =
-  discard
-proc jsWindowSelf*(self: Window): JsObject {.wasmBindgen.} =
-  discard
-proc jsWindowName*(self: Window): cstring {.wasmBindgen.} =
-  discard
-proc jsWindowLocation*(self: Window): JsObject {.wasmBindgen.} =
-  discard
-proc jsWindowHistory*(self: Window): JsObject {.wasmBindgen.} =
-  discard
-proc jsWindowCustomElements*(self: Window): JsObject {.wasmBindgen.} =
-  discard
-proc jsWindowLocationbar*(self: Window): JsObject {.wasmBindgen.} =
-  discard
-proc jsWindowMenubar*(self: Window): JsObject {.wasmBindgen.} =
-  discard
-proc jsWindowPersonalbar*(self: Window): JsObject {.wasmBindgen.} =
-  discard
-proc jsWindowScrollbars*(self: Window): JsObject {.wasmBindgen.} =
-  discard
-proc jsWindowStatusbar*(self: Window): JsObject {.wasmBindgen.} =
-  discard
-proc jsWindowToolbar*(self: Window): JsObject {.wasmBindgen.} =
-  discard
-proc jsWindowStatus*(self: Window): cstring {.wasmBindgen.} =
-  discard
-proc jsWindowClosed*(self: Window): bool {.wasmBindgen.} =
-  discard
-proc jsWindowEvent*(self: Window): JsObject {.wasmBindgen.} =
-  discard
-proc jsWindowFrames*(self: Window): JsObject {.wasmBindgen.} =
-  discard
-proc jsWindowLength*(self: Window): uint32 {.wasmBindgen.} =
-  discard
-proc jsWindowOpener*(self: Window): JsObject {.wasmBindgen.} =
-  discard
-proc jsWindowNavigator*(self: Window): JsObject {.wasmBindgen.} =
-  discard
-proc jsWindowExternal*(self: Window): JsObject {.wasmBindgen.} =
-  discard
-proc jsWindowApplicationCache*(self: Window): JsObject {.wasmBindgen.} =
-  discard
-proc jsClose*(self: Window): void {.wasmBindgen.} =
-  discard
-proc jsStop*(self: Window): void {.wasmBindgen.} =
-  discard
-proc jsFocus*(self: Window): void {.wasmBindgen.} =
-  discard
-proc jsBlur*(self: Window): void {.wasmBindgen.} =
-  discard
-proc jsOpen*(self: Window; url: cstring; target: cstring; features: cstring): Option[JsObject] {.wasmBindgen.} =
-  discard
-proc jsAlert*(self: Window): void {.wasmBindgen.} =
-  discard
-proc jsAlert*(self: Window; message: cstring): void {.wasmBindgen.} =
-  discard
-proc jsConfirm*(self: Window; message: cstring): bool {.wasmBindgen.} =
-  discard
-proc jsPrompt*(self: Window; message: cstring; default: cstring): Option[cstring] {.wasmBindgen.} =
-  discard
-proc jsPrint*(self: Window): void {.wasmBindgen.} =
-  discard
-proc jsPostMessage*(self: Window; message: JsObject; targetOrigin: cstring; transfer: JsObject): void {.wasmBindgen.} =
+proc jsWheelEventDeltaMode*(self: WheelEvent): uint32 =
   discard
 
-proc jsWorkerOnmessage*(self: Worker): JsObject {.wasmBindgen.} =
+proc jsWindowWindow*(self: Window): JsObject =
   discard
-proc jsWorkerOnmessageerror*(self: Worker): JsObject {.wasmBindgen.} =
+proc jsWindowSelf*(self: Window): JsObject =
   discard
-proc jsTerminate*(self: Worker): void {.wasmBindgen.} =
+proc jsWindowName*(self: Window): cstring =
   discard
-proc jsPostMessage*(self: Worker; message: JsObject; transfer: JsObject): void {.wasmBindgen.} =
+proc jsWindowLocation*(self: Window): JsObject =
+  discard
+proc jsWindowHistory*(self: Window): JsObject =
+  discard
+proc jsWindowCustomElements*(self: Window): JsObject =
+  discard
+proc jsWindowLocationbar*(self: Window): JsObject =
+  discard
+proc jsWindowMenubar*(self: Window): JsObject =
+  discard
+proc jsWindowPersonalbar*(self: Window): JsObject =
+  discard
+proc jsWindowScrollbars*(self: Window): JsObject =
+  discard
+proc jsWindowStatusbar*(self: Window): JsObject =
+  discard
+proc jsWindowToolbar*(self: Window): JsObject =
+  discard
+proc jsWindowStatus*(self: Window): cstring =
+  discard
+proc jsWindowClosed*(self: Window): bool =
+  discard
+proc jsWindowEvent*(self: Window): JsObject =
+  discard
+proc jsWindowFrames*(self: Window): JsObject =
+  discard
+proc jsWindowLength*(self: Window): uint32 =
+  discard
+proc jsWindowOpener*(self: Window): JsObject =
+  discard
+proc jsWindowNavigator*(self: Window): JsObject =
+  discard
+proc jsWindowExternal*(self: Window): JsObject =
+  discard
+proc jsWindowApplicationCache*(self: Window): JsObject =
+  discard
+proc jsClose*(self: Window): void =
+  discard
+proc jsStop*(self: Window): void =
+  discard
+proc jsFocus*(self: Window): void =
+  discard
+proc jsBlur*(self: Window): void =
+  discard
+proc jsOpen*(self: Window; url: cstring; target: cstring; features: cstring): Option[JsObject] =
+  discard
+proc jsAlert*(self: Window): void =
+  discard
+proc jsAlert*(self: Window; message: cstring): void =
+  discard
+proc jsConfirm*(self: Window; message: cstring): bool =
+  discard
+proc jsPrompt*(self: Window; message: cstring; default: cstring): Option[cstring] =
+  discard
+proc jsPrint*(self: Window): void =
+  discard
+proc jsPostMessage*(self: Window; message: JsObject; targetOrigin: cstring; transfer: JsObject): void =
   discard
 
-
-proc jsWorkerDebuggerGlobalScopeGlobal*(self: WorkerDebuggerGlobalScope): JsObject {.wasmBindgen.} =
+proc jsWorkerOnmessage*(self: Worker): JsObject =
   discard
-proc jsWorkerDebuggerGlobalScopeOnmessage*(self: WorkerDebuggerGlobalScope): JsObject {.wasmBindgen.} =
+proc jsWorkerOnmessageerror*(self: Worker): JsObject =
   discard
-proc jsCreateSandbox*(self: WorkerDebuggerGlobalScope; name: cstring; prototype: JsObject): JsObject {.wasmBindgen.} =
+proc jsTerminate*(self: Worker): void =
   discard
-proc jsLoadSubScript*(self: WorkerDebuggerGlobalScope; url: cstring; sandbox: JsObject): void {.wasmBindgen.} =
-  discard
-proc jsEnterEventLoop*(self: WorkerDebuggerGlobalScope): void {.wasmBindgen.} =
-  discard
-proc jsLeaveEventLoop*(self: WorkerDebuggerGlobalScope): void {.wasmBindgen.} =
-  discard
-proc jsPostMessage*(self: WorkerDebuggerGlobalScope; message: cstring): void {.wasmBindgen.} =
-  discard
-proc jsSetImmediate*(self: WorkerDebuggerGlobalScope; handler: JsObject): void {.wasmBindgen.} =
-  discard
-proc jsReportError*(self: WorkerDebuggerGlobalScope; message: cstring): void {.wasmBindgen.} =
-  discard
-proc jsRetrieveConsoleEvents*(self: WorkerDebuggerGlobalScope): JsObject {.wasmBindgen.} =
-  discard
-proc jsSetConsoleEventHandler*(self: WorkerDebuggerGlobalScope; handler: Option[JsObject]): void {.wasmBindgen.} =
-  discard
-
-proc jsWorkerGlobalScopeSelf*(self: WorkerGlobalScope): JsObject {.wasmBindgen.} =
-  discard
-proc jsWorkerGlobalScopeLocation*(self: WorkerGlobalScope): JsObject {.wasmBindgen.} =
-  discard
-proc jsWorkerGlobalScopeNavigator*(self: WorkerGlobalScope): JsObject {.wasmBindgen.} =
-  discard
-proc jsWorkerGlobalScopeOnerror*(self: WorkerGlobalScope): JsObject {.wasmBindgen.} =
-  discard
-proc jsWorkerGlobalScopeOnoffline*(self: WorkerGlobalScope): JsObject {.wasmBindgen.} =
-  discard
-proc jsWorkerGlobalScopeOnonline*(self: WorkerGlobalScope): JsObject {.wasmBindgen.} =
-  discard
-proc jsImportScripts*(self: WorkerGlobalScope; urls: cstring): void {.wasmBindgen.} =
-  discard
-
-proc jsWorkerLocationHref*(self: WorkerLocation): cstring {.wasmBindgen.} =
-  discard
-proc jsWorkerLocationOrigin*(self: WorkerLocation): cstring {.wasmBindgen.} =
-  discard
-proc jsWorkerLocationProtocol*(self: WorkerLocation): cstring {.wasmBindgen.} =
-  discard
-proc jsWorkerLocationHost*(self: WorkerLocation): cstring {.wasmBindgen.} =
-  discard
-proc jsWorkerLocationHostname*(self: WorkerLocation): cstring {.wasmBindgen.} =
-  discard
-proc jsWorkerLocationPort*(self: WorkerLocation): cstring {.wasmBindgen.} =
-  discard
-proc jsWorkerLocationPathname*(self: WorkerLocation): cstring {.wasmBindgen.} =
-  discard
-proc jsWorkerLocationSearch*(self: WorkerLocation): cstring {.wasmBindgen.} =
-  discard
-proc jsWorkerLocationHash*(self: WorkerLocation): cstring {.wasmBindgen.} =
+proc jsPostMessage*(self: Worker; message: JsObject; transfer: JsObject): void =
   discard
 
 
-proc jsAddModule*(self: Worklet; moduleURL: cstring; options: JsObject): JsObject {.wasmBindgen.} =
+proc jsWorkerDebuggerGlobalScopeGlobal*(self: WorkerDebuggerGlobalScope): JsObject =
+  discard
+proc jsWorkerDebuggerGlobalScopeOnmessage*(self: WorkerDebuggerGlobalScope): JsObject =
+  discard
+proc jsCreateSandbox*(self: WorkerDebuggerGlobalScope; name: cstring; prototype: JsObject): JsObject =
+  discard
+proc jsLoadSubScript*(self: WorkerDebuggerGlobalScope; url: cstring; sandbox: JsObject): void =
+  discard
+proc jsEnterEventLoop*(self: WorkerDebuggerGlobalScope): void =
+  discard
+proc jsLeaveEventLoop*(self: WorkerDebuggerGlobalScope): void =
+  discard
+proc jsPostMessage*(self: WorkerDebuggerGlobalScope; message: cstring): void =
+  discard
+proc jsSetImmediate*(self: WorkerDebuggerGlobalScope; handler: JsObject): void =
+  discard
+proc jsReportError*(self: WorkerDebuggerGlobalScope; message: cstring): void =
+  discard
+proc jsRetrieveConsoleEvents*(self: WorkerDebuggerGlobalScope): JsObject =
+  discard
+proc jsSetConsoleEventHandler*(self: WorkerDebuggerGlobalScope; handler: Option[JsObject]): void =
+  discard
+
+proc jsWorkerGlobalScopeSelf*(self: WorkerGlobalScope): JsObject =
+  discard
+proc jsWorkerGlobalScopeLocation*(self: WorkerGlobalScope): JsObject =
+  discard
+proc jsWorkerGlobalScopeNavigator*(self: WorkerGlobalScope): JsObject =
+  discard
+proc jsWorkerGlobalScopeOnerror*(self: WorkerGlobalScope): JsObject =
+  discard
+proc jsWorkerGlobalScopeOnoffline*(self: WorkerGlobalScope): JsObject =
+  discard
+proc jsWorkerGlobalScopeOnonline*(self: WorkerGlobalScope): JsObject =
+  discard
+proc jsImportScripts*(self: WorkerGlobalScope; urls: cstring): void =
+  discard
+
+proc jsWorkerLocationHref*(self: WorkerLocation): cstring =
+  discard
+proc jsWorkerLocationOrigin*(self: WorkerLocation): cstring =
+  discard
+proc jsWorkerLocationProtocol*(self: WorkerLocation): cstring =
+  discard
+proc jsWorkerLocationHost*(self: WorkerLocation): cstring =
+  discard
+proc jsWorkerLocationHostname*(self: WorkerLocation): cstring =
+  discard
+proc jsWorkerLocationPort*(self: WorkerLocation): cstring =
+  discard
+proc jsWorkerLocationPathname*(self: WorkerLocation): cstring =
+  discard
+proc jsWorkerLocationSearch*(self: WorkerLocation): cstring =
+  discard
+proc jsWorkerLocationHash*(self: WorkerLocation): cstring =
+  discard
+
+
+proc jsAddModule*(self: Worklet; moduleURL: cstring; options: JsObject): JsObject =
   discard
 
 
 
-proc jsXMLHttpRequestOnreadystatechange*(self: XMLHttpRequest): JsObject {.wasmBindgen.} =
+proc jsXMLHttpRequestOnreadystatechange*(self: XMLHttpRequest): JsObject =
   discard
 const jsXMLHttpRequestUNSENT* : uint16 = 0
 const jsXMLHttpRequestOPENED* : uint16 = 0
 const jsXMLHttpRequestHEADERS_RECEIVED* : uint16 = 0
 const jsXMLHttpRequestLOADING* : uint16 = 0
 const jsXMLHttpRequestDONE* : uint16 = 0
-proc jsXMLHttpRequestReadyState*(self: XMLHttpRequest): uint16 {.wasmBindgen.} =
+proc jsXMLHttpRequestReadyState*(self: XMLHttpRequest): uint16 =
   discard
-proc jsXMLHttpRequestTimeout*(self: XMLHttpRequest): uint32 {.wasmBindgen.} =
+proc jsXMLHttpRequestTimeout*(self: XMLHttpRequest): uint32 =
   discard
-proc jsXMLHttpRequestWithCredentials*(self: XMLHttpRequest): bool {.wasmBindgen.} =
+proc jsXMLHttpRequestWithCredentials*(self: XMLHttpRequest): bool =
   discard
-proc jsXMLHttpRequestUpload*(self: XMLHttpRequest): JsObject {.wasmBindgen.} =
+proc jsXMLHttpRequestUpload*(self: XMLHttpRequest): JsObject =
   discard
-proc jsXMLHttpRequestResponseURL*(self: XMLHttpRequest): cstring {.wasmBindgen.} =
+proc jsXMLHttpRequestResponseURL*(self: XMLHttpRequest): cstring =
   discard
-proc jsXMLHttpRequestStatus*(self: XMLHttpRequest): uint16 {.wasmBindgen.} =
+proc jsXMLHttpRequestStatus*(self: XMLHttpRequest): uint16 =
   discard
-proc jsXMLHttpRequestStatusText*(self: XMLHttpRequest): cstring {.wasmBindgen.} =
+proc jsXMLHttpRequestStatusText*(self: XMLHttpRequest): cstring =
   discard
-proc jsXMLHttpRequestResponseType*(self: XMLHttpRequest): JsObject {.wasmBindgen.} =
+proc jsXMLHttpRequestResponseType*(self: XMLHttpRequest): JsObject =
   discard
-proc jsXMLHttpRequestResponse*(self: XMLHttpRequest): JsObject {.wasmBindgen.} =
+proc jsXMLHttpRequestResponse*(self: XMLHttpRequest): JsObject =
   discard
-proc jsOpen*(self: XMLHttpRequest; methodVal: cstring; url: cstring): void {.wasmBindgen.} =
+proc jsOpen*(self: XMLHttpRequest; methodVal: cstring; url: cstring): void =
   discard
-proc jsOpen*(self: XMLHttpRequest; methodVal: cstring; url: cstring; async: bool; user: Option[cstring]; password: Option[cstring]): void {.wasmBindgen.} =
+proc jsOpen*(self: XMLHttpRequest; methodVal: cstring; url: cstring; async: bool; user: Option[cstring]; password: Option[cstring]): void =
   discard
-proc jsSetRequestHeader*(self: XMLHttpRequest; header: cstring; value: cstring): void {.wasmBindgen.} =
+proc jsSetRequestHeader*(self: XMLHttpRequest; header: cstring; value: cstring): void =
   discard
-proc jsSend*(self: XMLHttpRequest; body: Option[JsObject]): void {.wasmBindgen.} =
+proc jsSend*(self: XMLHttpRequest; body: Option[JsObject]): void =
   discard
-proc jsAbort*(self: XMLHttpRequest): void {.wasmBindgen.} =
+proc jsAbort*(self: XMLHttpRequest): void =
   discard
-proc jsGetResponseHeader*(self: XMLHttpRequest; header: cstring): Option[cstring] {.wasmBindgen.} =
+proc jsGetResponseHeader*(self: XMLHttpRequest; header: cstring): Option[cstring] =
   discard
-proc jsGetAllResponseHeaders*(self: XMLHttpRequest): cstring {.wasmBindgen.} =
+proc jsGetAllResponseHeaders*(self: XMLHttpRequest): cstring =
   discard
-proc jsOverrideMimeType*(self: XMLHttpRequest; mime: cstring): void {.wasmBindgen.} =
-  discard
-
-proc jsXMLHttpRequestEventTargetOnloadstart*(self: XMLHttpRequestEventTarget): JsObject {.wasmBindgen.} =
-  discard
-proc jsXMLHttpRequestEventTargetOnprogress*(self: XMLHttpRequestEventTarget): JsObject {.wasmBindgen.} =
-  discard
-proc jsXMLHttpRequestEventTargetOnabort*(self: XMLHttpRequestEventTarget): JsObject {.wasmBindgen.} =
-  discard
-proc jsXMLHttpRequestEventTargetOnerror*(self: XMLHttpRequestEventTarget): JsObject {.wasmBindgen.} =
-  discard
-proc jsXMLHttpRequestEventTargetOnload*(self: XMLHttpRequestEventTarget): JsObject {.wasmBindgen.} =
-  discard
-proc jsXMLHttpRequestEventTargetOntimeout*(self: XMLHttpRequestEventTarget): JsObject {.wasmBindgen.} =
-  discard
-proc jsXMLHttpRequestEventTargetOnloadend*(self: XMLHttpRequestEventTarget): JsObject {.wasmBindgen.} =
+proc jsOverrideMimeType*(self: XMLHttpRequest; mime: cstring): void =
   discard
 
-
-proc jsSerializeToString*(self: XMLSerializer; root: JsObject): cstring {.wasmBindgen.} =
+proc jsXMLHttpRequestEventTargetOnloadstart*(self: XMLHttpRequestEventTarget): JsObject =
+  discard
+proc jsXMLHttpRequestEventTargetOnprogress*(self: XMLHttpRequestEventTarget): JsObject =
+  discard
+proc jsXMLHttpRequestEventTargetOnabort*(self: XMLHttpRequestEventTarget): JsObject =
+  discard
+proc jsXMLHttpRequestEventTargetOnerror*(self: XMLHttpRequestEventTarget): JsObject =
+  discard
+proc jsXMLHttpRequestEventTargetOnload*(self: XMLHttpRequestEventTarget): JsObject =
+  discard
+proc jsXMLHttpRequestEventTargetOntimeout*(self: XMLHttpRequestEventTarget): JsObject =
+  discard
+proc jsXMLHttpRequestEventTargetOnloadend*(self: XMLHttpRequestEventTarget): JsObject =
   discard
 
-proc jsEvaluate*(self: XPathExpression; contextNode: JsObject; typeVal: uint16; resultVal: Option[JsObject]): JsObject {.wasmBindgen.} =
+
+proc jsSerializeToString*(self: XMLSerializer; root: JsObject): cstring =
   discard
-proc jsEvaluateWithContext*(self: XPathExpression; contextNode: JsObject; contextPosition: uint32; contextSize: uint32; typeVal: uint16; resultVal: Option[JsObject]): JsObject {.wasmBindgen.} =
+
+proc jsEvaluate*(self: XPathExpression; contextNode: JsObject; typeVal: uint16; resultVal: Option[JsObject]): JsObject =
+  discard
+proc jsEvaluateWithContext*(self: XPathExpression; contextNode: JsObject; contextPosition: uint32; contextSize: uint32; typeVal: uint16; resultVal: Option[JsObject]): JsObject =
   discard
 
 const jsXPathResultANY_TYPE* : uint16 = 0
@@ -11326,40 +11325,40 @@ const jsXPathResultUNORDERED_NODE_SNAPSHOT_TYPE* : uint16 = 0
 const jsXPathResultORDERED_NODE_SNAPSHOT_TYPE* : uint16 = 0
 const jsXPathResultANY_UNORDERED_NODE_TYPE* : uint16 = 0
 const jsXPathResultFIRST_ORDERED_NODE_TYPE* : uint16 = 0
-proc jsXPathResultResultType*(self: XPathResult): uint16 {.wasmBindgen.} =
+proc jsXPathResultResultType*(self: XPathResult): uint16 =
   discard
-proc jsXPathResultNumberValue*(self: XPathResult): float64 {.wasmBindgen.} =
+proc jsXPathResultNumberValue*(self: XPathResult): float64 =
   discard
-proc jsXPathResultStringValue*(self: XPathResult): cstring {.wasmBindgen.} =
+proc jsXPathResultStringValue*(self: XPathResult): cstring =
   discard
-proc jsXPathResultBooleanValue*(self: XPathResult): bool {.wasmBindgen.} =
+proc jsXPathResultBooleanValue*(self: XPathResult): bool =
   discard
-proc jsXPathResultInvalidIteratorState*(self: XPathResult): bool {.wasmBindgen.} =
+proc jsXPathResultInvalidIteratorState*(self: XPathResult): bool =
   discard
-proc jsXPathResultSnapshotLength*(self: XPathResult): uint32 {.wasmBindgen.} =
+proc jsXPathResultSnapshotLength*(self: XPathResult): uint32 =
   discard
-proc jsIterateNext*(self: XPathResult): Option[JsObject] {.wasmBindgen.} =
+proc jsIterateNext*(self: XPathResult): Option[JsObject] =
   discard
-proc jsSnapshotItem*(self: XPathResult; index: uint32): Option[JsObject] {.wasmBindgen.} =
+proc jsSnapshotItem*(self: XPathResult; index: uint32): Option[JsObject] =
   discard
 
 const jsXSLTProcessorDISABLE_ALL_LOADS* : uint32 = 0
-proc jsXSLTProcessorFlags*(self: XSLTProcessor): uint32 {.wasmBindgen.} =
+proc jsXSLTProcessorFlags*(self: XSLTProcessor): uint32 =
   discard
-proc jsImportStylesheet*(self: XSLTProcessor; style: JsObject): void {.wasmBindgen.} =
+proc jsImportStylesheet*(self: XSLTProcessor; style: JsObject): void =
   discard
-proc jsTransformToFragment*(self: XSLTProcessor; source: JsObject; output: JsObject): JsObject {.wasmBindgen.} =
+proc jsTransformToFragment*(self: XSLTProcessor; source: JsObject; output: JsObject): JsObject =
   discard
-proc jsTransformToDocument*(self: XSLTProcessor; source: JsObject): JsObject {.wasmBindgen.} =
+proc jsTransformToDocument*(self: XSLTProcessor; source: JsObject): JsObject =
   discard
-proc jsSetParameter*(self: XSLTProcessor; namespaceURI: cstring; localName: cstring; value: JsObject): void {.wasmBindgen.} =
+proc jsSetParameter*(self: XSLTProcessor; namespaceURI: cstring; localName: cstring; value: JsObject): void =
   discard
-proc jsGetParameter*(self: XSLTProcessor; namespaceURI: cstring; localName: cstring): Option[JsObject] {.wasmBindgen.} =
+proc jsGetParameter*(self: XSLTProcessor; namespaceURI: cstring; localName: cstring): Option[JsObject] =
   discard
-proc jsRemoveParameter*(self: XSLTProcessor; namespaceURI: cstring; localName: cstring): void {.wasmBindgen.} =
+proc jsRemoveParameter*(self: XSLTProcessor; namespaceURI: cstring; localName: cstring): void =
   discard
-proc jsClearParameters*(self: XSLTProcessor): void {.wasmBindgen.} =
+proc jsClearParameters*(self: XSLTProcessor): void =
   discard
-proc jsReset*(self: XSLTProcessor): void {.wasmBindgen.} =
+proc jsReset*(self: XSLTProcessor): void =
   discard
 

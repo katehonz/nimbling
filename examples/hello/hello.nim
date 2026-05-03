@@ -16,6 +16,10 @@ proc greet(name: string): string {.wasmBindgen.} =
 proc add(a, b: int32): int32 {.wasmBindgen.} =
   result = a + b
 
+# Finalize — embeds the custom wasm section with metadata for the CLI.
+# This must be called once per module, after all wasmBindgen procs.
+wasmBindgenFinalize()
+
 # This would be the user's application logic
 when isMainModule:
   # When compiled natively, this runs

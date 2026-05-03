@@ -4,7 +4,6 @@
 ## and provides JS code generation helpers for wrapper patterns.
 
 import std/macros
-import std/strformat
 
 type
   BindgenAttr* = enum
@@ -84,42 +83,34 @@ proc exportJsName*(attrs: BindgenAttrs, defaultName: string): string =
   if attrs.jsName.len > 0: attrs.jsName else: defaultName
 
 proc generateGetterWrapperJs*(funcName: string, jsName: string, structName: string): string =
-  &"""
-export function {funcName}(ptr) {{
-    const ret = wasm.{funcName}(ptr);
-    return ret;
-}}
-"""
+  result = "export function " & funcName & "(ptr) {\n"
+  result.add("    const ret = wasm." & funcName & "(ptr);\n")
+  result.add("    return ret;\n")
+  result.add("}\n")
 
 proc generateSetterWrapperJs*(funcName: string, jsName: string, structName: string): string =
-  &"""
-export function {funcName}(ptr, val) {{
-    wasm.{funcName}(ptr, val);
-}}
-"""
+  result = "export function " & funcName & "(ptr, val) {\n"
+  result.add("    wasm." & funcName & "(ptr, val);\n")
+  result.add("}\n")
 
 proc generateConstructorWrapperJs*(funcName: string, jsName: string, args: seq[string]): string =
   var argList = ""
   for i, a in args:
     if i > 0: argList.add(", ")
     argList.add(a)
-  &"""
-export function {funcName}({argList}) {{
-    const ptr = wasm.{funcName}({argList});
-    const obj = Object.create({jsName}.prototype);
-    obj.__wbg_ptr = ptr;
-    return obj;
-}}
-"""
+  result = "export function " & funcName & "(" & argList & ") {\n"
+  result.add("    const ptr = wasm." & funcName & "(" & argList & ");\n")
+  result.add("    const obj = Object.create(" & jsName & ".prototype);\n")
+  result.add("    obj.__wbg_ptr = ptr;\n")
+  result.add("    return obj;\n")
+  result.add("}\n")
 
 proc generateCatchWrapperJs*(funcName: string): string =
-  &"""
-export function {funcName}_catch(...args) {{
-    try {{
-        return wasm.{funcName}(...args);
-    }} catch (e) {{
-        console.error('Error in {funcName}:', e);
-        return undefined;
-    }}
-}}
-"""
+  result = "export function " & funcName & "_catch(...args) {\n"
+  result.add("    try {\n")
+  result.add("        return wasm." & funcName & "(...args);\n")
+  result.add("    } catch (e) {\n")
+  result.add("        console.error('Error in " & funcName & ":', e);\n")
+  result.add("        return undefined;\n")
+  result.add("    }\n")
+  result.add("}\n")
