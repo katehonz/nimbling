@@ -106,7 +106,195 @@ function passArray8ToWasm(arg) {
   WASM_VECTOR_LEN = arg.length;
   return ptr;
 }
+
+// ─── Intrinsics: Memory & Module Access ───
+function __nbg_memory() { return wasm.memory; }
+function __nbg_module() { return __nbg_init.__wbindgen_wasm_module; }
+function __nbg_exports() { return wasm; }
+function __nbg_instance() { return result.instance; }
+function __nbg_function_table() { return wasm.__indirect_function_table; }
+function __nbg_panic_error(msg, len) {
+  throw new Error(getStringFromWasm(msg, len));
+}
+
+// ─── Intrinsics: Type Predicates ───
+function __nbg_is_null(idx) { return heap[idx] === null; }
+function __nbg_is_undefined(idx) { return heap[idx] === undefined; }
+function __nbg_is_string(idx) { return typeof heap[idx] === 'string'; }
+function __nbg_is_function(idx) { return typeof heap[idx] === 'function'; }
+function __nbg_is_object(idx) { return heap[idx] !== null && typeof heap[idx] === 'object'; }
+function __nbg_is_symbol(idx) { return typeof heap[idx] === 'symbol'; }
+function __nbg_is_bigint(idx) { return typeof heap[idx] === 'bigint'; }
+function __nbg_is_number(idx) { return typeof heap[idx] === 'number'; }
+function __nbg_is_boolean(idx) { return typeof heap[idx] === 'boolean'; }
+function __nbg_is_falsy(idx) { return !heap[idx]; }
+function __nbg_is_truthy(idx) { return !!heap[idx]; }
+function __nbg_is_array(idx) { return Array.isArray(heap[idx]); }
+
+// ─── Intrinsics: String/Number/Boolean Value Extraction ───
+function __nbg_string_get(idx) { return heap[idx]; }
+function __nbg_number_get(idx) { return heap[idx]; }
+function __nbg_boolean_get(idx) { return heap[idx]; }
+function __nbg_debug_string(idx) {
+  let v = heap[idx];
+  if (typeof v === 'function') return `[object Function]`;
+  try { return String(v); } catch(e) { return `[object]`; }
+}
+
+// ─── Intrinsics: Type Predicates v2 ───
+function __nbg_typeof(idx) {
+  let v = heap[idx];
+  if (v === null) return 'null';
+  if (v === undefined) return 'undefined';
+  if (Array.isArray(v)) return 'array';
+  return typeof v;
+}
+function __nbg_js_in(idx_a, idx_b) {
+  return heap[idx_a] in heap[idx_b];
+}
+
+// ─── Intrinsics: Object Heap Management ───
+function __nbg_object_clone_ref(idx) {
+  let obj = heap[idx];
+  if (obj && typeof obj === 'object' && !(obj instanceof Object)) {
+    addHeapObject(obj);
+  }
+}
+function __nbg_object_drop_ref(idx) {
+  takeObject(idx);
+}
+function __nbg_externref_heap_live_count() {
+  return heap.length - heap_next;
+}
+
+// ─── Intrinsics: Arithmetic Operators ───
+function __nbg_add(a, b) { return a + b; }
+function __nbg_sub(a, b) { return a - b; }
+function __nbg_mul(a, b) { return a * b; }
+function __nbg_div(a, b) { return a / b; }
+function __nbg_rem(a, b) { return a % b; }
+function __nbg_pow(a, b) { return Math.pow(a, b); }
+function __nbg_neg(a) { return -a; }
+function __nbg_checked_div(a, b) { if (b === 0) throw new Error('division by zero'); return a / b; }
+
+// ─── Intrinsics: Bitwise Operators ───
+function __nbg_bit_and(a, b) { return a & b; }
+function __nbg_bit_or(a, b)  { return a | b; }
+function __nbg_bit_xor(a, b) { return a ^ b; }
+function __nbg_bit_not(a)    { return ~a; }
+function __nbg_shl(a, b)     { return a << b; }
+function __nbg_shr(a, b)     { return a >> b; }
+function __nbg_unsigned_shr(a, b) { return a >>> b; }
+
+// ─── Intrinsics: Comparison Operators ───
+function __nbg_lt(a, b)  { return a < b ? 1 : 0; }
+function __nbg_le(a, b)  { return a <= b ? 1 : 0; }
+function __nbg_gt(a, b)  { return a > b ? 1 : 0; }
+function __nbg_ge(a, b)  { return a >= b ? 1 : 0; }
+function __nbg_eq(a, b)  { return a === b ? 1 : 0; }
+function __nbg_loose_eq(a, b) { return a == b ? 1 : 0; }
+
+// ─── Intrinsics: Object Operations ───
+function __nbg_object_add(idx_a, idx_b) { return addHeapObject(heap[idx_a] + heap[idx_b]); }
+function __nbg_object_sub(idx_a, idx_b) { return addHeapObject(heap[idx_a] - heap[idx_b]); }
+
+// ─── Intrinsics: JS Property Access ───
+function __nbg_js_get(idx, prop_idx) {
+  let obj = heap[idx];
+  let prop = heap[prop_idx];
+  return addHeapObject(obj[prop]);
+}
+function __nbg_js_set(idx, prop_idx, val_idx) {
+  heap[idx][heap[prop_idx]] = heap[val_idx];
+}
+
+// ─── Intrinsics: Throw ───
+function __nbg_throw(idx, len) { throw getStringFromWasm(idx, len); }
+function __nbg_rethrow(idx) { throw heap[idx]; }
+
+// ─── Intrinsics: BigInt Helpers ───
+function __nbg_bigint_from_i64(lo, hi) {
+  return addHeapObject(BigInt(lo) | (BigInt(hi) << 32n));
+}
+function __nbg_bigint_get_as_i64(idx) {
+  let n = BigInt(heap[idx]);
+  return [Number(n & 0xFFFFFFFFn), Number((n >> 32n) & 0xFFFFFFFFn)];
+}
 """
+
+type
+  IntrinsicKind* = enum
+    ikMemory, ikModule, ikExports, ikInstance, ikFunctionTable, ikPanicError
+    ikIsNull, ikIsUndefined, ikIsString, ikIsFunction, ikIsObject, ikIsSymbol, ikIsBigint
+    ikIsNumber, ikIsBoolean, ikIsFalsy, ikIsTruthy, ikIsArray
+    ikStringGet, ikNumberGet, ikBooleanGet, ikDebugString
+    ikTypeof, ikJsIn
+    ikObjectCloneRef, ikObjectDropRef, ikExternrefHeapLiveCount
+    ikAdd, ikSub, ikMul, ikDiv, ikRem, ikPow, ikNeg, ikCheckedDiv
+    ikBitAnd, ikBitOr, ikBitXor, ikBitNot, ikShl, ikShr, ikUnsignedShr
+    ikLt, ikLe, ikGt, ikGe, ikEq, ikLooseEq
+    ikObjectAdd, ikObjectSub, ikJsGet, ikJsSet
+    ikThrow, ikRethrow
+    ikBigintFromI64, ikBigintGetAsI64
+
+proc intrinsicName*(k: IntrinsicKind): string =
+  case k
+  of ikMemory: "__nbg_memory"
+  of ikModule: "__nbg_module"
+  of ikExports: "__nbg_exports"
+  of ikInstance: "__nbg_instance"
+  of ikFunctionTable: "__nbg_function_table"
+  of ikPanicError: "__nbg_panic_error"
+  of ikIsNull: "__nbg_is_null"
+  of ikIsUndefined: "__nbg_is_undefined"
+  of ikIsString: "__nbg_is_string"
+  of ikIsFunction: "__nbg_is_function"
+  of ikIsObject: "__nbg_is_object"
+  of ikIsSymbol: "__nbg_is_symbol"
+  of ikIsBigint: "__nbg_is_bigint"
+  of ikIsNumber: "__nbg_is_number"
+  of ikIsBoolean: "__nbg_is_boolean"
+  of ikIsFalsy: "__nbg_is_falsy"
+  of ikIsTruthy: "__nbg_is_truthy"
+  of ikIsArray: "__nbg_is_array"
+  of ikStringGet: "__nbg_string_get"
+  of ikNumberGet: "__nbg_number_get"
+  of ikBooleanGet: "__nbg_boolean_get"
+  of ikDebugString: "__nbg_debug_string"
+  of ikTypeof: "__nbg_typeof"
+  of ikJsIn: "__nbg_js_in"
+  of ikObjectCloneRef: "__nbg_object_clone_ref"
+  of ikObjectDropRef: "__nbg_object_drop_ref"
+  of ikExternrefHeapLiveCount: "__nbg_externref_heap_live_count"
+  of ikAdd: "__nbg_add"
+  of ikSub: "__nbg_sub"
+  of ikMul: "__nbg_mul"
+  of ikDiv: "__nbg_div"
+  of ikRem: "__nbg_rem"
+  of ikPow: "__nbg_pow"
+  of ikNeg: "__nbg_neg"
+  of ikCheckedDiv: "__nbg_checked_div"
+  of ikBitAnd: "__nbg_bit_and"
+  of ikBitOr: "__nbg_bit_or"
+  of ikBitXor: "__nbg_bit_xor"
+  of ikBitNot: "__nbg_bit_not"
+  of ikShl: "__nbg_shl"
+  of ikShr: "__nbg_shr"
+  of ikUnsignedShr: "__nbg_unsigned_shr"
+  of ikLt: "__nbg_lt"
+  of ikLe: "__nbg_le"
+  of ikGt: "__nbg_gt"
+  of ikGe: "__nbg_ge"
+  of ikEq: "__nbg_eq"
+  of ikLooseEq: "__nbg_loose_eq"
+  of ikObjectAdd: "__nbg_object_add"
+  of ikObjectSub: "__nbg_object_sub"
+  of ikJsGet: "__nbg_js_get"
+  of ikJsSet: "__nbg_js_set"
+  of ikThrow: "__nbg_throw"
+  of ikRethrow: "__nbg_rethrow"
+  of ikBigintFromI64: "__nbg_bigint_from_i64"
+  of ikBigintGetAsI64: "__nbg_bigint_get_as_i64"
 
 proc generateHelpers(g: var JsGen) =
   g.add(jsHelpers)

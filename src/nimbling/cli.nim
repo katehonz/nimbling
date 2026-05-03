@@ -11,6 +11,7 @@ import std/strutils
 
 import common
 import decode
+import interp
 import jsgen
 
 type
@@ -125,6 +126,12 @@ proc extractCustomSection(wasmData: seq[byte], sectionName: string): seq[byte] =
 
   return @[]
 
+proc describeExports*(wasmData: seq[byte], prog: var Program) =
+  ## Execute all `__nbg_describe_*` functions in the wasm binary
+  ## and attach the resulting type descriptors to the Program.
+  ## Each descriptor sequence maps 1-to-1 with prog.exports in order.
+  prog.descriptors = extractDescriptors(wasmData)
+
 proc runCli*() =
   let config = parseArgs()
 
@@ -170,7 +177,10 @@ proc runCli*() =
 
   # Decode program
   var decoder = newDecoder(customData)
-  let prog = decodeProgram(decoder)
+  var prog = decodeProgram(decoder)
+
+  # Extract type descriptors from wasm bytecode
+  describeExports(wasmData, prog)
 
   if config.debug:
     echo &"Decoded program: {prog.exports.len} exports, {prog.imports.len} imports"

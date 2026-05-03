@@ -17,6 +17,9 @@ when defined(wasm32):
   static void __nbg_object_drop_ref(unsigned int idx) { (void)idx; }
   static void __nbg_object_clone_ref(unsigned int idx) { (void)idx; }
   static void __nbg_closure_drop(unsigned int idx) { (void)idx; }
+  static void __nbg_throw(void *ptr, int len) { (void)ptr; (void)len; }
+  static void __nbg_rethrow(unsigned int idx) { (void)idx; }
+  static void __nbg_panic_error(void *ptr, int len) { (void)ptr; (void)len; }
   """.}
 
 proc `=destroy`*(v: var JsValue) =

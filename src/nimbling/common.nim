@@ -231,6 +231,7 @@ type
     uniqueCrateIdentifier*: string
     packageJson*: Option[string]
     linkedModules*: seq[LinkedModule]
+    descriptors*: seq[seq[uint32]]  ## raw u32 streams from __nbg_describe_*
 
 # ─── JS Identifier utilities ───
 

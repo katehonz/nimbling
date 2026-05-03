@@ -143,6 +143,10 @@ proc buildDescribeProc(procName: string, args: seq[(string, string)],
 # ─── Compile-time state ───
 
 var describeImportDeclared {.compileTime.} = false
+var compileTimeProgram {.compileTime.}: Program
+
+proc accumulateExport*(exp: Export) {.compileTime.} =
+  compileTimeProgram.exports.add(exp)
 
 # ─── Main macro ───
 
@@ -168,6 +172,22 @@ macro wasmBindgen*(body: untyped): untyped =
   let retTyId    = if isVoid: TY_UNIT else: nimTypeToTyId(retTypeStr)
 
   let args = parseFormalParams(params)
+
+  # Accumulate export in compile-time program metadata
+  var funcArgs = newSeq[FunctionArgumentData]()
+  for (aname, atype) in args:
+    funcArgs.add(FunctionArgumentData(name: aname, tyOverride: atype))
+
+  compileTimeProgram.exports.add(Export(
+    function: FunctionDesc(
+      name: procName,
+      args: funcArgs,
+      retTyOverride: retTypeStr,
+    ),
+  ))
+
+  if compileTimeProgram.uniqueCrateIdentifier.len == 0:
+    compileTimeProgram.uniqueCrateIdentifier = "crate_" & procName
 
   result = newStmtList()
 
@@ -207,3 +227,28 @@ template wasmBindgenType*(body: untyped): untyped =
 template wasmBindgenModule*(modulePath: static string, body: untyped): untyped =
   ## Annotation for JS import blocks.
   body
+
+# ─── Finalize: embed the Program as a custom wasm section ───
+
+macro wasmBindgenFinalize*(): untyped =
+  ## Must be called after all `{.wasmBindgen.}` annotations to embed metadata.
+  ## Encodes the accumulated Program and emits it as a custom wasm section
+  ## via C `__attribute__((section(...)))`.
+  var enc = newEncoder()
+  enc.encode(compileTimeProgram)
+  let bytes = enc.buf
+
+  var cArray = ""
+  for i, b in bytes:
+    if i > 0: cArray.add(",")
+    cArray.add($b)
+
+  let cDef = "static const unsigned char __nbg_section_data[] __attribute__((used, section(\"" &
+    CustomSectionName & "\"))) = {" & cArray & "};\n"
+
+  let emitStr = newStrLitNode(cDef)
+
+  result = newStmtList()
+  result.add quote do:
+    when defined(wasm32):
+      {.emit: `emitStr`.}

@@ -3,7 +3,6 @@
 
 import common
 import std/macros
-import std/strutils
 
 # ─── Nim type name → TY_* constant ───
 
@@ -70,3 +69,66 @@ proc jsTypeName*(tname: string): string =
   of "float32", "float64": "number"
   of "bool": "boolean"
   else: "any"
+
+# ─── Wasm ABI type conversion helpers ───
+
+proc nimTypeToWasmAbiType*(tname: string): string =
+  ## Returns the wasm ABI type for a Nim type.
+  ## "string" -> "uint32" (x2 for ptr+len), "int32" -> "int32", etc.
+  case tname
+  of "int8", "uint8", "byte": "int32"
+  of "int16", "uint16": "int32"
+  of "int32", "cint", "uint32", "cuint": "int32"
+  of "int64", "uint64": "int64"
+  of "float32": "float32"
+  of "float64": "float64"
+  of "bool": "int32"
+  of "string": "uint32"
+  of "JsValue": "uint32"
+  else: "uint32"
+
+proc hasWasmAbiConversion*(tname: string): bool =
+  ## Returns true if this type needs ABI conversion (e.g. string, JsValue)
+  tname == "string" or tname == "JsValue"
+
+proc abiArgCount*(tname: string): int =
+  ## How many wasm arguments a Nim type produces.
+  ## string -> 2 (ptr, len), others -> 1
+  if tname == "string": 2 else: 1
+
+proc abiArgNames*(baseName: string, tname: string): seq[string] =
+  ## Generate wasm argument names for a parameter.
+  if tname == "string":
+    @[baseName & "_ptr", baseName & "_len"]
+  else:
+    @[baseName]
+
+proc argConvertStmts*(varName: string, baseName: string, tname: string): string =
+  ## Generate Nim code string to convert wasm ABI args to Nim types.
+  ## Returns Nim source code as string.
+  if tname == "string":
+    "var " & varName & " = newString(int(" & baseName & "_len))\n" &
+    "  if " & baseName & "_len > 0:\n" &
+    "    copyMem(addr " & varName & "[0], cast[pointer](" & baseName & "_ptr), int(" & baseName & "_len))"
+  elif tname == "JsValue":
+    "var " & varName & " = JsValue(idx: " & baseName & ")"
+  else:
+    "var " & varName & " = " & baseName
+
+proc retConvertStmts*(retVar: string, tname: string): string =
+  ## Generate Nim code string to convert return value from Nim to wasm ABI.
+  ## Returns Nim source code as string.
+  if tname == "string":
+    "let retDataLen = uint32(" & retVar & ".len)\n" &
+    "var retDataPtr: uint32 = 0\n" &
+    "if retDataLen > 0:\n" &
+    "  retDataPtr = cast[uint32](nbgMalloc(retDataLen, 1))\n" &
+    "  copyMem(cast[pointer](retDataPtr), unsafeAddr " & retVar & "[0], int(retDataLen))\n" &
+    "let retBoxPtr = cast[uint32](nbgMalloc(8, 4))\n" &
+    "cast[ptr uint32](cast[pointer](retBoxPtr))[] = retDataPtr\n" &
+    "cast[ptr uint32](cast[pointer](cast[uint](retBoxPtr) + 4))[] = retDataLen\n" &
+    "return retBoxPtr"
+  elif tname == "JsValue":
+    "return " & retVar & ".idx"
+  else:
+    "return " & retVar
