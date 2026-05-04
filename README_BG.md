@@ -79,7 +79,7 @@ JS object → addHeapObject(obj) → idx: u32 → Nim: JsValue(idx: u32)
 | WIT adapter system (30 instruction types) | `wit.nim` | ✅ |
 | WebIDL parser → Nim codegen | `webidl.nim` | ✅ |
 | **WebIDL compile-time macro** | **`macroimpl_webidl.nim`** | ✅ |
-| `js-sys` bindings (228 procs, 20 APIs) | `js_sys.nim` | ✅ |
+| `js-sys` bindings (526 procs, 42 types, 40+ APIs) | `js_sys.nim` | ✅ |
 | `web-sys` bindings (~472 procs, 27 APIs, ръчно) | `web_sys.nim` | ✅ |
 | `web-sys` generated (4,734 procs, ~2,870 типа, 644 WebIDL файла, ~500+ APIs) | `web_sys_generated.nim` | ✅ |
 | Test framework (browser/Node/Deno) | `test_runner.nim` | ✅ |
@@ -174,7 +174,7 @@ nimbling/
 │       ├── jsgen.nim            # JavaScript glue генератор
 │       ├── interp.nim           # Wasm stack-machine interpreter
 │       ├── transforms.nim       # Wasm binary transforms
-│       ├── js_sys.nim           # js-sys: 228 procs, 20 JS APIs
+│       ├── js_sys.nim           # js-sys: 526 procs, 42 types, 40+ APIs
 │       ├── web_sys.nim          # web-sys: ~472 procs, 27 Web APIs (ръчно)
 │       ├── web_sys_generated.nim # web-sys: 4,734 procs, ~500+ APIs (автоматично генериран)
 │       ├── webidl.nim           # WebIDL parser → Nim codegen
@@ -215,7 +215,7 @@ nimbling/
 | web-sys | Да (~100 Web API) | Готово (~500+ Web API, 4,734 procs, 644 WebIDL файла) |
 | Test runner | Да (browser/Node/Deno) | Готово |
 | WebIDL macro | Не | **Да** — compile-time `webidlBind` |
-| js-sys | ~1,438 procs | 228 procs (20 APIs) |
+| js-sys | ~1,438 procs | 526 procs (42 types, 40+ APIs) |
 
 ## Реални примери (Real-World Examples)
 

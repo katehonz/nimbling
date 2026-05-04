@@ -80,7 +80,7 @@ JS object -> addHeapObject(obj) -> idx: u32 -> Nim: JsValue(idx: u32)
 | WIT adapter system (30 instruction types) | `wit.nim` | Done |
 | WebIDL parser → Nim codegen | `webidl.nim` | Done |
 | **WebIDL compile-time macro** | **`macroimpl_webidl.nim`** | **Done** |
-| `js-sys` bindings (526 procs, 42 types, 30+ APIs) | `js_sys.nim` | Done |
+| `js-sys` bindings (526 procs, 42 types, 40+ APIs) | `js_sys.nim` | Done |
 | `web-sys` bindings (~472 procs, 27 APIs, hand-written) | `web_sys.nim` | Done |
 | `web-sys` generated (4,734 procs, ~2,870 types, 644 WebIDL files, ~500+ APIs) | `web_sys_generated.nim` | Done |
 | Test framework (browser/Node/Deno) | `test_runner.nim` | Done |
@@ -177,14 +177,14 @@ nimbling/
 │       ├── jsgen.nim            # JavaScript glue generator
 │       ├── interp.nim           # Wasm stack-machine interpreter
 │       ├── transforms.nim       # Wasm binary transforms
-│       ├── js_sys.nim           # js-sys: 228 procs, 20 JS APIs
+│       ├── js_sys.nim           # js-sys: 526 procs, 42 types, 40+ APIs
 │       ├── web_sys.nim          # web-sys: ~472 procs, 27 Web APIs (hand-written)
 │       ├── web_sys_generated.nim # web-sys: 4,734 procs, ~500+ APIs (auto-generated)
 │       ├── webidl.nim           # WebIDL parser → Nim codegen
 │       ├── wit.nim              # WIT adapter system
 │       └── emscripten.nim       # Emscripten + Memory64 support
 ├── tests/
-│   └── all.nim                  # Unit test suite (333 tests)
+│   └── all.nim                  # Unit test suite (372 tests)
 ├── examples/
 │   └── hello/                   # Hello World example
 │       ├── hello.nim
@@ -221,7 +221,7 @@ nimbling/
 | web-sys | Yes (~100 Web APIs) | Done (~500+ Web APIs, 4,734 procs, 644 WebIDL files) |
 | Test runner | Yes (browser/Node/Deno) | Done |
 | WebIDL macro | No | **Yes** — compile-time `webidlBind` |
-| js-sys | ~1,438 procs | 526 procs (42 types, 30+ APIs) |
+| js-sys | ~1,438 procs | 526 procs (42 types, 40+ APIs) |
 
 ## Real-World Examples
 

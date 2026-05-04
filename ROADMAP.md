@@ -9,7 +9,7 @@
 | `encode.nim` — binary encoder (varint LEB128) | 190 | ✅ |
 | `decode.nim` — binary decoder (roundtrip) | 309 | ✅ |
 | `describe.nim` — type descriptor decode from u32 stream | 147 | ✅ |
-| `runtime.nim` — bump allocator, boxed strings, C stubs | 74 | ✅ |
+| `runtime.nim` — bump allocator, boxed strings, C stubs | 140 | ✅ |
 | `macroimpl.nim` — `{.wasmBindgen.}` macro + `wasmBindgenFinalize` | 716 | ✅ |
 | `macroimpl_closure.nim` — closure support | 315 | ✅ |
 | `macroimpl_async.nim` — async/Promise support | 231 | ✅ |
@@ -20,15 +20,15 @@
 | `cli.nim` — CLI tool, wasm section extraction + interpreter | 283 | ✅ |
 | `interp.nim` — wasm stack-machine interpreter | 502 | ✅ |
 | `transforms.nim` — externref/multivalue/catch/threads | 790 | ✅ |
-| `js_sys.nim` — 210 procs, 24 types | 1633 | ✅ |
-| `web_sys.nim` — 481 procs, 68 types | 3539 | ✅ |
+| `js_sys.nim` — 526 procs, 42 types | 3925 | ✅ |
+| `web_sys.nim` — 481 procs, 68 types | 5395 | ✅ |
 | `webidl.nim` — WebIDL parser → Nim | 632 | ✅ |
 | `wit.nim` — WIT adapter system | 602 | ✅ |
 | `emscripten.nim` — Emscripten + Memory64 + CLI flags | 457 | ✅ |
 | `test_runner.nim` — wasm test framework | 781 | ✅ |
 | Tests **(372/372 pass)** | 3068 | ✅ |
 | Docs (README, docs/) | 5 files | ✅ |
-| **TOTAL** | **~11,000** | ✅ |
+| **TOTAL** | **~13,300** | ✅ |
 
 ### Next — Tier 4: Parity, Tier 5: Beat wasm-bindgen
 
@@ -38,7 +38,7 @@
 | P0 | Catch/exception transform — real wasm binary patching | ✅ Done | `wrapCatchBodies` wraps catch-exported function bodies with `try`/`catch_all`/`unreachable` — catches JS exceptions and converts to wasm traps. No tag import needed (uses `catch_all`). Finds `*_catch`/`*__catch` exports, patches code section. 8 tests. |
 | P1 | **web-sys: batch-convert 647 WebIDL → Nim** | ✅ Done | **647/647 files parse OK** (0 failures). Generated `web_sys_generated.nim`: 30,381 lines, 4,734 procs with real `{.emit.}` blocks, 2,870 types, ~500+ Web APIs. Compiles and passes all 372 tests. |
 | P2 | JsCast / Upcast type system | ✅ Done | `jscast.nim` fully implemented with `uncheckedInto`, `dynInto`, `upcastTo`, converter chains. `web_sys_cast.nim` generated for web-sys types. |
-| P3 | Missing js-sys APIs (WeakRef, SharedArrayBuffer, DataView, RegExp, Proxy) | ✅ Added | All 5 APIs present in `js_sys.nim` (228 procs total, +18 over claim). **Zero tests** for them; large gap (~1,210 procs) to wasm-bindgen parity remains. |
+| P3 | Missing js-sys APIs (WeakRef, SharedArrayBuffer, DataView, RegExp, Proxy) | ✅ Added | All 5 APIs present in `js_sys.nim`. Since expanded to 526 procs across 42 types and 40+ APIs (+Atomics, TypedArrays, Date, String, Object, Console, Intl, Iterator, Storage, Navigator, Location, window, Performance, Math, Storage). Remaining gap to wasm-bindgen: ~912 procs. |
 | P4 | CLI targets + flags | ✅ Targets done, ⚠️ Flags pending | 7/7 targets. Many flags still need wiring from `emscripten.nim` to CLI. |
 
 ### 5.1 web-sys from 647 WebIDL Files — **DONE (May 2026)**

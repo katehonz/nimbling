@@ -296,8 +296,8 @@ src/
     +-- jsgen.nim                # JavaScript glue code generator
     +-- interp.nim               # Wasm stack-machine interpreter
     +-- transforms.nim           # Wasm binary transforms
-    +-- js_sys.nim               # js-sys: 192 procs for 20 JS built-in APIs
-    +-- web_sys.nim              # web-sys: 112 procs for 27 Web APIs
+    +-- js_sys.nim               # js-sys: 526 procs, 42 types, 40+ APIs
+    +-- web_sys.nim              # web-sys: ~472 procs, 27 Web APIs (hand-written)
     +-- webidl.nim               # WebIDL parser → Nim codegen
     +-- wit.nim                  # WIT adapter system (30 instruction types)
     +-- emscripten.nim           # Emscripten + Memory64 + CLI flags
@@ -316,10 +316,10 @@ src/
 | JS heap | `addHeapObject`/`dropObject` | identical |
 | Schema version | `0.2.119` | `0.2.0` |
 | CLI | `wasm-bindgen` (Rust binary) | `nimbling` (Nim binary) |
-| web-sys | Yes (~100 Web APIs) | Done (27 APIs, expandable via WebIDL) |
+| web-sys | Yes (~100 Web APIs) | Done (~500+ Web APIs, 4,734 procs, 644 WebIDL files) |
 | Test runner | Yes (browser/Node/Deno) | Done |
 | WebIDL macro | No | **Yes** — compile-time `webidlBind` |
-| js-sys | ~250 procs | 192 procs (20 APIs) |
+| js-sys | ~1,438 procs | 526 procs (42 types, 40+ APIs) |
 | WIT adapters | via wit-bindgen | Built-in |
 | Wasm transforms | Built-in | Built-in |
 | Stack-machine interpreter | Built-in | Built-in |

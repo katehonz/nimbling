@@ -332,7 +332,7 @@ nimbling includes pre-generated bindings for common Web APIs:
 ### Window and Document
 
 ```nim
-import nimble/web_sys
+import nimbling/web_sys
 
 let win = window()
 let doc = win.document()
@@ -351,7 +351,7 @@ doc.body.appendChild(p)
 ### DOM Manipulation
 
 ```nim
-import nimble/web_sys
+import nimbling/web_sys
 
 # Set attributes
 div.setAttribute("class", "container")
@@ -374,7 +374,7 @@ if div.classList.contains("active"):
 ### Events
 
 ```nim
-import nimble/web_sys
+import nimbling/web_sys
 
 proc myHandler(event: Event) =
   echo "Clicked!"
@@ -392,7 +392,7 @@ button.removeEventListener("click", myHandler)
 ### Canvas 2D
 
 ```nim
-import nimble/web_sys
+import nimbling/web_sys
 
 let canvas = doc.getElementById("canvas")
 let ctx = canvas.getContext("2d")
@@ -414,7 +414,7 @@ ctx.fillText("Hello", 10, 50)
 ### Fetch API
 
 ```nim
-import nimble/web_sys
+import nimbling/web_sys
 
 proc onLoad(data: JsValue) =
   echo "Loaded"
@@ -430,7 +430,7 @@ let req = fetch("/api/data")
 ### Console
 
 ```nim
-import nimble/web_sys
+import nimbling/web_sys
 
 console.log("Message")
 console.log("Value: ", 42)
@@ -445,7 +445,7 @@ console.debug("Debug info")
 ## Complete Example
 
 ```nim
-import nimble/web_sys
+import nimbling/web_sys
 
 proc main() =
   let doc = window().document()
