@@ -80,7 +80,7 @@ JS object -> addHeapObject(obj) -> idx: u32 -> Nim: JsValue(idx: u32)
 | WIT adapter system (30 instruction types) | `wit.nim` | Done |
 | WebIDL parser → Nim codegen | `webidl.nim` | Done |
 | **WebIDL compile-time macro** | **`macroimpl_webidl.nim`** | **Done** |
-| `js-sys` bindings (228 procs, 20 APIs) | `js_sys.nim` | Done |
+| `js-sys` bindings (329 procs, 38 types, 20+ APIs) | `js_sys.nim` | Done |
 | `web-sys` bindings (~472 procs, 27 APIs, hand-written) | `web_sys.nim` | Done |
 | `web-sys` generated (4,734 procs, ~2,870 types, 644 WebIDL files, ~500+ APIs) | `web_sys_generated.nim` | Done |
 | Test framework (browser/Node/Deno) | `test_runner.nim` | Done |
@@ -221,7 +221,7 @@ nimbling/
 | web-sys | Yes (~100 Web APIs) | Done (~500+ Web APIs, 4,734 procs, 644 WebIDL files) |
 | Test runner | Yes (browser/Node/Deno) | Done |
 | WebIDL macro | No | **Yes** — compile-time `webidlBind` |
-| js-sys | ~1,438 procs | 228 procs (20 APIs) |
+| js-sys | ~1,438 procs | 329 procs (38 types, 20+ APIs) |
 
 ## Real-World Examples
 
