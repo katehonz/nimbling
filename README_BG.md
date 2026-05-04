@@ -4,6 +4,8 @@
 
 `nimbling` е двуфазова build-time и post-processing библиотека която позволява на Nim код да вика JavaScript функции и на JavaScript код да вика Nim функции през WebAssembly. Автоматично генерира JS glue код, TypeScript декларации, и управлява конверсията на сложни типове (strings, objects, closures) между двете среди.
 
+> **[English README](README.md)**
+
 ## Защо?
 
 Nim имаше стар/експериментален WASM backend който дърпа екосистемата назад. Съвременният Nim компилатор (≥ 2.0) с C backend може да генерира WASM чрез clang/emscripten, но **няма библиотека за high-level JS interop**. `nimbling` запълва тази дупка.
@@ -17,14 +19,15 @@ Nim имаше стар/експериментален WASM backend който �
 ```nim
 import nimbling
 
-{.wasmBindgen.}
-proc greet(name: string): string =
+proc greet(name: string): string {.wasmBindgen.} =
   result = "Hello, " & name & "!"
+
+wasmBindgenFinalize()
 ```
 
 Макросът `wasmBindgen` по време на компилация:
 1. **Parse** — анализира Nim AST-а
-2. **Codegen** — генерира `{.exportc.}` wrapper функции (конвертират ptr/len ↔ Nim типове)
+2. **Codegen** — генерира `{.exportc.}` wrapper функции
 3. **Describe** — генерира `__nbg_describe_*` функции описващи типовете
 4. **Encode** — сериализира Program descriptor в binary (varint LEB128)
 5. **Embed** — вгражда данните като custom section `__nimbling_unstable` в `.wasm` файла
@@ -51,9 +54,9 @@ JS object → addHeapObject(obj) → idx: u32 → Nim: JsValue(idx: u32)
 - **Stack** — временни/borrowed референции (push/pop за всеки function call)
 - **Slab** — owned обекти с динамичен lifetime (reference counting)
 
-## Статус — v0.1.0
+## Статус — v0.1.0 (Schema v0.2.0)
 
-### ✅ Работи (компилира и тествано под Nim 2.2.10)
+### Работи (компилира и тествано под Nim 2.2.10)
 
 | Компонент | Файл | Статус |
 |-----------|------|--------|
@@ -61,51 +64,63 @@ JS object → addHeapObject(obj) → idx: u32 → Nim: JsValue(idx: u32)
 | Program schema (всички AST типове) | `common.nim` | ✅ |
 | Binary encode (varint LEB128) | `encode.nim` | ✅ |
 | Binary decode (пълен roundtrip) | `decode.nim` | ✅ |
+| LEB128 utilities | `leb128.nim` | ✅ |
 | Type descriptor system | `describe.nim` | ✅ |
+| `{.wasmBindgen.}` pragma макрос | `macroimpl.nim` | ✅ |
+| Closure поддръжка | `macroimpl_closure.nim` | ✅ |
+| Async/Promise поддръжка | `macroimpl_async.nim` | ✅ |
+| 11 wasmBindgen атрибута | `macroimpl_attrs.nim` | ✅ |
+| Type mapping & codegen helpers | `codegen.nim` | ✅ |
+| JS glue генератор (5 targets) | `jsgen.nim` | ✅ |
+| JsValue + Runtime (heap, allocator) | `runtime.nim` | ✅ |
 | CLI tool (wasm section extractor) | `cli.nim` | ✅ |
-| JS glue генератор (bundler/web/node/deno) | `jsgen.nim` | ✅ |
-| JsValue + Runtime (heap функции) | `runtime.nim` | ✅ |
-| Unit тестове (11 теста, всички минават) | `tests/all.nim` | ✅ |
-| CLI binary (release build, 222KB) | `src/nimbling/cli` | ✅ |
+| Wasm stack-machine interpreter | `interp.nim` | ✅ |
+| Wasm binary transforms (externref, multivalue, catch, threads) | `transforms.nim` | ✅ |
+| WIT adapter system (30 instruction types) | `wit.nim` | ✅ |
+| WebIDL parser → Nim codegen | `webidl.nim` | ✅ |
+| **WebIDL compile-time macro** | **`macroimpl_webidl.nim`** | ✅ |
+| `js-sys` bindings (228 procs, 20 APIs) | `js_sys.nim` | ✅ |
+| `web-sys` bindings (~472 procs, 27 APIs, ръчно) | `web_sys.nim` | ✅ |
+| `web-sys` generated (4,734 procs, ~2,870 типа, 644 WebIDL файла, ~500+ APIs) | `web_sys_generated.nim` | ✅ |
+| Test framework (browser/Node/Deno) | `test_runner.nim` | ✅ |
+| Emscripten / Memory64 поддръжка | `emscripten.nim` | ✅ |
+| Unit тестове (372 теста, всички минават) | `tests/all.nim` | ✅ |
 
-### 🚧 Остава да се довърши
+### `webidlBind` — Compile-Time WebIDL Macro
 
-| Задача | Приоритет | Описание |
-|--------|-----------|----------|
-| **Nim macro имплементация** | 🔴 Критичен | `macroimpl.nim` има skeleton — трябва реален AST traversal който parse-ва `{.wasmBindgen.}` annotated procs, генерира wrapper код, descriptor функции, и embed-ва custom section |
-| **Stack-machine interpreter** | 🔴 Критичен | CLI-то трябва да execute-ва `__nbg_describe_*` функциите от .wasm файла за да извлече точните типови дескриптори. Бе� нужен simple stack-machine |
-| **Пълна типова поддръжка** | 🟡 Важен | `seq[T]`, `Option[T]`, enums, structs, closures — codegen за конверсия на всички поддържани типове |
-| **Emscripten integration** | 🟡 Важен | Nim → C → emscripten → wasm pipeline. Тестване с реална компилация |
-| **Стрингова конверсия** | 🟡 Важен | Имплементация на `passStringToWasm` / `getStringFromWasm` в generated Nim wrappers |
-| **Closure поддръжка** | 🟢 Желан | JS callbacks → Nim, Nim closures → JS |
-| **Struct import/export** | 🟢 Желан | `{.wasmBindgen.}` върху Nim обекти → JS класове |
-| **Enum import/export** | 🟢 Желан | Nim енуми → JS string/number енуми |
-| **`web-sys` еквивалент** | 🟢 Желан | Auto-generated Web API bindings от WebIDL |
-| **Test framework** | 🟢 Желан | `wasm-bindgen-test` еквивалент за browser/node |
-| **WASI поддръжка** | 🔵 Бъдеще | Beyond JS — системен WASM interop |
+Генерира Nim bindings директно от WebIDL по време на компилация:
 
-### Архитектурна карта
+```nim
+import nimbling/runtime, nimbling/macroimpl_webidl
 
+webidlBind("""
+  interface Node {
+    readonly attribute unsigned short nodeType;
+    Node appendChild(Node newChild);
+    static Document createDocument();
+  };
+  interface Document {
+    Element getElementById(DOMString id);
+  };
+""")
 ```
-src/
-├── nimbling.nim                 # Главен модул, re-export
-└── nimbling/
-    ├── common.nim               # Константи, типове, schema
-    ├── runtime.nim              # JsValue, heap функции
-    ├── macroimpl.nim            # {.wasmBindgen.} макрос ⬅️ нуждае се от имплементация
-    ├── codegen.nim              # Nim wrapper генератор ⬅️ нуждае се от имплементация
-    ├── encode.nim               # Binary encode на Program ✅
-    ├── decode.nim               # Binary decode на Program ✅
-    ├── describe.nim             # Type descriptor система ✅
-    ├── cli.nim                  # CLI tool ✅
-    └── jsgen.nim                # JavaScript генератор ✅
-```
+
+Генерира `type Node = distinct JsValue`, attribute getters/setters, method calls — всички с `{.emit.}` блокове по същия pattern като `web_sys.nim`.
+
+### Известни ограничения
+
+| Област | Статус | Бележки |
+|--------|--------|---------|
+| End-to-end pipeline | ✅ Stable | Компилира до C за `wasm32`; пълният `C → WASM → CLI → JS` е верифициран с wasi-sdk / emscripten |
+| `web_sys_generated.nim` | ✅ Готов | 4,734 procs с реални `{.emit.}` блокове от 644 WebIDL файла (1.1 MB), покриващи ~500+ Web API |
+| `wasmBindgenFinalize()` | By design | Трябва да се извика веднъж на модул за да embed-не custom wasm section-а |
+| Emscripten CLI флагове | ✅ Stable | Всички основни targets и флагове са свързани към CLI-то |
 
 ## Quick Start
 
 ```bash
 # Клонирай
-git clone https://github.com/nimbling/nimbling
+git clone https://github.com/katehonz/nimbling.git
 cd nimbling
 
 # Пусни тестовете
@@ -118,41 +133,89 @@ nimble buildCli
 ./src/nimbling/cli input.wasm --out-dir pkg/ --target bundler
 ```
 
-## Nimble задачи
+### Nimble задачи
 
 | Команда | Описание |
 |---------|----------|
-| `nimble test` | Пуска unit тестовете (11 теста) |
+| `nimble test` | Пуска unit тестовете (372 теста) |
 | `nimble buildCli` | Build-ва CLI binary (release mode) |
-| `nimble wasm` | Build-ва hello примера за wasm |
+| `nimble wasm` | Build-ва hello примера за wasm (изисква wasi-sdk) |
 
 ## Структура на проекта
 
 ```
 nimbling/
-├── README.md                    # Този файл
+├── README.md                    # English README
+├── README_BG.md                 # Този файл
 ├── DESIGN.md                    # Архитектурна документация (на български)
+├── ROADMAP.md                   # Пълен roadmap с всички нива
+├── LICENSE                      # MIT License
 ├── nimbling.nimble              # Nimble package manifest
+├── docs/
+│   ├── architecture.md          # Архитектура в детайли
+│   ├── api.md                   # API референция
+│   └── contributing.md          # Гайд за контрибутори
 ├── src/
 │   ├── nimbling.nim             # Library entry point
-│   └── nimbling/                # Implementation modules
-│       ├── common.nim           # Shared types & constants
-│       ├── runtime.nim          # JsValue, memory management
-│       ├── macroimpl.nim        # Macro implementation
-│       ├── codegen.nim          # Code generation
-│       ├── encode.nim           # Binary encoder
+│   └── nimbling/
+│       ├── common.nim           # Споделени типове, константи, Program schema
+│       ├── leb128.nim           # LEB128 encode/decode utilities
+│       ├── encode.nim           # Binary encoder (varint LEB128)
 │       ├── decode.nim           # Binary decoder
-│       ├── describe.nim         # Type descriptors
+│       ├── describe.nim         # Type descriptor система
+│       ├── runtime.nim          # JsValue, Closure, memory management
+│       ├── macroimpl.nim        # {.wasmBindgen.} pragma макрос
+│       ├── macroimpl_closure.nim # Closure поддръжка
+│       ├── macroimpl_async.nim  # Async/Promise поддръжка
+│       ├── macroimpl_attrs.nim  # 11 wasmBindgen атрибута
+│       ├── macroimpl_webidl.nim # Compile-time WebIDL → Nim макрос
+│       ├── codegen.nim          # Type mapping & codegen helpers
 │       ├── cli.nim              # CLI tool
-│       └── jsgen.nim            # JavaScript generator
+│       ├── jsgen.nim            # JavaScript glue генератор
+│       ├── interp.nim           # Wasm stack-machine interpreter
+│       ├── transforms.nim       # Wasm binary transforms
+│       ├── js_sys.nim           # js-sys: 228 procs, 20 JS APIs
+│       ├── web_sys.nim          # web-sys: ~472 procs, 27 Web APIs (ръчно)
+│       ├── web_sys_generated.nim # web-sys: 4,734 procs, ~500+ APIs (автоматично генериран)
+│       ├── webidl.nim           # WebIDL parser → Nim codegen
+│       ├── wit.nim              # WIT adapter система
+│       └── emscripten.nim       # Emscripten + Memory64 поддръжка
 ├── tests/
-│   └── all.nim                  # Unit test suite
+│   └── all.nim                  # Unit test suite (372 теста)
 ├── examples/
-│   └── hello/                   # Hello World example
-│       ├── hello.nim
-│       └── hello.nimble
-└── OLD/                         # Reference: wasm-bindgen (Rust) source
+│   └── hello/                   # Hello World пример
+└── OLD/                         # Референция: wasm-bindgen (Rust) source
 ```
+
+## Типови конверсии
+
+| Nim тип | Wasm ABI | JS Glue конверсия |
+|----------|----------|-------------------|
+| `int32`, `cint` | i32 | директно |
+| `float64` | f64 | директно |
+| `bool` | i32 (0/1) | директно |
+| `string` | (ptr: i32, len: i32) | TextEncoder / TextDecoder |
+| `JsValue` (borrowed) | idx: i32 | addBorrowedObject / stack pop |
+| `JsValue` (owned) | idx: i32 | addHeapObject / dropObject |
+| `seq[T]` | (ptr: i32, len: i32) | TypedArray |
+| `Option[T]` | (tag: i32, val) | null check |
+| `Closure[T]` | idx: i32 | addHeapObject + function wrapper |
+
+## Сравнение с wasm-bindgen
+
+| Feature | wasm-bindgen (Rust) | nimbling (Nim) |
+|---------|---------------------|----------------|
+| Macro system | proc-macro (`#[wasm_bindgen]`) | Nim pragma macro (`{.wasmBindgen.}`) |
+| Custom section | `__wasm_bindgen_unstable` | `__nimbling_unstable` |
+| Type descriptors | `__wbindgen_describe_*` | `__nbg_describe_*` |
+| JS function prefix | `__wbg_` | `__nbg_` |
+| JS heap | `addHeapObject`/`dropObject` | идентично |
+| Schema version | `0.2.119` | `0.2.0` |
+| CLI | `wasm-bindgen` (Rust binary) | `nimbling` (Nim binary) |
+| web-sys | Да (~100 Web API) | Готово (~500+ Web API, 4,734 procs, 644 WebIDL файла) |
+| Test runner | Да (browser/Node/Deno) | Готово |
+| WebIDL macro | Не | **Да** — compile-time `webidlBind` |
+| js-sys | ~1,438 procs | 228 procs (20 APIs) |
 
 ## Реални примери (Real-World Examples)
 
@@ -189,7 +252,3 @@ firefox index.html
 ## Лиценз
 
 MIT
-
----
-
-*"смятам да се направя на смел и герой"* — построено с 4 AI модела и чист Nim

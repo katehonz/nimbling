@@ -58,6 +58,34 @@ WebIDL parser + compile-time macro, WIT адаптери, emscripten поддр�
 
 ---
 
+## Kilo Code CLI (AI агент) — Май 2026 (втора сесия)
+
+**Задача:** Поправка на `web_sys_generated.nim` — от stub-ове към реални `{.emit.}` блокове.
+
+### Какво направих
+
+1. **Пренаписах `generateNimBindings()`** в `webidl.nim` — преди генерираше
+   stub-ове с `discard`, сега генерира реални `{.emit.}` блокове следвайки
+   същия pattern като `web_sys.nim` и `macroimpl_webidl.nim`.
+
+2. **Поправих типовия модел:**
+   - Dictionaries: от `object` → `distinct JsValue`
+   - Callbacks: пропуснати (bare `proc` не може да има emit блок)
+   - DOMString: от `cstring` → `string`
+   - `seq[...]`, `Option[...]`, `mixin` типове: добавена специална обработка
+
+3. **Multi-line emit форматиране:** `"""..."""` за emit блокове с нови редове
+
+4. **Резултат:**
+   - **Преди:** 11,364 реда stubs, 1,449 типа, 27 Web API (ръчно)
+   - **След:** 30,381 реда, 4,734 procs с реални `{.emit.}` блокове, 2,870 типа, ~500+ Web API (от 644 WebIDL файла)
+   - Компилира успешно, 372/372 теста минават
+
+**Оценка след поправката: 8/10** — генерираният код компилира и има реален JS interop,
+но overloaded методите споделят emit-а на първата дефиниция и липсва emscripten код path.
+
+---
+
 ## dimgigov (основен автор)
 
 **Git:** `gigov@gigov.org`

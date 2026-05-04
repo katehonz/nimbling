@@ -80,8 +80,9 @@ JS object -> addHeapObject(obj) -> idx: u32 -> Nim: JsValue(idx: u32)
 | WIT adapter system (30 instruction types) | `wit.nim` | Done |
 | WebIDL parser → Nim codegen | `webidl.nim` | Done |
 | **WebIDL compile-time macro** | **`macroimpl_webidl.nim`** | **Done** |
-| `js-sys` bindings (192 procs, 20 APIs) | `js_sys.nim` | Done |
-| `web-sys` bindings (112+ procs, 27+ APIs) | `web_sys.nim` | Done |
+| `js-sys` bindings (228 procs, 20 APIs) | `js_sys.nim` | Done |
+| `web-sys` bindings (~472 procs, 27 APIs, hand-written) | `web_sys.nim` | Done |
+| `web-sys` generated (4,734 procs, ~2,870 types, 644 WebIDL files, ~500+ APIs) | `web_sys_generated.nim` | Done |
 | Test framework (browser/Node/Deno) | `test_runner.nim` | Done |
 | Emscripten / Memory64 support | `emscripten.nim` | Done |
 | Unit tests (372 tests, all passing) | `tests/all.nim` | Done |
@@ -114,7 +115,7 @@ Generates `type Node = distinct JsValue`, attribute getters/setters, method call
 | Area | Status | Notes |
 |------|--------|-------|
 | End-to-end pipeline | ✅ Stable | Compiles to C for `wasm32`; full `C → WASM → CLI → JS` verified with wasi-sdk / emscripten |
-| `web_sys_generated.nim` | ✅ Integrated | 1,449 types from 647 WebIDL files, exported from `nimbling.nim` |
+| `web_sys_generated.nim` | ✅ Done | 4,734 procs with real `{.emit.}` blocks from 644 WebIDL files (1.1 MB), covering ~500+ Web APIs |
 | `wasmBindgenFinalize()` | By design | Must be called once per module to embed the custom wasm section |
 | Emscripten CLI flags | ✅ Stable | All core targets and flags wired to CLI |
 
@@ -176,8 +177,9 @@ nimbling/
 │       ├── jsgen.nim            # JavaScript glue generator
 │       ├── interp.nim           # Wasm stack-machine interpreter
 │       ├── transforms.nim       # Wasm binary transforms
-│       ├── js_sys.nim           # js-sys: 192 procs, 20 JS APIs
-│       ├── web_sys.nim          # web-sys: 112 procs, 27 Web APIs
+│       ├── js_sys.nim           # js-sys: 228 procs, 20 JS APIs
+│       ├── web_sys.nim          # web-sys: ~472 procs, 27 Web APIs (hand-written)
+│       ├── web_sys_generated.nim # web-sys: 4,734 procs, ~500+ APIs (auto-generated)
 │       ├── webidl.nim           # WebIDL parser → Nim codegen
 │       ├── wit.nim              # WIT adapter system
 │       └── emscripten.nim       # Emscripten + Memory64 support
@@ -216,10 +218,10 @@ nimbling/
 | JS heap | `addHeapObject`/`dropObject` | identical |
 | Schema version | `0.2.119` | `0.2.0` |
 | CLI | `wasm-bindgen` (Rust binary) | `nimbling` (Nim binary) |
-| web-sys | Yes (~100 Web APIs) | Done (27 Web APIs, expandable via WebIDL) |
+| web-sys | Yes (~100 Web APIs) | Done (~500+ Web APIs, 4,734 procs, 644 WebIDL files) |
 | Test runner | Yes (browser/Node/Deno) | Done |
 | WebIDL macro | No | **Yes** — compile-time `webidlBind` |
-| js-sys | ~250 procs | 192 procs (20 APIs) |
+| js-sys | ~1,438 procs | 228 procs (20 APIs) |
 
 ## Real-World Examples
 

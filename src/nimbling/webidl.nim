@@ -624,7 +624,7 @@ proc webidlTypeToNim(widlType: string): string =
   of "unsigned long long": return "uint64"
   of "float", "unrestricted float": return "float32"
   of "double", "unrestricted double": return "float64"
-  of "DOMString", "USVString", "ByteString", "UTF8String": return "cstring"
+  of "DOMString", "USVString", "ByteString", "UTF8String": return "string"
   of "DOMTimeStamp": return "uint64"
   of "PredefinedColorSpace": return "JsObject"
   of "any", "object": return "JsObject"
@@ -684,9 +684,60 @@ proc isValidNimIdent(s: string): bool =
     if c notin {'a'..'z', 'A'..'Z', '0'..'9', '_'}: return false
   return true
 
+# ─── Emit helpers ───
+
+proc isWasmValueType(nimType: string): bool =
+  ## Types that pass directly through C/Wasm (no heap wrapper needed).
+  nimType in ["bool", "int8", "uint8", "int16", "uint16", "int32", "uint32",
+              "int64", "uint64", "float32", "float64", "string", "void"]
+
+proc isSeqType(nimType: string): bool =
+  nimType.startsWith("seq[")
+
+proc isHeapRefType(nimType: string): bool =
+  ## Types that go through heap[] wrapping in emit.
+  not isWasmValueType(nimType) and not isSeqType(nimType)
+
+proc argToJsExpr(argName: string, nimType: string): string =
+  ## Build JS expression for a function argument.
+  if isHeapRefType(nimType):
+    "heap[`" & argName & "`.idx]"
+  else:
+    "`" & argName & "`"
+
+proc emitReturnStmt(nimType: string): string =
+  ## Build the return-assignment emit statement after `var ret = ...`.
+  if nimType == "void": return ""
+  if isSeqType(nimType):
+    return "`result` = {idx: addHeapObject(ret)};"
+  if isWasmValueType(nimType):
+    if nimType == "bool": "`result` = ret ? 1 : 0;"
+    else: "`result` = ret;"
+  else:
+    "`result` = {idx: addHeapObject(ret)};"
+
+proc defaultReturnExpr(nimType: string, typeName: string = ""): string =
+  ## Build the default return expression for non-wasm fallback.
+  if nimType == "void": return "discard"
+  if nimType == "bool": return "false"
+  if nimType == "string": return "\"\""
+  if isSeqType(nimType): return "@[]"
+  if nimType.startsWith("Option["):
+    return "none(" & nimType[7..^2] & ")"
+  if isWasmValueType(nimType): return "0"
+  return nimType & "(JsValue(idx: 0))"
+
+proc formatEmit(body: string): string =
+  ## Wrap emit body in proper Nim string quotes.
+  if '\n' in body:
+    "\"\"\"" & body & "\"\"\""
+  else:
+    "\"" & body & "\""
+
+# ─── Main code generator ───
 
 proc generateNimBindings*(defs: seq[WebIDLDefinition], types: Table[string, WebIDLDefinition]): string =
-  ## Generate Nim source code with {.wasmBindgen.} annotations.
+  ## Generate Nim source code with real {.emit.} blocks for wasm32 interop.
   ## Two-pass: types first, then procs, to avoid forward-reference errors.
   var typeSection = ""
   var procSection = ""
@@ -697,27 +748,7 @@ proc generateNimBindings*(defs: seq[WebIDLDefinition], types: Table[string, WebI
       typeSection.add("  " & d.name & "* = distinct JsValue\n")
 
     of witDictionary:
-      # Use separate type block for each dictionary to avoid field name conflicts
-      typeSection.add("\n  " & d.name & "* = object\n")
-      var usedFields = initHashSet[string]()
-      for f in d.fields:
-        let nimTy = webidlTypeToNim(f.returnType)
-        var fieldName = nimFieldName(f.name)
-        if not isValidNimIdent(fieldName): continue
-        if not isValidNimIdent(nimTy) and nimTy notin ["JsObject", "cstring"]: continue
-        # Avoid duplicate field names within the same dictionary (Nim is case-insensitive)
-        let baseName = fieldName.toLowerAscii()
-        var uniqueName = fieldName
-        var counter = 2
-        while uniqueName.toLowerAscii() in usedFields:
-          uniqueName = fieldName & $counter
-          inc counter
-        usedFields.incl(uniqueName.toLowerAscii())
-        fieldName = uniqueName
-        var suffix = ""
-        if f.isOptional:
-          suffix = " ## optional"
-        typeSection.add("    " & fieldName & "*: " & nimTy & suffix & "\n")
+      typeSection.add("  " & d.name & "* = distinct JsValue\n")
 
     of witEnum:
       typeSection.add("  " & d.name & "* = enum\n")
@@ -732,47 +763,74 @@ proc generateNimBindings*(defs: seq[WebIDLDefinition], types: Table[string, WebI
         var variantName = sanitizeIdent(cleanV)
         if variantName.len > 0:
           variantName[0] = variantName[0].toUpperAscii()
-          # Prefix with enum name to avoid conflicts with interface types
           typeSection.add("    " & d.name & variantName & "\n")
 
-    of witCallback:
-      typeSection.add("  " & d.name & "* = proc\n")
-
-    of witCallbackInterface:
-      typeSection.add("  " & d.name & "* = proc\n")
+    of witCallback, witCallbackInterface:
+      discard  # skip bare `proc` types; they can't have meaningful emit blocks
 
     of witTypedef:
       typeSection.add("  " & d.name & "* = JsObject\n")
 
     of witNamespace:
-      discard  # namespace types are not emitted as distinct types
-
-    of witPartialInterface, witPartialDictionary, witMixin, witIncludes:
       discard
 
-  # Second pass: procs and constants
+    of witMixin:
+      typeSection.add("  " & d.name & "* = distinct JsValue\n")
+
+    of witPartialInterface, witPartialDictionary, witIncludes:
+      discard
+
+  # Second pass: procs with real emit blocks
   var generatedProcs = initHashSet[string]()
   for d in defs:
     case d.kind
-    of witInterface:
+    of witInterface, witDictionary, witMixin:
+      let typeName = d.name
       for f in d.fields:
         if f.memberType == "attribute":
           if f.name.len == 0: continue
-          if not isValidNimIdent(nimFieldName(f.name)): continue
+          let fieldName = nimFieldName(f.name)
+          if not isValidNimIdent(fieldName): continue
           let nimTy = webidlTypeToNim(f.returnType)
-          if not isValidNimIdent(nimTy) and nimTy notin ["JsObject", "cstring"]: continue
-          let getterName = "js" & d.name & nimFieldName(f.name)[0].toUpperAscii() & nimFieldName(f.name)[1..^1]
-          if getterName in generatedProcs:
-            continue
+          if not isValidNimIdent(nimTy) and nimTy notin ["JsObject", "string", "bool", "void"]: continue
+          let getterName = "js" & typeName & fieldName[0].toUpperAscii() & fieldName[1..^1]
+          if getterName in generatedProcs: continue
           generatedProcs.incl(getterName)
-          procSection.add("proc " & getterName & "*(self: " & d.name & "): " & nimTy & " {.wasmBindgen.} =\n  discard\n")
+
+          let retAssignStmt = emitReturnStmt(nimTy)
+          let defRet = defaultReturnExpr(nimTy, typeName)
+          let emitBody = if retAssignStmt.len > 0:
+            "var ret = heap[`self`.idx]." & f.name & ";\n" & retAssignStmt
+          else:
+            "heap[`self`.idx]." & f.name & ";"
+
+          procSection.add("proc " & getterName & "*(self: " & typeName & "): " & nimTy & " =\n")
+          procSection.add("  when defined(wasm32):\n")
+          procSection.add("    {.emit: " & formatEmit(emitBody) & ".}\n")
+          procSection.add("  else:\n")
+          if defRet == "discard":
+            procSection.add("    discard\n")
+          else:
+            procSection.add("    result = " & defRet & "\n")
+
+          # Generate setter if not readonly
+          if not f.isReadonly and nimTy != "void":
+            let setterName = getterName & "Eq"
+            if setterName notin generatedProcs:
+              generatedProcs.incl(setterName)
+              let jsVal = argToJsExpr("value", nimTy)
+              let setEmit = "heap[`self`.idx]." & f.name & " = " & jsVal & ";"
+              procSection.add("proc `" & fieldName & "=`*(self: " & typeName & "; value: " & nimTy & ") =\n")
+              procSection.add("  when defined(wasm32):\n")
+              procSection.add("    {.emit: " & formatEmit(setEmit) & ".}\n")
+              procSection.add("  else:\n")
+              procSection.add("    discard\n")
+
         elif f.memberType == "const":
           let nimTy = webidlTypeToNim(f.returnType)
-          if nimTy == "JsObject":
-            continue  # skip consts with unknown/object types
-          let constName = "js" & d.name & f.name[0].toUpperAscii() & f.name[1..^1]
-          if constName in generatedProcs:
-            continue
+          if nimTy == "JsObject": continue
+          let constName = "js" & typeName & f.name[0].toUpperAscii() & f.name[1..^1]
+          if constName in generatedProcs: continue
           generatedProcs.incl(constName)
           procSection.add("const " & constName & "* : " & nimTy & " = 0\n")
 
@@ -782,43 +840,98 @@ proc generateNimBindings*(defs: seq[WebIDLDefinition], types: Table[string, WebI
           if not isValidNimIdent(sanitizeIdent(f.name)): continue
           if f.returnType in ["setter", "deleter", "getter", "stringifier", "serializer"]: continue
           let retTy = webidlTypeToNim(f.returnType)
-          var args = "self: " & d.name
-          for (argName, argType) in f.args:
-            args.add("; " & nimFieldName(argName) & ": " & webidlTypeToNim(argType))
           let procBaseName = "js" & sanitizeIdent(f.name)[0].toUpperAscii() & sanitizeIdent(f.name)[1..^1]
-          let procSignature = procBaseName & "(" & args & "):" & retTy
-          if procSignature in generatedProcs:
-            continue
+
+          # Build argument strings
+          var formalArgs: seq[string]
+          var jsArgs: seq[string]
+          var allArgsStr = "self: " & typeName
+          if not f.isStatic:
+            formalArgs.add("self: " & typeName)
+          for (argName, argType) in f.args:
+            let nimArgTy = webidlTypeToNim(argType)
+            let nf = nimFieldName(argName)
+            formalArgs.add(nf & ": " & nimArgTy)
+            jsArgs.add(argToJsExpr(nf, nimArgTy))
+          for i, fa in formalArgs:
+            if i > 0 or f.isStatic:
+              if allArgsStr.len > 0: allArgsStr.add("; ")
+              allArgsStr.add(fa)
+
+          let procSignature = procBaseName & "(" & allArgsStr & "):" & retTy
+          if procSignature in generatedProcs: continue
           generatedProcs.incl(procSignature)
+
+          # Build JS call expression
+          var callObj: string
           if f.isStatic:
-            args = ""
-            for i, (argName, argType) in f.args:
-              if i > 0: args.add("; ")
-              args.add(nimFieldName(argName) & ": " & webidlTypeToNim(argType))
-            if args.len > 0:
-              args = "; " & args
-            procSection.add("proc " & procBaseName & "*(self: typedesc[" & d.name & "]" & args & "): " & retTy & " {.wasmBindgen.} =\n  discard\n")
+            callObj = typeName
           else:
-            procSection.add("proc " & procBaseName & "*(" & args & "): " & retTy & " {.wasmBindgen.} =\n  discard\n")
+            callObj = "heap[\x60self\x60.idx]"
+          var callStr = "var ret = " & callObj & "." & f.name & "("
+          for i, ja in jsArgs:
+            if i > 0: callStr.add(", ")
+            callStr.add(ja)
+          callStr.add(')')
+          let retAssignStmt = emitReturnStmt(retTy)
+          var emitBody: string
+          if retAssignStmt.len > 0:
+            emitBody = callStr & ";\n" & retAssignStmt
+          else:
+            emitBody = callStr & ";"
+          let defRet = defaultReturnExpr(retTy, typeName)
+
+          if f.isStatic:
+            var staticArgs = ""
+            for (argName, argType) in f.args:
+              let na = nimFieldName(argName)
+              let nt = webidlTypeToNim(argType)
+              if staticArgs.len > 0: staticArgs.add("; ")
+              staticArgs.add(na & ": " & nt)
+            if staticArgs.len > 0: staticArgs = "; " & staticArgs
+            procSection.add("proc " & procBaseName & "*(self: typedesc[" & typeName & "]" & staticArgs & "): " & retTy & " =\n")
+          else:
+            procSection.add("proc " & procBaseName & "*(" & allArgsStr & "): " & retTy & " =\n")
+          procSection.add("  when defined(wasm32):\n")
+          procSection.add("    {.emit: " & formatEmit(emitBody) & ".}\n")
+          procSection.add("  else:\n")
+          if defRet == "discard":
+            procSection.add("    discard\n")
+          else:
+            procSection.add("    result = " & defRet & "\n")
       procSection.add("\n")
 
     of witNamespace:
-      let valProc = d.name & "Val"
-      if valProc notin generatedProcs:
-        generatedProcs.incl(valProc)
-        procSection.add("proc " & valProc & "*() {.wasmBindgen.} =\n  discard\n")
       for f in d.fields:
         if f.memberType == "operation":
           let retTy = webidlTypeToNim(f.returnType)
-          var args = ""
-          for i, (argName, argType) in f.args:
-            if i > 0: args.add("; ")
-            args.add(nimFieldName(argName) & ": " & webidlTypeToNim(argType))
+          var formalArgs: seq[string]
+          var jsArgs: seq[string]
+          for (argName, argType) in f.args:
+            let nimArgTy = webidlTypeToNim(argType)
+            let nf = nimFieldName(argName)
+            formalArgs.add(nf & ": " & nimArgTy)
+            jsArgs.add(argToJsExpr(nf, nimArgTy))
+          let allArgs = formalArgs.join("; ")
           let nsProc = sanitizeIdent(f.name)
-          if nsProc in generatedProcs:
-            continue
+          if nsProc in generatedProcs: continue
           generatedProcs.incl(nsProc)
-          procSection.add("proc " & nsProc & "*(" & args & "): " & retTy & " {.wasmBindgen.} =\n  discard\n")
+
+          var callStr = "var ret = " & d.name & "." & f.name & "(" & jsArgs.join(", ") & ")"
+          let retAssignStmt = emitReturnStmt(retTy)
+          let emitBody = if retAssignStmt.len > 0:
+            callStr & ";\n" & retAssignStmt
+          else:
+            callStr & ";"
+          let defRet = defaultReturnExpr(retTy)
+          procSection.add("proc " & nsProc & "*(" & allArgs & "): " & retTy & " =\n")
+          procSection.add("  when defined(wasm32):\n")
+          procSection.add("    {.emit: " & formatEmit(emitBody) & ".}\n")
+          procSection.add("  else:\n")
+          if defRet == "discard":
+            procSection.add("    discard\n")
+          else:
+            procSection.add("    result = " & defRet & "\n")
       procSection.add("\n")
 
     else:
@@ -828,7 +941,6 @@ proc generateNimBindings*(defs: seq[WebIDLDefinition], types: Table[string, WebI
   result.add("## Auto-generated WebIDL bindings for nimbling.\n")
   result.add("import nimbling/runtime\n")
   result.add("import nimbling/js_sys\n")
-  result.add("import nimbling/macroimpl\n")
   result.add("import std/options\n\n")
   if typeSection.len > 0:
     result.add("type\n" & typeSection & "\n")
