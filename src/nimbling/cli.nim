@@ -191,22 +191,49 @@ proc runCli*() =
   if config.debug:
     echo &"Custom section '{CustomSectionName}': {customData.len} bytes"
 
+  var prog: Program
   if customData.len == 0:
-    echo "Warning: no nimbling custom section found. Outputting minimal JS glue."
-    # Still generate basic JS glue with no specific exports/imports
-    let emptyProg = Program(uniqueCrateIdentifier: "unknown")
-    var jsg = newJsGen(emptyProg, config.target, config.wasmName)
-    let jsOutput = jsg.generate()
+    # Try reading sidecar .nbg file (for toolchains that strip custom sections)
+    let sidecarPath = config.input.parentDir / (config.input.extractFilename.splitFile.name & ".nbg")
+    var sidecarData: seq[byte] = @[]
+    if fileExists(sidecarPath):
+      let content = readFile(sidecarPath)
+      sidecarData = cast[seq[byte]](content)
+      if config.debug:
+        echo &"Read sidecar file: {sidecarPath} ({sidecarData.len} bytes)"
+    else:
+      # Fallback: search for any .nbg file in the same directory or CWD
+      for searchDir in [config.input.parentDir, getCurrentDir()]:
+        for kind, path in walkDir(searchDir):
+          if kind == pcFile and path.endsWith(".nbg"):
+            let content = readFile(path)
+            sidecarData = cast[seq[byte]](content)
+            if config.debug:
+              echo &"Read sidecar file: {path} ({sidecarData.len} bytes)"
+            break
+        if sidecarData.len > 0:
+          break
 
-    createDir(config.outDir)
-    let jsPath = config.outDir / (config.wasmName & ".js")
-    writeFile(jsPath, jsOutput)
-    echo &"Generated {jsPath}"
-    return
+    if sidecarData.len > 0:
+      var decoder = newDecoder(sidecarData)
+      prog = decodeProgram(decoder)
+      if config.debug:
+        echo &"Decoded program from sidecar: {prog.exports.len} exports"
+    else:
+      echo "Warning: no nimbling custom section found. Outputting minimal JS glue."
+      # Still generate basic JS glue with no specific exports/imports
+      let emptyProg = Program(uniqueCrateIdentifier: "unknown")
+      var jsg = newJsGen(emptyProg, config.target, config.wasmName)
+      let jsOutput = jsg.generate()
 
-  # Decode program
-  var decoder = newDecoder(customData)
-  var prog = decodeProgram(decoder)
+      createDir(config.outDir)
+      let jsPath = config.outDir / (config.wasmName & ".js")
+      writeFile(jsPath, jsOutput)
+      echo &"Generated {jsPath}"
+      return
+  else:
+    var decoder = newDecoder(customData)
+    prog = decodeProgram(decoder)
 
   # Extract type descriptors from wasm bytecode
   describeExports(wasmData, prog)

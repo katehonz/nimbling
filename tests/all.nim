@@ -3,6 +3,7 @@
 import std/unittest
 import std/strutils
 import std/times
+import std/os
 
 import nimbling/common
 import nimbling/encode
@@ -1787,6 +1788,42 @@ suite "cli — custom section extraction":
     )
     # No custom section — type section (id=1) should be ignored
     check extractCustomSection(wasm, CustomSectionName) == noByteSeq
+
+  test "sidecar .nbg file fallback when custom section missing":
+    # Build a minimal wasm with no custom section
+    let wasm = buildMinimalWasm(
+      types = @[(params: noByteSeq, results: noByteSeq)],
+      imports = noImportSeq,
+      funcTypeIndices = noU32Seq,
+      exports = noExportSeq,
+      codes = noCodeSeq,
+    )
+    check extractCustomSection(wasm, CustomSectionName) == noByteSeq
+
+    # Build a sidecar .nbg file with a simple program
+    var prog = Program(uniqueCrateIdentifier: "test_sidecar")
+    prog.exports.add(Export(
+      function: FunctionDesc(name: "hello", args: @[FunctionArgumentData(name: "x")], retTyOverride: "int32"),
+    ))
+    var enc = newEncoder()
+    enc.encode(prog)
+    let nbgPath = getTempDir() / "test_sidecar.nbg"
+    var nbgContent = newString(enc.buf.len)
+    for i, b in enc.buf:
+      nbgContent[i] = chr(b)
+    writeFile(nbgPath, nbgContent)
+
+    # Verify sidecar file exists and can be decoded
+    check fileExists(nbgPath)
+    let readContent = readFile(nbgPath)
+    var dec = newDecoder(cast[seq[byte]](readContent))
+    let decoded = decodeProgram(dec)
+    check decoded.uniqueCrateIdentifier == "test_sidecar"
+    check decoded.exports.len == 1
+    check decoded.exports[0].function.name == "hello"
+
+    # Cleanup
+    removeFile(nbgPath)
 
 # ─── cli — type helpers ───
 

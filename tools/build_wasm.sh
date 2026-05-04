@@ -34,6 +34,24 @@ nim c \
 
 echo "=== Nim → C OK ==="
 
+# Step 1b: Find and copy .nbg sidecar file next to wasm output
+# The macro writes it to CWD during compilation
+NBG_SRC=""
+for f in *.nbg; do
+  if [ -f "$f" ]; then
+    NBG_SRC="$f"
+    break
+  fi
+done
+
+if [ -n "$NBG_SRC" ]; then
+  NBG_DST="$(dirname "$OUT_WASM")/$(basename "$NBG_SRC")"
+  cp "$NBG_SRC" "$NBG_DST"
+  echo "Copied sidecar: $NBG_SRC → $NBG_DST"
+else
+  echo "Warning: no .nbg sidecar file found. CLI may output minimal glue."
+fi
+
 # Step 2: C → WASM
 if [ -d "$WASI_SDK" ]; then
   echo "Using wasi-sdk: $WASI_SDK"
@@ -41,8 +59,12 @@ if [ -d "$WASI_SDK" ]; then
   SYSROOT="--sysroot=$WASI_SDK/share/wasi-sysroot"
   "$CC" --target=wasm32-wasi $SYSROOT \
     -O3 \
+    -nostartfiles \
+    -Wno-implicit-function-declaration \
     -Wl,--export-all \
     -Wl,--no-entry \
+    -Wl,--allow-undefined \
+    -Wl,--no-gc-sections \
     -o "$OUT_WASM" \
     "$NIMCACHE"/*.c
 elif [ -n "$EMSDK" ] && [ -x "$EMSDK/upstream/emscripten/emcc" ]; then
@@ -58,10 +80,9 @@ else
   echo "ERROR: No wasm linker found."
   echo "Please install wasi-sdk and set WASI_SDK_PATH, or activate emscripten."
   echo ""
-  echo "Quick install (Debian/Ubuntu):"
-  echo "  sudo apt install wasi-sdk"
-  echo ""
-  echo "Or download from: https://github.com/WebAssembly/wasi-sdk"
+  echo "Quick install:"
+  echo "  curl -L https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-24/wasi-sdk-24.0-x86_64-linux.tar.gz | tar xz -C /tmp"
+  echo "  export WASI_SDK_PATH=/tmp/wasi-sdk-24.0-x86_64-linux"
   exit 1
 fi
 

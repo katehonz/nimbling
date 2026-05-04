@@ -7,6 +7,7 @@
 
 import std/macros
 import std/tables
+import std/os
 import common
 import encode
 import codegen
@@ -666,6 +667,13 @@ macro wasmBindgenFinalize*(): untyped =
   var enc = newEncoder()
   enc.encode(compileTimeProgram)
   let bytes = enc.buf
+
+  # Write sidecar file for toolchains that strip custom sections (e.g. wasi-sdk)
+  let sidecarPath = compileTimeProgram.uniqueCrateIdentifier & ".nbg"
+  var sidecarContent = newString(bytes.len)
+  for i, b in bytes:
+    sidecarContent[i] = chr(b)
+  writeFile(sidecarPath, sidecarContent)
 
   var cArray = ""
   for i, b in bytes:
