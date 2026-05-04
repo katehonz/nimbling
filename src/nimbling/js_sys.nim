@@ -2442,3 +2442,1478 @@ proc jsCancelAnimationFrame*(id: int) =
     {.emit: "cancelAnimationFrame(`id`);".}
   else:
     discard
+
+# ─── Atomics ───
+
+proc jsAtomicsAdd*(typedArray: JsInt32Array, index: int, value: int32): int32 =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = Atomics.add(heap[`typedArray`.idx], `index`, `value`);".}
+  else:
+    result = 0'i32
+
+proc jsAtomicsAnd*(typedArray: JsInt32Array, index: int, value: int32): int32 =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = Atomics.and(heap[`typedArray`.idx], `index`, `value`);".}
+  else:
+    result = 0'i32
+
+proc jsAtomicsCompareExchange*(typedArray: JsInt32Array, index: int, expectedValue: int32, replacementValue: int32): int32 =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = Atomics.compareExchange(heap[`typedArray`.idx], `index`, `expectedValue`, `replacementValue`);".}
+  else:
+    result = 0'i32
+
+proc jsAtomicsExchange*(typedArray: JsInt32Array, index: int, value: int32): int32 =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = Atomics.exchange(heap[`typedArray`.idx], `index`, `value`);".}
+  else:
+    result = 0'i32
+
+proc jsAtomicsLoad*(typedArray: JsInt32Array, index: int): int32 =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = Atomics.load(heap[`typedArray`.idx], `index`);".}
+  else:
+    result = 0'i32
+
+proc jsAtomicsOr*(typedArray: JsInt32Array, index: int, value: int32): int32 =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = Atomics.or(heap[`typedArray`.idx], `index`, `value`);".}
+  else:
+    result = 0'i32
+
+proc jsAtomicsStore*(typedArray: JsInt32Array, index: int, value: int32): int32 =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = Atomics.store(heap[`typedArray`.idx], `index`, `value`);".}
+  else:
+    result = 0'i32
+
+proc jsAtomicsSub*(typedArray: JsInt32Array, index: int, value: int32): int32 =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = Atomics.sub(heap[`typedArray`.idx], `index`, `value`);".}
+  else:
+    result = 0'i32
+
+proc jsAtomicsXor*(typedArray: JsInt32Array, index: int, value: int32): int32 =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = Atomics.xor(heap[`typedArray`.idx], `index`, `value`);".}
+  else:
+    result = 0'i32
+
+proc jsAtomicsWait*(typedArray: JsInt32Array, index: int, value: int32, timeout: int = -1): string =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: """
+    var s = Atomics.wait(heap[`typedArray`.idx], `index`, `value`, `timeout`);
+    var len = s.length;
+    var ptr = __nbg_malloc(len, 1);
+    for (var i = 0; i < len; i++) ptr[i] = s.charCodeAt(i);
+    `result` = {Field0: ptr, Field1: len};
+    """.}
+  else:
+    result = ""
+
+proc jsAtomicsNotify*(typedArray: JsInt32Array, index: int, count: int = -1): int32 =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = Atomics.notify(heap[`typedArray`.idx], `index`, `count`);".}
+  else:
+    result = 0'i32
+
+proc jsAtomicsIsLockFree*(size: int): bool =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = Atomics.isLockFree(`size`) ? 1 : 0;".}
+  else:
+    result = false
+
+# ─── TypedArray expansions ───
+
+# --- Int8Array ---
+
+proc jsInt8ArrayLen*(arr: JsInt8Array): int =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = heap[`arr`.idx].length;".}
+  else:
+    result = 0
+
+proc jsInt8ArrayGet*(arr: JsInt8Array, idx: int): int8 =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = heap[`arr`.idx][`idx`];".}
+  else:
+    result = 0'i8
+
+proc jsInt8ArraySet*(arr: JsInt8Array, idx: int, val: int8) =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "heap[`arr`.idx][`idx`] = `val`;".}
+  else:
+    discard
+
+proc jsInt8ArraySlice*(arr: JsInt8Array, start: int = 0, stop: int = -1): JsInt8Array =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = {idx: addHeapObject(heap[`arr`.idx].slice(`start`, `stop`))};".}
+  else:
+    result = JsInt8Array(JsValue(idx: 0))
+
+proc jsInt8ArraySubarray*(arr: JsInt8Array, start: int, stop: int): JsInt8Array =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = {idx: addHeapObject(heap[`arr`.idx].subarray(`start`, `stop`))};".}
+  else:
+    result = JsInt8Array(JsValue(idx: 0))
+
+proc jsInt8ArrayFill*(arr: JsInt8Array, val: int8, start: int = 0, stop: int = -1): JsInt8Array =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = {idx: addHeapObject(heap[`arr`.idx].fill(`val`, `start`, `stop`))};".}
+  else:
+    result = JsInt8Array(JsValue(idx: 0))
+
+proc jsInt8ArraySetFromSlice*(arr: JsInt8Array, offset: int, src: JsInt8Array) =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "heap[`arr`.idx].set(heap[`src`.idx], `offset`);".}
+  else:
+    discard
+
+# --- Uint16Array ---
+
+proc jsUint16ArrayLen*(arr: JsUint16Array): int =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = heap[`arr`.idx].length;".}
+  else:
+    result = 0
+
+proc jsUint16ArrayGet*(arr: JsUint16Array, idx: int): uint16 =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = heap[`arr`.idx][`idx`];".}
+  else:
+    result = 0'u16
+
+proc jsUint16ArraySet*(arr: JsUint16Array, idx: int, val: uint16) =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "heap[`arr`.idx][`idx`] = `val`;".}
+  else:
+    discard
+
+proc jsUint16ArraySlice*(arr: JsUint16Array, start: int = 0, stop: int = -1): JsUint16Array =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = {idx: addHeapObject(heap[`arr`.idx].slice(`start`, `stop`))};".}
+  else:
+    result = JsUint16Array(JsValue(idx: 0))
+
+proc jsUint16ArraySubarray*(arr: JsUint16Array, start: int, stop: int): JsUint16Array =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = {idx: addHeapObject(heap[`arr`.idx].subarray(`start`, `stop`))};".}
+  else:
+    result = JsUint16Array(JsValue(idx: 0))
+
+proc jsUint16ArrayFill*(arr: JsUint16Array, val: uint16, start: int = 0, stop: int = -1): JsUint16Array =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = {idx: addHeapObject(heap[`arr`.idx].fill(`val`, `start`, `stop`))};".}
+  else:
+    result = JsUint16Array(JsValue(idx: 0))
+
+proc jsUint16ArraySetFromSlice*(arr: JsUint16Array, offset: int, src: JsUint16Array) =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "heap[`arr`.idx].set(heap[`src`.idx], `offset`);".}
+  else:
+    discard
+
+# --- Int16Array ---
+
+proc jsInt16ArrayLen*(arr: JsInt16Array): int =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = heap[`arr`.idx].length;".}
+  else:
+    result = 0
+
+proc jsInt16ArrayGet*(arr: JsInt16Array, idx: int): int16 =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = heap[`arr`.idx][`idx`];".}
+  else:
+    result = 0'i16
+
+proc jsInt16ArraySet*(arr: JsInt16Array, idx: int, val: int16) =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "heap[`arr`.idx][`idx`] = `val`;".}
+  else:
+    discard
+
+proc jsInt16ArraySlice*(arr: JsInt16Array, start: int = 0, stop: int = -1): JsInt16Array =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = {idx: addHeapObject(heap[`arr`.idx].slice(`start`, `stop`))};".}
+  else:
+    result = JsInt16Array(JsValue(idx: 0))
+
+proc jsInt16ArraySubarray*(arr: JsInt16Array, start: int, stop: int): JsInt16Array =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = {idx: addHeapObject(heap[`arr`.idx].subarray(`start`, `stop`))};".}
+  else:
+    result = JsInt16Array(JsValue(idx: 0))
+
+proc jsInt16ArrayFill*(arr: JsInt16Array, val: int16, start: int = 0, stop: int = -1): JsInt16Array =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = {idx: addHeapObject(heap[`arr`.idx].fill(`val`, `start`, `stop`))};".}
+  else:
+    result = JsInt16Array(JsValue(idx: 0))
+
+proc jsInt16ArraySetFromSlice*(arr: JsInt16Array, offset: int, src: JsInt16Array) =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "heap[`arr`.idx].set(heap[`src`.idx], `offset`);".}
+  else:
+    discard
+
+# --- Uint32Array ---
+
+proc jsUint32ArrayLen*(arr: JsUint32Array): int =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = heap[`arr`.idx].length;".}
+  else:
+    result = 0
+
+proc jsUint32ArrayGet*(arr: JsUint32Array, idx: int): uint32 =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = heap[`arr`.idx][`idx`];".}
+  else:
+    result = 0'u32
+
+proc jsUint32ArraySet*(arr: JsUint32Array, idx: int, val: uint32) =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "heap[`arr`.idx][`idx`] = `val`;".}
+  else:
+    discard
+
+proc jsUint32ArraySlice*(arr: JsUint32Array, start: int = 0, stop: int = -1): JsUint32Array =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = {idx: addHeapObject(heap[`arr`.idx].slice(`start`, `stop`))};".}
+  else:
+    result = JsUint32Array(JsValue(idx: 0))
+
+proc jsUint32ArraySubarray*(arr: JsUint32Array, start: int, stop: int): JsUint32Array =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = {idx: addHeapObject(heap[`arr`.idx].subarray(`start`, `stop`))};".}
+  else:
+    result = JsUint32Array(JsValue(idx: 0))
+
+proc jsUint32ArrayFill*(arr: JsUint32Array, val: uint32, start: int = 0, stop: int = -1): JsUint32Array =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = {idx: addHeapObject(heap[`arr`.idx].fill(`val`, `start`, `stop`))};".}
+  else:
+    result = JsUint32Array(JsValue(idx: 0))
+
+proc jsUint32ArraySetFromSlice*(arr: JsUint32Array, offset: int, src: JsUint32Array) =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "heap[`arr`.idx].set(heap[`src`.idx], `offset`);".}
+  else:
+    discard
+
+# --- Int32Array ---
+
+proc jsInt32ArrayLen*(arr: JsInt32Array): int =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = heap[`arr`.idx].length;".}
+  else:
+    result = 0
+
+proc jsInt32ArrayGet*(arr: JsInt32Array, idx: int): int32 =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = heap[`arr`.idx][`idx`];".}
+  else:
+    result = 0'i32
+
+proc jsInt32ArraySet*(arr: JsInt32Array, idx: int, val: int32) =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "heap[`arr`.idx][`idx`] = `val`;".}
+  else:
+    discard
+
+proc jsInt32ArraySlice*(arr: JsInt32Array, start: int = 0, stop: int = -1): JsInt32Array =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = {idx: addHeapObject(heap[`arr`.idx].slice(`start`, `stop`))};".}
+  else:
+    result = JsInt32Array(JsValue(idx: 0))
+
+proc jsInt32ArraySubarray*(arr: JsInt32Array, start: int, stop: int): JsInt32Array =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = {idx: addHeapObject(heap[`arr`.idx].subarray(`start`, `stop`))};".}
+  else:
+    result = JsInt32Array(JsValue(idx: 0))
+
+proc jsInt32ArrayFill*(arr: JsInt32Array, val: int32, start: int = 0, stop: int = -1): JsInt32Array =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = {idx: addHeapObject(heap[`arr`.idx].fill(`val`, `start`, `stop`))};".}
+  else:
+    result = JsInt32Array(JsValue(idx: 0))
+
+proc jsInt32ArraySetFromSlice*(arr: JsInt32Array, offset: int, src: JsInt32Array) =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "heap[`arr`.idx].set(heap[`src`.idx], `offset`);".}
+  else:
+    discard
+
+# --- Float32Array ---
+
+proc jsFloat32ArrayLen*(arr: JsFloat32Array): int =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = heap[`arr`.idx].length;".}
+  else:
+    result = 0
+
+proc jsFloat32ArrayGet*(arr: JsFloat32Array, idx: int): float32 =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = heap[`arr`.idx][`idx`];".}
+  else:
+    result = 0'f32
+
+proc jsFloat32ArraySet*(arr: JsFloat32Array, idx: int, val: float32) =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "heap[`arr`.idx][`idx`] = `val`;".}
+  else:
+    discard
+
+proc jsFloat32ArraySlice*(arr: JsFloat32Array, start: int = 0, stop: int = -1): JsFloat32Array =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = {idx: addHeapObject(heap[`arr`.idx].slice(`start`, `stop`))};".}
+  else:
+    result = JsFloat32Array(JsValue(idx: 0))
+
+proc jsFloat32ArraySubarray*(arr: JsFloat32Array, start: int, stop: int): JsFloat32Array =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = {idx: addHeapObject(heap[`arr`.idx].subarray(`start`, `stop`))};".}
+  else:
+    result = JsFloat32Array(JsValue(idx: 0))
+
+proc jsFloat32ArrayFill*(arr: JsFloat32Array, val: float32, start: int = 0, stop: int = -1): JsFloat32Array =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = {idx: addHeapObject(heap[`arr`.idx].fill(`val`, `start`, `stop`))};".}
+  else:
+    result = JsFloat32Array(JsValue(idx: 0))
+
+proc jsFloat32ArraySetFromSlice*(arr: JsFloat32Array, offset: int, src: JsFloat32Array) =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "heap[`arr`.idx].set(heap[`src`.idx], `offset`);".}
+  else:
+    discard
+
+# --- Float64Array ---
+
+proc jsFloat64ArrayLen*(arr: JsFloat64Array): int =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = heap[`arr`.idx].length;".}
+  else:
+    result = 0
+
+proc jsFloat64ArrayGet*(arr: JsFloat64Array, idx: int): float64 =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = heap[`arr`.idx][`idx`];".}
+  else:
+    result = 0.0
+
+proc jsFloat64ArraySet*(arr: JsFloat64Array, idx: int, val: float64) =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "heap[`arr`.idx][`idx`] = `val`;".}
+  else:
+    discard
+
+proc jsFloat64ArraySlice*(arr: JsFloat64Array, start: int = 0, stop: int = -1): JsFloat64Array =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = {idx: addHeapObject(heap[`arr`.idx].slice(`start`, `stop`))};".}
+  else:
+    result = JsFloat64Array(JsValue(idx: 0))
+
+proc jsFloat64ArraySubarray*(arr: JsFloat64Array, start: int, stop: int): JsFloat64Array =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = {idx: addHeapObject(heap[`arr`.idx].subarray(`start`, `stop`))};".}
+  else:
+    result = JsFloat64Array(JsValue(idx: 0))
+
+proc jsFloat64ArrayFill*(arr: JsFloat64Array, val: float64, start: int = 0, stop: int = -1): JsFloat64Array =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = {idx: addHeapObject(heap[`arr`.idx].fill(`val`, `start`, `stop`))};".}
+  else:
+    result = JsFloat64Array(JsValue(idx: 0))
+
+proc jsFloat64ArraySetFromSlice*(arr: JsFloat64Array, offset: int, src: JsFloat64Array) =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "heap[`arr`.idx].set(heap[`src`.idx], `offset`);".}
+  else:
+    discard
+
+# ─── More Date methods ───
+
+proc jsDateGetDay*(date: JsDate): int =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = heap[`date`.idx].getDay();".}
+  else:
+    result = 0
+
+proc jsDateGetUTCDay*(date: JsDate): int =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = heap[`date`.idx].getUTCDay();".}
+  else:
+    result = 0
+
+proc jsDateGetUTCFullYear*(date: JsDate): int =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = heap[`date`.idx].getUTCFullYear();".}
+  else:
+    result = 0
+
+proc jsDateGetUTCMonth*(date: JsDate): int =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = heap[`date`.idx].getUTCMonth();".}
+  else:
+    result = 0
+
+proc jsDateGetUTCDate*(date: JsDate): int =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = heap[`date`.idx].getUTCDate();".}
+  else:
+    result = 0
+
+proc jsDateGetUTCHours*(date: JsDate): int =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = heap[`date`.idx].getUTCHours();".}
+  else:
+    result = 0
+
+proc jsDateGetUTCMinutes*(date: JsDate): int =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = heap[`date`.idx].getUTCMinutes();".}
+  else:
+    result = 0
+
+proc jsDateGetUTCSeconds*(date: JsDate): int =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = heap[`date`.idx].getUTCSeconds();".}
+  else:
+    result = 0
+
+proc jsDateGetMilliseconds*(date: JsDate): int =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = heap[`date`.idx].getMilliseconds();".}
+  else:
+    result = 0
+
+proc jsDateGetUTCMilliseconds*(date: JsDate): int =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = heap[`date`.idx].getUTCMilliseconds();".}
+  else:
+    result = 0
+
+proc jsDateGetTimezoneOffset*(date: JsDate): int =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = heap[`date`.idx].getTimezoneOffset();".}
+  else:
+    result = 0
+
+proc jsDateToDateString*(date: JsDate): string =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: """
+    var s = heap[`date`.idx].toDateString();
+    var len = s.length;
+    var ptr = __nbg_malloc(len, 1);
+    for (var i = 0; i < len; i++) ptr[i] = s.charCodeAt(i);
+    `result` = {Field0: ptr, Field1: len};
+    """.}
+  else:
+    result = ""
+
+proc jsDateToTimeString*(date: JsDate): string =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: """
+    var s = heap[`date`.idx].toTimeString();
+    var len = s.length;
+    var ptr = __nbg_malloc(len, 1);
+    for (var i = 0; i < len; i++) ptr[i] = s.charCodeAt(i);
+    `result` = {Field0: ptr, Field1: len};
+    """.}
+  else:
+    result = ""
+
+proc jsDateToUTCString*(date: JsDate): string =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: """
+    var s = heap[`date`.idx].toUTCString();
+    var len = s.length;
+    var ptr = __nbg_malloc(len, 1);
+    for (var i = 0; i < len; i++) ptr[i] = s.charCodeAt(i);
+    `result` = {Field0: ptr, Field1: len};
+    """.}
+  else:
+    result = ""
+
+proc jsDateSetFullYear*(date: JsDate, year: int): float64 =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = heap[`date`.idx].setFullYear(`year`);".}
+  else:
+    result = 0.0
+
+proc jsDateSetMonth*(date: JsDate, month: int): float64 =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = heap[`date`.idx].setMonth(`month`);".}
+  else:
+    result = 0.0
+
+proc jsDateSetDate*(date: JsDate, day: int): float64 =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = heap[`date`.idx].setDate(`day`);".}
+  else:
+    result = 0.0
+
+proc jsDateSetHours*(date: JsDate, hours: int): float64 =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = heap[`date`.idx].setHours(`hours`);".}
+  else:
+    result = 0.0
+
+proc jsDateSetMinutes*(date: JsDate, minutes: int): float64 =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = heap[`date`.idx].setMinutes(`minutes`);".}
+  else:
+    result = 0.0
+
+proc jsDateSetSeconds*(date: JsDate, seconds: int): float64 =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = heap[`date`.idx].setSeconds(`seconds`);".}
+  else:
+    result = 0.0
+
+# ─── More String methods ───
+
+proc jsStringConcat*(s1: string, s2: string): string =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: """
+    var a = `s1`;
+    var b = `s2`;
+    var s = a.concat(b);
+    var len = s.length;
+    var ptr = __nbg_malloc(len, 1);
+    for (var i = 0; i < len; i++) ptr[i] = s.charCodeAt(i);
+    `result` = {Field0: ptr, Field1: len};
+    """.}
+  else:
+    result = ""
+
+proc jsStringIncludes*(s: string, search: string): bool =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: """
+    var a = `s`;
+    var b = `search`;
+    `result` = a.includes(b) ? 1 : 0;
+    """.}
+  else:
+    result = false
+
+proc jsStringStartsWith*(s: string, prefix: string): bool =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: """
+    var a = `s`;
+    var b = `prefix`;
+    `result` = a.startsWith(b) ? 1 : 0;
+    """.}
+  else:
+    result = false
+
+proc jsStringEndsWith*(s: string, suffix: string): bool =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: """
+    var a = `s`;
+    var b = `suffix`;
+    `result` = a.endsWith(b) ? 1 : 0;
+    """.}
+  else:
+    result = false
+
+proc jsStringIndexOf*(s: string, search: string): int =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: """
+    var a = `s`;
+    var b = `search`;
+    `result` = a.indexOf(b);
+    """.}
+  else:
+    result = -1
+
+proc jsStringLastIndexOf*(s: string, search: string): int =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: """
+    var a = `s`;
+    var b = `search`;
+    `result` = a.lastIndexOf(b);
+    """.}
+  else:
+    result = -1
+
+proc jsStringSlice*(s: string, start: int, stop: int): string =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: """
+    var a = `s`;
+    var sliced = a.slice(`start`, `stop`);
+    var len = sliced.length;
+    var ptr = __nbg_malloc(len, 1);
+    for (var i = 0; i < len; i++) ptr[i] = sliced.charCodeAt(i);
+    `result` = {Field0: ptr, Field1: len};
+    """.}
+  else:
+    result = ""
+
+proc jsStringSubstring*(s: string, start: int, stop: int): string =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: """
+    var a = `s`;
+    var sub = a.substring(`start`, `stop`);
+    var len = sub.length;
+    var ptr = __nbg_malloc(len, 1);
+    for (var i = 0; i < len; i++) ptr[i] = sub.charCodeAt(i);
+    `result` = {Field0: ptr, Field1: len};
+    """.}
+  else:
+    result = ""
+
+proc jsStringToUpperCase*(s: string): string =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: """
+    var a = `s`;
+    var upper = a.toUpperCase();
+    var len = upper.length;
+    var ptr = __nbg_malloc(len, 1);
+    for (var i = 0; i < len; i++) ptr[i] = upper.charCodeAt(i);
+    `result` = {Field0: ptr, Field1: len};
+    """.}
+  else:
+    result = ""
+
+proc jsStringToLowerCase*(s: string): string =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: """
+    var a = `s`;
+    var lower = a.toLowerCase();
+    var len = lower.length;
+    var ptr = __nbg_malloc(len, 1);
+    for (var i = 0; i < len; i++) ptr[i] = lower.charCodeAt(i);
+    `result` = {Field0: ptr, Field1: len};
+    """.}
+  else:
+    result = ""
+
+proc jsStringTrim*(s: string): string =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: """
+    var a = `s`;
+    var trimmed = a.trim();
+    var len = trimmed.length;
+    var ptr = __nbg_malloc(len, 1);
+    for (var i = 0; i < len; i++) ptr[i] = trimmed.charCodeAt(i);
+    `result` = {Field0: ptr, Field1: len};
+    """.}
+  else:
+    result = ""
+
+proc jsStringTrimStart*(s: string): string =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: """
+    var a = `s`;
+    var trimmed = a.trimStart();
+    var len = trimmed.length;
+    var ptr = __nbg_malloc(len, 1);
+    for (var i = 0; i < len; i++) ptr[i] = trimmed.charCodeAt(i);
+    `result` = {Field0: ptr, Field1: len};
+    """.}
+  else:
+    result = ""
+
+proc jsStringTrimEnd*(s: string): string =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: """
+    var a = `s`;
+    var trimmed = a.trimEnd();
+    var len = trimmed.length;
+    var ptr = __nbg_malloc(len, 1);
+    for (var i = 0; i < len; i++) ptr[i] = trimmed.charCodeAt(i);
+    `result` = {Field0: ptr, Field1: len};
+    """.}
+  else:
+    result = ""
+
+proc jsStringRepeat*(s: string, count: int): string =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: """
+    var a = `s`;
+    var repeated = a.repeat(`count`);
+    var len = repeated.length;
+    var ptr = __nbg_malloc(len, 1);
+    for (var i = 0; i < len; i++) ptr[i] = repeated.charCodeAt(i);
+    `result` = {Field0: ptr, Field1: len};
+    """.}
+  else:
+    result = ""
+
+proc jsStringReplace*(s: string, pattern: string, replacement: string): string =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: """
+    var a = `s`;
+    var p = `pattern`;
+    var r = `replacement`;
+    var replaced = a.replace(p, r);
+    var len = replaced.length;
+    var ptr = __nbg_malloc(len, 1);
+    for (var i = 0; i < len; i++) ptr[i] = replaced.charCodeAt(i);
+    `result` = {Field0: ptr, Field1: len};
+    """.}
+  else:
+    result = ""
+
+proc jsStringReplaceAll*(s: string, pattern: string, replacement: string): string =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: """
+    var a = `s`;
+    var p = `pattern`;
+    var r = `replacement`;
+    var replaced = a.replaceAll(p, r);
+    var len = replaced.length;
+    var ptr = __nbg_malloc(len, 1);
+    for (var i = 0; i < len; i++) ptr[i] = replaced.charCodeAt(i);
+    `result` = {Field0: ptr, Field1: len};
+    """.}
+  else:
+    result = ""
+
+proc jsStringSplit*(s: string, separator: string): JsArray =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: """
+    var a = `s`;
+    var sep = `separator`;
+    `result` = {idx: addHeapObject(a.split(sep))};
+    """.}
+  else:
+    result = JsArray(JsValue(idx: 0))
+
+proc jsStringPadStart*(s: string, targetLength: int, padString: string): string =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: """
+    var a = `s`;
+    var p = `padString`;
+    var padded = a.padStart(`targetLength`, p);
+    var len = padded.length;
+    var ptr = __nbg_malloc(len, 1);
+    for (var i = 0; i < len; i++) ptr[i] = padded.charCodeAt(i);
+    `result` = {Field0: ptr, Field1: len};
+    """.}
+  else:
+    result = ""
+
+proc jsStringPadEnd*(s: string, targetLength: int, padString: string): string =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: """
+    var a = `s`;
+    var p = `padString`;
+    var padded = a.padEnd(`targetLength`, p);
+    var len = padded.length;
+    var ptr = __nbg_malloc(len, 1);
+    for (var i = 0; i < len; i++) ptr[i] = padded.charCodeAt(i);
+    `result` = {Field0: ptr, Field1: len};
+    """.}
+  else:
+    result = ""
+
+proc jsStringCharAt*(s: string, index: int): string =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: """
+    var a = `s`;
+    var ch = a.charAt(`index`);
+    var len = ch.length;
+    var ptr = __nbg_malloc(len, 1);
+    for (var i = 0; i < len; i++) ptr[i] = ch.charCodeAt(i);
+    `result` = {Field0: ptr, Field1: len};
+    """.}
+  else:
+    result = ""
+
+proc jsStringCharCodeAt*(s: string, index: int): int =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: """
+    var a = `s`;
+    `result` = a.charCodeAt(`index`);
+    """.}
+  else:
+    result = 0
+
+# ─── More Object methods ───
+
+proc jsObjectIs*(val1: JsValue, val2: JsValue): bool =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = Object.is(heap[`val1`.idx], heap[`val2`.idx]) ? 1 : 0;".}
+  else:
+    result = false
+
+proc jsObjectFromEntries*(entries: JsArray): JsObject =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = {idx: addHeapObject(Object.fromEntries(heap[`entries`.idx]))};".}
+  else:
+    result = JsObject(JsValue(idx: 0))
+
+proc jsObjectPreventExtensions*(obj: JsObject): JsObject =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = {idx: addHeapObject(Object.preventExtensions(heap[`obj`.idx]))};".}
+  else:
+    result = JsObject(JsValue(idx: 0))
+
+proc jsObjectIsExtensible*(obj: JsObject): bool =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = Object.isExtensible(heap[`obj`.idx]) ? 1 : 0;".}
+  else:
+    result = false
+
+proc jsObjectIsSealed*(obj: JsObject): bool =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = Object.isSealed(heap[`obj`.idx]) ? 1 : 0;".}
+  else:
+    result = false
+
+proc jsObjectIsFrozen*(obj: JsObject): bool =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = Object.isFrozen(heap[`obj`.idx]) ? 1 : 0;".}
+  else:
+    result = false
+
+# ─── More Console methods ───
+
+proc jsConsoleTable*(val: JsValue) =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "console.table(heap[`val`.idx]);".}
+  else:
+    discard
+
+proc jsConsoleCount*(label: string) =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "console.count(`label`);".}
+  else:
+    discard
+
+proc jsConsoleCountReset*(label: string) =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "console.countReset(`label`);".}
+  else:
+    discard
+
+proc jsConsoleGroup*(label: string) =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "console.group(`label`);".}
+  else:
+    discard
+
+proc jsConsoleGroupEnd*() =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "console.groupEnd();".}
+  else:
+    discard
+
+proc jsConsoleDir*(val: JsValue) =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "console.dir(heap[`val`.idx]);".}
+  else:
+    discard
+
+proc jsConsoleClear*() =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "console.clear();".}
+  else:
+    discard
+
+# ─── Date parsing/formatting ───
+
+proc jsDateParse*(str: string): float64 =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: """
+    var s = `str`;
+    `result` = Date.parse(s);
+    """.}
+  else:
+    result = 0.0
+
+proc jsDateUTC*(year: int, month: int, day: int, hours: int, minutes: int, seconds: int, ms: int): float64 =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = Date.UTC(`year`, `month`, `day`, `hours`, `minutes`, `seconds`, `ms`);".}
+  else:
+    result = 0.0
+
+proc jsDateToJSON*(date: JsDate): string =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: """
+    var s = heap[`date`.idx].toJSON();
+    var len = s.length;
+    var ptr = __nbg_malloc(len, 1);
+    for (var i = 0; i < len; i++) ptr[i] = s.charCodeAt(i);
+    `result` = {Field0: ptr, Field1: len};
+    """.}
+  else:
+    result = ""
+
+proc jsDateSetTime*(date: JsDate, time: float64): float64 =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = heap[`date`.idx].setTime(`time`);".}
+  else:
+    result = 0.0
+
+proc newJsDateFromYearMonthDay*(year: int, month: int, day: int): JsDate =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = {idx: addHeapObject(new Date(`year`, `month`, `day`))};".}
+  else:
+    result = JsDate(JsValue(idx: 0))
+
+# ─── JSON reviver ───
+
+proc jsJsonParseWithReviver*(str: string, reviver: JsValue): JsValue =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: """
+    var s = `str`;
+    `result` = {idx: addHeapObject(JSON.parse(s, heap[`reviver`.idx]))};
+    """.}
+  else:
+    result = JsValue(idx: 0)
+
+proc jsJsonStringifyWithReplacer*(val: JsValue, replacer: JsValue, space: int): string =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: """
+    var s = JSON.stringify(heap[`val`.idx], heap[`replacer`.idx], `space`);
+    var len = s.length;
+    var ptr = __nbg_malloc(len, 1);
+    for (var i = 0; i < len; i++) ptr[i] = s.charCodeAt(i);
+    `result` = {Field0: ptr, Field1: len};
+    """.}
+  else:
+    result = ""
+
+# ─── Intl - resolved options for all remaining Intl types ───
+
+proc jsIntlListFormatResolvedOptions*(fmt: JsIntlListFormat): JsValue =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = {idx: addHeapObject(heap[`fmt`.idx].resolvedOptions())};".}
+  else:
+    result = JsValue(idx: 0)
+
+proc jsIntlRelativeTimeFormatResolvedOptions*(fmt: JsIntlRelativeTimeFormat): JsValue =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = {idx: addHeapObject(heap[`fmt`.idx].resolvedOptions())};".}
+  else:
+    result = JsValue(idx: 0)
+
+proc jsIntlSegmenterResolvedOptions*(sgr: JsIntlSegmenter): JsValue =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = {idx: addHeapObject(heap[`sgr`.idx].resolvedOptions())};".}
+  else:
+    result = JsValue(idx: 0)
+
+proc jsIntlDurationFormatResolvedOptions*(fmt: JsIntlDurationFormat): JsValue =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = {idx: addHeapObject(heap[`fmt`.idx].resolvedOptions())};".}
+  else:
+    result = JsValue(idx: 0)
+
+proc jsIntlDisplayNamesResolvedOptions*(dn: JsIntlDisplayNames): JsValue =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = {idx: addHeapObject(heap[`dn`.idx].resolvedOptions())};".}
+  else:
+    result = JsValue(idx: 0)
+
+# ─── Intl - formatToParts for DateTimeFormat ───
+
+proc jsIntlDateTimeFormatFormatToParts*(fmt: JsIntlDateTimeFormat, date: JsValue): JsValue =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = {idx: addHeapObject(heap[`fmt`.idx].formatToParts(heap[`date`.idx]))};".}
+  else:
+    result = JsValue(idx: 0)
+
+proc jsIntlRelativeTimeFormatFormatToParts*(fmt: JsIntlRelativeTimeFormat, value: float64, unit: string): JsValue =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = {idx: addHeapObject(heap[`fmt`.idx].formatToParts(`value`, `unit`))};".}
+  else:
+    result = JsValue(idx: 0)
+
+# ─── Performance API ───
+
+type JsPerformance* = distinct JsValue
+
+proc jsPerformanceNow*(): float64 =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = performance.now();".}
+  else:
+    result = 0.0
+
+proc jsPerformanceMark*(name: string) =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "performance.mark(`name`);".}
+  else:
+    discard
+
+proc jsPerformanceMeasure*(name: string, startMark: string, endMark: string) =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "performance.measure(`name`, `startMark`, `endMark`);".}
+  else:
+    discard
+
+proc jsPerformanceGetEntriesByName*(name: string): JsValue =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = {idx: addHeapObject(performance.getEntriesByName(`name`))};".}
+  else:
+    result = JsValue(idx: 0)
+
+proc jsPerformanceClearMarks*() =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "performance.clearMarks();".}
+  else:
+    discard
+
+# ─── Navigator ───
+
+type JsNavigator* = distinct JsValue
+
+proc jsNavigatorGet*(): JsNavigator =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = {idx: addHeapObject(navigator)};".}
+  else:
+    result = JsNavigator(JsValue(idx: 0))
+
+proc jsNavigatorUserAgent*(nav: JsNavigator): string =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: """
+    var s = heap[`nav`.idx].userAgent;
+    var len = s.length;
+    var ptr = __nbg_malloc(len, 1);
+    for (var i = 0; i < len; i++) ptr[i] = s.charCodeAt(i);
+    `result` = {Field0: ptr, Field1: len};
+    """.}
+  else:
+    result = ""
+
+proc jsNavigatorLanguage*(nav: JsNavigator): string =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: """
+    var s = heap[`nav`.idx].language;
+    var len = s.length;
+    var ptr = __nbg_malloc(len, 1);
+    for (var i = 0; i < len; i++) ptr[i] = s.charCodeAt(i);
+    `result` = {Field0: ptr, Field1: len};
+    """.}
+  else:
+    result = ""
+
+# ─── Location (browser) ───
+
+type JsLocation* = distinct JsValue
+
+proc jsLocationGet*(): JsLocation =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = {idx: addHeapObject(window.location)};".}
+  else:
+    result = JsLocation(JsValue(idx: 0))
+
+proc jsLocationHref*(loc: JsLocation): string =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: """
+    var s = heap[`loc`.idx].href;
+    var len = s.length;
+    var ptr = __nbg_malloc(len, 1);
+    for (var i = 0; i < len; i++) ptr[i] = s.charCodeAt(i);
+    `result` = {Field0: ptr, Field1: len};
+    """.}
+  else:
+    result = ""
+
+proc jsLocationHostname*(loc: JsLocation): string =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: """
+    var s = heap[`loc`.idx].hostname;
+    var len = s.length;
+    var ptr = __nbg_malloc(len, 1);
+    for (var i = 0; i < len; i++) ptr[i] = s.charCodeAt(i);
+    `result` = {Field0: ptr, Field1: len};
+    """.}
+  else:
+    result = ""
+
+proc jsLocationPathname*(loc: JsLocation): string =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: """
+    var s = heap[`loc`.idx].pathname;
+    var len = s.length;
+    var ptr = __nbg_malloc(len, 1);
+    for (var i = 0; i < len; i++) ptr[i] = s.charCodeAt(i);
+    `result` = {Field0: ptr, Field1: len};
+    """.}
+  else:
+    result = ""
+
+proc jsLocationReload*(loc: JsLocation) =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "heap[`loc`.idx].reload();".}
+  else:
+    discard
+
+# ─── More Math ───
+
+proc jsMathE*(): float64 =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = Math.E;".}
+  else:
+    result = 2.718281828459045
+
+proc jsMathLN2*(): float64 =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = Math.LN2;".}
+  else:
+    result = 0.6931471805599453
+
+proc jsMathLN10*(): float64 =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = Math.LN10;".}
+  else:
+    result = 2.302585092994046
+
+proc jsMathLog2E*(): float64 =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = Math.LOG2E;".}
+  else:
+    result = 1.4426950408889634
+
+proc jsMathLog10E*(): float64 =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = Math.LOG10E;".}
+  else:
+    result = 0.4342944819032518
+
+proc jsMathSQRT1_2*(): float64 =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = Math.SQRT1_2;".}
+  else:
+    result = 0.7071067811865476
+
+proc jsMathSQRT2*(): float64 =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = Math.SQRT2;".}
+  else:
+    result = 1.4142135623730951
+
+proc jsMathRandomRange*(min: float64, max: float64): float64 =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = Math.random() * (`max` - `min`) + `min`;".}
+  else:
+    result = 0.0
+
+# ─── TypedArray buffer/byteOffset/byteLength ───
+
+# --- Int8Array ---
+proc jsInt8ArrayBuffer*(arr: JsInt8Array): JsArrayBuffer =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = {idx: addHeapObject(heap[`arr`.idx].buffer)};".}
+  else:
+    result = JsArrayBuffer(JsValue(idx: 0))
+
+proc jsInt8ArrayByteOffset*(arr: JsInt8Array): int =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = heap[`arr`.idx].byteOffset;".}
+  else:
+    result = 0
+
+proc jsInt8ArrayByteLength*(arr: JsInt8Array): int =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = heap[`arr`.idx].byteLength;".}
+  else:
+    result = 0
+
+# --- Uint16Array ---
+proc jsUint16ArrayBuffer*(arr: JsUint16Array): JsArrayBuffer =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = {idx: addHeapObject(heap[`arr`.idx].buffer)};".}
+  else:
+    result = JsArrayBuffer(JsValue(idx: 0))
+
+proc jsUint16ArrayByteOffset*(arr: JsUint16Array): int =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = heap[`arr`.idx].byteOffset;".}
+  else:
+    result = 0
+
+proc jsUint16ArrayByteLength*(arr: JsUint16Array): int =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = heap[`arr`.idx].byteLength;".}
+  else:
+    result = 0
+
+# --- Int16Array ---
+proc jsInt16ArrayBuffer*(arr: JsInt16Array): JsArrayBuffer =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = {idx: addHeapObject(heap[`arr`.idx].buffer)};".}
+  else:
+    result = JsArrayBuffer(JsValue(idx: 0))
+
+proc jsInt16ArrayByteOffset*(arr: JsInt16Array): int =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = heap[`arr`.idx].byteOffset;".}
+  else:
+    result = 0
+
+proc jsInt16ArrayByteLength*(arr: JsInt16Array): int =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = heap[`arr`.idx].byteLength;".}
+  else:
+    result = 0
+
+# --- Uint32Array ---
+proc jsUint32ArrayBuffer*(arr: JsUint32Array): JsArrayBuffer =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = {idx: addHeapObject(heap[`arr`.idx].buffer)};".}
+  else:
+    result = JsArrayBuffer(JsValue(idx: 0))
+
+proc jsUint32ArrayByteOffset*(arr: JsUint32Array): int =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = heap[`arr`.idx].byteOffset;".}
+  else:
+    result = 0
+
+proc jsUint32ArrayByteLength*(arr: JsUint32Array): int =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = heap[`arr`.idx].byteLength;".}
+  else:
+    result = 0
+
+# --- Int32Array ---
+proc jsInt32ArrayBuffer*(arr: JsInt32Array): JsArrayBuffer =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = {idx: addHeapObject(heap[`arr`.idx].buffer)};".}
+  else:
+    result = JsArrayBuffer(JsValue(idx: 0))
+
+proc jsInt32ArrayByteOffset*(arr: JsInt32Array): int =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = heap[`arr`.idx].byteOffset;".}
+  else:
+    result = 0
+
+proc jsInt32ArrayByteLength*(arr: JsInt32Array): int =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = heap[`arr`.idx].byteLength;".}
+  else:
+    result = 0
+
+# --- Float32Array ---
+proc jsFloat32ArrayBuffer*(arr: JsFloat32Array): JsArrayBuffer =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = {idx: addHeapObject(heap[`arr`.idx].buffer)};".}
+  else:
+    result = JsArrayBuffer(JsValue(idx: 0))
+
+proc jsFloat32ArrayByteOffset*(arr: JsFloat32Array): int =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = heap[`arr`.idx].byteOffset;".}
+  else:
+    result = 0
+
+proc jsFloat32ArrayByteLength*(arr: JsFloat32Array): int =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = heap[`arr`.idx].byteLength;".}
+  else:
+    result = 0
+
+# --- Float64Array ---
+proc jsFloat64ArrayBuffer*(arr: JsFloat64Array): JsArrayBuffer =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = {idx: addHeapObject(heap[`arr`.idx].buffer)};".}
+  else:
+    result = JsArrayBuffer(JsValue(idx: 0))
+
+proc jsFloat64ArrayByteOffset*(arr: JsFloat64Array): int =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = heap[`arr`.idx].byteOffset;".}
+  else:
+    result = 0
+
+proc jsFloat64ArrayByteLength*(arr: JsFloat64Array): int =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = heap[`arr`.idx].byteLength;".}
+  else:
+    result = 0
+
+# ─── Iterator / Generator types ───
+
+type
+  JsIterator* = distinct JsValue
+  JsAsyncIterator* = distinct JsValue
+  JsGenerator* = distinct JsValue
+
+proc jsIteratorNext*(iter: JsIterator): JsValue =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = {idx: addHeapObject(heap[`iter`.idx].next())};".}
+  else:
+    result = JsValue(idx: 0)
+
+proc jsIteratorNextVal*(iter: JsIterator, value: JsValue): JsValue =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = {idx: addHeapObject(heap[`iter`.idx].next(heap[`value`.idx]))};".}
+  else:
+    result = JsValue(idx: 0)
+
+proc jsGeneratorNext*(gen: JsGenerator): JsValue =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = {idx: addHeapObject(heap[`gen`.idx].next())};".}
+  else:
+    result = JsValue(idx: 0)
+
+proc jsGeneratorNextVal*(gen: JsGenerator, value: JsValue): JsValue =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = {idx: addHeapObject(heap[`gen`.idx].next(heap[`value`.idx]))};".}
+  else:
+    result = JsValue(idx: 0)
+
+proc jsGeneratorReturn*(gen: JsGenerator, value: JsValue): JsValue =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = {idx: addHeapObject(heap[`gen`.idx].return(heap[`value`.idx]))};".}
+  else:
+    result = JsValue(idx: 0)
+
+proc jsGeneratorThrow*(gen: JsGenerator, error: JsValue): JsValue =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = {idx: addHeapObject(heap[`gen`.idx].throw(heap[`error`.idx]))};".}
+  else:
+    result = JsValue(idx: 0)
+
+# ─── TypedArray constructors from buffer ───
+
+proc newJsUint16ArrayFromBuffer*(buffer: JsArrayBuffer, byteOffset: int = 0, length: int = -1): JsUint16Array =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = {idx: addHeapObject(new Uint16Array(heap[`buffer`.idx], `byteOffset`, `length`))};".}
+  else:
+    result = JsUint16Array(JsValue(idx: 0))
+
+proc newJsInt16ArrayFromBuffer*(buffer: JsArrayBuffer, byteOffset: int = 0, length: int = -1): JsInt16Array =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = {idx: addHeapObject(new Int16Array(heap[`buffer`.idx], `byteOffset`, `length`))};".}
+  else:
+    result = JsInt16Array(JsValue(idx: 0))
+
+proc newJsUint32ArrayFromBuffer*(buffer: JsArrayBuffer, byteOffset: int = 0, length: int = -1): JsUint32Array =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = {idx: addHeapObject(new Uint32Array(heap[`buffer`.idx], `byteOffset`, `length`))};".}
+  else:
+    result = JsUint32Array(JsValue(idx: 0))
+
+proc newJsInt32ArrayFromBuffer*(buffer: JsArrayBuffer, byteOffset: int = 0, length: int = -1): JsInt32Array =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = {idx: addHeapObject(new Int32Array(heap[`buffer`.idx], `byteOffset`, `length`))};".}
+  else:
+    result = JsInt32Array(JsValue(idx: 0))
+
+proc newJsFloat32ArrayFromBuffer*(buffer: JsArrayBuffer, byteOffset: int = 0, length: int = -1): JsFloat32Array =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = {idx: addHeapObject(new Float32Array(heap[`buffer`.idx], `byteOffset`, `length`))};".}
+  else:
+    result = JsFloat32Array(JsValue(idx: 0))
+
+proc newJsInt8ArrayFromBuffer*(buffer: JsArrayBuffer, byteOffset: int = 0, length: int = -1): JsInt8Array =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = {idx: addHeapObject(new Int8Array(heap[`buffer`.idx], `byteOffset`, `length`))};".}
+  else:
+    result = JsInt8Array(JsValue(idx: 0))
+
+proc newJsUint8ArrayFromByteLength*(length: int): JsUint8Array =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = {idx: addHeapObject(new Uint8Array(`length`))};".}
+  else:
+    result = JsUint8Array(JsValue(idx: 0))
+
+proc newJsFloat64ArrayFromByteLength*(length: int): JsFloat64Array =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = {idx: addHeapObject(new Float64Array(`length`))};".}
+  else:
+    result = JsFloat64Array(JsValue(idx: 0))
+
+# ─── Window / global shortcuts ───
+
+proc jsWindowAlert*(msg: string) =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "alert(`msg`);".}
+  else:
+    discard
+
+proc jsWindowConfirm*(msg: string): bool =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = confirm(`msg`) ? 1 : 0;".}
+  else:
+    result = false
+
+proc jsWindowPrompt*(msg: string, defaultVal: string = ""): string =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: """
+    var s = prompt(`msg`, `defaultVal`);
+    if (s == null) s = "";
+    var len = s.length;
+    var ptr = __nbg_malloc(len, 1);
+    for (var i = 0; i < len; i++) ptr[i] = s.charCodeAt(i);
+    `result` = {Field0: ptr, Field1: len};
+    """.}
+  else:
+    result = ""
+
+proc jsWindowOpen*(url: string, target: string = "_blank", features: string = ""): JsValue =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = {idx: addHeapObject(window.open(`url`, `target`, `features`))};".}
+  else:
+    result = JsValue(idx: 0)
+
+proc jsWindowClose*() =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "window.close();".}
+  else:
+    discard
+
+# ─── More Console ───
+
+proc jsConsoleTrace*(msg: string) =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "console.trace(`msg`);".}
+  else:
+    discard
+
+proc jsConsoleProfile*(label: string) =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "console.profile(`label`);".}
+  else:
+    discard
+
+proc jsConsoleProfileEnd*(label: string) =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "console.profileEnd(`label`);".}
+  else:
+    discard
+
+# ─── Storage ───
+
+type JsStorage* = distinct JsValue
+
+proc jsLocalStorageGet*(): JsStorage =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = {idx: addHeapObject(localStorage)};".}
+  else:
+    result = JsStorage(JsValue(idx: 0))
+
+proc jsSessionStorageGet*(): JsStorage =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "`result` = {idx: addHeapObject(sessionStorage)};".}
+  else:
+    result = JsStorage(JsValue(idx: 0))
+
+proc jsStorageGetItem*(storage: JsStorage, key: string): string =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: """
+    var s = heap[`storage`.idx].getItem(`key`);
+    if (s == null) s = "";
+    var len = s.length;
+    var ptr = __nbg_malloc(len, 1);
+    for (var i = 0; i < len; i++) ptr[i] = s.charCodeAt(i);
+    `result` = {Field0: ptr, Field1: len};
+    """.}
+  else:
+    result = ""
+
+proc jsStorageSetItem*(storage: JsStorage, key: string, value: string) =
+  when defined(wasm32) and not defined(emscripten):
+    {.emit: "heap[`storage`.idx].setItem(`key`, `value`);".}
+  else:
+    discard
+

@@ -72,7 +72,7 @@
 |--------|-------------|----------|-----|--------|
 | web-sys types | ~1,700 | **2,870** | **+1,170** | ✅ Ahead |
 | web-sys procs | ~12,000 | **4,734** | −7,266 | Catching up |
-| js-sys procs | ~1,438 | **329** | −1,109 | Needs expansion |
+| js-sys procs | ~1,438 | **526** | −912 | Catching up |
 | WebIDL files | 697 | **644** (parsed, codegen done) | −53 | ✅ Done |
 | Threads transform | Full implementation | Binary patching (memory + TLS) | — | ✅ Done |
 | Catch transform | Full implementation | Binary patching (try/catch_all) | — | ✅ Done |
