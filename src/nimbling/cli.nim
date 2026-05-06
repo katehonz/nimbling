@@ -5,7 +5,6 @@
 ## Usage: nimbling input.wasm --out-dir out/ --target bundler
 
 import std/os
-import std/parseopt
 import std/strformat
 import std/strutils
 
@@ -14,6 +13,7 @@ import decode
 import interp
 import jsgen
 import transforms
+import emscripten
 
 type
   CliConfig* = object
@@ -24,6 +24,7 @@ type
     noTypescript*: bool
     noModules*: bool
     wasmName*: string
+    flags*: CliFlags
 
 proc parseArgs(): CliConfig =
   result = CliConfig(
@@ -32,19 +33,19 @@ proc parseArgs(): CliConfig =
     wasmName: "",
   )
 
-  var p = initOptParser()
-  for kind, key, val in p.getopt():
-    case kind
-    of cmdArgument:
-      result.input = key
-      if result.wasmName.len == 0:
-        result.wasmName = key.extractFilename().splitFile().name
-    of cmdLongOption, cmdShortOption:
-      case key
-      of "out-dir", "o":
-        result.outDir = val
-      of "target", "t":
-        case val
+  let allArgs = commandLineParams()
+  var unknownArgs: seq[string] = @[]
+  var i = 0
+  while i < allArgs.len:
+    let arg = allArgs[i]
+    case arg
+    of "--out-dir", "-o":
+      if i + 1 < allArgs.len:
+        result.outDir = allArgs[i + 1]
+        inc i
+    of "--target", "-t":
+      if i + 1 < allArgs.len:
+        case allArgs[i + 1]
         of "bundler":      result.target = jsBundler
         of "web":          result.target = jsWeb
         of "no-modules":   result.target = jsNoModules
@@ -53,17 +54,24 @@ proc parseArgs(): CliConfig =
         of "experimental-nodejs-module": result.target = jsNodeModule
         of "module":       result.target = jsModule
         else:
-          echo &"Unknown target: {val}, using bundler"
-      of "debug", "d":
-        result.debug = true
-      of "no-typescript":
-        result.noTypescript = true
-      of "no-modules":
-        result.noModules = true
+          echo &"Unknown target: " & allArgs[i + 1] & ", using bundler"
+        inc i
+    of "--debug", "-d":
+      result.debug = true
+    of "--no-typescript":
+      result.noTypescript = true
+    of "--no-modules":
+      result.noModules = true
+    else:
+      if arg.len > 0 and arg[0] != '-':
+        result.input = arg
+        if result.wasmName.len == 0:
+          result.wasmName = arg.extractFilename().splitFile().name
       else:
-        discard
-    of cmdEnd:
-      break
+        unknownArgs.add(arg)
+    inc i
+
+  result.flags = parseCliFlags(unknownArgs)
 
 proc extractCustomSection*(wasmData: seq[byte], sectionName: string): seq[byte] =
   ## Parse a .wasm binary and extract a named custom section.
@@ -170,6 +178,14 @@ proc runCli*() =
     echo "  --target, -t <target>  Target: bundler, web, no-modules, nodejs, deno"
     echo "  --debug, -d            Enable debug output"
     echo "  --no-typescript        Skip generating .d.ts files"
+    echo ""
+    echo "Binary post-processing flags:"
+    echo "  --keep-debug           Preserve DWARF debug sections"
+    echo "  --remove-name-section  Strip the wasm name section"
+    echo "  --remove-producers-section  Strip the producers section"
+    echo "  --omit-imports         Omit import generation"
+    echo "  --emit-start           Inject a start section"
+    echo "  --encode-into          Enable TextEncoder.encodeInto optimization"
     return
 
   # Read input wasm
@@ -183,8 +199,9 @@ proc runCli*() =
     echo &"Read {wasmData.len} bytes from {config.input}"
 
   wasmData = applyTransforms(wasmData, defaultTransformConfig())
+  wasmData = applyCliFlags(wasmData, config.flags)
   if config.debug:
-    echo &"After transforms: {wasmData.len} bytes"
+    echo &"After transforms + CLI flags: {wasmData.len} bytes"
 
   # Extract custom section
   let customData = extractCustomSection(wasmData, CustomSectionName)
@@ -227,7 +244,8 @@ proc runCli*() =
       let jsOutput = jsg.generate()
 
       createDir(config.outDir)
-      let jsPath = config.outDir / (config.wasmName & ".js")
+      let jsExt = if config.target == jsNode: ".mjs" else: ".js"
+      let jsPath = config.outDir / (config.wasmName & jsExt)
       writeFile(jsPath, jsOutput)
       echo &"Generated {jsPath}"
       return
@@ -250,9 +268,15 @@ proc runCli*() =
   # Write outputs
   createDir(config.outDir)
 
-  let jsPath = config.outDir / (config.wasmName & ".js")
+  let jsExt = if config.target == jsNode: ".mjs" else: ".js"
+  let jsPath = config.outDir / (config.wasmName & jsExt)
   writeFile(jsPath, jsOutput)
   echo &"Generated {jsPath}"
+
+  if config.target == jsNode:
+    let pkgJsonPath = config.outDir / "package.json"
+    writeFile(pkgJsonPath, "{\"type\": \"module\"}\n")
+    echo &"Generated {pkgJsonPath}"
 
   # Copy/reference the wasm file
   let wasmOut = config.outDir / (config.wasmName & "_bg.wasm")

@@ -121,6 +121,35 @@ Generates `type Node = distinct JsValue`, attribute getters/setters, method call
 
 ## Quick Start
 
+### Vite Plugin (npm)
+
+The easiest way to use nimbling in a modern web project:
+
+```bash
+npm install --save-dev vite-plugin-nimbling
+```
+
+```js
+// vite.config.js
+import { defineConfig } from 'vite';
+import nimbling from 'vite-plugin-nimbling';
+
+export default defineConfig({
+  plugins: [nimbling({ target: 'web' })]
+});
+```
+
+Then import `.nim` files directly:
+
+```js
+import { greet, add } from './hello.nim';
+await greet();
+```
+
+See [`js/vite-plugin-nimbling/`](js/vite-plugin-nimbling/) for full docs.
+
+### Manual (CLI)
+
 ```bash
 # Clone
 git clone https://github.com/katehonz/nimbling.git

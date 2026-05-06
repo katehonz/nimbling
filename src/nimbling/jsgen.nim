@@ -41,8 +41,6 @@ proc dedent(g: var JsGen) = dec g.indent
 # ─── JS helpers (standard across all targets) ───
 
 const jsHelpers = """
-let wasm;
-
 const heap = new Array(128).fill(undefined);
 heap.push(undefined, null, true, false);
 let heap_next = 132;
@@ -546,26 +544,32 @@ proc generate*(g: var JsGen): string =
 
   # Module header
   case g.target
-  of jsBundler, jsWeb, jsDeno:
-    if g.target == jsDeno:
-      g.addLine(&"import * as wasm from './{g.wasmName}';")
-    else:
-      g.addLine(&"import * as wasm from './{g.wasmName}_bg.js';")
-      g.addLine(&"let imports = {{}};")
+  of jsBundler:
+    g.addLine(&"import * as wasm from './{g.wasmName}_bg.js';")
+    g.addLine(&"let imports = {{}};")
+  of jsWeb:
+    g.addLine(&"// Web target — wasm loaded via init()")
+    g.addLine("let wasm;")
+  of jsDeno:
+    g.addLine(&"import * as wasm from './{g.wasmName}';")
+    g.addLine(&"let imports = {{}};")
 
+  of jsNode:
+    g.addLine(&"// Node.js target — wasm loaded via init()")
+    g.addLine("let wasm;")
   of jsNoModules:
     g.addLine("(function() {")
     g.indent()
     g.addLine(&"const wasm = wasm_bindgen;")
 
-  of jsNode:
-    g.addLine(&"const wasm = require('./{g.wasmName}_bg.js');")
+
   of jsNodeModule:
     g.addLine(&"import * as wasm from './{g.wasmName}_bg.js';")
     g.addLine(&"let imports = {{}};")
   of jsModule:
     g.addLine(&"import source wasmModule from './{g.wasmName}.wasm';")
     g.addLine(&"let imports = {{}};")
+    g.addLine("let wasm;")
   g.add("")
 
   # Apply linked modules
@@ -605,6 +609,8 @@ proc generate*(g: var JsGen): string =
   g.addLine("return await WebAssembly.instantiate(bytes, imports);")
   g.dedent()
   g.addLine("}")
+  g.dedent()
+  g.addLine("}")
   g.add("")
 
   # init function
@@ -612,7 +618,11 @@ proc generate*(g: var JsGen): string =
   g.indent()
 
   case g.target
-  of jsWeb, jsNoModules:
+  of jsWeb:
+    g.addLine(&"const imports = {{}};")
+    g.addLine("const response = await fetch(input);")
+    g.addLine(&"const result = await __nbg_load(response, imports);")
+  of jsNoModules:
     g.addLine(&"const imports = {{}};")
     g.addLine(&"const result = await __nbg_load(input, imports);")
   of jsBundler:
@@ -620,8 +630,10 @@ proc generate*(g: var JsGen): string =
     g.addLine(&"const result = await __nbg_load(input, imports);")
   of jsNode:
     g.addLine(&"const imports = {{}};")
-    g.addLine("const path = require('path').join(__dirname, input);")
-    g.addLine("const bytes = require('fs').readFileSync(path);")
+    g.addLine("const { join } = await import('node:path');")
+    g.addLine("const { readFileSync } = await import('node:fs');")
+    g.addLine("const path = join(import.meta.dirname, input);")
+    g.addLine("const bytes = readFileSync(path);")
     g.addLine("const result = await WebAssembly.instantiate(bytes, imports);")
   of jsDeno:
     g.addLine("const imports = {};")
@@ -641,6 +653,7 @@ proc generate*(g: var JsGen): string =
   g.addLine("return wasm;")
   g.dedent()
   g.addLine("}")
+  g.addLine("const __nbg_init = { init };")
   g.add("")
 
   # Default export

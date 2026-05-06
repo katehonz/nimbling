@@ -16,7 +16,10 @@ task buildCli, "Build the nimbling CLI tool":
   exec "nim c -d:release src/nimbling/cli.nim"
 
 task test, "Run all tests":
-  exec "nim c --path:src -r tests/all.nim"
+  exec "nim c -d:ssl --path:src -r tests/all.nim"
+
+task e2e, "Run end-to-end tests":
+  exec "node tests/e2e/test.mjs"
 
 # Build with wasm target helper
 # Two-step process: Nim → C → .wasm via clang

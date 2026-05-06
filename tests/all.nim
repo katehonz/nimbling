@@ -4,6 +4,7 @@ import std/unittest
 import std/strutils
 import std/times
 import std/os
+import std/httpclient
 
 import nimbling/common
 import nimbling/encode
@@ -268,7 +269,7 @@ suite "jsgen - JS glue generation":
     var prog = Program(uniqueCrateIdentifier: "test")
     var jsg = newJsGen(prog, jsNode, "hello")
     let output = jsg.generate()
-    check output.contains("require('./hello_bg.js')")
+    check output.contains("// Node.js target")
 
   test "generates heap helpers":
     var prog = Program(uniqueCrateIdentifier: "test")
@@ -3099,7 +3100,13 @@ suite "webidl parser — regression fixes":
     check defs[0].fields.len == 1
 
   test "parses full Window.webidl without infinite loop":
-    let src = readFile("OLD/crates/web-sys/webidls/enabled/Window.webidl")
+    const url = "https://raw.githubusercontent.com/rustwasm/wasm-bindgen/main/crates/web-sys/webidls/enabled/Window.webidl"
+    const path = "tests/Window.webidl"
+    let src = if fileExists(path): readFile(path) else:
+      let client = newHttpClient()
+      let content = client.getContent(url)
+      writeFile(path, content)
+      content
     let t0 = cpuTime()
     let defs = parseWebIDL(src)
     let dt = cpuTime() - t0
@@ -3107,7 +3114,13 @@ suite "webidl parser — regression fixes":
     check dt < 1.0  # must not infinite-loop
 
   test "parses full Streams.webidl without infinite loop":
-    let src = readFile("OLD/crates/web-sys/webidls/enabled/Streams.webidl")
+    const url = "https://raw.githubusercontent.com/rustwasm/wasm-bindgen/main/crates/web-sys/webidls/enabled/Streams.webidl"
+    const path = "tests/Streams.webidl"
+    let src = if fileExists(path): readFile(path) else:
+      let client = newHttpClient()
+      let content = client.getContent(url)
+      writeFile(path, content)
+      content
     let t0 = cpuTime()
     let defs = parseWebIDL(src)
     let dt = cpuTime() - t0

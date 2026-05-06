@@ -1,0 +1,22 @@
+{
+  "name": "vite-plugin-nimbling",
+  "version": "0.1.1",
+  "description": "Vite plugin for Nim → WebAssembly via nimbling",
+  "main": "index.js",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./index.js",
+      "default": "./index.js"
+    }
+  },
+  "files": [
+    "index.js",
+    "README.md"
+  ],
+  "keywords": ["vite", "plugin", "nim", "webassembly", "wasm"],
+  "license": "MIT",
+  "peerDependencies": {
+    "vite": "^4.0.0 || ^5.0.0 || ^6.0.0"
+  }
+}

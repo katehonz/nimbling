@@ -1,0 +1,87 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build ${{ matrix.target }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            target: linux-x64
+            os-flag: linux
+            ext: ''
+          - os: macos-13
+            target: macos-x64
+            os-flag: macosx
+            ext: ''
+          - os: macos-latest
+            target: macos-arm64
+            os-flag: macosx
+            ext: ''
+          - os: windows-latest
+            target: windows-x64
+            os-flag: windows
+            ext: '.exe'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Nim
+        uses: jiro4989/setup-nim-action@v2
+        with:
+          nim-version: '2.2.x'
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Cache nimble packages
+        if: runner.os != 'Windows'
+        uses: actions/cache@v4
+        with:
+          path: ~/.nimble
+          key: ${{ runner.os }}-nimble-v2-${{ hashFiles('*.nimble') }}
+          restore-keys: |
+            ${{ runner.os }}-nimble-v2-
+
+      - name: Install dependencies
+        run: nimble install -y
+
+      - name: Build release binary
+        shell: bash
+        run: |
+          nim c -d:release --os:${{ matrix.os-flag }} -o:nimbling-${{ matrix.target }}${{ matrix.ext }} src/nimbling/cli.nim
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: nimbling-${{ matrix.target }}
+          path: nimbling-${{ matrix.target }}${{ matrix.ext }}
+
+  release:
+    name: Create GitHub Release
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+          merge-multiple: true
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: artifacts/*
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

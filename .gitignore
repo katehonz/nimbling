@@ -1,4 +1,3 @@
-OLD/
 nimcache/
 *.exe
 *.o
@@ -29,4 +28,20 @@ src/nimbling/macroimpl_closure
 src/nimbling/macroimpl_async
 src/nimbling/macroimpl_webidl
 tools/webidl_batch
+tests/Window.webidl
+tests/Streams.webidl
 src/nimbling.out
+
+# Build artifacts
+pkg/
+examples/hello/pkg/
+examples/hello/pkg2/
+examples/hello/pkg_node/
+examples/hello/*.wasm
+examples/hello/*.nbg
+tests/e2e/pkg/
+crate_greet.nbg
+js/vite-plugin-nimbling/test-project/dist/
+js/vite-plugin-nimbling/test-project/node_modules/
+js/vite-plugin-nimbling/test-project/package-lock.json
+js/vite-plugin-nimbling/test-project/src/.nimbling-cache/
